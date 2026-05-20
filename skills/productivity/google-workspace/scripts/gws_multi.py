@@ -14,6 +14,9 @@ USAGE
   # Run a single command against a single account (explicit)
   $GWS_MULTI --account work gmail search "is:unread newer_than:1d" --max 5
 
+  # Extract one field as raw text — avoids `| python3 -c` and `| jq`
+  $GWS_MULTI --account personal-main gmail get MSG_ID --field body --max-len 2000
+
   # Run against ALL registered accounts and merge results
   $GWS_MULTI --account all gmail search "is:unread newer_than:1d" --max 5
   $GWS_MULTI --account all calendar list
@@ -169,6 +172,40 @@ def main():
     merged_results = []
     errors = []
     single_record_results = []
+
+    # Detect raw-text mode (passthrough opted out of JSON via e.g. --field).
+    # In that case, don't try to parse stdout as JSON — emit it as-is, with a
+    # per-account header when fanning out to multiple accounts. This makes the
+    # `gmail get --field body` pattern work cleanly through the multi-account
+    # wrapper without forcing the caller to pipe through python or jq.
+    raw_text_mode = "--field" in passthrough
+
+    if raw_text_mode:
+        multi = len(targets) > 1
+        any_ok = False
+        for account in targets:
+            rc, stdout, stderr = run_for_account(account, passthrough)
+            if rc != 0:
+                errors.append(
+                    {
+                        "account": account,
+                        "exit_code": rc,
+                        "stderr": stderr.strip()[:500] or stdout.strip()[:500],
+                    }
+                )
+                if multi:
+                    print(f"=== {account} (ERROR rc={rc}) ===", file=sys.stderr)
+                    print(stderr.strip()[:500] or stdout.strip()[:500], file=sys.stderr)
+                continue
+            any_ok = True
+            if multi:
+                print(f"=== {account} ===")
+            sys.stdout.write(stdout)
+            if not stdout.endswith("\n"):
+                sys.stdout.write("\n")
+        if errors and not any_ok:
+            sys.exit(1)
+        sys.exit(0)
 
     for account in targets:
         rc, stdout, stderr = run_for_account(account, passthrough)

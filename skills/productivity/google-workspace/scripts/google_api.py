@@ -295,6 +295,32 @@ def gmail_search(args):
 
 
 
+def _emit_gmail_get_result(result, args):
+    """Emit a gmail get result honoring --field / --max-len if present.
+
+    With --field: print the raw value of that top-level field (string-coerced),
+    optionally truncated to --max-len characters. No JSON wrapping. This is the
+    preferred pattern for extracting a single field from shell — it avoids
+    needing `| python3 -c` or `| jq`, both of which add friction (and the
+    former trips Hermes' command-approval security scanner).
+
+    Without --field: legacy behavior — pretty-printed JSON object.
+    """
+    field = getattr(args, "field", None)
+    max_len = getattr(args, "max_len", None)
+    if field:
+        value = result.get(field, "")
+        if isinstance(value, (list, dict)):
+            text = json.dumps(value, ensure_ascii=False)
+        else:
+            text = "" if value is None else str(value)
+        if max_len is not None and max_len > 0 and len(text) > max_len:
+            text = text[:max_len]
+        print(text)
+        return
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+
+
 def gmail_get(args):
     if _gws_binary():
         msg = _run_gws(
@@ -312,7 +338,7 @@ def gmail_get(args):
             "labels": msg.get("labelIds", []),
             "body": _extract_message_body(msg),
         }
-        print(json.dumps(result, indent=2, ensure_ascii=False))
+        _emit_gmail_get_result(result, args)
         return
 
     service = build_service("gmail", "v1")
@@ -331,7 +357,7 @@ def gmail_get(args):
         "labels": msg.get("labelIds", []),
         "body": _extract_message_body(msg),
     }
-    print(json.dumps(result, indent=2, ensure_ascii=False))
+    _emit_gmail_get_result(result, args)
 
 
 
@@ -1086,6 +1112,19 @@ def main():
 
     p = gmail_sub.add_parser("get")
     p.add_argument("message_id")
+    p.add_argument(
+        "--field",
+        help="Print only this top-level field (e.g. body, subject, from) as raw text "
+        "instead of the full JSON object. Preferred for shell extraction — avoids "
+        "needing `| python3 -c` or `| jq`.",
+    )
+    p.add_argument(
+        "--max-len",
+        type=int,
+        default=None,
+        help="When --field is set, truncate output to this many characters. Ignored "
+        "without --field.",
+    )
     p.set_defaults(func=gmail_get)
 
     p = gmail_sub.add_parser("send")
