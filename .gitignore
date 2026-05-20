@@ -83,3 +83,10 @@ skills/yuanbao/**
 !skills/note-taking/obsidian/SKILL.md
 !skills/note-taking/obsidian/references/
 !skills/note-taking/obsidian/references/**
+
+# Tracked customizations of bundled skill: google-workspace
+# (scopes patched to read-only; SKILL.md banner explaining the constraint)
+!skills/productivity/google-workspace/
+!skills/productivity/google-workspace/SKILL.md
+!skills/productivity/google-workspace/scripts/
+!skills/productivity/google-workspace/scripts/setup.py
