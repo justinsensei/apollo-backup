@@ -3,3 +3,5 @@ Justin is Head of Product at SignLab, a multinational ed tech company building s
 Child: James aka Jamie (they/them) DOB 05/08/2015
 §
 Justin and family live in Pittsburgh, PA.
+§
+When Justin mentions family members by first name only, default to the family member unless strong context says otherwise. Known family: Jamie (child, they/them, b. 2015), Sam (son, oldest, b. 2013). In Obsidian notes, wikilink them: [[Jamie]], [[Sam]].
