@@ -68,6 +68,10 @@ Obsidian links notes with `[[Note Name]]` syntax. When creating notes, use these
 
 These rules govern how Justin organizes *his* vault. Follow them when creating or modifying notes.
 
+## Typed notes (People, Organizations)
+
+For creating People or Organization notes, load `obsidian-people-notes`. It covers: `Notebook/` destination, name-based filenames, category frontmatter, aliases, family wikilinks, and real vault examples.
+
 ## Where to put new notes
 
 - Create new notes in the **vault root** unless explicitly told otherwise.
