@@ -122,7 +122,13 @@ Every note in this vault should have these fields:
 - **`id`** — numerical string based on the file-created timestamp (`YYYYMMDDHHmmss`).
 - **`daily_note`** — wikilink to the daily note for when the file was created, in the format `[[YYYY-MM-DD dddd]]`.
 - **`project`** *(optional)* — quoted wikilink to the project this note belongs to, in the format `"[[Project Name]]"`. This field should appear **last** in the frontmatter. Use this to mark the note as a *child* of the project (as opposed to merely mentioning the project in passing).
-- **`aliases`** *(optional)* — alternate names that make the note easier to find and link to.
+- **`aliases`** *(optional)* — alternate names that make the note easier to find and link to. Use a YAML list:
+  ```yaml
+  aliases:
+    - Short Name
+    - Abbreviation
+  ```
+  Common for organization notes (e.g. Winchester-Thurston School → Winchester-Thurston, Winchester, WT).
 
 ## Structuring new notes
 
