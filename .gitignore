@@ -127,3 +127,10 @@ skills/productivity/linear/**/__pycache__/
 skills/productivity/airtable/**/__pycache__/
 skills/research/arxiv/**/__pycache__/
 skills/creative/comfyui/**/__pycache__/
+
+# Agent-authored skill: todoist (Doist MCP server wrapper — task management for Hermes + Bes)
+!skills/productivity/todoist/
+!skills/productivity/todoist/**
+# Exclude pycache from within the allowlisted dir
+skills/productivity/todoist/**/__pycache__/
+skills/productivity/todoist/**/*.pyc
