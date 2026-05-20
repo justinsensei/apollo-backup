@@ -144,3 +144,12 @@ hooks:
 hooks_auto_accept: true
 approvals:
   destructive_slash_confirm: false
+
+mcp_servers:
+  todoist:
+    command: "npx"
+    args: ["-y", "@doist/todoist-mcp"]
+    env:
+      TODOIST_API_KEY: "${TODOIST_API_KEY}"
+    timeout: 120
+    connect_timeout: 60
