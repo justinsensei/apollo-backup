@@ -452,6 +452,17 @@ All commands return JSON. Parse with `jq` or read directly. Key fields:
 4. **Calendar times must include timezone** — always use ISO 8601 with offset (e.g., `2026-03-01T10:00:00-06:00`) or UTC (`Z`).
 5. **Respect rate limits** — avoid rapid-fire sequential API calls. Batch reads when possible.
 
+## Pitfalls
+
+1. **`json.loads()` fails on Gmail search output with control characters.** Email snippets frequently contain Unicode control chars (e.g. `\u034f`, zero-width spaces) that cause `json.decoder.JSONDecodeError: Invalid control character`. Always use `json_parse()` from `hermes_tools` (which uses `strict=False`) instead of `json.loads()` when parsing gmail search/get output in `execute_code`.
+
+   ```python
+   from hermes_tools import json_parse
+   data = json_parse(result["output"])  # not json.loads(result["output"])
+   ```
+
+2. **Use `--field body --max-len N` for targeted email reads.** Avoids piping through `python3 -c` (trips the security scanner) and keeps output manageable. Fall back to `jq` (not `python3 -c`) when you need multiple fields or transformations.
+
 ## Troubleshooting
 
 | Problem | Fix |
