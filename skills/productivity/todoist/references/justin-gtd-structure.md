@@ -1,45 +1,58 @@
 # Justin's GTD Structure in Todoist
 
-Established 2026-05-20. May evolve — check this file before restructuring anything.
+Last updated: 2026-05-20
+
+## Philosophy
+
+Lightweight GTD. Whole-life (work + personal). Main pain: doesn't trust the system; too much in his head; stuff falls through cracks.
+
+No references list. Inbox is Todoist's default inbox — no special conventions yet (process manually).
 
 ## Projects (areas of focus)
 
-| Project | Color | Purpose |
-|---|---|---|
-| Work | Blue | All work next actions and projects |
-| Personal | Green | Personal admin, health, family, finances |
-| #Hermes (sub of Work) | — | Hermes Agent infra/setup tasks — actioned BY Hermes agent, not Justin |
+| Project | Color | Notes |
+|---------|-------|-------|
+| Work | Blue | Work area of focus |
+| Personal | Green | Personal + family + personal admin |
+| Hermes *(sub-project of Work)* | — | Hermes Agent infra tasks. Actioned BY the Hermes infra agent, not Justin. |
 
-## Sections (in each Project)
+**Rule:** Justin organizes manually. Don't restructure Projects without asking.
 
-- **Someday Maybe** — items Justin is not committing to yet. Convention: anything dropped here also gets the `@someday` label (see below).
-- Unsectioned area = active next actions.
+## Sections (inside each Project)
+
+Each Project has one section:
+
+- **Someday Maybe** — things not committed to yet but worth keeping
+
+**Critical:** Todoist filters cannot filter by section. Items placed in Someday Maybe MUST also get the `@someday` label or they'll appear in Next Actions views.
 
 ## Labels
 
 | Label | Color | Meaning |
-|---|---|---|
-| `@waiting` | Orange | Delegated or blocked — watching, not acting |
-| `@someday` | Grey | In Someday Maybe section — not a current commitment |
+|-------|-------|---------|
+| `@waiting` | Orange | Delegated or blocked — tracking, not acting |
+| `@someday` | Grey | In a Someday Maybe section — excluded from Next Actions |
+| `@project` | Violet | Parent task of a multi-step GTD project |
 
-**Why `@someday` exists:** Todoist filter syntax cannot exclude tasks by section. Without this label, "Next Actions" filters would surface Someday Maybe items. The label is the workaround — small discipline, big payoff. Apply it to every task dropped into a Someday Maybe section.
+**Convention:** GTD "projects" (anything requiring 2+ steps) are modeled as a parent task (labeled `@project`) with subtasks, NOT as separate Todoist Projects.
+
+**Section + label pairing:** Every item added to a Someday Maybe section must get `@someday`. Every item that is delegated/blocked must get `@waiting`. Apply manually at capture time.
 
 ## Filters
 
-| Filter | Query | Purpose |
-|---|---|---|
-| Next Actions — Work | `#Work & !@waiting & !@someday` | Work next actions only |
-| Next Actions — Personal | `#Personal & !@waiting & !@someday` | Personal next actions only |
-| Waiting For | `@waiting` | Cross-area delegated/blocked items |
+| Filter | Query | Color |
+|--------|-------|-------|
+| Next Actions — Work | `#Work & !@waiting & !@someday` | Blue |
+| Next Actions — Personal | `#Personal & !@waiting & !@someday` | Green |
+| Waiting For — Work | `#Work & @waiting` | Orange |
+| Waiting For — Personal | `#Personal & @waiting` | Green |
 
-## Inbox
+These are already live. Don't recreate or rename without asking.
 
-Default Todoist inbox. No special conventions yet — Justin processes it manually. Items captured by Bes land here unless explicitly routed.
+## Design decisions and rationale
 
-## Key design decisions (rationale)
-
-- **Projects = areas of focus**, not GTD projects. GTD projects (multi-step work) live as tasks with subtasks inside Work or Personal.
-- **No Home project** — Justin uses Work and Personal only for now.
-- **No References project** — not using Todoist for reference material (that's Obsidian).
-- **Someday Maybe as sections, not separate Projects** — keeps the Someday Maybe items contextualized by area of focus (Work vs Personal).
-- **@waiting as label, not Project** — cross-area by nature; a filter is the right view.
+- **Someday Maybe as section (not Project):** keeps items contextualized by area of focus (Work vs Personal). Requires `@someday` label as workaround for Todoist's lack of section-based filtering.
+- **Waiting For as label + filter (not Project):** cross-area visibility without extra sidebar clutter. Filtered per-area via Work/Personal filter pair.
+- **GTD projects as subtasks (not Projects):** Justin carries dozens of active projects; separate Todoist Projects per project would make the sidebar unwieldy. Parent task + `@project` label scales better.
+- **No Home Project:** Justin simplified to just Work and Personal.
+- **Naming:** "Someday Maybe" (no slash).
