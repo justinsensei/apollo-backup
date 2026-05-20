@@ -1,6 +1,6 @@
 ---
 name: work-log
-description: Use when Justin asks to "create a work log", "log today's work", "write a work log", or otherwise wants today's work activity summarized and appended to today's daily note in the Obsidian vault. Pulls from Slack (SignLab), Linear, Gmail (work + personal-main + personal-junk), Google Calendar (all 3 accounts), plus the daily note and any chat brain-dump.
+description: Use when Justin asks to "create a work log", "log today's work", "write a work log", or otherwise wants today's work activity summarized and appended to today's daily note in the Obsidian vault. Pulls from Slack (SignLab), Linear, Gmail (work + personal-main; personal-junk only on request), Google Calendar (all 3 accounts), plus the daily note and any chat brain-dump.
 platforms: [linux, macos]
 ---
 
@@ -27,71 +27,123 @@ Use `search_files` with `target: "files"` to locate. If neither exists, tell Jus
 
 ## Step 3 — Gather raw material (parallel, one subagent per source)
 
-Spawn **one `delegate_task` subagent per external source** in a single batch so raw API output stays out of your context. Each subagent returns a small filtered summary (bullets, ~10–30 items max). You only see the summaries.
+Spawn **one `delegate_task` subagent per external source** in a single batch so raw API output stays out of your context. Each subagent runs a **specific, pre-canned set of commands** — no exploration — and returns a small filtered summary (bullets, ~10–30 items max). You only see the summaries.
 
-Today's date in vault timezone is the cutoff for every source. Pre-compute it once (`date +%F` in the VM shell) and pass it to each subagent verbatim — don't let subagents re-derive it.
+**Speed discipline:** subagents have a soft budget of **≤8 tool calls each**. If a subagent can't finish inside that, it must return what it has and exit. Tell it so explicitly in the context block ("Budget: 8 tool calls. If you exhaust it, return partial results and stop.").
+
+Today's date in vault timezone is the cutoff for every source. Pre-compute it once (`TODAY=$(date +%F)`) and pass it to each subagent verbatim — don't let subagents re-derive it. Also pre-compute Justin's Linear user-id once (see *Pre-flight*, below) and pass it too.
+
+### Pre-flight (do once, in-context, before spawning subagents)
+
+```bash
+TODAY=$(date +%F)                       # e.g. 2026-05-20
+TOMORROW=$(date -d "$TODAY + 1 day" +%F) # e.g. 2026-05-21
+TODAY_SLASH=$(date +%Y/%m/%d)            # Gmail wants slashes
+TOMORROW_SLASH=$(date -d "$TODAY + 1 day" +%Y/%m/%d)
+```
+
+Justin's Linear user-id can be cached. First time, look it up with `{ viewer { id name } }`. After that, store it as `LINEAR_USER_ID` in `~/.hermes/.env` (or wherever Bes keeps env vars) so future runs skip the lookup. If unknown at runtime, the Linear subagent will resolve it itself — but that costs one extra round-trip.
 
 ### Subagent A — Slack (SignLab)
 
 - **Toolsets:** `["terminal"]`
 - **Skill to mention:** `slack`
-- **Goal:** "Summarize Justin's Slack activity for `<YYYY-MM-DD>` in the SignLab workspace. Use the `slack` CLI."
-- **Context to pass:**
-  - Today's date.
-  - Workspace: SignLab (only one wired up).
-  - Scope: messages Justin sent, messages directed at him (@mentions, DMs, threads he was in), and any channel where he reacted or participated.
-  - Filter out: pure social chatter Justin wasn't part of; bot/integration noise (Zapier, GitHub bots, deploy bots) unless Justin reacted; channels he's only lurking in.
-  - Keep: decisions, asks, blockers, FYIs to/from him, threads where he weighed in, any DMs.
-  - Output format: bullet list grouped by channel/DM, each bullet has `[#channel | @person]` prefix, one-line gist, and (if material) the slack permalink. End with a count: `Total: N messages across M channels/DMs.`
+- **Goal:** `"Run two specific slack searches for <TODAY> and format the results. Budget: 8 tool calls."`
+- **Context to pass (verbatim, with TODAY substituted):**
+  > Run exactly these two commands (no exploration, no `slack channels`, no `slack read`):
+  >
+  > 1. `slack search 'from:@justin after:<TODAY>' --limit 50` — messages Justin sent today.
+  > 2. `slack search 'to:@justin after:<TODAY>' --limit 50` — DMs / @-mentions / threads addressed to him today.
+  >
+  > Dedupe by permalink. Drop bot/integration messages (Zapier, GitHub bots, deploy bots) unless they have a human reaction. Drop pure social chatter Justin wasn't part of.
+  >
+  > Return a bullet list grouped by channel/DM, each bullet: `[#channel | @person] one-line gist (permalink)`. End with `Total: N messages across M channels/DMs.`
+  >
+  > Budget: 8 tool calls. If you exhaust it, return what you have and stop.
 
 ### Subagent B — Linear
 
 - **Toolsets:** `["terminal"]`
 - **Skill to mention:** `linear`
-- **Goal:** "Summarize Justin's Linear activity for `<YYYY-MM-DD>`."
-- **Context to pass:**
-  - Today's date.
-  - Pull issues where Justin is assignee, creator, or commenter AND that had activity today (status change, comment, new issue, completion).
-  - Output format: bullets like `[TEAM-123 | status] Title — what changed today.` End with `Total: N issues touched.`
+- **Goal:** `"Run one GraphQL query for <TODAY>'s Linear activity. Budget: 8 tool calls."`
+- **Context to pass (verbatim, with TODAY/TOMORROW and LINEAR_USER_ID substituted):**
+  > Justin's Linear user-id is `<LINEAR_USER_ID>` (if blank, resolve once via `{ viewer { id } }` and cache to `~/.hermes/.env` as `LINEAR_USER_ID`).
+  >
+  > Run **one** GraphQL query that ORs assignee+creator+subscriber filters with `updatedAt` in `[<TODAY>T00:00:00Z, <TOMORROW>T00:00:00Z)`:
+  >
+  > ```graphql
+  > { issues(filter: {
+  >     and: [
+  >       { updatedAt: { gte: "<TODAY>T00:00:00.000Z", lt: "<TOMORROW>T00:00:00.000Z" } },
+  >       { or: [
+  >         { assignee: { id: { eq: "<LINEAR_USER_ID>" } } },
+  >         { creator:  { id: { eq: "<LINEAR_USER_ID>" } } },
+  >         { subscribers: { id: { eq: "<LINEAR_USER_ID>" } } }
+  >       ] }
+  >     ]
+  >   }, first: 50) {
+  >     nodes { identifier title state { name type } updatedAt assignee { name } creator { name } team { key } url
+  >             comments(filter: { createdAt: { gte: "<TODAY>T00:00:00.000Z" } }) { nodes { body user { name } } } }
+  >   } }
+  > ```
+  >
+  > Format as bullets like `[TEAM-123 | status] Title — what changed today (state change / comment / created).` End with `Total: N issues touched.`
+  >
+  > Budget: 8 tool calls. If you exhaust it, return what you have and stop.
 
-### Subagent C — Email (all 3 Gmail accounts via gws_multi)
+### Subagent C — Email (work + personal-main only by default)
 
 - **Toolsets:** `["terminal"]`
 - **Skill to mention:** `google-workspace`
-- **Goal:** "Summarize emails Justin sent or received on `<YYYY-MM-DD>` across all 3 accounts (work, personal-main, personal-junk)."
-- **Context to pass:**
-  - Today's date in `YYYY/MM/DD` form (Gmail search uses `after:`/`before:` with slashes).
-  - Use the `gws_multi.py` wrapper, `--account all`, search `after:YYYY/MM/DD before:YYYY/MM/DD+1`. The wrapper path lives at `${HERMES_HOME:-$HOME/.hermes}/skills/productivity/google-workspace/scripts/gws_multi.py`.
-  - Bes's gws token is **read-only** — `gmail search` and `gmail get` work; sending does not. Do not attempt sends.
-  - Filter out per account:
-    - **work**: drop pure CI/build notifications, calendar invites that already show in Calendar, automated reports unless Justin replied. Keep human-to-human threads and anything he sent.
-    - **personal-main**: keep only items that touch work, scheduling, or Justin-as-operator-of-his-life decisions. Drop newsletters, receipts, marketing.
-    - **personal-junk**: this is the newsletter/marketing inbox by design. Default = drop everything. Only surface a thread if a real human DM-style email slipped through.
-  - Output format: bullets grouped by account, `[account | from→to]` prefix, one-line gist. End with `Total: N relevant threads (work: X, personal-main: Y, personal-junk: Z).`
+- **Goal:** `"Search Gmail for <TODAY> across work + personal-main only. Budget: 8 tool calls."`
+- **Context to pass (verbatim, with TODAY_SLASH/TOMORROW_SLASH substituted):**
+  > Use the wrapper at `${HERMES_HOME:-$HOME/.hermes}/skills/productivity/google-workspace/scripts/gws_multi.py`. Bes's gws token is **read-only** — do not attempt sends.
+  >
+  > Run **exactly two** searches (do NOT include personal-junk unless Justin explicitly asked for it — see "personal-junk opt-in" below):
+  >
+  > 1. `gws_multi.py --account work gmail search 'after:<TODAY_SLASH> before:<TOMORROW_SLASH>' --max 50`
+  > 2. `gws_multi.py --account personal-main gmail search 'after:<TODAY_SLASH> before:<TOMORROW_SLASH>' --max 50`
+  >
+  > Use the search results' subject/snippet/from fields — do NOT call `gmail get` per message (too slow). If a thread looks ambiguous from snippet alone, mention it briefly rather than fetching the full body.
+  >
+  > Filter per account:
+  > - **work**: drop pure CI/build notifications, calendar invites that already show in Calendar, automated reports unless Justin replied. Keep human-to-human threads and anything he sent.
+  > - **personal-main**: keep only items that touch work, scheduling, or operator-of-his-life decisions. Drop newsletters, receipts, marketing.
+  >
+  > Return bullets grouped by account: `[account | from→to] one-line gist`. End with `Total: N relevant threads (work: X, personal-main: Y).`
+  >
+  > Budget: 8 tool calls. If you exhaust it, return what you have and stop.
+
+**personal-junk opt-in:** the third Gmail account (`personal-junk`) is the newsletter/marketing inbox. Skip it by default. Only include a Subagent C2 (identical shape, `--account personal-junk`, even harsher filters: surface only if a real human DM-style email slipped in) if Justin says something like *"include personal-junk"* / *"check junk too"* when asking for the work log.
 
 ### Subagent D — Calendar (all 3 Google accounts via gws_multi)
 
 - **Toolsets:** `["terminal"]`
 - **Skill to mention:** `google-workspace`
-- **Goal:** "List Justin's calendar events for `<YYYY-MM-DD>` across all 3 accounts."
-- **Context to pass:**
-  - Today's date.
-  - Use `gws_multi.py --account all calendar list` and filter to events whose start is today (vault timezone).
-  - Include: meetings (with attendees), focus blocks Justin himself created, all-day events that materially affected today.
-  - Output format: chronological bullets like `HH:MM–HH:MM [account] Title — attendees (if any) — location/link (if any).` Note whether each event happened, was cancelled/declined, or is upcoming-later-today. End with `Total: N events.`
+- **Goal:** `"List today's calendar events across all 3 accounts in one call. Budget: 5 tool calls."`
+- **Context to pass (verbatim, with TODAY substituted):**
+  > Run **one** command:
+  >
+  > ```
+  > gws_multi.py --account all calendar list --start <TODAY>T00:00:00 --end <TOMORROW>T00:00:00 --max 50
+  > ```
+  >
+  > Output chronological bullets: `HH:MM–HH:MM [account] Title — attendees (if any) — location/link (if any).` Flag each event as happened / cancelled-or-declined / upcoming-later-today based on the current time. End with `Total: N events.`
+  >
+  > Budget: 5 tool calls. If you exhaust it, return what you have and stop.
 
 ### Subagent E (optional) — recent git activity
 
-Skip unless Justin specifically mentions code work. If you do run it: scope to repos under `~/clio-backup`, `~/bes-backup`, `~/hermes-agent` (if present), and any project repo Justin mentioned in the daily note. Use `git log --author --since=midnight --pretty` per repo. Return commits as bullets `[repo] sha — subject`.
+Skip unless Justin specifically mentions code work. If you do run it: scope to repos under `~/clio-backup`, `~/bes-backup`, `~/hermes-agent` (if present), and any project repo Justin mentioned in the daily note. Use `git log --author --since=midnight --pretty` per repo. Return commits as bullets `[repo] sha — subject`. Budget: 8 tool calls.
 
 ### After subagents return
 
-You now have 4 (or 5) small summaries. Also do these two **in-context** reads — they're cheap:
+You now have 3–5 small summaries. Also do these two **in-context** reads — they're cheap:
 
 1. **Read today's daily note** with `read_file`. Scan for decisions, completions, blockers, links, meeting notes Justin wrote himself.
 2. **Ask Justin in chat** what else he worked on that isn't in any source yet. Short prompt: *"Anything from today not captured in Slack/Linear/email/calendar/daily-note? Side-quests, conversations IRL, decisions in your head?"* If he says "nothing," move on.
 
-If a subagent fails (auth expired, network, etc.), include the failure in the footer (`Slack: ERR — token expired`) rather than silently dropping the source. Then continue with what you have.
+If a subagent fails (auth expired, network, hit budget, etc.), include the failure in the footer (`Slack: ERR — token expired` or `Linear: PARTIAL — hit budget`) rather than silently dropping the source. Then continue with what you have.
 
 ## Step 4 — Synthesize three sections
 
@@ -125,7 +177,7 @@ Use `patch` (anchored append) or `write_file` (whole-note rewrite). Append this 
 [bullets]
 
 ---
-*Sources: Slack (12 msgs / 4 channels) | Linear (5 issues) | Gmail work (8 threads), personal-main (1), personal-junk (0) | Calendar (4 events / 3 accts) | daily note + chat.*
+*Sources: Slack (12 msgs / 4 channels) | Linear (5 issues) | Gmail work (8 threads), personal-main (1) | Calendar (4 events / 3 accts) | daily note + chat.*
 ```
 
 Use the **actual counts** from the subagent summaries. If a source was unavailable, mark it `ERR` with a short reason. Always include `daily note + chat` at the end.
