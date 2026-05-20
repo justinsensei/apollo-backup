@@ -53,6 +53,12 @@ Justin uses Todoist as a lightweight GTD system. Full design detail in `referenc
   - *Waiting For — Work*: `#Work & @waiting`
   - *Waiting For — Personal*: `#Personal & @waiting`
 
+## Capture conventions (important)
+
+- **Actions only.** Todoist is for actionable items with a state. No informational notes, FYIs, or "heads up" entries. If it isn't something Justin will do, don't add it.
+- **No App Store Connect issue emails.** Justin doesn't handle those — engineering does. Skip them when scanning email.
+- **Descriptions carry context, not content.** Put who to follow up with, relevant issue numbers, deadlines, and source provenance in `description`. Keep `content` concise and actionable.
+
 ## Capture from daily notes / email
 
 When scanning Obsidian daily notes or email for action items:
