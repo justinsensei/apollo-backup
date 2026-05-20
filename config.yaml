@@ -138,3 +138,12 @@ display:
   show_reasoning: false
   streaming: true
   skin: default
+# --- Gateway lifecycle notifications ---
+# Per Justin (May 2026): the gateway should send "Gateway shutting down" /
+# "Gateway online" pings ONLY on telegram. Every other platform with a
+# connected adapter must have gateway_restart_notification: false.
+# Bes currently only has telegram configured — no platforms: block needed yet.
+# When wiring a new non-telegram platform here, add a platforms: block:
+#   platforms:
+#     <name>:
+#       gateway_restart_notification: false
