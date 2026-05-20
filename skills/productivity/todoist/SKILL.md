@@ -194,6 +194,8 @@ Justin runs a lightweight GTD structure in Todoist. See `references/gtd-setup.md
 
 ## Pitfalls
 
+11. **Todoist filters cannot filter by section.** A filter like `#Work & !@someday` works; `#Work & !/Someday Maybe` does not — section-based exclusion isn't supported. Workaround: pair every organizational section with a label and filter on the label. This is why Justin's Someday Maybe sections require the `@someday` label on every item dropped into them.
+
 1. **Don't use `update-tasks` to change due date on recurring tasks.** It replaces the entire due-string blob and can wipe the recurrence pattern. Use `reschedule-tasks` for date changes — it preserves recurrence. `update-tasks` is fine for content/description/priority/labels/projectId.
 
 2. **Priorities are strings (`"p1"`–`"p4"`), not integers.** `priority: 1` or `priority: "1"` will error or silently default. Use `"p1"` / `"p2"` / `"p3"` / `"p4"`.
