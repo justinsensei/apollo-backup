@@ -313,6 +313,74 @@ $GAPI docs create --title "Draft" --body "First paragraph..."
 $GAPI docs append DOC_ID --text "Additional content to append"
 ```
 
+
+## Multi-Account Usage (Bes customization)
+
+Justin has multiple Google accounts. This installation supports per-account tokens
+and cross-account read queries. Tokens are stored as
+`~/.hermes/google_tokens/<account>.json`.
+
+### Listing registered accounts
+
+```bash
+GWS_MULTI="python ${HERMES_HOME:-$HOME/.hermes}/skills/productivity/google-workspace/scripts/gws_multi.py"
+$GWS_MULTI accounts
+```
+
+Returns JSON like `{"accounts": [{"account": "work", "auth_valid": true}, ...]}`.
+
+### Running a command against a specific account
+
+Use `--account <name>` (BEFORE the gmail/calendar/etc. subcommand):
+
+```bash
+$GWS_MULTI --account work gmail search "is:unread newer_than:1d" --max 5
+$GWS_MULTI --account personal-main calendar list
+$GWS_MULTI --account personal-junk gmail search "from:newsletter@example.com" --max 10
+```
+
+### Running a command across ALL accounts (cross-account view)
+
+Use `--account all`:
+
+```bash
+$GWS_MULTI --account all calendar list           # All events across work + personal accounts
+$GWS_MULTI --account all gmail search "is:unread newer_than:1d" --max 5
+```
+
+Or a subset:
+
+```bash
+$GWS_MULTI --account work,personal-main calendar list
+```
+
+### Output format with --account
+
+Every record in the response gets an `"account": "<name>"` field added so you can
+tell which account contributed which row. Per-account errors don't abort the
+whole run — they're collected into a top-level `"_errors"` field on the response.
+
+When summarizing for Justin, **always preface results with the account tag**:
+- ✅ "On `work`: 3 unread; on `personal-main`: 1 unread."
+- ❌ "4 unread emails." (loses the per-account view he wants)
+
+### Decision: when to use --account all vs. a single account
+
+- **Default to `--account all`** for time-sensitive queries ("what's on my calendar
+  today", "any urgent unread emails") — Justin lives across all his accounts.
+- Use a **specific account** when Justin explicitly names one ("check work email
+  from Alice") or when the query is account-specific by topic (e.g. company-only
+  Drive folders → `--account work`).
+- For write operations: not applicable. This install is read-only.
+
+### Legacy single-account compatibility
+
+If `--account` is omitted, the script falls back to the legacy single-token path
+(`~/.hermes/google_token.json`) which is now a symlink to
+`google_tokens/work.json`. So old calls like
+`python google_api.py gmail search ...` still work and resolve to the work
+account. Prefer the explicit `--account` form in new code.
+
 ## Output Format
 
 All commands return JSON. Parse with `jq` or read directly. Key fields:

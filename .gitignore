@@ -90,3 +90,6 @@ skills/yuanbao/**
 !skills/productivity/google-workspace/SKILL.md
 !skills/productivity/google-workspace/scripts/
 !skills/productivity/google-workspace/scripts/setup.py
+
+# Broader allowlist for google-workspace scripts (gws_multi.py, etc.)
+!skills/productivity/google-workspace/scripts/**
