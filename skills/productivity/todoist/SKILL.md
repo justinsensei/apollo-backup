@@ -207,17 +207,7 @@ reschedule-tasks(tasks=[{id: "<id>", date: "2026-05-27"}])
 
 `reschedule-tasks` preserves recurrence patterns; `update-tasks` with `dueString` can silently strip them on recurring tasks (Pitfall 1).
 
-## Justin's GTD setup
 
-Justin runs a lightweight GTD structure in Todoist. See `references/gtd-setup.md` for full detail. Key facts:
-
-- **Projects (areas):** `#Work` (blue), `#Personal` (green). Sub-project: `#Hermes` under `#Work` (Hermes Agent infra work, actioned by Hermes agent — not Bes).
-- **GTD projects** = tasks with subtasks inside those Projects. Not separate Todoist Projects.
-- **Someday Maybe** = a section inside each Project (contextualizes by area). Items in those sections get `@someday`.
-- **Labels:** `@waiting` (orange) for delegated/blocked; `@someday` (grey) for Someday Maybe items.
-- **Filters:** "Next Actions — Work" (`#Work & !@waiting & !@someday`), "Next Actions — Personal" (`#Personal & !@waiting & !@someday`), "Waiting For" (`@waiting`).
-- **Inbox** = default Todoist inbox, no special conventions yet.
-- Naming: "Someday Maybe" (no slash).
 
 ## Pitfalls
 
