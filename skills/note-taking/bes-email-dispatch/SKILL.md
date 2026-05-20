@@ -19,6 +19,53 @@ This skill is **read-only on Gmail**. It never archives, marks read, or replies.
 
 One Gmail message ID. The poller passes it via the cron prompt; you call `scripts/load_context.py <id>` to fetch.
 
+## Core principle: follow the instruction narrowly
+
+Justin's instruction is the spec. The email is **source material**, not a payload to wrap. Do what the instruction asks, and nothing else.
+
+- Do **not** include the source email as a quoted block, attachment summary, or "email captures" section. The email lives in Gmail; you don't need to duplicate it.
+- Do **not** synthesize extra context from the email body that wasn't requested. If the instruction says "add Suzetta as a Person note with her phone number," the body of the note is her name, the facts mentioned in the instruction, and her phone number. Not a summary of what her email was about.
+- Do **not** add provenance lines like "captured from email on YYYY-MM-DD" unless the instruction asks for tracking.
+- **Less is more.** A 4-line body that nails the instruction beats a 20-line body that includes everything you could have said.
+
+Think of yourself as a careful assistant taking dictation, not a librarian cataloguing the email.
+
+**Frontmatter is the exception to "less is more."** New notes need YAML frontmatter that matches Justin's existing templates (see next section) — those frontmatter fields drive his Dataview queries and daily-note backlinks. Frontmatter is part of the structure, not extra ornament.
+
+## Frontmatter (match the templates exactly)
+
+The vault has Templater templates that Justin uses when he creates notes by hand. When Bes creates a note, the frontmatter must match the equivalent template's rendered output (Templater syntax pre-evaluated to literal values, since Bes is writing through the filesystem and not via Obsidian's plugin runtime).
+
+**Template selection rule** based on the instruction's intent:
+
+| Instruction shape | Template | `category` field |
+|---|---|---|
+| "Person note for <Name>" / "<Name> works at …" / "<Name> is …" | New Person | `"[[People]]"` |
+| "Org note for <Org>" / "<Org> is …" | New Organization | `"[[Organizations]]"` |
+| "Project note for <Project>" / "Track <Project>" | New Project | `"[[Projects]]"` |
+| "Meeting note for …" / "Capture meeting with …" | New Meeting | `"[[Meetings]]"` |
+| "Save as a note" / empty / generic | New Note | (empty) |
+
+**Rendered frontmatter** (Bes evaluates the Templater placeholders at write time):
+
+```yaml
+---
+id: "<YYYYMMDDHHmmss at write time, e.g. 20260520143157>"
+daily_note: "[[<YYYY-MM-DD dddd at write time, e.g. 2026-05-20 Wednesday>]]"
+category: "<wikilink per the table above, or omit field entirely for generic New Note>"
+---
+```
+
+Rules:
+- `id` — UTC or local time is fine; match what the template's `tp.date.now()` would produce. Use Justin's local timezone (America/New_York). Format strictly `YYYYMMDDHHmmss`, no separators.
+- `daily_note` — long-day-name wikilink. `dddd` is the full weekday name (`Wednesday`, not `Wed`).
+- `category` — wikilink in double quotes (matches Justin's template output exactly). Omit the `category:` line entirely for `New Note` (the template emits `category:` with no value, which is equivalent to omitting).
+- For `New Meeting`, the template auto-renames the file to today's date (`YYYY-MM-DD.md`). Follow that convention.
+- For `New Note`, the template auto-renames the file to the 14-digit timestamp (`YYYYMMDDHHmmss.md`). Follow that convention **unless** the instruction is "save as a note" + a forwarded email, in which case use `YYYY-MM-DD <subject>.md` for human-scannable titles. When in doubt, prefer the timestamp-only filename — it matches what Justin would get by hand.
+- For Person/Organization/Project, the template's auto-rename is overridden by Justin (e.g. `Suzetta Large.md`, not `20260520143157.md`). Use the human name.
+
+Below the frontmatter, follow the template's body shape (most are empty — Justin fills them in). The instruction tells you what body content to add.
+
 ## Process
 
 For each message ID:
@@ -64,55 +111,85 @@ For each message ID:
 - **Append to an existing note** → use that note's current location, do not move it. If the title match is ambiguous (multiple plausible matches), pick the closest and mention the chosen path in the report; if no match, fall back to creating a new note at root and note that in the report.
 - **Filename collision** → if `YYYY-MM-DD <Subject>.md` already exists, append a short numeric suffix (`YYYY-MM-DD <Subject> 2.md`). Never overwrite.
 
-## Person note shape
+## Examples of narrow execution
 
-When creating or updating `<Name>.md` at the root of the vault:
+These illustrate how to interpret instructions literally — narrow body content, template-matching frontmatter. The note body should be the smallest thing that satisfies the instruction.
 
-```markdown
----
-name: <Full Name>
-type: person
-created: <YYYY-MM-DD>
----
+### Example 1 — Person note with included facts
 
-# <Full Name>
+**Instruction:** "Add a Person note for Suzetta Large. She's our neighbor on Darlington (two doors down). Include her phone number. Note that she and Rosie are close friends."
 
-<role/affiliation summary if known>
+**Email body:** Block party announcement signed "Suzetta, 412.849.6615, suzetta.large@gmail.com."
 
-## Email captures
-
-### <YYYY-MM-DD> — <original subject>
-
-> From: <forwarded_from> · To: <forwarded_to if present>
-> Instruction: <Justin's instruction, verbatim>
-
-<concise extracted facts: who, what, when, where, contact info, dates mentioned>
-
-<optional: short quoted snippet of the original email if it's information-dense>
-```
-
-When updating, **append** a new `### <date> — <subject>` block under `## Email captures`. Do not edit prior blocks.
-
-## Default note shape (when "Save as note" or no instruction)
-
-Filename: `<YYYY-MM-DD> <subject>.md` at the **root of the vault**.
+**Output → `Suzetta Large.md` at root** (assume write time = 2026-05-20 14:31:57 Wednesday):
 
 ```markdown
 ---
-source: email
-forwarded_from: <forwarded_from>
-forwarded_subject: <forwarded_subject>
-captured: <YYYY-MM-DD HH:MM>
-instruction: <Justin's instruction or "default save">
+id: "20260520143157"
+daily_note: "[[2026-05-20 Wednesday]]"
+category: "[[People]]"
 ---
 
-# <subject (cleaned)>
+Neighbor on Darlington Ave (two doors down).
+Close friend of Rosie.
 
-> Forwarded by Justin from <forwarded_from>
-> <forwarded_date if present>
-
-<the original email body, cleaned of HTML/quoted-reply chains where reasonable>
+- **Phone:** 412.849.6615
+- **Email:** suzetta.large@gmail.com
 ```
+
+Frontmatter matches the `New Person` template exactly. No `# Suzetta Large` H1 (the templates don't add one — the filename is the title). No "Email captures" section. No summary of the block party (instruction didn't ask for it). Email address included because the instruction implicitly wanted contact info (it asked for phone, the email was sitting right there in the from-line).
+
+### Example 2 — Save-as-note (default)
+
+**Instruction:** none / "Save as a note"
+
+**Email:** a Paul Graham essay forwarded as plaintext.
+
+**Output → `2026-05-20 <essay title>.md` at root:**
+
+```markdown
+---
+id: "20260520143200"
+daily_note: "[[2026-05-20 Wednesday]]"
+---
+
+<the essay body, lightly cleaned>
+```
+
+Matches `New Note` template — no `category` field (template emits it empty). Just the essay content. No "Forwarded by Justin" header, no source URL synthesis, no commentary.
+
+### Example 3 — Append to existing note
+
+**Instruction:** "Add this to the Acme launch note — timeline is changing."
+
+**Email body:** Vendor says delivery is pushed to June 1.
+
+**Output → append a short bullet to whichever existing note matches "Acme launch" (in its current folder, frontmatter untouched):**
+
+```markdown
+- 2026-05-20: Vendor pushed delivery to June 1.
+```
+
+One line. The instruction was about the timeline; that's what gets recorded. **Do not** touch the existing note's frontmatter — appends are body-only edits.
+
+### Example 4 — Free-form judgment
+
+**Instruction:** "Summarize this and add it to my reading queue."
+
+**Email:** a long article.
+
+If a `Reading queue.md` (or similar) exists at root, append one bullet with the title, a one-sentence summary, and a `[link](url)` if a URL is in the email. If no such note exists, create `Reading queue.md` at root with the `New Note` template frontmatter (no category) and that single entry. Don't dump the article into the queue note.
+
+## When to err on the side of LESS
+
+Frontmatter must match templates — that's structural. But for **body content**, if you find yourself adding:
+
+- More than ~3 sentences of context the instruction didn't ask for
+- A `## Source` or `## Email` or `## Provenance` section
+- A summary of the email's content when the instruction was about extracting one specific fact
+- An H1 title heading inside the note (the templates don't do this — filename is the title)
+
+…stop and trim. The instruction is the spec.
 
 ## When to NOT act
 
