@@ -72,3 +72,14 @@ skills/yuanbao/**
 #   !skills/productivity/linear/
 #   !skills/productivity/linear/SKILL.md
 # (none yet — Bes is fresh)
+
+# Agent-authored skill: work-log (vault daily-note work-log generator)
+!skills/note-taking/work-log/
+!skills/note-taking/work-log/**
+
+# Tracked customizations of bundled skill: obsidian
+# (vault path, vault conventions, OFM reference)
+!skills/note-taking/obsidian/
+!skills/note-taking/obsidian/SKILL.md
+!skills/note-taking/obsidian/references/
+!skills/note-taking/obsidian/references/**
