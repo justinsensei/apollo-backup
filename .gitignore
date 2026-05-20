@@ -93,3 +93,5 @@ skills/yuanbao/**
 
 # Broader allowlist for google-workspace scripts (gws_multi.py, etc.)
 !skills/productivity/google-workspace/scripts/**
+# But never commit __pycache__ from within the allowlisted scripts dir
+skills/productivity/google-workspace/scripts/__pycache__/
