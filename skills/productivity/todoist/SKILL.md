@@ -40,13 +40,18 @@ Justin's task system. Todoist Pro account (uid `49270620`), shared between this 
 
 ## Justin's GTD structure
 
-Justin uses Todoist as a GTD system. The full structure is in `references/justin-gtd-structure.md`. Key facts for daily use:
+Justin uses Todoist as a lightweight GTD system. Full design detail in `references/justin-gtd-structure.md`. Key facts for daily use:
 
-- **Projects = areas of focus**: Work (blue), Personal (green). `#Hermes` is a sub-Project under Work — tasks there are actioned BY the Hermes infra agent, not Justin.
-- **Someday Maybe** is a section inside each Project (not a separate Project). Any task dropped there **must also get the `@someday` label** — this is how the Next Actions filters exclude them (Todoist can't filter by section).
-- **`@waiting`** = delegated or blocked. **`@someday`** = Someday Maybe. Both labels must be applied manually at capture time.
-- **Default routing**: Inbox, unless Justin names a project or it obviously belongs in Work/Personal.
-- **Filters**: "Next Actions — Work", "Next Actions — Personal", "Waiting For" — already created, don't recreate.
+- **Projects = areas of focus**: Work (blue), Personal (green). Sub-Project `#Hermes` under Work — tasks there are actioned BY the Hermes infra agent, not Justin.
+- **GTD projects** (multi-step work) = parent tasks with subtasks, labeled `@project` (violet). NOT separate Todoist Projects.
+- **Someday Maybe** is a section inside each Project. Any task dropped there **must also get `@someday`** — Todoist filters can't filter by section (Pitfall 11), so the label is what makes exclusion work.
+- **Labels**: `@waiting` (orange) = delegated/blocked; `@someday` (grey) = Someday Maybe; `@project` (violet) = parent of a multi-step GTD project.
+- **Default routing**: Inbox. Justin sorts manually.
+- **Filters** (already live — don't recreate):
+  - *Next Actions — Work*: `#Work & !@waiting & !@someday`
+  - *Next Actions — Personal*: `#Personal & !@waiting & !@someday`
+  - *Waiting For — Work*: `#Work & @waiting`
+  - *Waiting For — Personal*: `#Personal & @waiting`
 
 ## Capture from daily notes / email
 
