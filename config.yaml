@@ -143,4 +143,3 @@ hooks:
   - command: ~/.hermes/agent-hooks/bes-vault-pre-turn.sh
     timeout: 8
 hooks_auto_accept: true
-OBSIDIAN_VAULT_PATH: /home/justin.guest/vault
