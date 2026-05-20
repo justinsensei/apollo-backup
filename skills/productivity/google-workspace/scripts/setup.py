@@ -38,9 +38,38 @@ if _SCRIPTS_DIR not in sys.path:
 from _hermes_home import display_hermes_home, get_hermes_home
 
 HERMES_HOME = get_hermes_home()
-TOKEN_PATH = HERMES_HOME / "google_token.json"
-CLIENT_SECRET_PATH = HERMES_HOME / "google_client_secret.json"
-PENDING_AUTH_PATH = HERMES_HOME / "google_oauth_pending.json"
+# ─── Multi-account support (Bes customization) ──────────────────────────────
+def _resolve_account_paths():
+    """Resolve token + client_secret paths for the requested account.
+
+    Reads GOOGLE_ACCOUNT env var. Examples:
+      GOOGLE_ACCOUNT=work     -> ~/.hermes/google_tokens/work.json,
+                                  ~/.hermes/google_client_secrets/work.json
+      GOOGLE_ACCOUNT unset    -> legacy paths (~/.hermes/google_token.json, ...)
+    """
+    import os as _os
+    account = _os.environ.get("GOOGLE_ACCOUNT", "").strip()
+    if not account:
+        return (
+            HERMES_HOME / "google_token.json",
+            HERMES_HOME / "google_client_secret.json",
+            HERMES_HOME / "google_oauth_pending.json",
+        )
+    # Per-account paths
+    tokens_dir = HERMES_HOME / "google_tokens"
+    secrets_dir = HERMES_HOME / "google_client_secrets"
+    tokens_dir.mkdir(parents=True, exist_ok=True)
+    secrets_dir.mkdir(parents=True, exist_ok=True)
+    # Pending OAuth scoped per account so concurrent setups for different
+    # accounts can't trample each other.
+    return (
+        tokens_dir / f"{account}.json",
+        secrets_dir / f"{account}.json",
+        HERMES_HOME / f"google_oauth_pending_{account}.json",
+    )
+
+TOKEN_PATH, CLIENT_SECRET_PATH, PENDING_AUTH_PATH = _resolve_account_paths()
+# ─── End multi-account support ──────────────────────────────────────────────
 
 SCOPES = [
     # READ-ONLY SCOPES (patched by Hermes for Bes — see SKILL.md note)
