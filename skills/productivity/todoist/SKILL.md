@@ -18,17 +18,21 @@ Bes's scope: **everything in Todoist**. Hermes is restricted to tasks labeled `h
 
 ## Justin's Todoist model (the new shape — read this twice)
 
-As of May 2026, Justin moved away from pure GTD. The structure is:
+As of May 2026, Justin uses **Projects as areas**, not status buckets. The structure is:
 
-- **Projects represent status, not areas.** Four status projects:
-  - **Now** — actively in progress / today's queue (id `6ggx3MPrfF5mj5PQ`)
-  - **Next** — committed, will be picked up soon (id `6ggx3PCJJW2RpfRP`)
-  - **Later** — deferred but real (id `6ggx3QWJXR72QHQ9`)
-  - **Maybe** — speculative / someday (id `6ggx3R92FrJ42j6C`)
-  - Plus **Inbox** (id `6VGcQ7r6HW5r87j9`) as the capture/triage bucket.
-- **Every task is atomic.** No sub-tasks-as-project-decomposition. If something is multi-step, it's either (a) one task that captures the next concrete action, or (b) tracked elsewhere (Obsidian) with individual atomic Todoist tasks pointing at it.
-- **Real "projects" (multi-step efforts with accruing context) live in Obsidian**, not in Todoist. When a task is associated with an Obsidian project, that linkage goes in the task's description as prose — typically a wikilink like `Project: [[Project-Name]]` or `From: Meetings/2026-05-20 X.md`. **You can and should follow these links** using your Obsidian skill when the work calls for it.
-- **Labels carry GTD-style context.**
+- **Projects represent areas of life:**
+  - **Work** (id `6ggxXvCWfccF6VWc`) — work tasks
+  - **Home** (id `6ggxXvF79JFwgc8G`) — personal/home tasks
+  - **Other** (id `6ggxXvCPPW3jCmF8`) — catch-all for tasks that don't fit Work or Home
+  - **Inbox** (id `6VGcQ7r6HW5r87j9`) — capture/triage bucket; tasks with no label go here
+  - **Now / Next / Later / Maybe** — legacy status projects, kept but currently empty; do not use for routing
+- **Project routing rules:**
+  - Task labeled `work` → Work project
+  - Task labeled `home` → Home project
+  - Task labeled both `work` and `home` (shouldn't happen) → Other
+  - Task with neither label → Inbox
+  - When in doubt → Inbox
+- **Labels carry context** (area, location, person, status). Infer them from conversation even if not stated explicitly.
 
 | Label | Type | Meaning |
 |---|---|---|
