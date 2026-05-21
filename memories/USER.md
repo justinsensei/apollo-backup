@@ -8,4 +8,4 @@ Justin prefers filter views over native Todoist sidebar views (Today, Inbox, etc
 §
 Pittsburgh, PA. Family: wife Nana Massie (nana.massie@gmail.com, has Obsidian note); kids Sam (b. 11/22/2013), Jamie/James (they/them, b. 05/08/2015), Rosie (she/her, b. 05/16/2017). Default to family when first name only. Obsidian wikilinks: [[Nana]], [[Sam]], [[Jamie]], [[Rosie]].
 §
-Justin captures completed work in Todoist or Obsidian. When asked "did I already do X", check Todoist completed tasks first, then Obsidian notes/work logs, then session search as last resort.
+Justin captures completed work in Todoist or Obsidian.
