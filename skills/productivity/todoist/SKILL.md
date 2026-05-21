@@ -39,7 +39,7 @@ As of May 2026, Justin uses **Projects as areas**, not status buckets. The struc
 | `work` | Area | Work tasks |
 | `home` | Area | Home / personal tasks |
 | `@<location>` | Location | Where the task needs to happen, e.g. `@costco`, `@office` |
-| `+<person>` | Person | Person the task involves, e.g. `+nana`, `+sam` |
+| `<person>+` | Person | Person the task involves, e.g. `nana+`, `sam+`. Suffix `+`, not prefix — name comes first. (Mnemonic: Japanese "nana-to" = "with nana".) |
 | `waiting` | Special | Delegated or blocked — waiting on someone/something |
 | `hermes` | Special | Hermes-originated tasks — **do not touch** |
 
