@@ -276,7 +276,7 @@ Justin has four saved filters for temporal visibility:
 
 | Filter | Query | ID |
 |---|---|---|
-| This Week | `due before: sat` | 2370421613 |
+| This Week | `due before: sun` | 2370421613 |
 | Next Week | `(due: next week \| due after: next week) & due before: 1 week after next week` | 2370421614 |
 | This Month | `due before: first day & !due before: sat & !(due: next week \| due after: next week) & due before: 1 week after next week` | 2370421615 |
 | Later | `due after: 1 week after next week` | 2370421618 |
