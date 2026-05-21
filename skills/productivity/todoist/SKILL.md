@@ -80,7 +80,7 @@ As of May 2026, Justin uses **Projects as areas + actual project containers**. T
 
 - **Actions only.** Todoist is for atomic actionable items with a state. No informational notes, FYIs, or "heads up" entries. If it isn't something Justin will do, don't add it.
 - **One concrete next action per task.** No sub-tasks-as-project-decomposition. If the work is multi-step, either (a) capture only the next concrete action and let the rest stay in Obsidian, or (b) batch-add several atomic tasks each pointing back at the same Obsidian project.
-- **Descriptions carry context, not content.** Put who to follow up with, relevant issue numbers, deadlines, source provenance, and Obsidian project links in `description`. Keep `content` concise and actionable.
+- **Descriptions must enable getting started.** The description should give Justin everything he needs to begin the task without hunting: where the details live (email thread, Slack channel, Linear issue), direct links or URLs, relevant phone numbers or contact info, deadline if known, and Obsidian project link if applicable. One line per piece of context. If the source has a URL or permalink, always include it. The bar: could Justin open the task cold and immediately know where to go and what to do?
 - **Default project is Inbox** unless Justin names a status project (Now/Next/Later/Maybe) or the task obviously belongs in one. He sorts manually from Inbox. When in doubt, default to Inbox — being too helpful with auto-routing is worse than being too conservative.
 - **No App Store Connect issue emails.** Justin doesn't handle those — engineering does. Skip them when scanning email.
 
