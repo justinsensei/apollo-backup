@@ -237,11 +237,9 @@ Once Justin responds:
 - **Never add without confirmation.** The present-then-confirm loop (Steps 4–5) is mandatory. Don't silently add.
 - **No FYIs or informational notes.** If it's not something Justin needs to do, it doesn't belong in Todoist.
 - **No hermes-labeled tasks.** Never add or modify the `hermes` label. Skip tasks labeled `hermes` in the Todoist snapshot — they're Hermes's.
-- **Fail gracefully.** If a subagent fails, note it in the header (\"Slack: ERR — auth expired\") and continue with the other sources. A 3-source run is still useful.
-- **Don't over-extract from Linear.** Issues Justin is subscribed to but not assigned to are not his actions — skip them. If he's assigned and it's active, it's a candidate.
+- **Fail gracefully.** If a subagent fails, note it in the header ("Slack: ERR — auth expired") and continue with the other sources. A 3-source run is still useful.
 - **Calendar prep tasks: be selective.** Standup, team syncs, 1:1s with direct reports — Justin doesn't need a \"prep for standup\" task. Save calendar suggestions for meetings with external stakes or real prep need.
-- **Date precision.** Pre-compute dates once (Step 1) and pass them to every subagent. Don't trust subagents to re-derive TODAY.
-- **Linear user-id caching.** If the Linear subagent resolves the user-id and returns it, cache it: append `LINEAR_USER_ID=<id>` to `~/.hermes/.env` so the next run skips the lookup.
+- **Date precision.** Pre-compute dates once (Step 1) and pass them to every subagent. Don't trust subagents to re-derive TODAY or LOOKBACK_START.
 
 ## Pitfalls
 
