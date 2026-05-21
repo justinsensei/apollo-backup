@@ -210,7 +210,7 @@ Justin's `bes-vault-sync` watcher auto-commits and pushes the vault to `obsidian
 
 ## Important behaviors
 
-- **No duplicate Work Log blocks.** If the daily note already contains `## 💼 Work Log`, ask Justin: replace, update, or skip? Don't append a second one silently.
+- **No duplicate Work Log blocks.** If the daily note already contains `# 📋 Work Log`, **overwrite** it — replace everything from that heading to the end of the file with the newly synthesized block. Do NOT append a second one, and do NOT ask for confirmation when running autonomously (e.g. from a cron job). Only prompt Justin interactively if he is present in chat and the run was triggered manually.
 - **Omit empty sections.** A Work Log with only Highlights is better than one with empty "Decisions Made" / "Open Questions" headings.
 - **No file creation.** The only write operation is appending to the existing daily note.
 - **Skip cleanup of the daily note.** Don't reformat or tidy what Justin already wrote — the Work Log block is additive.
