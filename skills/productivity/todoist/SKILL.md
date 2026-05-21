@@ -205,7 +205,8 @@ User says: "I need to follow up with Alex about the proposal next Tuesday."
    }])
    ```
    Omit `projectId` → Inbox. Justin triages.
-3. Reply with one-line confirmation that includes the task ID (so Justin can ask "complete that one" later without re-searching).
+3. Immediately after creating, call `add-comments` with a one-sentence comment on the new task ID. Explain where it came from and why it was captured. Example: "From chat — Justin mentioned he needs to follow up with Alex before the proposal deadline." Keep it terse — one sentence, for future-Justin scanning his inbox.
+4. Reply with one-line confirmation that includes the task ID (so Justin can ask "complete that one" later without re-searching).
 
 ### Pattern: "what's on my plate?"
 
