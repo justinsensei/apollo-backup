@@ -4,7 +4,7 @@ description: Use when Justin asks to "create a work log", "log today's work", "w
 platforms: [linux, macos]
 ---
 
-# Work Log
+# 📋 Work Log
 
 Summarize today's work activity and append a structured Work Log block to **today's daily note** in the Obsidian vault. Do NOT create a separate file.
 
@@ -165,7 +165,7 @@ Writing style: concise, specific, past tense for highlights. Match the voice of 
 Use `patch` (anchored append) or `write_file` (whole-note rewrite). Append this block at the **end** of the note, preserving everything above:
 
 ```
-## 💼 Work Log
+# 📋 Work Log
 
 ### Today's Highlights
 [bullets]
