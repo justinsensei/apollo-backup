@@ -134,3 +134,9 @@ skills/creative/comfyui/**/__pycache__/
 # Exclude pycache from within the allowlisted dir
 skills/productivity/todoist/**/__pycache__/
 skills/productivity/todoist/**/*.pyc
+
+# Custom skill — todoist-inbox-fill (Bes-only)
+!skills/productivity/todoist-inbox-fill/
+!skills/productivity/todoist-inbox-fill/**
+skills/productivity/todoist-inbox-fill/**/__pycache__/
+skills/productivity/todoist-inbox-fill/**/*.pyc
