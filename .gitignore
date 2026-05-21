@@ -140,3 +140,26 @@ skills/productivity/todoist/**/*.pyc
 !skills/productivity/todoist-inbox-fill/**
 skills/productivity/todoist-inbox-fill/**/__pycache__/
 skills/productivity/todoist-inbox-fill/**/*.pyc
+
+# Agent-authored skill: obsidian-manage-categories (Bes manages vault category notes/templates)
+!skills/note-taking/
+!skills/note-taking/obsidian-manage-categories/
+!skills/note-taking/obsidian-manage-categories/**
+
+# Agent-authored skill: obsidian-people-notes (Bes creates People/Org vault notes)
+!skills/note-taking/obsidian-people-notes/
+!skills/note-taking/obsidian-people-notes/**
+
+# Agent-authored skill: did-i-already-do-this (Bes looks up whether Justin already did something)
+!skills/note-taking/did-i-already-do-this/
+!skills/note-taking/did-i-already-do-this/**
+
+# Agent-authored skill: manage-projects (cross-tool project workflow — Todoist sub-project + Obsidian note)
+!skills/productivity/manage-projects/
+!skills/productivity/manage-projects/**
+
+# Exclude pycache from the four agent-authored skills above
+skills/note-taking/obsidian-manage-categories/**/__pycache__/
+skills/note-taking/obsidian-people-notes/**/__pycache__/
+skills/note-taking/did-i-already-do-this/**/__pycache__/
+skills/productivity/manage-projects/**/__pycache__/
