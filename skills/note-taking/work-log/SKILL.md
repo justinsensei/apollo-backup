@@ -1,6 +1,6 @@
 ---
 name: work-log
-description: Use when Justin asks to "create a work log", "log today's work", "write a work log", or otherwise wants today's work activity summarized and appended to today's daily note in the Obsidian vault. Pulls from Slack (SignLab), Linear, Gmail (work + personal-main; personal-junk only on request), Google Calendar (all 3 accounts), plus the daily note and any chat brain-dump.
+description: Use when Justin asks to "create a work log", "log today's work", "write a work log", or otherwise wants today's work activity summarized and appended to today's daily note in the Obsidian vault. Pulls from Slack (SignLab), Linear, Gmail (work + personal-main; personal-junk only on request), Google Calendar (all 3 accounts), Todoist (completed + due-today tasks), plus the daily note and any chat brain-dump.
 platforms: [linux, macos]
 ---
 
