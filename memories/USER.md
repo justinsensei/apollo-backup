@@ -9,3 +9,7 @@ When Justin mentions family members by first name only, default to the family me
 Nana Massie is Justin's wife. She has an Obsidian note already. Email: nana.massie@gmail.com.
 §
 Justin uses uppercase "Projects" for Todoist projects and lowercase "projects" for GTD/general projects. Respect this distinction in conversation.
+§
+Justin's week ends Sunday in his mental model (not Saturday). Use Sunday as the week boundary when reasoning about scheduling, deadlines, and "this week."
+§
+Justin prefers filter views over native Todoist sidebar views (Today, Inbox, etc.) — he finds the native views cluttered. He replicates them as saved filters for cleaner sidebar control.
