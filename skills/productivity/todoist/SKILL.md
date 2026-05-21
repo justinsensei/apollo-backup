@@ -270,6 +270,21 @@ You're working in an Obsidian project note that has 3 obvious open actions in it
 3. Surface to Justin: "These N are in Todoist; these M are in the note but not in Todoist. Want me to add the missing ones to Inbox?"
 4. On confirm, batch-add the missing ones with `description: "Project: [[<project-note-name>]]"`.
 
+## Filters (saved views)
+
+Justin has four saved filters for temporal visibility:
+
+| Filter | Query | ID |
+|---|---|---|
+| This Week | `due: this week` | 2370421613 |
+| Next Week | `due: next week` | 2370421614 |
+| This Month | `due: this month & !due: this week & !due: next week` | 2370421615 |
+| Later | `!due: this month & due after: today` | 2370421618 |
+
+**Important:** Todoist's filter API does not support `deadline:` queries — only `due:` works. These filters are due-date only.
+
+**Convention:** When a task has a deadline and needs to appear in these filters, set **both** a `deadlineDate` and a `dueString`. The deadline is the hard constraint; the due date is the "work on it by" date and what drives filter visibility.
+
 ## Pitfalls
 
 1. **Don't use `update-tasks` to change due date on recurring tasks.** It replaces the entire due-string blob and can wipe the recurrence pattern. Use `reschedule-tasks` for date changes — it preserves recurrence. `update-tasks` is fine for content/description/priority/labels/projectId.
