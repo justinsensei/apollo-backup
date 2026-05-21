@@ -18,17 +18,19 @@ Bes's scope: **everything in Todoist**. Hermes is restricted to tasks labeled `h
 
 ## Justin's Todoist model (the new shape — read this twice)
 
-As of May 2026, Justin uses **Projects as areas**, not status buckets. The structure is:
+As of May 2026, Justin uses **Projects as areas + actual project containers**. The structure is:
 
-- **Projects represent areas of life:**
-  - **Work** (id `6ggxXvCWfccF6VWc`) — work tasks
-  - **Home** (id `6ggxXvF79JFwgc8G`) — personal/home tasks
+- **Top-level Projects represent areas of life:**
+  - **Work** (id `6ggxXvCWfccF6VWc`) — work tasks and work sub-projects
+  - **Home** (id `6ggxXvF79JFwgc8G`) — personal/home tasks and home sub-projects
   - **Other** (id `6ggxXvCPPW3jCmF8`) — catch-all for tasks that don't fit Work or Home
   - **Inbox** (id `6VGcQ7r6HW5r87j9`) — capture/triage bucket; tasks with no label go here
   - **Now / Next / Later / Maybe** — legacy status projects, kept but currently empty; do not use for routing
+- **Actual projects (GTD sense) are nested sub-Projects** under Work or Home (e.g. "Bes Setup" under Work). See the `manage-projects` skill for the full create/update/close workflow.
+- **Loose tasks** (not part of any project) go directly into Work, Home, Other, or Inbox.
 - **Project routing rules:**
-  - Task labeled `work` → Work project
-  - Task labeled `home` → Home project
+  - Work-related task → Work project (or a sub-Project of Work if it belongs to a specific project)
+  - Personal/home task → Home project (or a sub-Project of Home)
   - Task labeled both `work` and `home` (shouldn't happen) → Other
   - Task with neither label → Inbox
   - When in doubt → Inbox
