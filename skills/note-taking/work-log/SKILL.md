@@ -132,7 +132,27 @@ Justin's Linear user-id can be cached. First time, look it up with `{ viewer { i
   >
   > Budget: 5 tool calls. If you exhaust it, return what you have and stop.
 
-### Subagent E (optional) — recent git activity
+### Subagent E — Todoist
+
+- **Toolsets:** `[]` (uses built-in MCP todoist tools)
+- **Goal:** `"Pull today's Todoist activity for the work log. Budget: 8 tool calls."`
+- **Context to pass (verbatim, with TODAY substituted):**
+  > Use the Todoist MCP tools. Retrieve two things:
+  >
+  > 1. **Completed today:** call `mcp_todoist_find_completed_tasks` with `since: <TODAY>`, `until: <TODAY>`, `getBy: "completion"`, `responsibleUser: "me"`. Return all completed tasks.
+  > 2. **Due today (incomplete):** call `mcp_todoist_find_tasks_by_date` with `startDate: <TODAY>`, `overdueOption: "exclude-overdue"`, `responsibleUserFiltering: "unassignedOrMe"`, `limit: 50`. Return tasks not yet completed.
+  >
+  > Format:
+  > - Completed: bullets like `✓ [Project] Task name`
+  > - Due/incomplete: bullets like `○ [Project] Task name`
+  >
+  > End with `Total: N completed, M still open today.`
+  >
+  > Budget: 8 tool calls. If you exhaust it, return what you have and stop.
+
+**What this feeds:** completed tasks → "Today's Highlights"; incomplete due-today tasks → "Open Questions / Blockers."
+
+### Subagent F (optional) — recent git activity
 
 Skip unless Justin specifically mentions code work. If you do run it: scope to repos under `~/clio-backup`, `~/bes-backup`, `~/hermes-agent` (if present), and any project repo Justin mentioned in the daily note. Use `git log --author --since=midnight --pretty` per repo. Return commits as bullets `[repo] sha — subject`. Budget: 8 tool calls.
 
