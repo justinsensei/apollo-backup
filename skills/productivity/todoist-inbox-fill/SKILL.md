@@ -65,19 +65,16 @@ Sources: **Slack, Gmail, Obsidian daily notes, Calendar.** Linear is excluded �
 - **Skill:** `slack`
 - **Goal:** Find open actions for Justin in Slack today. Budget: 8 tool calls.
 - **Context:**
-  > Extract open actions from Slack for the user "justin". Run these searches only (no exploration):
+  > Extract open actions from Slack for Justin. **Only surface messages where Justin has set a Slack reminder** — these are the clearest signal of intent to act.
   >
-  > 1. `slack search 'to:@justin after:<TODAY>' --limit 50` — @-mentions and DMs directed at him.
-  > 2. `slack search 'from:@justin after:<TODAY>' --limit 50` — messages Justin sent, to catch commitments he made ("I'll look into this", "I'll send you", "let me check").
+  > Run one search:
+  > 1. `slack search 'has:reminder after:<LOOKBACK_START>' --limit 50`
   >
-  > The `after:<TODAY>` token in each query already restricts results to today. **Do not** add a second timestamp filter on top by piping into `python3 -c` or similar — that pattern trips the security scanner (`pipe_to_interpreter`, HIGH) and will halt the run. If a result somehow leaks in from before today, just drop it when summarizing.
+  > `has:reminder` returns messages Justin flagged with Slack's native reminder feature. This is intentionally narrow — Justin sets reminders on things he means to act on, so false positives are rare.
   >
-  > From these results, extract only genuine open actions:
-  > - Questions or requests directed at Justin that he hasn't replied to yet.
-  > - Explicit commitments Justin made in his own messages ("I'll…", "Let me…", "I'll get back to you").
-  > - Threads where Justin is the last person to be @-mentioned but hasn't replied.
+  > Note: the word "reminder" appearing in message *text* (e.g. "Reminder: meeting at 3pm") can occasionally leak in. Drop these if they're clearly not reminder-flagged — use context and channel to judge.
   >
-  > Drop: bot/automation messages, notifications, pure social chat, things he already acted on in thread.
+  > Drop: bot/automation messages, notifications, things that are clearly already done.
   >
   > Format each as a candidate task:
   > `- [Slack] <concise action> | context: <#channel or @person, brief what/why> | url: <permalink>`
@@ -97,8 +94,10 @@ Sources: **Slack, Gmail, Obsidian daily notes, Calendar.** Linear is excluded �
   > Use the wrapper at `${HERMES_HOME:-$HOME/.hermes}/skills/productivity/google-workspace/scripts/gws_multi.py`. Read-only — do NOT attempt sends.
   >
   > Run exactly two searches (no personal-junk unless Justin explicitly asked):
-  > 1. `gws_multi.py --account work gmail search 'after:<TODAY_SLASH> before:<TOMORROW_SLASH> -label:sent' --max 50`
-  > 2. `gws_multi.py --account personal-main gmail search 'after:<TODAY_SLASH> before:<TOMORROW_SLASH> -label:sent' --max 50`
+  > 1. `gws_multi.py --account work gmail search 'after:<LOOKBACK_START_SLASH> before:<TOMORROW_SLASH> in:inbox -label:sent' --max 50`
+  > 2. `gws_multi.py --account personal-main gmail search 'after:<LOOKBACK_START_SLASH> before:<TOMORROW_SLASH> in:inbox -label:sent' --max 50`
+  >
+  > The `in:inbox` filter is critical — it excludes archived threads. **Do not surface tasks from archived emails.** If a thread has been archived, Justin has already processed it and it is not an open action.
   >
   > From results (subject, from, snippet only — do NOT fetch full bodies), extract:
   > - Emails from humans that contain a direct question or request for Justin.
