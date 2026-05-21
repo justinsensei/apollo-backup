@@ -197,7 +197,7 @@ Use `patch` (anchored append) or `write_file` (whole-note rewrite). Append this 
 [bullets]
 
 ---
-*Sources: Slack (12 msgs / 4 channels) | Linear (5 issues) | Gmail work (8 threads), personal-main (1) | Calendar (4 events / 3 accts) | daily note + chat.*
+*Sources: Slack (12 msgs / 4 channels) | Linear (5 issues) | Gmail work (8 threads), personal-main (1) | Calendar (4 events / 3 accts) | Todoist (N completed, M open) | daily note + chat.*
 ```
 
 Use the **actual counts** from the subagent summaries. If a source was unavailable, mark it `ERR` with a short reason. Always include `daily note + chat` at the end.
