@@ -14,6 +14,8 @@ Scan external sources for open actions Justin owns and needs to do. Deduplicate 
 
 ## Step 1 — Pre-flight
 
+Determine the lookback window. If Justin specified one (e.g. "last 24 hours", "go back 3 days"), use it. Otherwise default to **48 hours**.
+
 Compute dates and snapshot the current Todoist state. Do this in-context (not in a subagent).
 
 ```bash
@@ -22,7 +24,14 @@ TOMORROW=$(date -d "$TODAY + 1 day" +%F)
 TODAY_SLASH=$(date +%Y/%m/%d)
 TOMORROW_SLASH=$(date -d "$TODAY + 1 day" +%Y/%m/%d)
 WEEK_FROM_NOW=$(date -d "$TODAY + 7 days" +%F)
+
+# Lookback window (default 48h = 2 days)
+LOOKBACK_HOURS=48           # override if Justin specified something else
+LOOKBACK_START=$(date -d "$TODAY - ${LOOKBACK_HOURS} hours" +%F)
+LOOKBACK_START_SLASH=$(date -d "$TODAY - ${LOOKBACK_HOURS} hours" +%Y/%m/%d)
 ```
+
+Pass `LOOKBACK_HOURS`, `LOOKBACK_START`, and `LOOKBACK_START_SLASH` to subagents so they scope their searches to the right window.
 
 Then snapshot **all open tasks** in Todoist so you can deduplicate later. Make one call:
 
@@ -33,8 +42,6 @@ find-tasks(filter="!date & !recurring | today | overdue | due before: <WEEK_FROM
 This is intentionally broad — you want to know what Todoist already knows. Keep the result in-context. You'll diff against it in Step 3.
 
 > **Tip:** If the filter syntax errors, fall back to two calls: `find-tasks-by-date(startDate="today", daysCount=7, overdueOption="include-overdue", limit=100)` and `find-tasks(filter="no date", limit=100)`. Merge results.
-
-Also load Justin's Linear user-id (`LINEAR_USER_ID`) from `~/.hermes/.env` if set. If not set, the Linear subagent will resolve and return it for you to cache.
 
 ---
 
