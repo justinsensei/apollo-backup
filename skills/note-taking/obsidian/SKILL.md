@@ -109,9 +109,23 @@ Template files use the **Templater plugin**, NOT core Obsidian templates. Templa
 3. When simplifying templates, preserve ALL Templater tags exactly as-is.
 4. Always review the full diff before committing template changes.
 
-## Category notes and templates
+## Entities and category notes
 
-The vault has four category notes: **Meetings**, **Organizations**, **People**, **Projects**. Each has a corresponding template in `<vault>/Templates/`. When creating a note of a given type, follow that type's template. When searching for notes by category, filter by `category: "[[CategoryName]]"`.
+An **entity** is any note with a `category:` frontmatter field. The canonical list of entity types lives in `<vault>/Categories/`. Each category note is itself an entity (`category: "[[Categories]]"`), including `Categories/Categories.md` which is self-referential.
+
+Current entity types (each has a file in `Categories/` and a template in `Templates/`):
+
+| Entity type | Category note | Template |
+|---|---|---|
+| Meetings | `Categories/Meetings.md` | `Templates/New Meeting.md` |
+| Organizations | `Categories/Organizations.md` | `Templates/New Organization.md` |
+| People | `Categories/People.md` | `Templates/New Person.md` |
+| Projects | `Categories/Projects.md` | `Templates/New Project.md` |
+| Categories | `Categories/Categories.md` | `Templates/New Category.md` |
+
+When creating a note of a given type, follow that type's template. When searching for notes by category, filter by `category: "[[CategoryName]]"`.
+
+**Note:** The existing four category notes (Meetings, Organizations, People, Projects) were created before the entity model and currently lack a `category:` field. They should eventually get `category: "[[Categories]]"` added.
 
 ### Templates (from `<vault>/Templates/`)
 
