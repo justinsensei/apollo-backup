@@ -193,13 +193,12 @@ Show a clean numbered list. Format:
 📥 Found N potential inbox items not yet in Todoist:
 
 1. [Slack] Reply to @maya re: sprint retro format — #product-eng
-2. [Linear] SL-204: Update onboarding copy — In Progress
-3. [Email/work] Reply to Alex about Q3 roadmap review — from Alex Chen
-4. [Obsidian/2026-05-20] Follow up on Nana's dentist appointment
-5. [Calendar] Prep for: Board review — Thu 2pm
+2. [Email/work] Reply to Alex about Q3 roadmap review — from Alex Chen
+3. [Obsidian/2026-05-20] Follow up on Nana's dentist appointment
+4. [Calendar] Prep for: Board review — Thu 2pm
 
 ~SIMILAR~ (already in Todoist but different angle):
-6. [Linear] SL-188: API rate limit spike — similar to existing "Investigate API latency" task
+5. [Email/work] Alex re: API rate limit spike — similar to existing "Investigate API latency" task
 
 Which ones should I add? (say "all", "1 3 5", or "skip 4" — or edit any item before I add it)
 ```
