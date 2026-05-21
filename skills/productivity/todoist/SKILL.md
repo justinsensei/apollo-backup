@@ -345,10 +345,13 @@ On restart, look for `MCP server 'todoist' (stdio): registered 54 tool(s)` in `~
 ```
 Projects:
   Inbox  6VGcQ7r6HW5r87j9
-  Now    6ggx3MPrfF5mj5PQ
-  Next   6ggx3PCJJW2RpfRP
-  Later  6ggx3QWJXR72QHQ9
-  Maybe  6ggx3R92FrJ42j6C
+  Work   6ggxXvCWfccF6VWc
+  Home   6ggxXvF79JFwgc8G
+  Other  6ggxXvCPPW3jCmF8
+  Now    6ggx3MPrfF5mj5PQ  (legacy, empty)
+  Next   6ggx3PCJJW2RpfRP  (legacy, empty)
+  Later  6ggx3QWJXR72QHQ9  (legacy, empty)
+  Maybe  6ggx3R92FrJ42j6C  (legacy, empty)
 
 Labels:
   hermes  2183843700  (teal — Hermes's identity marker; do not touch)
