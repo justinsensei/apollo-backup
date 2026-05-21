@@ -143,6 +143,35 @@ Sources: **Slack, Gmail, Obsidian daily notes, Calendar.** Linear is excluded �
 
 ---
 
+### Subagent E — iMessages (family)
+
+- **Toolsets:** `["terminal"]`
+- **Skill:** `imessage`
+- **Goal:** Find open actions from family texts in the lookback window. Budget: 5 tool calls.
+- **Context:**
+  > Read recent messages across the allowlisted iMessage chats via SSH proxy:
+  > ```bash
+  > ssh mac-host bes-imsg recent-all --since <LOOKBACK_HOURS>h
+  > ```
+  >
+  > From results, extract messages where someone is:
+  > - Making an explicit request of Justin ("Can you pick up…", "Don't forget…", "Can we…")
+  > - Asking a direct question that Justin hasn't answered (you only see incoming messages, not Justin's replies — flag these as potential outstanding replies)
+  > - Communicating a time-sensitive need (appointments, pickups, deadlines)
+  >
+  > Use friendly names for senders (Nana, Sam, Jamie, Rosie, Kathy, etc.) — not phone numbers.
+  >
+  > Skip: pure reactions ("YAYYY", "I did", "Kk"), FYIs with no ask, group chatter with no clear request directed at Justin.
+  >
+  > Format each candidate task:
+  > `- [iMessage/<chat label>] <concise action> | from: <sender> | context: <brief quote or summary>`
+  >
+  > End with `Total: N candidates`.
+  >
+  > Budget: 5 tool calls. Return what you have and stop.
+
+---
+
 ### Subagent D — Calendar (upcoming meetings needing prep)
 
 - **Toolsets:** `["terminal"]`
