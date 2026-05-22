@@ -326,6 +326,7 @@ Once Justin responds:
 ## Pitfalls
 
 - **`delegate_task` concurrency cap is 3.** With 6 sources (Slack, Gmail, Obsidian, Calendar, Linear, iMessages), split into two batches of 3: first batch (Slack, Gmail, Obsidian), second batch (Calendar, Linear, iMessages). Don't try to pass all 6 at once — it errors immediately.
+- **Linear task naming is fixed.** Do not invent task titles for Linear items. Use exactly `Work on <ID> <name>` for assigned issues and `Triage <ID> <name>` for triage issues. Strip these from the source prefix when adding to Todoist — the content field should be the bare task name, not `[Linear/assigned] Work on…`.
 - **`find-tasks` requires at least one filter.** If you call it with no args it errors. See Step 1 for the right snapshot call.
 - **Dedup is semantic, not textual.** \"Reply to Maya about retro\" and \"Respond to Maya re: retrospective\" are the same action. Don't add both.
 - **Priorities are strings (`"p1"`–`"p4"`), not integers.** Default to `"p4"`.
