@@ -27,45 +27,37 @@ Full structural and frontmatter audit of `/home/justin.guest/vault`.
 - 153 notes are date-prefixed (`YYYY-MM-DD Title`) — these are meeting notes, correctly in Notebook.
 - 171 notes have no date prefix — mix of People, Orgs, and uncategorized notes.
 
-## Issues found
+## Issues and resolution status
 
-### 1. Misplaced daily notes in Notebook/ (5 files)
-Files named `YYYY-MM-DD Weekday.md` (no topic after the weekday) accidentally in `Notebook/` instead of `Daily Notes/`:
+### ✅ FIXED — Misplaced daily notes in Notebook/ (5 files)
+Files named `YYYY-MM-DD Weekday.md` (no topic after the weekday) accidentally in `Notebook/` instead of `Daily Notes/`. **Moved 2026-05-22** by vault_hygiene.py.
+
+Files moved:
 - `2026-05-20 Wednesday.md`
 - `2026-05-19 Tuesday.md`
 - `2026-05-18 Monday.md`
 - `2026-03-17 Tuesday.md`
 - `2025-10-01 Wednesday.md`
 
-Detection: filename `YYYY-MM-DD (Monday|Tuesday|…).md` + `#daily_note` tag OR no meeting content.
+Detection going forward: filename `YYYY-MM-DD (Monday|Tuesday|…).md` with no extra words after the weekday.
 
-### 2. Notebook notes missing category (25 files)
+### ⚠️ OPEN — Notebook notes missing category (20 files, post-fix)
 
-Apparent types based on filename + tags:
+Justin's decision (2026-05-22): **not every note needs a category**. Only object/entity notes do. These should not be force-categorized.
 
-| Tag/Pattern | Files | Suggested category |
-|-------------|-------|--------------------|
-| `#project` | AI Agents 2026 H1.md, Mobile Game Doctors.md | `[[Projects]]` |
-| `#reference` | ASL Facts.md, Benchmarks - *.md (3 files) | `[[References]]` (doesn't exist yet) or leave uncategorized |
-| `#trip` | Madeira 2026.md, Belize 2026.md | No category yet |
-| Essay/journal | Sports fandom sucks, Fighting with Jamie, Brain dump on Bes, etc. | No category yet |
-| `category:` field blank | Headaches 20260520142723.md | Needs value |
-| Other (workshop notes, external content) | Dianne AI Workshop, Cursor on Agent-Powered Dev, etc. | Ambiguous |
+The `#project` and `#meeting` tags were NOT converted for notes without a date-prefix filename — too ambiguous. Example: `Dianne AI Workshop` had `#project` but was workshop pre-work, not a GTD project object.
 
-Full list (25):
+Remaining uncategorized (not object notes, leave alone):
 ```
 Sports fandom sucks 20260423102157.md
 Dianne AI Workshop 20260420141613.md
 ASL Facts.md
 Tor's thoughts about Artemis-style code bots 20260514080631.md
-2026-05-20 Wednesday.md  ← misplaced daily note
 Spring Performance 20260501134243.md
-2026-03-17 Tuesday.md  ← misplaced daily note
 Single-agent for Clio for now 20260519111334.md
 Response to Tor's thoughts on Artemis 20260514081149.md
 Fighting with Jamie 20260519075445.md
 AI Agents 2026 H1.md
-2026-05-18 Monday.md  ← misplaced daily note
 Mobile Game Doctors.md
 Cursor on Agent-Powered Dev 20260513084557.md
 The Beginning of Infinity 20260506092057.md
@@ -75,30 +67,31 @@ PostHog → CustomerIO 20260423101926.md
 Benchmarks - Subscription page CTR.md
 Madeira 2026.md
 Belize 2026.md
-2026-05-19 Tuesday.md  ← misplaced daily note
 Benchmarks - user retention.md
 Brain dump on Bes 20260519162610.md
-2025-10-01 Wednesday.md  ← misplaced daily note
 ```
 
-### 3. Bes Setup.md in vault root (1 file)
-Sole project note with `category: "[[Projects]]"`. Lives in vault root by manage-projects convention, not in Notebook. This is INTENTIONAL per the manage-projects skill — project notes go in root.
+### ⚠️ OPEN — Bes Setup.md in vault root
+Sole project note with `category: "[[Projects]]"`. Lives in vault root by manage-projects convention — INTENTIONAL. Project notes go in root, not Notebook.
 
-### 4. Readwise — bulk import bug (112 files)
+### ⚠️ OPEN — Readwise bulk import bug (112 files)
 All 112 Readwise notes have identical malformed frontmatter from a one-time import run:
 - `id: "2026052211:53 AM"` (should be `YYYYMMDDHHmmss`)
-- `daily_note: "2026-05-22 Friday"` (plain string, should be `[[2026-05-22 Friday]]` wikilink)
+- `daily_note: "2026-05-22 Friday"` (plain string, not wikilink)
 
-These are auto-managed by the Readwise plugin — do NOT patch them manually, they'll be overwritten on next sync. Fix belongs in the Readwise import template/settings.
+Do NOT patch manually — plugin overwrites on next sync. Fix belongs in Readwise import template/settings.
 
-### 5. Daily Notes missing daily_note field
-Many archived daily notes (in `Daily Notes/`) have `id` but no `daily_note` in frontmatter — they predate the `daily_note` convention. Low priority since the filename itself is the date reference.
+### ⚠️ OPEN — References/2026-06 Sienna PA Registration.md
+No frontmatter at all (just a PDF embed). Needs `id` and `daily_note` added manually. Will show up in daily hygiene report until fixed.
 
-## What to skip in a hygiene job
+### LOW PRIORITY — Daily Notes missing daily_note field
+Many archived daily notes (in `Daily Notes/`) have `id` but no `daily_note` in frontmatter — they predate the convention. Low priority; filename is the date reference. Hygiene script skips `Daily Notes/` entirely.
+
+## What hygiene script skips
 
 - `Granola/` — own schema, third-party managed
 - `Readwise/` — own schema, plugin-managed
-- `Daily Notes/` — backfilling `daily_note` field is low-value
+- `Daily Notes/` — backfilling `daily_note` is low-value
 - `Templates/` — contains Templater syntax, never auto-edit
-- `.trash/` — ignore
-- `.cursor/`, `.claude/` — IDE metadata, ignore
+- `Categories/` — legitimately live there, not Notebook
+- `.trash/`, `.cursor/`, `.claude/` — system/IDE metadata
