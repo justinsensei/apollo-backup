@@ -138,7 +138,7 @@ Current entity types (each has a file in `Categories/` and a template in `Templa
 
 When creating a note of a given type, follow that type's template. When searching for notes by category, filter by `category: "[[CategoryName]]"`.
 
-**Note:** The existing four category notes (Meetings, Organizations, People, Projects) were created before the entity model and currently lack a `category:` field. They should eventually get `category: "[[Categories]]"` added.
+**Note:** As of a May 2026 vault audit, the category notes in `Categories/` have been confirmed to already carry `category: "[[Categories]]"` (e.g. `Categories/Meetings.md` has it). The stale claim that they lacked this field is no longer accurate.
 
 ### Templates (from `<vault>/Templates/`)
 
