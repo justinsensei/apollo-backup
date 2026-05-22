@@ -1,7 +1,7 @@
 model:
-  default: google/gemini-2.0-flash-001
-  provider: openrouter
-  base_url: https://openrouter.ai/api/v1
+  default: gemini-flash-latest
+  provider: gemini
+  base_url: https://generativelanguage.googleapis.com/v1beta
 terminal:
   backend: local
   cwd: .
@@ -127,8 +127,8 @@ code_execution:
   max_tool_calls: 50
 delegation:
   max_iterations: 50
-  model: google/gemini-pro-1.5
-  provider: openrouter
+  model: gemini-pro-latest
+  provider: gemini
 display:
   compact: false
   tool_progress: all
