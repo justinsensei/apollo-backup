@@ -133,13 +133,18 @@ display:
   compact: false
   tool_progress: all
   cleanup_progress: false
-  interim_assistant_messages: true
+  interim_assistant_messages: false
   busy_input_mode: interrupt
   background_process_notifications: all
   bell_on_complete: false
   show_reasoning: false
   streaming: true
   skin: default
+  platforms:
+    telegram:
+      show_reasoning: false
+    slack:
+      show_reasoning: false
 hooks:
   pre_llm_call:
   - command: ~/.hermes/agent-hooks/bes-vault-pre-turn.sh
