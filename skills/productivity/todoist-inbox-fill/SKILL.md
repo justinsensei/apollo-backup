@@ -376,7 +376,8 @@ Once Justin responds:
 
 ## Pitfalls
 
-- **`delegate_task` concurrency cap is 3.** With 6 sources (Slack, Gmail, Obsidian, Calendar, Linear, iMessages), split into two batches of 3: first batch (Slack, Gmail, Obsidian), second batch (Calendar, Linear, iMessages). Don't try to pass all 6 at once — it errors immediately.
+- **Granola notes are in `<vault>/Granola/YYYY-MM/` month subfolders.** Filenames start with `YYYY-MM-DD`. Only lines beginning `- Justin:` (case-insensitive) under the `### Next Steps` section are action items for Justin. Everything else is noise.
+- **`delegate_task` concurrency cap is 3.** With 7 sources (Slack, Gmail, Obsidian, Calendar, Linear, iMessages, Granola), split into three batches: Batch 1 (Slack, Gmail, Obsidian), Batch 2 (Calendar, Linear, iMessages), Batch 3 (Granola). Don't try to pass more than 3 at once — it errors immediately.
 - **Linear task naming is fixed.** Do not invent task titles for Linear items. Use exactly `Work on <ID> <name>` for assigned issues and `Triage <ID> <name>` for triage issues. Strip these from the source prefix when adding to Todoist — the content field should be the bare task name, not `[Linear/assigned] Work on…`.
 - **`find-tasks` requires at least one filter.** If you call it with no args it errors. See Step 1 for the right snapshot call.
 - **Dedup is semantic, not textual.** \"Reply to Maya about retro\" and \"Respond to Maya re: retrospective\" are the same action. Don't add both.
