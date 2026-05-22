@@ -85,7 +85,7 @@ For creating People or Organization notes, load `obsidian-people-notes`. It cove
 
 These folders are managed by external apps with their own schemas. Never add or modify `id`, `daily_note`, or `category` fields in these:
 
-- `Granola/` — meeting summaries and transcripts from the Granola app. Schema: `granola_id`, `title`, `type`, `created`, `updated`, `attendees`, `transcript`/`note`.
+- `Granola/` — meeting summaries and transcripts from the Granola app. Schema: `granola_id`, `title`, `type`, `created`, `updated`, `attendees`, `transcript`/`note`. Only carry `category: "[[Meetings]]"` on summaries (not transcripts); other standard frontmatter (like numeric `id` or `daily_note`) is omitted.
 - `Readwise/` — article highlights imported by the Readwise plugin. Schema: `id` (non-standard timestamp format), `daily_note` (plain string, not wikilink). Do not patch these — they get overwritten on the next sync.
 
 ## Misplaced daily notes
