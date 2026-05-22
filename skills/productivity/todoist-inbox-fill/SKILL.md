@@ -325,7 +325,7 @@ Once Justin responds:
 
 ## Pitfalls
 
-- **`delegate_task` concurrency cap is 3.** `delegate_task` accepts a `tasks` array but only runs 3 subagents in parallel (configured via `delegation.max_concurrent_children`). With 5 sources (Slack, Gmail, Obsidian, Calendar, iMessages), split into two batches: first 3 in parallel (Slack, Gmail, Obsidian), then 2 in parallel (Calendar, iMessages). Don't try to pass all 5 at once — it errors immediately.
+- **`delegate_task` concurrency cap is 3.** With 6 sources (Slack, Gmail, Obsidian, Calendar, Linear, iMessages), split into two batches of 3: first batch (Slack, Gmail, Obsidian), second batch (Calendar, Linear, iMessages). Don't try to pass all 6 at once — it errors immediately.
 - **`find-tasks` requires at least one filter.** If you call it with no args it errors. See Step 1 for the right snapshot call.
 - **Dedup is semantic, not textual.** \"Reply to Maya about retro\" and \"Respond to Maya re: retrospective\" are the same action. Don't add both.
 - **Priorities are strings (`"p1"`–`"p4"`), not integers.** Default to `"p4"`.
