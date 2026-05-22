@@ -156,7 +156,7 @@ Sources: **Slack, Gmail, Obsidian daily notes, Calendar, Linear.**
 
 - **Toolsets:** `["terminal"]`
 - **Skill:** `linear`
-- **Goal:** Find Linear issues assigned to Justin (To Do / In Progress) and new Triage issues from the last 24 hours. Budget: 8 tool calls.
+- **Goal:** Find Linear issues assigned to Justin (To Do / In Progress) and new Triage issues from within the lookback window. Budget: 8 tool calls.
 - **Context:**
   > Use `curl` against `https://api.linear.app/graphql` with `Authorization: $LINEAR_API_KEY`.
   >
@@ -172,7 +172,7 @@ Sources: **Slack, Gmail, Obsidian daily notes, Calendar, Linear.**
   > ```
   > `unstarted` = To Do, `started` = In Progress.
   >
-  > **Query 2 — New Triage issues created in the last 24 hours (any assignee):**
+  > **Query 2 — New Triage issues created within the lookback window (any assignee):**
   > ```graphql
   > { issues(filter: {
   >     and: [
