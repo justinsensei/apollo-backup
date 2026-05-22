@@ -17,8 +17,8 @@ Reports (stdout):
   - Notes missing an id
   - Notes missing a daily_note wikilink
 
-Ignored folders: Granola, Readwise, Templates, Daily Notes, Categories,
-                 .git, .trash, .cursor, .claude, ustin.guest
+Ignored folders (general walks): Readwise, Templates, Daily Notes, Categories,
+                 Granola (scanned separately), .git, .trash, .cursor, .claude
 
 Exits 0 (clean) or 1 (fixes applied / issues found).
 Dry-run: DRY_RUN=1
