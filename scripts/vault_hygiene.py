@@ -253,7 +253,7 @@ if GRANOLA_DIR.exists():
 
 # ── 5. ID conflicts ───────────────────────────────────────────────────────────
 id_to_paths = defaultdict(list)
-for path in sorted(all_notes(skip_dirs=IGNORE_DIRS | {"Daily Notes"})):
+for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_GRANOLA | {"Daily Notes"})):
     _, fm, _ = read_note(path)
     note_id = fm.get("id", "").strip()
     if note_id:
@@ -266,16 +266,16 @@ for note_id, paths in sorted(id_to_paths.items()):
                 (p, f"id={note_id!r} shared by {len(paths)} notes")
             )
 
-# ── 5. Missing ID ─────────────────────────────────────────────────────────────
-for path in sorted(all_notes(skip_dirs=IGNORE_DIRS | {"Daily Notes"})):
+# ── 6. Missing ID ─────────────────────────────────────────────────────────────
+for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_GRANOLA | {"Daily Notes"})):
     _, fm, _ = read_note(path)
     note_id = fm.get("id", "").strip()
     if not note_id:
         issues["missing_id"].append((path, ""))
 
-# ── 6. Missing daily_note ─────────────────────────────────────────────────────
+# ── 7. Missing daily_note ─────────────────────────────────────────────────────
 # Also exclude vault-root daily notes (YYYY-MM-DD Weekday.md in root)
-for path in sorted(all_notes(skip_dirs=IGNORE_DIRS | {"Daily Notes"})):
+for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_GRANOLA | {"Daily Notes"})):
     if path.parent == VAULT and DAILY_NOTE_PATTERN.match(path.name):
         continue  # current daily note in root — self-referential, skip
     _, fm, _ = read_note(path)
