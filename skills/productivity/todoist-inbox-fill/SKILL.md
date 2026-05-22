@@ -202,15 +202,18 @@ Sources: **Slack, Gmail, Obsidian daily notes, Calendar, Linear, iMessages, Gran
   >
   > Run **two queries**:
   >
-  > **Query 1 — Assigned issues in To Do or In Progress:**
+  > **Query 1 — Assigned issues in To Do, In Progress, or Monitoring:**
   > ```graphql
   > { viewer { assignedIssues(filter: {
-  >     state: { type: { in: ["unstarted", "started"] } }
+  >     or: [
+  >       { state: { type: { in: ["unstarted", "started"] } } },
+  >       { state: { name: { eq: "Monitoring" } } }
+  >     ]
   >   }, first: 50) {
   >     nodes { identifier title state { name type } url }
   >   } } }
   > ```
-  > `unstarted` = To Do, `started` = In Progress.
+  > `unstarted` = To Do, `started` = In Progress, `Monitoring` = custom state (matched by name).
   >
   > **Query 2 — New Triage issues created within the lookback window (any assignee):**
   > ```graphql
