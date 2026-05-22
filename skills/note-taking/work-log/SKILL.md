@@ -10,20 +10,28 @@ Summarize today's work activity and append a structured Work Log block to **toda
 
 The block has three sections — **Highlights / Decisions / Open Questions** — synthesized across all sources. New sources do not get their own headings; they feed the synthesis. The footer enumerates which sources were actually pulled and rough counts.
 
+## TARGET_DATE override (for cron / morning briefing)
+
+By default this skill logs **today**. When called from the morning briefing cron, a `TARGET_DATE` (YYYY-MM-DD) is passed in the prompt context — use that date instead of today everywhere `TODAY` / `TOMORROW` / "today's daily note" appear.
+
+**How to detect:** the calling prompt will include a line like `TARGET_DATE: 2026-05-21` near the top. If present, substitute it for `TODAY` in every step below. The daily note you find, read, and append to is the *TARGET_DATE* note, not today's.
+
+If no `TARGET_DATE` is present, default to today as usual. When run from cron (no interactive user), if the target daily note doesn't exist, log the error and exit gracefully — do not halt the whole briefing.
+
 ## Step 1 — Resolve vault path
 
 Read `OBSIDIAN_VAULT_PATH` from env (typically `/home/justin.guest/vault` inside `bes-vm`). Do not hard-code. If unset, fall back to `~/Documents/Obsidian Vault`. See the `obsidian` skill for full path-handling conventions.
 
-## Step 2 — Find today's daily note
+## Step 2 — Find the target daily note
 
 Daily-note filename format: `YYYY-MM-DD DayName.md` (e.g. `2026-05-20 Wednesday.md`).
 
 Justin's vault convention: **current** daily notes live in the vault root; **archived** daily notes live in `Daily Notes/`. Check the root first:
 
-1. `<vault>/<YYYY-MM-DD DayName>.md` — primary
-2. `<vault>/Daily Notes/<YYYY-MM-DD DayName>.md` — fallback (rare; means today's note already got archived, which is unusual mid-day)
+1. `<vault>/<TARGET_DATE DayName>.md` — primary
+2. `<vault>/Daily Notes/<TARGET_DATE DayName>.md` — fallback
 
-Use `search_files` with `target: "files"` to locate. If neither exists, tell Justin "Today's daily note doesn't exist yet — create it first." and stop.
+Use `search_files` with `target: "files"` to locate. If neither exists, tell Justin "The daily note for TARGET_DATE doesn't exist yet." and stop (when run from cron, log the error to the briefing cache and continue).
 
 ## Step 3 — Gather raw material (parallel, one subagent per source)
 
