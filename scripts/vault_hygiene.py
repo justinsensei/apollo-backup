@@ -71,6 +71,8 @@ NOTEBOOK_DIR   = VAULT / "Notebook"
 DAILY_DIR      = VAULT / "Daily Notes"
 CATEGORIES_DIR = VAULT / "Categories"
 
+MEETINGS_CATEGORY = '"[[Meetings]]"'
+
 
 # ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -178,8 +180,7 @@ for path in sorted(NOTEBOOK_DIR.glob("*.md")):
             )
 
 # ── 2. Category tag → frontmatter ────────────────────────────────────────────
-for path in sorted(all_notes(skip_dirs=IGNORE_DIRS)):
-    text = path.read_text(encoding="utf-8", errors="replace")
+for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_GRANOLA)):
     _, fm, _ = read_note(path)
 
     existing_cat = fm.get("category", "").strip().strip('"\'')
