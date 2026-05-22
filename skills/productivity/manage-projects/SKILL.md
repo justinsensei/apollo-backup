@@ -76,7 +76,7 @@ Where `<slug>` is the project name lowercased with spaces replaced by hyphens. T
 
 3. **Create the Obsidian project note** (can be parallelized with step 2):
    - Filename: simple descriptive title, no timestamp (e.g. `Bes Setup.md`)
-   - Location: vault root (`/home/justin.guest/vault/`)
+   - Location: **vault root** (`/home/justin.guest/vault/`), NOT `Notebook/`. Project notes are the one typed-note exception that lives in root — the `obsidian-people-notes` skill routes People/Orgs to `Notebook/` but that rule does not apply to Projects.
    - `id`: current timestamp as `YYYYMMDDHHmmss`
    - `daily_note`: wikilink to today's daily note (`[[YYYY-MM-DD dddd]]`)
    - `category`: `"[[Projects]]"`
