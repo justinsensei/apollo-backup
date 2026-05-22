@@ -218,7 +218,7 @@ for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_GRANOLA)):
         )
 
 # ── 3. Wrong-folder: typed notes outside Notebook/ ───────────────────────────
-for path in sorted(all_notes(skip_dirs=IGNORE_DIRS)):
+for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_GRANOLA)):
     _, fm, _ = read_note(path)
     cat = fm.get("category", "").strip().strip('"\'')
     if not cat or not cat.startswith("[["):
