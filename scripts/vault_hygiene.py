@@ -230,7 +230,28 @@ for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_GRANOLA)):
             (path, f"category {cat} but lives in {path.parent.relative_to(VAULT)}/")
         )
 
-# ── 4. ID conflicts ───────────────────────────────────────────────────────────
+# ── 4. Granola meeting notes missing category: "[[Meetings]]" ────────────────
+# Granola syncs two types: meeting summaries (type: note) and transcripts
+# (type: transcript). Only summaries should carry the Meetings category.
+# Legacy pasted notes (no 'type' field) are also treated as summaries.
+if GRANOLA_DIR.exists():
+    for path in sorted(GRANOLA_DIR.glob("*.md")):
+        text, fm, _ = read_note(path)
+        note_type = fm.get("type", "note").strip().strip('"\'').lower()
+        if note_type == "transcript":
+            continue  # transcripts don't get a category
+        existing_cat = fm.get("category", "").strip().strip('"\'')
+        if existing_cat == "[[Meetings]]":
+            continue  # already correct
+        # Auto-fix: add the Meetings category
+        new_text = frontmatter_set(text, "category", MEETINGS_CATEGORY)
+        if new_text != text:
+            write_note(path, new_text)
+            fixes_applied.append(
+                f"Added category [[Meetings]] to Granola note: Granola/{path.name}"
+            )
+
+# ── 5. ID conflicts ───────────────────────────────────────────────────────────
 id_to_paths = defaultdict(list)
 for path in sorted(all_notes(skip_dirs=IGNORE_DIRS | {"Daily Notes"})):
     _, fm, _ = read_note(path)
