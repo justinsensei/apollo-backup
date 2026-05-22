@@ -152,6 +152,53 @@ Sources: **Slack, Gmail, Obsidian daily notes, Calendar, Linear.**
 
 ---
 
+### Subagent — Linear
+
+- **Toolsets:** `["terminal"]`
+- **Skill:** `linear`
+- **Goal:** Find Linear issues assigned to Justin (To Do / In Progress) and new Triage issues from the last 24 hours. Budget: 8 tool calls.
+- **Context:**
+  > Use `curl` against `https://api.linear.app/graphql` with `Authorization: $LINEAR_API_KEY`.
+  >
+  > Run **two queries**:
+  >
+  > **Query 1 — Assigned issues in To Do or In Progress:**
+  > ```graphql
+  > { viewer { assignedIssues(filter: {
+  >     state: { type: { in: ["unstarted", "started"] } }
+  >   }, first: 50) {
+  >     nodes { identifier title state { name type } url }
+  >   } } }
+  > ```
+  > `unstarted` = To Do, `started` = In Progress.
+  >
+  > **Query 2 — New Triage issues created in the last 24 hours (any assignee):**
+  > ```graphql
+  > { issues(filter: {
+  >     and: [
+  >       { state: { type: { eq: "triage" } } },
+  >       { createdAt: { gt: "<LOOKBACK_ISO>" } }
+  >     ]
+  >   }, first: 50) {
+  >     nodes { identifier title state { name type } url createdAt }
+  >   } }
+  > ```
+  > (Replace `<LOOKBACK_ISO>` with the computed ISO timestamp, e.g. `2026-05-21T10:00:00.000Z`.)
+  >
+  > **Task naming rules (these exact formats will become Todoist task content):**
+  > - Assigned To Do/In Progress: `Work on <identifier> <title>`
+  > - Triage: `Triage <identifier> <title>`
+  >
+  > Format each result:
+  > - For assigned: `- [Linear/assigned] Work on <identifier> <title> | state: <state name> | url: <url>`
+  > - For triage: `- [Linear/triage] Triage <identifier> <title> | url: <url>`
+  >
+  > End with `Total: N candidates (assigned: X, triage: Y)`.
+  >
+  > Budget: 8 tool calls. Return what you have and stop.
+
+---
+
 ### Subagent E — iMessages (family)
 - **Goal:** Find open actions from family texts in the lookback window. Budget: 5 tool calls.
 - **Context:**
