@@ -10,6 +10,8 @@ Use this skill for filesystem-first Obsidian vault work: reading notes, listing 
 
 For Obsidian-Flavored-Markdown syntax details (callouts, embeds, block IDs, dataview queries, math, mermaid, etc.), load `references/obsidian-flavored-markdown.md` from this skill when you need it. Don't load it eagerly — it's a reference, not a rule-set.
 
+For a full structural audit of the vault (folder sizes, category distribution, known issues as of 2026-05-22), see `references/vault-audit-2026-05-22.md`.
+
 ## Vault path
 
 Use a known or resolved vault path before calling file tools.
