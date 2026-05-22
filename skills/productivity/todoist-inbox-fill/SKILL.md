@@ -307,6 +307,86 @@ Sources: **Slack, Gmail, Obsidian daily notes, Calendar, Linear, iMessages, Gran
 
 ---
 
+## Step 2b — Calendar event detection (separate pass)
+
+This pass scans the same sources for *potential calendar events* — future commitments that aren't already on Justin's Google Calendar. Results are presented separately from general Todoist inbox candidates (see Step 4).
+
+**What counts as a potential calendar event (cast wide):**
+- Any specific future date + time mentioned in context (meetings, calls, appointments, deadlines with a time component)
+- Phrases like "let's sync Thursday", "can we meet next week", "I'll call you at 3", "dinner Friday", "flight on the 15th"
+- iMessage/Slack scheduling exchanges (even informal ones)
+- Obsidian notes with a date reference that looks like a future commitment
+- Email invites that didn't come with a calendar invite attachment
+- When in doubt, surface it — Justin will decide what belongs on his calendar
+
+**What to skip:**
+- Events already on the calendar (checked below)
+- Pure deadlines with no time component (those become regular Todoist tasks)
+- Recurring standing meetings already on the calendar
+- Past dates
+
+### Pre-flight: snapshot calendar for dedup
+
+Before spawning calendar-detection subagents, pull Justin's calendar for the next 30 days across all 3 accounts:
+
+```bash
+gws_multi.py --account all calendar list \
+  --start <TODAY>T00:00:00 \
+  --end <30_DAYS_OUT>T23:59:59 \
+  --max 100
+```
+
+Keep this in-context as `CALENDAR_SNAPSHOT`. You'll use it to dedup candidates.
+
+Compute `30_DAYS_OUT`:
+```bash
+THIRTY_DAYS_OUT=$(date -d "$TODAY + 30 days" +%F)
+```
+
+### Calendar-detection subagents
+
+Run alongside Batch 1/2/3 of the regular inbox gather — they share the same sources but look for different signals. The same subagents can return both action-item candidates AND calendar-event candidates in a single run; just ask them to produce two labeled sections in their output:
+
+**Section 1: `## Action items`** — regular Todoist tasks (as before)
+**Section 2: `## Potential calendar events`** — future commitments spotted while scanning
+
+Update each existing subagent's context to include:
+
+> Also scan for **potential calendar events**: any specific future date + time mentioned, scheduling language ("let's sync", "meet me at", "dinner", "call", "flight", "appointment"), or implied commitments with a time component. Cast wide — surface anything that looks like it might belong on a calendar, even informal scheduling. List these under a separate `## Potential calendar events` section.
+>
+> Format each calendar candidate:
+> `- [Source] <concise event description> | when: <date/time as mentioned> | context: <brief where/with whom>`
+
+### Calendar dedup
+
+After subagents return, filter the calendar candidates against `CALENDAR_SNAPSHOT`:
+- If an event with the same date, time, and rough description already exists → mark EXISTS, drop it
+- If something similar exists but details differ → mark SIMILAR, keep with a note
+- Everything else → NEW
+
+### Calendar candidates output format
+
+Present calendar candidates in a dedicated section (Step 4 output), separate from regular inbox candidates:
+
+```
+📅 Found N potential calendar events not yet on your calendar:
+
+1. [Slack] Sync with Maya re: sprint planning | when: Thursday 2pm | context: #product-eng
+2. [Email/work] Call with Alex | when: next Monday 10am | context: email from Alex Chen
+3. [iMessage/Nana] Dentist appointment (Jamie) | when: June 3rd | context: Nana's text
+
+Each will become: "Add to calendar: <event>" task in Todoist Inbox.
+```
+
+When Justin confirms, create tasks shaped as:
+- **content**: `Add to calendar: <event description>`
+- **description**: date/time as mentioned + source context + URL/permalink if available
+- **projectId**: omit (→ Inbox)
+- **priority**: `"p2"` if time-sensitive (within 3 days), otherwise `"p4"`
+- Add comment: source + why it was flagged
+
+---
+
 ## Step 3 — Deduplicate
 
 You now have subagent summaries (3–5 source lists) plus the Todoist snapshot from Step 1.
