@@ -181,7 +181,7 @@ for path in sorted(NOTEBOOK_DIR.glob("*.md")):
 
 # ── 2. Category tag → frontmatter ────────────────────────────────────────────
 for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_GRANOLA)):
-    _, fm, _ = read_note(path)
+    text, fm, _ = read_note(path)
 
     existing_cat = fm.get("category", "").strip().strip('"\'')
     if existing_cat and existing_cat not in ("", "[[]]"):
