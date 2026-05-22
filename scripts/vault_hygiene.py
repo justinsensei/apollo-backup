@@ -33,9 +33,14 @@ VAULT = Path(os.environ.get("OBSIDIAN_VAULT_PATH", "/home/justin.guest/vault"))
 DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
 
 IGNORE_DIRS = {
-    "Granola", "Readwise", "Templates", "Daily Notes",
+    "Readwise", "Templates", "Daily Notes",
     "Categories", ".git", ".trash", ".cursor", ".claude", "ustin.guest",
 }
+
+# Granola is scanned separately for category checks; skip it in general walks
+IGNORE_DIRS_WITH_GRANOLA = IGNORE_DIRS | {"Granola"}
+
+GRANOLA_DIR = VAULT / "Granola"
 
 WEEKDAYS = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}
 DAILY_NOTE_PATTERN = re.compile(
