@@ -403,20 +403,44 @@ Build the final candidate list: only NEW and SIMILAR items. Drop EXISTS.
 
 ## Step 4 — Present to Justin
 
-Show a clean numbered list. Format:
+Show two sections. Within the inbox section, group candidates by semantic theme (same project, same person, same context). Don't number across groups — number within each group.
+
+**When called from morning briefing:** present calendar candidates first (Phase 3 of briefing), then inbox candidates (Phase 4). The briefing skill controls the turn order; this skill just provides the formatted output for each section.
+
+**When called standalone:** present both sections in one message.
+
+### Section A — Calendar events
 
 ```
-📥 Found N potential inbox items not yet in Todoist:
+📅 N potential calendar events not yet on your calendar:
 
+1. [Slack] Sync with Maya re: sprint planning | when: Thu 2pm | context: #product-eng
+2. [iMessage/Nana] Jamie's dentist | when: June 3rd | context: Nana's text Tue
+3. [Email/work] Call with Alex | when: next Mon 10am | context: email from Alex Chen
+
+Which ones should I add as "Add to calendar:" tasks? (say "all", "1 3", or "skip 2")
+```
+
+### Section B — Inbox tasks, batched by theme
+
+Group semantically related items under a bolded label. Number items continuously across groups.
+
+```
+📥 N potential inbox items not yet in Todoist:
+
+**Replies owed**
 1. [Slack] Reply to @maya re: sprint retro format — #product-eng
-2. [Email/work] Reply to Alex about Q3 roadmap review — from Alex Chen
-3. [Obsidian/2026-05-20] Follow up on Nana's dentist appointment
-4. [Calendar] Prep for: Board review — Thu 2pm
-5. [Linear/assigned] Work on SL-204 Update onboarding copy — In Progress
-6. [Linear/triage] Triage SL-312 Crash on lesson complete
+2. [Email/work] Reply to Alex about Q3 roadmap review
+
+**Linear**
+3. [Linear/assigned] Work on SL-204 Update onboarding copy
+4. [Linear/triage] Triage SL-312 Crash on lesson complete
+
+**Home / family**
+5. [Obsidian/2026-05-20] Follow up on Nana's dentist appointment
 
 ~SIMILAR~ (already in Todoist but different angle):
-5. [Email/work] Alex re: API rate limit spike — similar to existing "Investigate API latency" task
+6. [Email/work] Alex re: API rate limit spike — similar to existing "Investigate API latency" task
 
 Which ones should I add? (say "all", "1 3 5", or "skip 4" — or edit any item before I add it)
 ```
