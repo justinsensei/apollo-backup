@@ -76,6 +76,19 @@ For creating People or Organization notes, load `obsidian-people-notes`. It cove
 
 - Create new notes in the **vault root** unless explicitly told otherwise.
 - The vault has a flat-ish structure with category folders (`Attachments/`, `Daily Notes/`, `Notebook/`, `References/`, `Templates/`) but new notes default to root.
+- **Project notes** (category `[[Projects]]`) also live in the **vault root** by convention (see `manage-projects` skill). The `obsidian-people-notes` skill routes People/Orgs to `Notebook/` — that does NOT apply to Projects.
+- **Typed notes** (People, Organizations, Meetings) live in `Notebook/`.
+
+## Third-party managed folders — do not touch
+
+These folders are managed by external apps with their own schemas. Never add or modify `id`, `daily_note`, or `category` fields in these:
+
+- `Granola/` — meeting summaries and transcripts from the Granola app. Schema: `granola_id`, `title`, `type`, `created`, `updated`, `attendees`, `transcript`/`note`.
+- `Readwise/` — article highlights imported by the Readwise plugin. Schema: `id` (non-standard timestamp format), `daily_note` (plain string, not wikilink). Do not patch these — they get overwritten on the next sync.
+
+## Misplaced daily notes
+
+Daily notes are sometimes accidentally saved to `Notebook/` instead of `Daily Notes/`. Detect them by: filename matches `YYYY-MM-DD Weekday.md` (no extra words after the day name) AND contains `#daily_note` tag. Correct location is `Daily Notes/`.
 
 ## Templates
 
