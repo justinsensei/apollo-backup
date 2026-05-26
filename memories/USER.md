@@ -1,6 +1,6 @@
 Justin is Head of Product at SignLab, a multinational ed tech company building sign language learning apps (mostly B2C). He has 10+ years in ed tech; prior roles at Duolingo and PowerSchool. SignLab's strategy: build premium apps to fund a future pivot to free-to-play, then scale globally (Duolingo playbook).
 §
-Todoist structure: Work, Home, Other, Inbox at top level; GTD projects nested under Work or Home. Loose tasks go into area Projects directly. Each GTD project has a matching Obsidian note with `Todoist: <url>`. "work" and "home" are projects, NOT labels. See `manage-projects` skill.
+Todoist structure: status-based Projects (Now, Next, Soon, Maybe Later), Shopping, and Inbox. Now = actionable now; Next = review daily & move; Soon = review weekly & move; Maybe Later = review monthly & move. No Work/Home/Other top-level projects or GTD sub-projects.
 §
 Justin's week ends Sunday in his mental model (not Saturday). Use Sunday as the week boundary when reasoning about scheduling, deadlines, and "this week."
 §
