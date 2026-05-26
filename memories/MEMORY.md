@@ -11,3 +11,5 @@ Todoist is for actions only — no informational notes or FYIs. If something isn
 During inbox fills, Justin does not want generic meeting prep tasks suggested. Exclude standard team/internal syncs and brief chat slots unless explicit prep is required.
 §
 During inbox fills, do not suggest any task for a Linear issue if any existing Todoist task already references or is linked to that same issue ID.
+§
+Justin uses Apple Notes as a "filing cabinet" for references (previously in Obsidian References/), while continuing to use Obsidian for general note-taking.
