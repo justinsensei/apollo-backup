@@ -393,7 +393,8 @@ You now have subagent summaries (3–5 source lists) plus the Todoist snapshot f
 
 For each candidate task:
 1. Check the Todoist snapshot for a semantically similar task. Similar = same person/issue/thread/subject matter, close enough that adding a second task would be redundant.
-2. Mark it as **NEW** (not in Todoist) or **EXISTS** (already covered). If it's close but not exact, mark it **SIMILAR** and note what the existing task is.
+2. For Linear issues, check if an existing Todoist task's title, description, or content links/references the same Linear issue identifier (e.g., `PROD-533` or `CLAW-31`). If a match is found, mark it **EXISTS** and filter it out. Do not suggest a new task for any Linear issue already tracked in Todoist in any form.
+3. Mark it as **NEW** (not in Todoist) or **EXISTS** (already covered). If it's close but not exact, mark it **SIMILAR** and note what the existing task is.
 
 This dedup is LLM reasoning — you're comparing intent and subject matter, not text equality. Be conservative: if in doubt, mark it NEW and let Justin decide.
 
@@ -479,7 +480,7 @@ Once Justin responds:
 - **No FYIs or informational notes.** If it's not something Justin needs to do, it doesn't belong in Todoist.
 - **No hermes-labeled tasks.** Never add or modify the `hermes` label. Skip tasks labeled `hermes` in the Todoist snapshot — they're Hermes's.
 - **Fail gracefully.** If a subagent fails, note it in the header ("Slack: ERR — auth expired") and continue with the other sources. A 3-source run is still useful.
-- **Calendar prep tasks: be selective.** Standup, team syncs, 1:1s with direct reports — Justin doesn't need a \"prep for standup\" task. Save calendar suggestions for meetings with external stakes or real prep need.
+- **Calendar prep tasks: be selective.** Justin generally does *not* want generic meeting prep tasks suggested. Skip standups, regular team syncs, internal 1:1s, leadership syncs, and short chat blocks. Only suggest prep tasks for high-stakes meetings with external clients/partners where explicit preparation is clearly warranted.
 - **Date precision.** Pre-compute dates once (Step 1) and pass them to every subagent. Don't trust subagents to re-derive TODAY or LOOKBACK_START.
 
 ## Pitfalls
