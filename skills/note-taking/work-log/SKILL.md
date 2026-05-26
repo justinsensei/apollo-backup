@@ -61,8 +61,8 @@ Justin's Linear user-id can be cached. First time, look it up with `{ viewer { i
 - **Context to pass (verbatim, with TODAY substituted):**
   > Run exactly these two commands (no exploration, no `slack channels`, no `slack read`):
   >
-  > 1. `slack search 'from:@justin after:<TODAY>' --limit 50` — messages Justin sent today.
-  > 2. `slack search 'to:@justin after:<TODAY>' --limit 50` — DMs / @-mentions / threads addressed to him today.
+  > 1. `python3 ${HERMES_HOME:-$HOME/.hermes}/skills/social-media/slack/scripts/slack.py search 'from:@justin after:<TODAY>' --limit 50` — messages Justin sent today.
+  > 2. `python3 ${HERMES_HOME:-$HOME/.hermes}/skills/social-media/slack/scripts/slack.py search 'to:@justin after:<TODAY>' --limit 50` — DMs / @-mentions / threads addressed to him today.
   >
   > Dedupe by permalink. Drop bot/integration messages (Zapier, GitHub bots, deploy bots) unless they have a human reaction. Drop pure social chatter Justin wasn't part of.
   >
@@ -231,9 +231,7 @@ Justin's `bes-vault-sync` watcher auto-commits and pushes the vault to `obsidian
 
 - **Slack channel names in Obsidian must be escaped.** A bare `#channel-name` in a note will be interpreted as an Obsidian tag. Always write `\#channel-name` (backslash prefix) so it renders as plain text.
 
-
-
-- **`gws_multi.py` path varies by Hermes home.** Always resolve it as `${HERMES_HOME:-$HOME/.hermes}/skills/productivity/google-workspace/scripts/gws_multi.py` — don't hardcode `/home/justin.guest/...`.
+- **`slack.py` and `gws_multi.py` paths vary by Hermes home.** Always resolve them using absolute paths referencing `${HERMES_HOME:-$HOME/.hermes}` (e.g. `${HERMES_HOME:-$HOME/.hermes}/skills/social-media/slack/scripts/slack.py` and `${HERMES_HOME:-$HOME/.hermes}/skills/productivity/google-workspace/scripts/gws_multi.py`) — do not hardcode `/home/justin.guest/...` and do not rely on bare `slack` in subagent `$PATH`.
 - **Gmail date format is `YYYY/MM/DD` with slashes**, not dashes. Calendar event listings use ISO. Don't mix them up.
 - **`slack` CLI defaults to read-only-ish use.** Never let a subagent post to a channel — the work-log gather is read-only by definition.
 - **Calendar "all-day events" can be timezone-shifted by one day** depending on how they were created. If something looks off-by-one, double-check the event's raw start/end before flagging it as a discrepancy.
