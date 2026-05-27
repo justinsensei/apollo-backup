@@ -127,7 +127,7 @@ code_execution:
   max_tool_calls: 50
 delegation:
   max_iterations: 50
-  model: gemini-pro-latest
+  model: gemini-flash-latest
   provider: gemini
   subagent_auto_approve: true
 display:
