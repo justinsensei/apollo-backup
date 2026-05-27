@@ -37,6 +37,8 @@ Use `search_files` with `target: "files"` to locate. If neither exists, tell Jus
 
 Spawn **one `delegate_task` subagent per external source** in a single batch so raw API output stays out of your context. Each subagent runs a **specific, pre-canned set of commands** — no exploration — and returns a small filtered summary (bullets, ~10–30 items max). You only see the summaries.
 
+**Direct execution option (Fast-track):** Spawning 5 parallel subagents may hit the max concurrent children limit of 3. If you can, you can execute the commands directly in-context via `terminal()` and the native MCP tools (especially for Todoist). This bypasses subagent overhead, completes in seconds, and is extremely clean when parsed directly by the main agent.
+
 **Speed discipline:** subagents have a soft budget of **≤8 tool calls each**. If a subagent can't finish inside that, it must return what it has and exit. Tell it so explicitly in the context block ("Budget: 8 tool calls. If you exhaust it, return partial results and stop.").
 
 The target date (TARGET_DATE) is the cutoff for every source. Pre-compute it once and pass it to each subagent verbatim — don't let subagents re-derive it. Also pre-compute Justin's Linear user-id once (see *Pre-flight*, below) and pass it too.
@@ -167,10 +169,11 @@ Skip unless Justin specifically mentions code work. If you do run it: scope to r
 
 ### After subagents return
 
-You now have 3–5 small summaries. Also do these two **in-context** reads — they're cheap:
+You now have 3–5 small summaries. Also do these **in-context** reads/searches — they're cheap:
 
-1. **Read today's daily note** with `read_file`. Scan for decisions, completions, blockers, links, meeting notes Justin wrote himself.
-2. **Ask Justin in chat** what else he worked on that isn't in any source yet. Short prompt: *"Anything from today not captured in Slack/Linear/email/calendar/daily-note? Side-quests, conversations IRL, decisions in your head?"* If he says "nothing," move on.
+1. **Read today's daily note** with `read_file`. Scan for decisions, completions, blockers, links, meeting notes Justin wrote himself today.
+2. **Scan for meeting/Granola notes:** Use `search_files` with `target: "files"` to look for files in the vault containing `<TARGET_DATE>` in their name (e.g. under `Granola/`). These notes (like Granola meeting summaries) often contain incredibly rich summaries of design discussions, product decisions, and future plans that won't show up in automated sources.
+3. **Ask Justin in chat** what else he worked on that isn't in any source yet (skip if running in a non-interactive cron job). Short prompt: *"Anything from today not captured in Slack/Linear/email/calendar/daily-note? Side-quests, conversations IRL, decisions in your head?"* If he says "nothing," move on.
 
 If a subagent fails (auth expired, network, hit budget, etc.), include the failure in the footer (`Slack: ERR — token expired` or `Linear: PARTIAL — hit budget`) rather than silently dropping the source. Then continue with what you have.
 
