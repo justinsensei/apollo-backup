@@ -175,7 +175,8 @@
         "terminal",
         "file",
         "web",
-        "browser"
+        "browser",
+        "delegation"
       ],
       "workdir": null,
       "profile": null
