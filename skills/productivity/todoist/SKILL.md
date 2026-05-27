@@ -338,6 +338,8 @@ Justin has four saved filters for temporal visibility:
 
 12. **The Hermes agent has a deliberately narrower scope.** Hermes only writes to Inbox with the `hermes` label, and only reads tasks tagged `hermes`. If you see something in Now/Next/Soon/Maybe Later without the `hermes` label, that's Justin's or yours. Don't assume an unlabeled task is unattended — it may be Justin's manual entry that you shouldn't touch unless directed.
 
+13. **Do NOT use raw HTTP requests to api.todoist.com in custom code/scripts.** The old REST v2 and Sync v9 endpoints are deprecated and return HTTP 410 or 404. Always prefer the native `mcp_todoist_*` tools. If you must make raw HTTP requests, use the correct v1 endpoint prefix: `https://api.todoist.com/api/v1/` and POST to `/api/v1/sync`.
+
 ## Configuration (reference)
 
 In `~/.hermes/config.yaml`:
