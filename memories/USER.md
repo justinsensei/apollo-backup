@@ -2,10 +2,10 @@ Justin is Head of Product at SignLab, a multinational ed tech company building s
 §
 Todoist structure: status-based Projects (Now, Next, Soon, Maybe Later), Shopping, and Inbox. Now = actionable now; Next = review daily & move; Soon = review weekly & move; Maybe Later = review monthly & move. No Work/Home/Other top-level projects or GTD sub-projects.
 §
-Justin's week ends Sunday in his mental model (not Saturday). Use Sunday as the week boundary when reasoning about scheduling, deadlines, and "this week."
+Justin's week ends Sunday. Captures completed work in Todoist/Obsidian.
 §
 Justin prefers filter views over native Todoist sidebar (Today, Inbox, etc.) — finds them cluttered. When creating any Todoist task, always add a one-sentence comment immediately after — source + why it became a task.
 §
 Pittsburgh, PA. Family: wife Nana Massie (nana.massie@gmail.com, has Obsidian note); kids Sam (b. 11/22/2013), Jamie/James (they/them, b. 05/08/2015), Rosie (she/her, b. 05/16/2017). Default to family when first name only. Obsidian wikilinks: [[Nana]], [[Sam]], [[Jamie]], [[Rosie]].
 §
-Justin captures completed work in Todoist or Obsidian.
+Accurately attribute decisions to the actual decision-maker (e.g. colleagues or family members) in work logs/summaries, rather than assuming Justin made them.
