@@ -150,7 +150,7 @@ Justin's Linear user-id can be cached. First time, look it up with `{ viewer { i
 - **Context to pass (verbatim, with TODAY substituted):**
   > Use the Todoist MCP tools. Retrieve two things:
   >
-  > 1. **Completed today:** call `mcp_todoist_find_completed_tasks` with `since: <TODAY>`, `until: <TODAY>`, `getBy: "completion"`, `responsibleUser: "me"`. Return all completed tasks.
+  > 1. **Completed today:** call `mcp_todoist_find_completed_tasks` with `since: <TODAY>`, `until: <TODAY>`, `getBy: "completion"`. Note: Do NOT pass `responsibleUser: "me"` as this will filter out all unassigned personal/inbox tasks! Keep it omitted to get all completed tasks.
   > 2. **Due today (incomplete):** call `mcp_todoist_find_tasks_by_date` with `startDate: <TODAY>`, `overdueOption: "exclude-overdue"`, `responsibleUserFiltering: "unassignedOrMe"`, `limit: 50`. Return tasks not yet completed.
   >
   > Format:
