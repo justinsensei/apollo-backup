@@ -187,6 +187,8 @@ The most important things that happened — shipped work, key conversations, dec
 ### `### Decisions Made`
 Consequential decisions only. For each, bold the decision itself; include owner if not obvious. Skip if no real decisions were made — don't promote tasks or observations into "decisions." A Linear status change is not a decision; a Slack thread where a tradeoff was settled IS.
 
+**Crucial attribution rule:** Never default to attributing a decision to Justin or using ambiguous passive phrasing like "Agreed to..." if the decision was actually made by a collaborator, family member, or third party. Always explicitly credit the correct decision-maker (e.g., "Jeff Galak rescheduled..." or "Anya chose...") to prevent misattribution.
+
 ### `### Open Questions / Blockers`
 Unresolved questions, pending actions, known blockers as of end-of-day. Includes asks Justin owes a reply to (from Slack/email), Linear issues stalled waiting on someone, calendar conflicts upcoming. Skip if none.
 
@@ -231,6 +233,8 @@ Justin's `bes-vault-sync` watcher auto-commits and pushes the vault to `obsidian
 - **Source failures are non-fatal.** If Slack auth expired or Linear is down, log it in the footer and continue. A 3-source work log is still useful.
 
 ## Pitfalls
+
+- **Decision misattribution.** Do not assume Justin is the owner or decision-maker for calendar/email/Slack updates. Explicitly attribute decisions to the source actor (e.g. family members, teachers, or business partners) when summarizing or logging (e.g. "Jeff Galak rescheduled Simon's birthday" rather than "Agreed to reschedule...").
 
 - **Slack channel names in Obsidian must be escaped.** A bare `#channel-name` in a note will be interpreted as an Obsidian tag. Always write `\#channel-name` (backslash prefix) so it renders as plain text.
 
