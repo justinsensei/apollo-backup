@@ -234,6 +234,8 @@ Justin's `bes-vault-sync` watcher auto-commits and pushes the vault to `obsidian
 
 ## Pitfalls
 
+- **Slack search date queries must use target date minus one day.** Slack's `after:YYYY-MM-DD` filter is exclusive of the specified day's start. To find messages sent on `TARGET_DATE` (e.g. `2026-05-28`), you must query `after:<TARGET_DATE_MINUS_1_DAY>` (e.g. `after:2026-05-27`). Searching with `after:<TARGET_DATE>` will exclude all messages from that day.
+
 - **Decision misattribution.** Do not assume Justin is the owner or decision-maker for calendar/email/Slack updates. Explicitly attribute decisions to the source actor (e.g. family members, teachers, or business partners) when summarizing or logging (e.g. "Jeff Galak rescheduled Simon's birthday" rather than "Agreed to reschedule...").
 
 - **Slack channel names in Obsidian must be escaped.** A bare `#channel-name` in a note will be interpreted as an Obsidian tag. Always write `\#channel-name` (backslash prefix) so it renders as plain text.
