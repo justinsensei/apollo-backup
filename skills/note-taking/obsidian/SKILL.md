@@ -199,7 +199,7 @@ When creating a note of a given type, follow that type's template. When searchin
 
 ### Templates (from `<vault>/Templates/`)
 
-All four share the same frontmatter skeleton:
+Entity templates (Meetings, People, Organizations, Projects) share the same frontmatter skeleton:
 ```yaml
 ---
 id: "<% tp.date.now("YYYYMMDDHHmmss") %>"
@@ -214,7 +214,10 @@ Differences by type:
 - **New Organization.md** — `category: "[[Organizations]]"`. Renames file to timestamp.
 - **New Project.md** — `category: "[[Projects]]"`. Renames file to timestamp.
 
-When Bes creates these notes (bypassing Templater), substitute the Templater expressions with real values and follow the rename convention for the filename.
+Free-form and brain-dump notes use the standard note template:
+- **New Note.md** — `category:` is left blank. Follows the default filename convention: `[Descriptive Title] YYYYMMDDHHmmss.md`. Ideal for essays, strategy brain dumps, journals, and raw conceptual thoughts that do not fit a specific entity category.
+
+When Bes creates any of these notes (bypassing Templater), substitute the Templater expressions with real values and follow the filename/naming conventions precisely.
 
 ## Filename conventions
 
