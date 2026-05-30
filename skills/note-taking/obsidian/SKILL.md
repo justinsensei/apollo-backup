@@ -96,6 +96,7 @@ Daily notes are sometimes accidentally saved to `Notebook/` instead of `Daily No
 
 - Templates live at `<vault>/Templates/` (not `Utilities/Templates/` — that's a stale path from the Cursor-era setup).
 - Daily Notes use `<vault>/Templates/Daily Note.md` (filename may vary; check the directory).
+- Default new notes use `<vault>/Templates/New Note.md` (has a blank `category:` field, which is correct for non-entity notes).
 
 ## Templater syntax — DO NOT MODIFY
 
