@@ -44,6 +44,11 @@ Use `search_files` for both filename and content searches. Prefer this over `gre
 
 Use `write_file` with the resolved absolute path and the full markdown content. Prefer this over shell heredocs or `echo` because it avoids shell quoting issues and returns structured results.
 
+### Brainstorming and Note-Creation Workflow
+When the user is brainstorming or brain-dumping thoughts (e.g., about strategic ideas or planning):
+- **Do not jump the gun:** Never rush to write or finalize the note files while the user is still mid-thought. 
+- **Let them finish:** Actively listen, capture, and acknowledge their dump, and explicitly wait until they confirm they are completely done brainstorming before generating and writing the final note files.
+
 ## Append to a note
 
 Prefer a native file-tool workflow when it is not awkward:
