@@ -49,6 +49,13 @@ When the user is brainstorming or brain-dumping thoughts (e.g., about strategic 
 - **Do not jump the gun:** Never rush to write or finalize the note files while the user is still mid-thought. 
 - **Let them finish:** Actively listen, capture, and acknowledge their dump, and explicitly wait until they confirm they are completely done brainstorming before generating and writing the final note files.
 
+#### Pattern: Adding to a Thematic Series of Strategy Notes
+When adding a new note to an existing series of conceptual or strategic notes (e.g., K12 Special Ed strategy):
+1. **Search and Analyze First:** Use file searches to find the existing notes in the series. Review their naming conventions, structures, and frontmatter styles.
+2. **Interlink Bidirectionally:** Make sure the new note references and links back to the earlier notes in the series (e.g., `Building on the critique... (from [[Note A]] and [[Note B]])`).
+3. **Preserve Naming & ID Conventions:** Use the same title + timestamp pattern and ID structures as the existing notes in the series to maintain vault consistency.
+4. **Synchronize Task Trackers:** Check for any active Todoist tasks referencing the series (e.g., "Discuss strategy with X") and append the new note's link to the task description so the context remains fully unified.
+
 ## Append to a note
 
 Prefer a native file-tool workflow when it is not awkward:
