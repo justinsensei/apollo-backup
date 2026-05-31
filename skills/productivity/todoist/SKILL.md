@@ -322,7 +322,7 @@ Justin has four saved filters for temporal visibility:
 
 4. **"Inbox" is a special project ID.** When adding to inbox, pass `projectId: "inbox"` — the MCP server resolves it. You can also omit `projectId` and most operations default correctly.
 
-5. **`find-tasks` requires at least one filter.** Calling it with no args errors. Use `find-tasks-by-date` instead for "everything for today" — that one works with just `startDate`.
+5. **`find-tasks` requires at least one filter and `searchText` alone can fail.** Calling `find-tasks` with no args errors. Calling it with `searchText` alone can trigger an `INVALID_SEARCH_QUERY` error (HTTP 400, code 55) from the Todoist API. For general keyword searches across tasks and projects, always use `mcp_todoist_search` instead. Use `find-tasks` only when filtering by specific containers (projectId, sectionId, parentId) or labels.
 
 6. **Natural language dates default to noon ET.** `dueString: "tomorrow"` produces a date-only task. `dueString: "tomorrow at 3pm"` produces a specific time. If Justin wants a specific time, include it.
 
