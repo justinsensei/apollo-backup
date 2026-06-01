@@ -91,6 +91,7 @@ For each message ID:
    | "Person note for <Name>" / "Add to <Name>'s page" / "<Name> works at <Org>" | Create or update a person note at the **root of the vault** (see Person notes below) |
    | "Add to <existing note>" / "Append to <title>" | Find the closest matching note by title; append under a dated heading **in whatever folder the note already lives in** (do not move the note) |
    | "Please extract events ... and add to Todoist" | Extract tasks/events, parse due dates, and call `mcp_todoist_add_tasks` (usually to `inbox`). Also save the email as a default note at the root of the vault for context/archival. |
+   | "Schedule this" / "Add this to my calendar" / "Schedule on <work/personal> calendar" | Parse event details (summary, start/end date & time, location, description, attendees). Invoke `gws_multi.py --account <work/personal-main> calendar create` with appropriate parameters. Default to `personal-main` for family/school/personal topics, and `work` for SignLab/professional topics. If ambiguous, ask or default sensibly based on email context. Also save the email as a default note at the root of the vault for context/archival. |
    | "Summarize and …" / free-form prose | Use judgment. The instruction is authorization to do reasonable, reversible things in the vault. |
 
 3. **Write to vault**. Vault path is `/home/justin.guest/vault` (also in `$OBSIDIAN_VAULT_PATH`). The vault syncs to Justin's Macbook via the watcher (see `vm-hermes-vault-sync` skill) — your writes show up on his iPad within a minute or two.
@@ -100,6 +101,7 @@ For each message ID:
 4. **Report**. One concise line per processed message in your final response, suitable for Telegram delivery:
    - `✅ <subject snippet> → created <filename>.md (instruction: <verbatim or "default save">)`
    - `✅ <subject snippet> → updated <Name>.md (added: <one-sentence summary>)`
+   - `✅ <subject snippet> → scheduled "<Summary>" on <account> calendar (<dateTime>)`
    - `⚠ <subject snippet> → ambiguous instruction "<text>"; saved to <filename>.md and flagged in body`
    - `❌ <subject snippet> → load_context failed (is_real=false). Skipping.`
 
