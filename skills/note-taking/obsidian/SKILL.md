@@ -48,6 +48,10 @@ Use `write_file` with the resolved absolute path and the full markdown content. 
 When the user is brainstorming or brain-dumping thoughts (e.g., about strategic ideas or planning):
 - **Do not jump the gun:** Never rush to write or finalize the note files while the user is still mid-thought. 
 - **Let them finish:** Actively listen, capture, and acknowledge their dump, and explicitly wait until they confirm they are completely done brainstorming before generating and writing the final note files.
+- **Structure for Product/Concept Notes:** When compiling a conceptual brain dump or new product idea, organize the final note with clear headings:
+  - **The Core Idea (Verbatim):** Highlight the user's raw, verbatim product description.
+  - **Risk Assessment:** Categorize notes by standard risks (e.g., Value Risk, Usability Risk, Feasibility Risk, Scale/Economic Risk) to make the strategic analysis scannable.
+  - **Next Steps:** End with the immediate next action, decision, or design/engineering challenges to address.
 
 #### Pattern: Adding to a Thematic Series of Strategy Notes
 When adding a new note to an existing series of conceptual or strategic notes (e.g., K12 Special Ed strategy):
