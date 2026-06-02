@@ -22,14 +22,20 @@ metadata:
 Gmail, Calendar, Drive, Contacts, Sheets, and Docs — through Hermes-managed OAuth and a thin CLI wrapper. When `gws` is installed, the skill uses it as the execution backend for broader Google Workspace coverage; otherwise it falls back to the bundled Python client implementation.
 
 
-> **⚠️ SEMI-READ-ONLY MODE (Bes-specific customization)**
+> ⚠️ **GMAIL-READ-ONLY MODE (Bes-specific customization)**
 >
-> This installation of the google-workspace skill is mostly **scoped read-only**, except
-> for **Google Calendar** which has **full write access** so you can schedule
-> and manage events on Justin's behalf.
+> This installation of the google-workspace skill has **full write access** for
+> **Google Calendar, Google Drive, Google Sheets, and Google Docs**, so you can
+> schedule events, upload/delete files, and manage documents/spreadsheets on
+> Justin's behalf.
+>
+> **Gmail** remains strictly **read-only** (`gmail.readonly`) for security.
 >
 > **You can use these write commands:**
 > - `calendar create`, `calendar delete`
+> - `drive upload`, `drive create-folder`, `drive share`, `drive delete`
+> - `sheets create`, `sheets update`, `sheets append`
+> - `docs create`, `docs append`
 >
 > **You can use these read-only subcommands:**
 > - `gmail search`, `gmail get`, `gmail labels`
@@ -41,13 +47,9 @@ Gmail, Calendar, Drive, Contacts, Sheets, and Docs — through Hermes-managed OA
 >
 > **You CANNOT use these write commands — calls will return 403:**
 > - `gmail send`, `gmail reply`, `gmail modify`
-> - `drive upload`, `drive create-folder`, `drive share`, `drive delete`
-> - `sheets create`, `sheets update`, `sheets append`
-> - `docs create`, `docs append`
 >
-> If Justin asks you to send mail or modify a Drive file, tell him this account
-> is read-only for those services and ask whether he wants to widen the scope.
-> For Google Calendar, write commands will work.
+> If Justin asks you to send or modify email, tell him Gmail is read-only.
+> All other Google Workspace services (Calendar, Drive, Sheets, Docs) have full write capabilities.
 
 ## References
 
@@ -413,7 +415,7 @@ When summarizing for Justin, **always preface results with the account tag**:
 - Use a **specific account** when Justin explicitly names one ("check work email
   from Alice") or when the query is account-specific by topic (e.g. company-only
   Drive folders → `--account work`).
-- For write operations (like creating calendar events): specify the correct target account using `--account <name>` (e.g. `gws_multi.py --account work calendar create ...` or `gws_multi.py --account personal-main calendar create ...`). Do not use `--account all` for write operations.
+- For write operations (like creating calendar events, managing files, or editing docs/sheets): specify the correct target account using `--account <name>` (e.g. `gws_multi.py --account work calendar create ...` or `gws_multi.py --account personal-main calendar create ...`). Do not use `--account all` for write operations.
 
 ### Legacy single-account compatibility
 
