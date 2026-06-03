@@ -153,10 +153,7 @@ def all_notes(skip_dirs=None):
     skip = skip_dirs or set()
     for root, dirs, files in os.walk(VAULT):
         root_path = Path(root)
-        if root_path == VAULT:
-            dirs[:] = [d for d in dirs if d not in skip]
-        else:
-            dirs[:] = [d for d in dirs if d not in {".git", ".trash"}]
+        dirs[:] = [d for d in dirs if d not in skip and d not in {".git", ".trash"}]
         for f in sorted(files):
             if f.endswith(".md"):
                 yield root_path / f
