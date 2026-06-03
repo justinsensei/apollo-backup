@@ -234,7 +234,7 @@ Justin's `bes-vault-sync` watcher auto-commits and pushes the vault to `obsidian
 
 ## Pitfalls
 
-- **Slack search date queries must use target date minus one day.** Slack's `after:YYYY-MM-DD` filter is exclusive of the specified day's start. To find messages sent on `TARGET_DATE` (e.g. `2026-05-28`), you must query `after:<TARGET_DATE_MINUS_1_DAY>` (e.g. `after:2026-05-27`). Searching with `after:<TARGET_DATE>` will exclude all messages from that day.
+- **Slack search date queries must use target date minus one day and plus one day.** Slack's `after:YYYY-MM-DD` filter is exclusive of the specified day's start, and `before:YYYY-MM-DD` is exclusive of the specified day's start. To find messages sent on `TARGET_DATE` (e.g. `2026-05-28`), you must query `after:<TARGET_DATE_MINUS_1_DAY>` (e.g. `2026-05-27`) and `before:<TARGET_DATE_PLUS_1_DAY>` (e.g. `2026-05-29`). Searching with `after:<TARGET_DATE>` or `before:<TARGET_DATE>` will exclude all messages from that day.
 
 - **Decision misattribution.** Do not assume Justin is the owner or decision-maker for calendar/email/Slack updates. Explicitly attribute decisions to the source actor (e.g. family members, teachers, or business partners) when summarizing or logging (e.g. "Jeff Galak rescheduled Simon's birthday" rather than "Agreed to reschedule...").
 
@@ -252,3 +252,5 @@ Justin's `bes-vault-sync` watcher auto-commits and pushes the vault to `obsidian
 - **Do NOT use custom python scripts to fetch Todoist data via direct REST API calls in subagents.** The sync v9 and REST v2 endpoints are deprecated (yielding HTTP 410 / 404). Subagent E must use the registered `mcp_todoist_*` tools directly. If a background script or custom tool must hit Todoist directly, use the correct current v1 path `https://api.todoist.com/api/v1/` and POST to `/api/v1/sync`.
 
 - **Daily note missing on weekends or non-work days.** If `TARGET_DATE` falls on a weekend or non-work day, a daily note might not exist in the vault. When running autonomously (such as from cron), update the corresponding morning-briefing cache file (`~/.hermes/morning-briefing/YYYY-MM-DD.json`) by setting `work_log_status` to `"error"` (or `"skipped"` if appropriate) and logging the detail in `work_log_error`, then exit gracefully by outputting `[SILENT]`. Do not attempt to create a blank daily note or halt.
+
+- **Linear GraphQL queries are highly prone to shell escaping errors.** Avoid passing raw GraphQL query strings with complex JSON filters directly as bash command arguments (e.g., using `linear_api.py raw`). Instead, write a quick, direct Python script (in-context or inside `execute_code`) that reads `LINEAR_API_KEY` from `~/.hermes/.env` and performs a standard HTTP POST to `https://api.linear.app/graphql` with `Authorization: <KEY>` (no `Bearer` prefix). This bypasses shell-quoting issues completely.
