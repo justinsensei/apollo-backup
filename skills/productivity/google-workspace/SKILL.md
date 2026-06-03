@@ -311,8 +311,8 @@ $GAPI sheets append SHEET_ID "Sheet1!A:C" --values '[["new","row","data"]]'
 ```
 
 ### Docs
+### Docs
 
-```bash
 # Read
 $GAPI docs get DOC_ID
 
@@ -322,9 +322,40 @@ $GAPI docs create --title "Draft" --body "First paragraph..."
 
 # Append text to the end of an existing Doc
 $GAPI docs append DOC_ID --text "Additional content to append"
+
+
+### Direct API Access via Python (Advanced/Custom Operations)
+
+When the CLI wrapper lacks subcommands for specific write or update actions (such as updating or patching calendar events), you can write a Python script that imports `google_api` and builds the service directly using `build_service(api, version)` to gain full access to the underlying API capabilities.
+
+```python
+import os
+import sys
+
+# Add google-workspace scripts directory to sys.path
+gw_scripts_dir = "/home/justin.guest/.hermes/skills/productivity/google-workspace/scripts"
+if gw_scripts_dir not in sys.path:
+    sys.path.insert(0, gw_scripts_dir)
+
+# Set the active account
+os.environ["GOOGLE_ACCOUNT"] = "personal-main"
+
+import google_api
+service = google_api.build_service("calendar", "v3")
+
+# Example: Update/patch an existing event
+service.events().patch(
+    calendarId="primary",
+    eventId="EVENT_ID",
+    body={
+        "summary": "New Summary",
+        "description": "New Description"
+    }
+).execute()
 ```
 
 
+## Multi-Account Usage (Bes customization)
 ## Multi-Account Usage (Bes customization)
 
 Justin has multiple Google accounts. This installation supports per-account tokens
