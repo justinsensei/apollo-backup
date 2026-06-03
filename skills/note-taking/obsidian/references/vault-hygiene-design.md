@@ -26,6 +26,10 @@ The cron wrapper (`vault_hygiene_cron.py`) imports stdout from the main script a
 
 **Pitfall discovered:** `Dianne AI Workshop 20260420141613.md` had `#project` but was workshop pre-work, not a project object note. No date prefix → correctly skipped.
 
+### Granola-to-Project linking
+**Detection:** matches key specific terms/phrases of active project notes in the meeting note.
+**Action:** appends a `### Related` section at the bottom of the Granola note containing a wikilink to the relevant project note (linking from meeting summary to the project note only). Ignores transcripts. Safe and idempotent.
+
 ## Report-only decisions
 
 ### Wrong folder
@@ -38,7 +42,7 @@ Report but never auto-fix — these require human judgment about which value is 
 
 | Folder | Reason |
 |--------|--------|
-| `Granola/` | Third-party schema (granola_id, attendees, etc.) |
+| Logs/Granola/ | Third-party schema skipped in general walks; summaries are explicitly processed for applying [[Meetings]] category and linking to relevant Project notes. Transcripts are skipped. |
 | `Readwise/` | Plugin-managed, gets overwritten on sync |
 | `Daily Notes/` | Backfilling daily_note is low-value; daily notes don't self-reference that way |
 | `Templates/` | Contains live Templater syntax — never auto-edit |
