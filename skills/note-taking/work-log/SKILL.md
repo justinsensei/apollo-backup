@@ -37,7 +37,7 @@ Use `search_files` with `target: "files"` to locate. If neither exists, tell Jus
 
 Spawn **one `delegate_task` subagent per external source** in a single batch so raw API output stays out of your context. Each subagent runs a **specific, pre-canned set of commands** — no exploration — and returns a small filtered summary (bullets, ~10–30 items max). You only see the summaries.
 
-**Direct execution option (Fast-track):** Spawning 5 parallel subagents may hit the max concurrent children limit of 3. If you can, you can execute the commands directly in-context via `terminal()` and the native MCP tools (especially for Todoist). This bypasses subagent overhead, completes in seconds, and is extremely clean when parsed directly by the main agent.
+**Direct execution option (Fast-track):** Spawning 5 parallel subagents may hit the max concurrent children limit of 3. If you can, you can execute the commands directly in-context via `terminal()` and the native MCP tools (especially for Todoist). This bypasses subagent overhead, completes in seconds, and is extremely clean when parsed directly by the main agent. A Python helper script is available at `references/direct_execution.py` which fetches Slack, Linear, and Google Workspace details in a single automated step to run within `execute_code()`.
 
 **Speed discipline:** subagents have a soft budget of **≤8 tool calls each**. If a subagent can't finish inside that, it must return what it has and exit. Tell it so explicitly in the context block ("Budget: 8 tool calls. If you exhaust it, return partial results and stop.").
 
