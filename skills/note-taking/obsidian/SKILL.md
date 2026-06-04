@@ -92,10 +92,10 @@ For creating People or Organization notes, load `obsidian-people-notes`. It cove
 
 ## Where to put new notes
 
-- Create new notes in the **vault root** unless explicitly told otherwise.
-- The vault has a flat-ish structure with category folders (`Attachments/`, `Daily Notes/`, `Notebook/`, `References/`, `Templates/`) but new notes default to root.
-- **Project notes** (category `[[Projects]]`) also live in the **vault root** by convention (see `manage-projects` skill). The `obsidian-people-notes` skill routes People/Orgs to `Notebook/` — that does NOT apply to Projects.
-- **Typed notes** (People, Organizations, Meetings) live in `Notebook/`.
+Notes are organized by type into specific locations in the vault:
+- **Notebook/**: Contains **free-form notes, essays, journals, personal reflections, braindumps**, and **typed notes** (People, Organizations, Meetings). Example files: `Notebook/Sledding with Rosie 20260101153654.md`, `Notebook/Why ship in small batches 20250603173937.md`.
+- **Vault Root**: **Project notes** (category `[[Projects]]`) and **current daily notes** live in the vault root by convention (see `manage-projects` skill).
+- **Daily Notes/**: **Archived daily notes** are moved here after the day is done.
 
 ## Third-party managed folders — do not touch
 
