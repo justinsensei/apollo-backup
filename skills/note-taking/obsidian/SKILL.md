@@ -364,5 +364,9 @@ If merging historical notes directly into your active vault (`~/vault`), they mu
 - **Filename Normalization & Duplicate Detection:** Old vaults and graphs often use different naming conventions (e.g., Spaced Title Case like `Contacts/Aly Lalji.md`) compared to the new vault (lowercase kebab-case like `people/aly-lalji.md`).
   - To prevent duplicate files with different cases/separators, always normalize filenames to lowercase alphanumeric-hyphen (kebab-case) before comparison. A naive exact match will miss hundreds of duplicates.
   - Compute SHA-256 content hashes, but do not rely on exact matches to declare files identical; cleanup scripts (tag stripping, frontmatter updates, template enrichment) will alter content hashes. Instead, flag overlapping normalized filenames as content conflicts (Yellow) if they differ in content, and unique (Green) if the normalized name is entirely absent.
-- **Logseq Graphs:** Convert outline-formatted Markdown...
+- **Logseq Graphs:** Convert outline-formatted Markdown. For converting Logseq JSON exports directly, a specialized script is available at `scripts/migrate_logseq_json.py` within this skill. It parses pages, strips block-level properties (`collapsed:: true`, etc.), resolves block-level reference IDs (`((uuid))`), normalizes filenames, and merges daily notes into the vault's active daily `## 🗒 Notepad` sections instead of overwriting them.
+  - Run it using:
+    ```bash
+    python3 ~/.hermes/skills/note-taking/obsidian/scripts/migrate_logseq_json.py <path_to_json> <vault_root_path>
+    ```
 
