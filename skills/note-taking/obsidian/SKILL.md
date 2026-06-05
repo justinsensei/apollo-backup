@@ -355,9 +355,14 @@ This enables unified semantic querying across all sources without polluting your
 
 #### In-Place Merge Pre-Processing
 If merging historical notes directly into your active vault (`~/vault`), they must be sanitized first via scripts to comply with vault rules:
-- **Old Obsidian Vaults:** Run a script to resolve filename duplicates, inject correct YAML frontmatter (`id`, `daily_note`, `category`), convert raw tags (like `#people`, `#meeting`) to category wikilinks, and organize notes into their designated directories (`Notebook/`, `Meetings/`, etc.).
+- **Migration & Sanitization Script:** A pre-made utility is available at `scripts/migrate_notes.py` within this skill. It automatically handles filename normalization, frontmatter cleanup (unquoting IDs, stripping null aliases), stripping of redundant inline typing tags (like `#zettel` or `#meeting`), and complete **Wikilink Healing**.
+  - *Wikilink Healing:* Converts all internal links (e.g. `[[Old Title#Section]]`) pointing to migrated files into their lowercase kebab-case targets (`[[old-title#Section|Old Title]]`), preserving the exact visual display text while ensuring no broken links.
+  - Run it using:
+    ```bash
+    python3 ~/.hermes/skills/note-taking/obsidian/scripts/migrate_notes.py --src <source_dir> --dest <dest_dir> [--strip-meeting]
+    ```
 - **Filename Normalization & Duplicate Detection:** Old vaults and graphs often use different naming conventions (e.g., Spaced Title Case like `Contacts/Aly Lalji.md`) compared to the new vault (lowercase kebab-case like `people/aly-lalji.md`).
   - To prevent duplicate files with different cases/separators, always normalize filenames to lowercase alphanumeric-hyphen (kebab-case) before comparison. A naive exact match will miss hundreds of duplicates.
   - Compute SHA-256 content hashes, but do not rely on exact matches to declare files identical; cleanup scripts (tag stripping, frontmatter updates, template enrichment) will alter content hashes. Instead, flag overlapping normalized filenames as content conflicts (Yellow) if they differ in content, and unique (Green) if the normalized name is entirely absent.
-- **Logseq Graphs:** Convert outline-formatted Markdown (where every line starts with a bullet point `- `) into standard paragraphs/headings. Translate Logseq page properties (`property:: value`) to YAML frontmatter. Rename Logseq journals (`journals/YYYY_MM_DD.md`) to standard Obsidian daily notes format and move to `Daily Notes/`.
+- **Logseq Graphs:** Convert outline-formatted Markdown...
 
