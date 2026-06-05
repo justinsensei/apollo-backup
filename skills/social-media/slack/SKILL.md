@@ -184,13 +184,42 @@ context to distinguish these from genuinely reminder-flagged messages.
 3. Confirm content with Justin in Telegram (paraphrase his ask).
 4. `slack post <dm_id> "<message>"`.
 
-**"Find the discussion about $TOPIC"**
+### Find the discussion about $TOPIC
 1. `slack search '$TOPIC' --limit 20`.
 2. Pick the relevant thread, grab `channel` and `thread_ts` (use `ts` if no
    thread_ts).
 3. `slack thread <channel> <thread_ts> --text` for full context.
 
-**"Find and Process Justin's Brain Reactions (`🧠` to Obsidian)"**
+## The Brain Note-Taking System (🧠)
+
+You can capture high-quality conversation notes directly from Slack into the Obsidian vault under `sources/slack/` using the emoji `🧠` or via interactive prompts in the **Morning Briefing**.
+
+### 1. Automated Note Capture (via `🧠` reaction)
+When Justin adds a `🧠` reaction to a message:
+- A cron job (`Slack Brain Note Capture`) runs every 2 hours using the `fetch_slack_brains.py` helper.
+- If Justin (user ID `U095LHMC4UW`) reacted with `🧠`, the script fetches the entire thread (if part of one) or an 11-message context window surrounding the message.
+- It synthesizes a Markdown note inside `/home/justin.guest/vault/sources/slack/YYYY-MM-DD-slug.md` with participants, a summary of who said what, and verbatim context.
+- It automatically appends a link + one-sentence gist under today's daily note `## 🗒 Notepad` section.
+- It marks the thread processed inside `~/.hermes/processed_slack_brains.json`.
+
+### 2. Manual Candidate Suggestions (Morning Briefing Phase 4.5)
+If a conversation wasn't explicitly tagged, the Morning Briefing live-scans active Slack threads from the last 36 hours for note-worthy discussions:
+- Runs `python3 ~/.hermes/scripts/fetch_slack_brains.py --list-candidates`.
+- **Candidate filters:** Requires `>= 3` messages, `>= 2` unique human participants, Justin's active participation or mention, and **no existing `🧠` reaction** (to avoid double-processing).
+- Prompts Justin with numbered candidates. If approved, it synthesizes the note, updates the daily note notepad, and marks it processed.
+
+### 3. Managing the System Helper
+The background script lives at:
+- `~/.hermes/scripts/fetch_slack_brains.py`
+Its database of processed threads is at:
+- `~/.hermes/processed_slack_brains.json`
+
+To manually mark a thread as processed (for testing or debugging):
+```bash
+python3 ~/.hermes/scripts/fetch_slack_brains.py --mark-processed <channel_id> <parent_ts>
+```
+
+## Pitfalls
 Justin uses a `🧠` (brain) emoji to flag Slack conversations that should be preserved in his vault as notes under `sources/slack/` (which is mapped as a `slack` page type in `gbrain-personal`).
 
 There is a dedicated cron job ("Slack Brain Note Capture") running every 2 hours that automates this workflow:
