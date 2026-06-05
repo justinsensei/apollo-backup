@@ -115,8 +115,12 @@ def fetch_gws(target_date):
     t_dt = datetime.strptime(target_date, '%Y-%m-%d')
     tomorrow = (t_dt + timedelta(days=1)).strftime('%Y-%m-%d')
     
-    # Calendar events
-    cal_cmd = f"python3 {gws_script} --account all calendar list --start {target_date}T00:00:00 --end {tomorrow}T00:00:00 --max 50"
+    # Get local timezone offset dynamically (e.g. -04:00 or -05:00)
+    local_offset = datetime.now().astimezone().strftime('%z')
+    formatted_offset = f"{local_offset[:-2]}:{local_offset[-2:]}" if local_offset else "Z"
+    
+    # Calendar events with proper local timezone offset
+    cal_cmd = f"python3 {gws_script} --account all calendar list --start {target_date}T00:00:00{formatted_offset} --end {tomorrow}T00:00:00{formatted_offset} --max 50"
     calendar_events = run_cmd(cal_cmd)
     
     # Gmail search (requires slashes)
