@@ -315,3 +315,21 @@ gbrain reinit-pglite --embedding-model <provider:model> --embedding-dimensions <
 - **OpenRouter Embedding:** Model is `openrouter:openai/text-embedding-3-small` with `1536` dimensions.
 - **Google Gemini Embedding:** Model is `google:gemini-embedding-001` with `768` dimensions. Requires `GOOGLE_GENERATIVE_AI_API_KEY` in the environment.
 
+### Integrating or Migrating Historical Vaults/Graphs
+
+When migrating historical note archives (e.g., old Obsidian vaults, old Logseq graphs), we can either keep them separate via GBrain multi-source routing or perform a unified in-place merge:
+
+#### Multi-Source Separation (Recommended)
+Keep your current vault clean by placing backups in a separate directory and registering them as separate federated sources inside your GBrain instance:
+```bash
+gbrain sources add old-obsidian --path ~/archive/old-obsidian --name "Old Obsidian"
+gbrain sources add old-logseq --path ~/archive/old-logseq --name "Old Logseq"
+gbrain sync
+```
+This enables unified semantic querying across all sources without polluting your active Obsidian workspace.
+
+#### In-Place Merge Pre-Processing
+If merging historical notes directly into your active vault (`~/vault`), they must be sanitized first via scripts to comply with vault rules:
+- **Old Obsidian Vaults:** Run a script to resolve filename duplicates, inject correct YAML frontmatter (`id`, `daily_note`, `category`), convert raw tags (like `#people`, `#meeting`) to category wikilinks, and organize notes into their designated directories (`Notebook/`, `Meetings/`, etc.).
+- **Logseq Graphs:** Convert outline-formatted Markdown (where every line starts with a bullet point `- `) into standard paragraphs/headings. Translate Logseq page properties (`property:: value`) to YAML frontmatter. Rename Logseq journals (`journals/YYYY_MM_DD.md`) to standard Obsidian daily notes format and move to `Daily Notes/`.
+
