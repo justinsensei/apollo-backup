@@ -92,22 +92,26 @@ For creating People or Organization notes, load `obsidian-people-notes`. It cove
 
 ## Where to put new notes
 
-Notes are organized by type into specific locations in the vault:
-- **Notebook/**: Contains **free-form notes, essays, journals, personal reflections, braindumps**, and **typed notes** (People, Organizations). Example files: `Notebook/Sledding with Rosie 20260101153654.md`, `Notebook/Why ship in small batches 20250603173937.md`.
-- **Meetings/**: Contains **meeting summaries and transcripts**. This folder consolidated the old `Granola/` logs folder. Meeting notes use the naming convention `YYYY-MM-DD [Descriptive title]`.
-- **Vault Root**: **Project notes** (category `[[Projects]]`) and **current daily notes** live in the vault root by convention (see `manage-projects` skill).
-- **Daily Notes/**: **Archived daily notes** are moved here after the day is done.
+Notes are organized into specific lowercase directories in the vault, which align with gbrain-personal's page-type definitions:
+- **meetings/**: Contains manual meeting summaries. (Transcripts live under `sources/meetings/transcripts/`).
+- **people/**: Contains People notes.
+- **projects/**: Contains Project notes.
+- **companies/**: Contains Organization/Company notes.
+- **concepts/**: Contains structured concept/definition notes.
+- **personal/**: Contains personal reflections and notes.
+- **notes/**: Contains quick fleeting scratchpads and brain dumps.
+- **daily/**: Contains both current and archived daily notes.
 
 ## Third-party managed folders — do not touch
 
 These folders are managed by external apps with their own schemas. Never add or modify `id`, `daily_note`, or `category` fields in these (except when performing deduplication/merges on duplicates):
 
-- `Meetings/` — meeting summaries and transcripts (inside `Meetings/Transcripts/`). Schema: `granola_id`, `title`, `type`, `created`, `updated`, `attendees`, `transcript`/`note`. Only carry `category: "[[Meetings]]"` on summaries (not transcripts); other standard frontmatter (like numeric `id` or `daily_note`) is omitted unless merged with manual notes.
+- `sources/` — holds transcripts, Readwise clips, and other third-party managed integrations with separate schemas. Skipped entirely by standard required-frontmatter hygiene rules.
 - `Readwise/` — article highlights imported by the Readwise plugin. Schema: `id` (non-standard timestamp format), `daily_note` (plain string, not wikilink). Do not patch these — they get overwritten on the next sync.
 
 ## Misplaced daily notes
 
-Daily notes are sometimes accidentally saved to `Notebook/` instead of `Daily Notes/`. Detect them by: filename matches `YYYY-MM-DD Weekday.md` (no extra words after the day name) AND contains `#daily_note` tag. Correct location is `Daily Notes/`.
+Daily notes are sometimes accidentally saved to folders like `inbox/` or root instead of `daily/`. `gbrain lint --fix` automatically detects files matching `YYYY-MM-DD Weekday.md` and re-routes/moves them into `daily/`.
 
 ## Templates
 
