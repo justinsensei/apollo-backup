@@ -330,6 +330,7 @@ def fetch_new_brains(client):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--list-new", action="store_true", help="List unprocessed messages with brain reaction")
+    parser.add_argument("--list-candidates", action="store_true", help="List candidate threads for manual note selection")
     parser.add_argument("--mark-processed", nargs=2, metavar=("CHANNEL_ID", "TS"), help="Mark message as processed")
     args = parser.parse_args()
     
@@ -346,6 +347,11 @@ def main():
             print(json.dumps({"ok": True, "marked": key}))
         else:
             print(json.dumps({"ok": True, "already_processed": key}))
+        sys.exit(0)
+        
+    if args.list_candidates:
+        candidates = fetch_note_candidates(client)
+        print(json.dumps(candidates, indent=2))
         sys.exit(0)
         
     # Default behavior if no specific command args are passed
