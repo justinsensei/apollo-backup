@@ -109,6 +109,127 @@ def get_channel_name(client, channel_id):
     except Exception:
         return channel_id
 
+def get_parent_ts(client, channel_id, ts):
+    try:
+        res = client.conversations_history(channel=channel_id, latest=ts, limit=1, inclusive=True)
+        msgs = res.get("messages", [])
+        if msgs:
+            m = msgs[0]
+            if m.get("thread_ts"):
+                return m.get("thread_ts")
+            return ts
+    except Exception:
+        pass
+    return ts
+
+def fetch_note_candidates(client):
+    import datetime as dt
+    user_id = client.auth_test()["user_id"]
+    processed = load_processed()
+    processed_set = {f"{p['channel']}:{p['ts']}" for p in processed}
+    
+    # Check last 36 hours for candidate conversations
+    start_date = (dt.date.today() - dt.timedelta(days=2)).strftime("%Y-%m-%d")
+    
+    # 1. Search messages from Justin
+    try:
+        res_from = client.search_messages(query=f"from:me after:{start_date}", count=30)
+        matches_from = res_from.get("messages", {}).get("matches", [])
+    except Exception:
+        matches_from = []
+        
+    # 2. Search mentions of Justin
+    try:
+        res_ment = client.search_messages(query=f"<@{user_id}> after:{start_date}", count=30)
+        matches_ment = res_ment.get("messages", {}).get("matches", [])
+    except Exception:
+        matches_ment = []
+        
+    all_matches = matches_from + matches_ment
+    
+    # Find unique (channel_id, parent_ts) threads
+    unique_conversations = set()
+    for m in all_matches:
+        channel_id = (m.get("channel") or {}).get("id")
+        ts = m.get("ts")
+        if channel_id and ts:
+            unique_conversations.add((channel_id, ts))
+            
+    unique_threads = set()
+    for channel_id, ts in unique_conversations:
+        parent_ts = get_parent_ts(client, channel_id, ts)
+        unique_threads.add((channel_id, parent_ts))
+        
+    candidates = []
+    for channel_id, parent_ts in unique_threads:
+        key = f"{channel_id}:{parent_ts}"
+        if key in processed_set:
+            continue
+            
+        try:
+            r = client.conversations_replies(channel=channel_id, ts=parent_ts, limit=100)
+            messages = r.get("messages", [])
+        except SlackApiError:
+            continue
+            
+        if len(messages) < 3:
+            continue
+            
+        # Verify Justin participated
+        participated = any(m.get("user") == user_id for m in messages)
+        if not participated:
+            continue
+            
+        # Verify distinct users
+        users = {m.get("user") for m in messages if m.get("user")}
+        if len(users) < 2:
+            continue
+            
+        # Check if Justin added a 'brain' reaction to any message in the thread
+        has_brain = False
+        for m in messages:
+            for rxn in m.get("reactions", []):
+                if rxn.get("name") == "brain" and user_id in rxn.get("users", []):
+                    has_brain = True
+                    break
+            if has_brain:
+                break
+                
+        if has_brain:
+            continue
+            
+        # Resolve all users in messages
+        resolve_users_in_messages(client, messages)
+        
+        # Clean messages
+        cleaned_messages = [clean_message(m, client) for m in messages]
+        
+        # Get permalink
+        permalink = None
+        try:
+            pl = client.chat_getPermalink(channel=channel_id, message_ts=parent_ts)
+            permalink = pl.get("permalink")
+        except SlackApiError:
+            permalink = f"https://signlab.slack.com/archives/{channel_id}/p{parent_ts.replace('.', '')}"
+            
+        channel_name = get_channel_name(client, channel_id)
+        
+        participants_names = list(set(m["user_name"] for m in cleaned_messages if m.get("user_name")))
+        
+        candidates.append({
+            "channel_id": channel_id,
+            "channel_name": channel_name,
+            "ts": parent_ts,
+            "permalink": permalink,
+            "is_thread": True,
+            "message_count": len(cleaned_messages),
+            "participants": participants_names,
+            "messages": cleaned_messages,
+            "preview": cleaned_messages[0]["text"][:150] + "..." if len(cleaned_messages[0]["text"]) > 150 else cleaned_messages[0]["text"]
+        })
+        
+    return candidates
+
 def fetch_new_brains(client):
     user_id = client.auth_test()["user_id"]
     processed = load_processed()
