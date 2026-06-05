@@ -22,18 +22,22 @@ If no `TARGET_DATE` is present, default to today as usual. When run from cron (n
 
 Read `OBSIDIAN_VAULT_PATH` from env (typically `/home/justin.guest/vault` inside `bes-vm`). Do not hard-code. If unset, fall back to `~/Documents/Obsidian Vault`. See the `obsidian` skill for full path-handling conventions.
 
-## Step 2 — Find the target daily note
+## Step 2 — Find or create the target daily note
 
-Daily-note filename format: `YYYY-MM-DD DayName.md` (e.g. `2026-05-20 Wednesday.md`).
+Daily-note filename format in this vault: `YYYY-MM-DD-weekday.md` (lowercase weekday name, hyphen-separated, e.g., `2026-06-04-thursday.md`). They are stored inside the `<vault>/daily/` directory.
 
-Justin's vault convention: **current** daily notes live in the vault root; **archived** daily notes live in `Daily Notes/`. Check the root first:
+Check if the daily note for the target date already exists:
+1. Search for `<vault>/daily/<YYYY-MM-DD-weekday>.md`.
+2. Fall back to checking `<vault>/<YYYY-MM-DD dddd>.md` or `<vault>/Daily Notes/<YYYY-MM-DD dddd>.md`.
 
-1. `<vault>/<TARGET_DATE DayName>.md` — primary
-2. `<vault>/Daily Notes/<TARGET_DATE DayName>.md` — fallback
-
-Use `search_files` with `target: "files"` to locate. If neither exists, tell Justin "The daily note for TARGET_DATE doesn't exist yet." and stop (when run from cron, log the error to the briefing cache and continue).
-
-**Manual Generation on Request:** If Justin asks to generate a missing daily note for a past day, read the template from `<vault>/Templates/Daily Note.md`, substitute the Templater ID with a target-date timestamp (e.g., `YYYYMMDD080000`), write it directly to `<vault>/Daily Notes/<TARGET_DATE DayName>.md` (since it is already archived/past), and then proceed with generating and appending the work log.
+**Auto-Creation of Daily Note:**
+If the target daily note does not exist, you must **automatically create it** from the template so the process never fails due to a missing note.
+1. Read the template from `<vault>/utilities/templates/daily_note.md`.
+2. Replace any Templater expressions with real values:
+   - For `id`, use `<TARGET_DATE_NOSYMBOLS>080000` (e.g., `20260605080000` for `2026-06-05`).
+   - Strip out any remaining `<% ... %>` or `<%* ... %>` tags or placeholder texts to make it a clean, ready-to-use note.
+3. Write the initialized note to `<vault>/daily/<YYYY-MM-DD-weekday>.md`.
+4. Proceed with generating and writing the work log / record blocks into this newly created file.
 
 ## Step 3 — Gather raw material (parallel, one subagent per source)
 
