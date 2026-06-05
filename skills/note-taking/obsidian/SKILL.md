@@ -93,15 +93,16 @@ For creating People or Organization notes, load `obsidian-people-notes`. It cove
 ## Where to put new notes
 
 Notes are organized by type into specific locations in the vault:
-- **Notebook/**: Contains **free-form notes, essays, journals, personal reflections, braindumps**, and **typed notes** (People, Organizations, Meetings). Example files: `Notebook/Sledding with Rosie 20260101153654.md`, `Notebook/Why ship in small batches 20250603173937.md`.
+- **Notebook/**: Contains **free-form notes, essays, journals, personal reflections, braindumps**, and **typed notes** (People, Organizations). Example files: `Notebook/Sledding with Rosie 20260101153654.md`, `Notebook/Why ship in small batches 20250603173937.md`.
+- **Meetings/**: Contains **meeting summaries and transcripts**. This folder consolidated the old `Granola/` logs folder. Meeting notes use the naming convention `YYYY-MM-DD [Descriptive title]`.
 - **Vault Root**: **Project notes** (category `[[Projects]]`) and **current daily notes** live in the vault root by convention (see `manage-projects` skill).
 - **Daily Notes/**: **Archived daily notes** are moved here after the day is done.
 
 ## Third-party managed folders — do not touch
 
-These folders are managed by external apps with their own schemas. Never add or modify `id`, `daily_note`, or `category` fields in these:
+These folders are managed by external apps with their own schemas. Never add or modify `id`, `daily_note`, or `category` fields in these (except when performing deduplication/merges on duplicates):
 
-- `Granola/` — meeting summaries and transcripts from the Granola app. Schema: `granola_id`, `title`, `type`, `created`, `updated`, `attendees`, `transcript`/`note`. Only carry `category: "[[Meetings]]"` on summaries (not transcripts); other standard frontmatter (like numeric `id` or `daily_note`) is omitted.
+- `Meetings/` — meeting summaries and transcripts (inside `Meetings/Transcripts/`). Schema: `granola_id`, `title`, `type`, `created`, `updated`, `attendees`, `transcript`/`note`. Only carry `category: "[[Meetings]]"` on summaries (not transcripts); other standard frontmatter (like numeric `id` or `daily_note`) is omitted unless merged with manual notes.
 - `Readwise/` — article highlights imported by the Readwise plugin. Schema: `id` (non-standard timestamp format), `daily_note` (plain string, not wikilink). Do not patch these — they get overwritten on the next sync.
 
 ## Misplaced daily notes
@@ -191,7 +192,7 @@ A hygiene script runs daily at 8am and auto-fixes structural issues. Location: `
 - Notes missing an `id` field
 - Notes missing a `daily_note` field (as a wikilink)
 
-**Folders the script skips entirely:** `Readwise/`, `Templates/`, `Daily Notes/`, `Categories/`, `.git`, `.trash`, `.cursor`, `.claude`, and any folder named `Granola` (e.g. `Logs/Granola/`) or `Copilot` (e.g. `Logs/Copilot/`) at any level of directory walk.
+**Folders the script skips entirely:** `Readwise/`, `Templates/`, `Daily Notes/`, `Categories/`, `.git`, `.trash`, `.cursor`, `.claude`, `Meetings/` (which consolidated the old `Granola` folders), and any folder named `Copilot` (e.g. `Logs/Copilot/`) at any level of directory walk.
 
 *Implementation detail:* To prevent descending into ignored subdirectories during a directory traversal, the vault hygiene scripts filter `dirs[:]` in-place inside `os.walk` at any nested level:
 ```python
