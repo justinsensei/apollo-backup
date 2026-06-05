@@ -141,6 +141,20 @@ accepts either `U01ABC...` or `@alice` (resolved via users.list).
 
 ### Common recipes
 
+**"Extract Brain Notes from Slack (`🧠` Emoji)"**
+If Justin reacts to a message with the `🧠` (brain) emoji, use `scripts/fetch_slack_brains.py` to fetch the message and its surrounding context.
+1. List all new reacted messages:
+   ```bash
+   python3 ${HERMES_HOME:-$HOME/.hermes}/skills/social-media/slack/scripts/fetch_slack_brains.py --list-new
+   ```
+2. For each new item:
+   - Generate a summarized Obsidian note in `sources/slack/YYYY-MM-DD-slug.md`.
+   - Update today's daily note with a link and one-sentence gist under `## 🗒 Notepad` or `## 🚀 Highlights & Decisions`.
+   - Mark the item as processed so it is never duplicated:
+     ```bash
+     python3 ${HERMES_HOME:-$HOME/.hermes}/skills/social-media/slack/scripts/fetch_slack_brains.py --mark-processed <channel_id> <ts>
+     ```
+
 **"What did I miss in #foo today?"**
 1. `slack channels --type public --member-only` to find the channel ID.
 2. `slack read <id> --since 24h --text`.
