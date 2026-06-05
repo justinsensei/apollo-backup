@@ -263,6 +263,10 @@ Every note in this vault should have these fields:
   ```
   Common for organization notes (e.g. Winchester-Thurston School → Winchester-Thurston, Winchester, WT).
 
+## Horizontal rules
+
+- **Standard horizontal line:** Always use exactly three hyphens `---` on a line by itself to represent a horizontal rule (horizontal line). Never use two hyphens `--` or em dashes `—` (which can be introduced by automatic smart-punctuation conversions on macOS/iOS devices).
+
 ## Structuring new notes
 
 - Always set `id` and `daily_note` correctly in the frontmatter.
