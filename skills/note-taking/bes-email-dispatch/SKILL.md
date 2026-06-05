@@ -1,7 +1,7 @@
 ---
 name: bes-email-dispatch
 description: Process an email that Justin forwarded to goff.justin+bes@gmail.com — parse the inline instruction (first line of body or subject prefix), turn the email into the right kind of Obsidian artifact (note, Person note update, append to existing note, ad-hoc judgment), and report back to Telegram. Read-only on Gmail.
-version: 1.0.0
+version: 1.1.0
 platforms: [linux, macos]
 metadata:
   hermes:
@@ -13,214 +13,111 @@ metadata:
 
 Handler skill for the email-forwarding workflow. Justin forwards an email to `goff.justin+bes@gmail.com` with a one-line instruction at the top of the body (or just a subject prefix); a Gmail filter labels it `Bes/Inbox`; a poller (`poll_bes_inbox.py`) detects it and invokes this skill once per new message ID.
 
-This skill is **read-only on Gmail**. It never archives, marks read, or replies. The source of truth for "has Bes seen this?" is the watermark file (`~/.hermes/state/bes-inbox-watermark.json`), not Gmail label state — so Justin can archive or re-label freely without confusing the agent.
+This skill is **read-only on Gmail**. It never archives, marks read, or replies. The source of truth for "has Bes seen this?" is the watermark file (`~/.hermes/state/bes-inbox-watermark.json`), not Gmail label state.
 
 ## Inputs
 
 One Gmail message ID. The poller passes it via the cron prompt; you call `scripts/load_context.py <id>` to fetch.
 
-## Core principle: follow the instruction narrowly
+## Core Principle: Tweakable Dual-Action Dispatch
 
-Justin's instruction is the spec. The email is **source material**, not a payload to wrap. Do what the instruction asks, and nothing else.
+When Justin forwards an email, he wants one of two actions (or sometimes both) to happen based on keywords and context in his one-line instruction (`instruction` field from `load_context.py`):
 
-- Do **not** include the source email as a quoted block, attachment summary, or "email captures" section. The email lives in Gmail; you don't need to duplicate it.
-- Do **not** synthesize extra context from the email body that wasn't requested. If the instruction says "add Suzetta as a Person note with her phone number," the body of the note is her name, the facts mentioned in the instruction, and her phone number. Not a summary of what her email was about.
-- Do **not** add provenance lines like "captured from email on YYYY-MM-DD" unless the instruction asks for tracking.
-- **Less is more.** A 4-line body that nails the instruction beats a 20-line body that includes everything you could have said.
+1. **Add the email to his Obsidian Vault (File it)**
+2. **Create a Todoist task based on the email (Task it)**
 
-Think of yourself as a careful assistant taking dictation, not a librarian cataloguing the email.
+For each action, Justin will include keywords and some context on the instruction line, for example:
+- *File this. I like the idea about the flux capacitor. I wonder if we could use it for the improbablity engine.*
+- *Task due Friday. Gotta finish the book before the weekend.*
+- *TODO due tomorrow. Check with Anya.*
 
-**Frontmatter is the exception to "less is more."** New notes need YAML frontmatter that matches Justin's existing templates (see next section) — those frontmatter fields drive his Dataview queries and daily-note backlinks. Frontmatter is part of the structure, not extra ornament.
+If his instruction contains keywords for **both** (or if he lists them on separate lines/sentences), you must perform **both** actions!
 
-## Frontmatter (match the templates exactly)
+### Default Behavior (Fallback)
+If the instruction is empty, has no keywords, or is just "Save as a note", default to **Action 1: Add the email to his vault**.
 
-The vault has Templater templates that Justin uses when he creates notes by hand. When Bes creates a note, the frontmatter must match the equivalent template's rendered output (Templater syntax pre-evaluated to literal values, since Bes is writing through the filesystem and not via Obsidian's plugin runtime).
+---
 
-**Template selection rule** based on the instruction's intent:
+## Action 1: File Email (Save to Vault)
 
-| Instruction shape | Template | `category` field |
-|---|---|---|
-| "Person note for <Name>" / "<Name> works at …" / "<Name> is …" | New Person | `"[[People]]"` |
-| "Org note for <Org>" / "<Org> is …" | New Organization | `"[[Organizations]]"` |
-| "Project note for <Project>" / "Track <Project>" | New Project | `"[[Projects]]"` |
-| "Meeting note for …" / "Capture meeting with …" | New Meeting | `"[[Meetings]]"` |
-| "Save as a note" / empty / generic | New Note | (empty) |
+### Trigger Keywords
+- Contains: `File this`, `file this`, `file`, `save this`, `save`, `archive this`
+- Or: Instruction is **empty / none** (default fallback)
 
-**Rendered frontmatter** (Bes evaluates the Templater placeholders at write time):
+### Storage Destination
+- Create a new markdown note inside the **`inbox/`** directory of his vault:
+  `/home/justin.guest/vault/inbox/YYYY-MM-DD-subject-slug.md`
+  *(Where `YYYY-MM-DD` is the current date or forwarded email date, and `subject-slug` is a cleaned, lowercase, hyphen-separated version of the cleaned subject).*
+
+### Note Structure & Frontmatter
+All new notes must start with the `New Note` frontmatter (pre-evaluating Templater values at write time using Justin's local time (America/New_York)):
 
 ```yaml
 ---
 id: "<YYYYMMDDHHmmss at write time, e.g. 20260520143157>"
 daily_note: "[[<YYYY-MM-DD dddd at write time, e.g. 2026-05-20 Wednesday>]]"
-category: "<We remove category since directories are MECE in GBrain>"
 ---
 ```
 
-Rules:
-- `id` — UTC or local time is fine; match what the template's `tp.date.now()` would produce. Use Justin's local timezone (America/New_York). Format strictly `YYYYMMDDHHmmss`, no separators.
-- `daily_note` — long-day-name wikilink. `dddd` is the full weekday name (`Wednesday`, not `Wed`).
-- `category` — wikilink in double quotes (matches Justin's template output exactly). Omit the `category:` line entirely for `New Note` (the template emits `category:` with no value, which is equivalent to omitting).
-- For `New Meeting`, the template auto-renames the file to today's date (`YYYY-MM-DD.md`). Follow that convention.
-- For `New Note`, the template auto-renames the file to the 14-digit timestamp (`YYYYMMDDHHmmss.md`). Follow that convention **unless** the instruction is "save as a note" + a forwarded email, in which case use `YYYY-MM-DD <subject>.md` for human-scannable titles. When in doubt, prefer the timestamp-only filename — it matches what Justin would get by hand.
-- For Person/Organization/Project, the template's auto-rename is overridden by Justin (e.g. `Suzetta Large.md`, not `20260520143157.md`). Use the human name.
+Below the frontmatter, format the note body cleanly:
+1. **Title:** Large H1 heading `# [Cleaned Subject]`
+2. **Email Metadata:** Labeled key-value pairs:
+   - **From:** [Original Sender Name <Email>]
+   - **To:** [Recipient Email]
+   - **Date:** [Original Email Date]
+3. **Context Note:** If Justin provided an instruction or extra thoughts (e.g., "I like the idea about the flux capacitor..."), include them in a `## Context` section.
+4. **Summary:** Add a concise markdown summary of the email's content (who sent it, what it is about).
+5. **Email Content:** A `---` line or `## Email Content` header followed by the cleaned plaintext body of the forwarded email.
 
-Below the frontmatter, follow the template's body shape (most are empty — Justin fills them in). The instruction tells you what body content to add.
+---
 
-## Process
+## Action 2: Create a Todoist Task
 
-For each message ID:
+### Trigger Keywords
+- Contains: `Task`, `task`, `TODO`, `todo`, `to do`, `To do`
 
-1. **Load context** — `~/.hermes/hermes-agent/venv/bin/python3 ~/.hermes/skills/note-taking/bes-email-dispatch/scripts/load_context.py <MESSAGE_ID>`. Returns JSON with:
-   - `id`, `subject`, `subject_clean`, `from`, `to`, `date` — raw email fields (`subject_clean` strips `Fwd:`/`Re:`)
-   - `body_text` — plaintext body (HTML auto-stripped if the email was HTML-only)
-   - `body_is_html` — true if the original was HTML
-   - `forwarded_from` — best-effort sender of the original email (parsed from `---------- Forwarded message ----------` blocks)
-   - `forwarded_subject` — best-effort original subject
-   - `forwarded_body` — the original email body with the forwarding wrapper stripped
-   - `instruction` — Justin's free-form instruction, parsed from the top of the body (everything BEFORE the first forward marker, with quoted reply markers stripped, capped at 600 chars)
-   - `instruction_source` — `"body"` (parsed from body), `"subject"` (subject after stripping `Fwd:` had a `[tag]` prefix), or `"none"` (no instruction found → default behavior)
-   - `is_real` — `false` if loader couldn't fetch the message (deleted, wrong account, scope error). Skip if false.
+### Task Creation Specifications
+Use `mcp_todoist_add_tasks` to add a single task to Justin's Todoist **Inbox** (projectId: `"6VGcQ7r6HW5r87j9"` or `"inbox"`):
 
-   **Note:** if `instruction_source` is `"none"`, default to "save as note." Don't try to extract intent from the email body itself — Justin's instruction lives at the top of the forward, not inside the original message.
+1. **Task Name (`content`):** Determine a meaningful, clear, actionable name based on the email's subject and summary. Do NOT use the raw `Fwd: ...` subject or a generic name.
+2. **Task Description (`description`):** Append whatever contextual note Justin has given you to the end of the task description (e.g. `Gotta finish the book before the weekend.`).
+3. **Due Date (`dueString`):** Extract any due date specified in the instruction (e.g., "due Friday", "due tomorrow", "due 6/15"). Pass this as the `dueString` parameter of the task. If no due date is mentioned, omit the `dueString` parameter.
+4. **Comment on Task:** After creating the task, immediately call `mcp_todoist_add_comments` to add a comment containing a concise summary of the email, including the original sender, recipient, and date. This keeps the task neat while preserving the original context.
 
-2. **Decide intent**. The instruction is free-form, so use judgment. Common shapes:
+---
 
-   | Shape of instruction | Action |
-   |---|---|
-   | "Save as a note" / "Save this" / "Note this" / empty | Create a new note inside the **`inbox/` directory** titled from the original subject |
-   | "Person note for <Name>" / "Add to <Name>'s page" / "<Name> works at <Org>" | Create or update a person note at the **root of the vault** (see Person notes below) |
-   | "Add to <existing note>" / "Append to <title>" | Find the closest matching note by title; append under a dated heading **in whatever folder the note already lives in** (do not move the note) |
-   | "Please extract events ... and add to Todoist" | Extract tasks/events, parse due dates, and call `mcp_todoist_add_tasks` (usually to `inbox`). Also save the email as a default note at the root of the vault for context/archival. |
-   | "Schedule this" / "Add this to my calendar" / "Schedule on <work/personal> calendar" | Parse event details (summary, start/end date & time, location, description, attendees). Invoke `gws_multi.py --account <work/personal-main> calendar create` with appropriate parameters. Default to `personal-main` for family/school/personal topics, and `work` for SignLab/professional topics. If ambiguous, ask or default sensibly based on email context. Also save the email as a default note at the root of the vault for context/archival. |
-   | "Summarize and …" / free-form prose | Use judgment. The instruction is authorization to do reasonable, reversible things in the vault. |
+## Other Intent Shapes (Legacy Support)
 
-3. **Write to vault**. Vault path is `/home/justin.guest/vault` (also in `$OBSIDIAN_VAULT_PATH`). The vault syncs to Justin's Macbook via the watcher (see `vm-hermes-vault-sync` skill) — your writes show up on his iPad within a minute or two.
+If Justin explicitly uses the following phrasing, support these specific paths:
+- **Person note:** *"Person note for <Name>"* or *"<Name> works at <Org>"* → Create/update `<lowercase-fullname-slug>.md` under `people/` using `New Person` frontmatter format.
+- **Append to existing note:** *"Add to <note title>"* or *"Append to <note title>"* → Find the closest match and append a dated bullet point.
+- **Calendar scheduling:** *"Schedule this"* or *"Add this to my calendar"* → Parse event details and call `gws_multi.py --account personal-main|work calendar create`.
 
-   **All new notes land at the root of the vault.** Sorting into subfolders is a distinct flow Justin handles himself. The vault has subfolders (`Notebook/`, `Daily Notes/`, `Granola/`, `Meetings/`, `References/`, `Attachments/`, etc.) but they exist for Justin's manual organization, not as agent write targets.
+---
 
-4. **Report**. One concise line per processed message in your final response, suitable for Telegram delivery:
-   - `✅ <subject snippet> → created <filename>.md (instruction: <verbatim or "default save">)`
-   - `✅ <subject snippet> → updated <Name>.md (added: <one-sentence summary>)`
-   - `✅ <subject snippet> → scheduled "<Summary>" on <account> calendar (<dateTime>)`
-   - `⚠ <subject snippet> → ambiguous instruction "<text>"; saved to <filename>.md and flagged in body`
+## Process Workflow
+
+For each message ID detected by the poller:
+
+1. **Load context:** Run `load_context.py <MESSAGE_ID>` to get the JSON email payload.
+2. **Determine intents:** Scan the `instruction` string for trigger keywords to decide if you need to:
+   - File the email to Vault (`File this` / `save` / empty)
+   - Create a Todoist task (`Task` / `TODO` / `to do`)
+   - Or both!
+3. **Execute actions:**
+   - If filing: Generate and write the markdown note to `/home/justin.guest/vault/inbox/`.
+   - If creating a task: Call `mcp_todoist_add_tasks` and then `mcp_todoist_add_comments` with the email summary.
+   - If both: Do both operations.
+4. **Report back:** Output a single concise line per email in your final response (for Telegram delivery):
+   - `✅ <subject snippet> → filed to vault and created Todoist task "<task_name>"`
+   - `✅ <subject snippet> → filed to vault as <filename>.md`
+   - `✅ <subject snippet> → created Todoist task "<task_name>"`
    - `❌ <subject snippet> → load_context failed (is_real=false). Skipping.`
 
-## Vault layout conventions
-
-**All new notes go to the root of the vault.** Justin sorts manually — pre-sorting into folders is the wrong move because it competes with his organizational flow.
-
-- **New note ("Save as note", default, or no instruction)** → `inbox/`, filename `YYYY-MM-DD-subject-slug.md`.
-- **New person note** → `people/`, filename `<lowercase-fullname-slug>.md`. Look for an existing match case-insensitively first; if a match exists with slightly different formatting, append to the existing one rather than creating a duplicate.
-- **Append to an existing note** → use that note's current location, do not move it. If the title match is ambiguous (multiple plausible matches), pick the closest and mention the chosen path in the report; if no match, fall back to creating a new note at root and note that in the report.
-- **Filename collision** → if `YYYY-MM-DD <Subject>.md` already exists, append a short numeric suffix (`YYYY-MM-DD <Subject> 2.md`). Never overwrite.
-
-## Examples of narrow execution
-
-These illustrate how to interpret instructions literally — narrow body content, template-matching frontmatter. The note body should be the smallest thing that satisfies the instruction.
-
-### Example 1 — Person note with included facts
-
-**Instruction:** "Add a Person note for Suzetta Large. She's our neighbor on Darlington (two doors down). Include her phone number. Note that she and Rosie are close friends."
-
-**Email body:** Block party announcement signed "Suzetta, 412.849.6615, suzetta.large@gmail.com."
-
-**Output → `people/suzetta-large.md`** (assume write time = 2026-05-20 14:31:57 Wednesday):
-
-```markdown
----
-id: "20260520143157"
-daily_note: "[[2026-05-20 Wednesday]]"
-# No category field needed in GBrain frontmatter
 ---
 
-Neighbor on Darlington Ave (two doors down).
-Close friend of Rosie.
+## Guidelines & Rules
 
-- **Phone:** 412.849.6615
-- **Email:** suzetta.large@gmail.com
-```
-
-Frontmatter matches the `New Person` template exactly. No `# Suzetta Large` H1 (the templates don't add one — the filename is the title). No "Email captures" section. No summary of the block party (instruction didn't ask for it). Email address included because the instruction implicitly wanted contact info (it asked for phone, the email was sitting right there in the from-line).
-
-### Example 2 — Save-as-note (default)
-
-**Instruction:** none / "Save as a note"
-
-**Email:** a Paul Graham essay forwarded as plaintext.
-
-**Output → `2026-05-20 <essay title>.md` at root:**
-
-```markdown
----
-id: "20260520143200"
-daily_note: "[[2026-05-20 Wednesday]]"
----
-
-<the essay body, lightly cleaned>
-```
-
-Matches `New Note` template — no `category` field (template emits it empty). Just the essay content. No "Forwarded by Justin" header, no source URL synthesis, no commentary.
-
-### Example 3 — Append to existing note
-
-**Instruction:** "Add this to the Acme launch note — timeline is changing."
-
-**Email body:** Vendor says delivery is pushed to June 1.
-
-**Output → append a short bullet to whichever existing note matches "Acme launch" (in its current folder, frontmatter untouched):**
-
-```markdown
-- 2026-05-20: Vendor pushed delivery to June 1.
-```
-
-One line. The instruction was about the timeline; that's what gets recorded. **Do not** touch the existing note's frontmatter — appends are body-only edits.
-
-### Example 4 — Free-form judgment
-
-**Instruction:** "Summarize this and add it to my reading queue."
-
-**Email:** a long article.
-
-If a `Reading queue.md` (or similar) exists at root, append one bullet with the title, a one-sentence summary, and a `[link](url)` if a URL is in the email. If no such note exists, create `Reading queue.md` at root with the `New Note` template frontmatter (no category) and that single entry. Don't dump the article into the queue note.
-
-## When to err on the side of LESS
-
-Frontmatter must match templates — that's structural. But for **body content**, if you find yourself adding:
-
-- More than ~3 sentences of context the instruction didn't ask for
-- A `## Source` or `## Email` or `## Provenance` section
-- A summary of the email's content when the instruction was about extracting one specific fact
-- An H1 title heading inside the note (the templates don't do this — filename is the title)
-
-…stop and trim. The instruction is the spec.
-
-## When to NOT act
-
-- `is_real == false` from load_context → just log and skip.
-- Instruction is wildly outside the email's content (e.g. "delete my whole vault") → save the email as a default note and flag for review. The mention is authorization for reversible vault operations, NOT for destructive ones.
-- Body looks like Bes himself sent the original (loop guard) — if `from` matches Justin's own addresses but content looks like a Bes confirmation, skip. The poller should filter most of these, but double-check.
-
-## Rate limit
-
-Designed for ≤ a few emails per cron tick. If the queue is suspiciously long (>10 new messages in one tick), process the first 5, then return early with a note that the rest will be picked up next tick.
-
-## Verification
-
-After writing, verify the file exists and is non-empty before reporting success. Cheap insurance against partial writes.
-
-## Troubleshooting
-
-### Gmail Token Expiry / Revocation (`invalid_grant`)
-
-If the poller cron or load context script fails with `invalid_grant` or a message that the token has expired/revoked:
-1. The OAuth credentials or user consent for `personal-main` have expired.
-2. Direct Justin to re-authenticate by running:
-   ```bash
-   export GOOGLE_ACCOUNT=personal-main
-   python3 ~/.hermes/skills/productivity/google-workspace/scripts/setup.py --revoke
-   python3 ~/.hermes/skills/productivity/google-workspace/scripts/setup.py --auth-url
-   ```
-   And then completing the authentication steps with the generated code:
-   ```bash
-   python3 ~/.hermes/skills/productivity/google-workspace/scripts/setup.py --auth-code <CODE>
-   ```
+- **Verify Writes:** After writing any note to the vault, verify the file exists and is non-empty before reporting success.
+- **Avoid Loop Guards:** Skip any emails sent by Bes himself to prevent infinite loops.
+- **Rate Limit:** Limit processing to at most 5 emails per cron tick. If there are more, report that the rest will be picked up next tick.
