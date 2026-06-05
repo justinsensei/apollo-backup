@@ -115,18 +115,14 @@ Daily notes are sometimes accidentally saved to folders like `inbox/` or root in
 
 ## Templates
 
-- Templates live at `<vault>/utilities/templates/` (lowercase path is active in this vault).
-- Daily Notes use `<vault>/utilities/templates/daily_note.md`.
-- Default new notes use `<vault>/utilities/templates/new_note.md`.
+Templates live under `<vault>/utilities/templates/` and have been massively simplified to align with gbrain-personal's prefix-driven classification. Since folder paths map automatically to page types, explicit `category: "[[CategoryName]]"` lines and tags are redundant and have been removed.
 
-### GBrain Path-Driven Classification & Template Simplification
-With the transition to **gbrain** (using the `gbrain-personal` schema pack), page classification is folder-driven. gbrain maps directory prefixes dynamically:
-- `meetings/` / `meeting/` → `meeting`
-- `people/` / `person/` → `person`
-- `projects/` / `project/` → `project`
-- `notes/` / `note/` → `note`
+The active templates are:
+1. **`daily_note.md`**: Structures the notepad, mantras, and work logs. Sets `id`.
+2. **`new_note.md`**: Baseline template for manual entries (concepts, people, projects, companies, etc.). Sets `id` and `daily_note`, and auto-renames to timestamp.
+3. **`new_meeting.md`**: Specialized template for meeting summaries. Sets `id` and `daily_note`, and auto-renames to date-prefix `YYYY-MM-DD`.
 
-Because of this prefix mapping, explicit `category: "[[CategoryName]]"` frontmatter is technically redundant for gbrain indexing and search. However, templates should still provide `id` and `daily_note` fields because they are required by the `vault_hygiene.py` scripts.
+All other category-specific templates (person, organization, project) are obsolete and have been deleted.
 
 ## Templater syntax — DO NOT MODIFY
 
@@ -193,24 +189,12 @@ Justin's old habit is to indicate a note's type with an inline tag (e.g. `#meeti
 
 ## Vault hygiene automation
 
-A hygiene script runs daily at 8am and auto-fixes structural issues. Location: `~/.hermes/scripts/vault_hygiene.py` (or `run_tier1_hygiene.py`). Wrapper (filters to red-level issues only for Telegram delivery): `~/.hermes/scripts/vault_hygiene_cron.py`.
+A consolidated hygiene script runs daily at 6AM (via the `vault-hygiene` cron job) at `~/.hermes/scripts/vault_hygiene.py`. Its cron wrapper `vault_hygiene_cron.py` filters to red-level issues only for Telegram delivery.
 
-**What it auto-fixes:**
-- Misplaced daily notes: `YYYY-MM-DD Weekday.md` in `Notebook/` → moves to `Daily Notes/`
-- Tag-to-category conversions (per rules above)
-
-**What it reports (no auto-fix):**
-- Typed notes outside `Notebook/` or vault root (wrong-folder)
-- ID conflicts (two notes share the same `id`)
-- Notes missing an `id` field
-- Notes missing a `daily_note` field (as a wikilink)
-
-**Folders the script skips entirely:** `Readwise/`, `Templates/`, `Daily Notes/`, `Categories/`, `.git`, `.trash`, `.cursor`, `.claude`, `Meetings/` (which consolidated the old `Granola` folders), and any folder named `Copilot` (e.g. `Logs/Copilot/`) at any level of directory walk.
-
-*Implementation detail:* To prevent descending into ignored subdirectories during a directory traversal, the vault hygiene scripts filter `dirs[:]` in-place inside `os.walk` at any nested level:
-```python
-dirs[:] = [d for d in dirs if not d.startswith(".") and d not in skip]
-```
+**How it works:**
+1. It runs `gbrain lint --fix` directly to perform content sanitization and automatically move misplaced daily notes into the `daily/` directory.
+2. It executes a high-speed Python check across non-archived user folders to check for duplicate IDs, missing IDs, and missing `daily_note` fields.
+3. It ignores `Readwise/`, `utilities/` (including templates), `sources/` (including transcripts), `daily/` (daily notes), `.git/`, `.trash/`, and system dirs.
 
 For the full vault structural audit (folder sizes, issue catalogue, what was found and fixed), see `references/vault-audit-2026-05-22.md`. For the hygiene script architecture and design decisions, see `references/vault-hygiene-design.md`.
 
