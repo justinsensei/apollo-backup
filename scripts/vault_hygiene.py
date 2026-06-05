@@ -220,7 +220,7 @@ for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_MEETINGS)):
         )
 
 # ── 3. Wrong-folder: typed notes outside Notebook/ ───────────────────────────
-for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_GRANOLA)):
+for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_MEETINGS)):
     _, fm, _ = read_note(path)
     cat = fm.get("category", "").strip().strip('"\'')
     if not cat or not cat.startswith("[["):
@@ -232,12 +232,11 @@ for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_GRANOLA)):
             (path, f"category {cat} but lives in {path.parent.relative_to(VAULT)}/")
         )
 
-# ── 4. Granola meeting notes missing category: "[[Meetings]]" ────────────────
-# Granola syncs two types: meeting summaries (type: note) and transcripts
-# (type: transcript). Only summaries should carry the Meetings category.
-# Legacy pasted notes (no 'type' field) are also treated as summaries.
-if GRANOLA_DIR.exists():
-    for path in sorted(GRANOLA_DIR.glob("*.md")):
+# ── 4. Meeting notes missing category: "[[Meetings]]" ────────────────────────
+# Meetings folder holds meeting summaries and a Transcripts/ subfolder.
+# Only summaries should carry the Meetings category.
+if MEETINGS_DIR.exists():
+    for path in sorted(MEETINGS_DIR.glob("*.md")):
         text, fm, _ = read_note(path)
         note_type = fm.get("type", "note").strip().strip('"\'').lower()
         if note_type == "transcript":
@@ -250,12 +249,12 @@ if GRANOLA_DIR.exists():
         if new_text != text:
             write_note(path, new_text)
             fixes_applied.append(
-                f"Added category [[Meetings]] to Granola note: Granola/{path.name}"
+                f"Added category [[Meetings]] to meeting note: Meetings/{path.name}"
             )
 
 # ── 5. ID conflicts ───────────────────────────────────────────────────────────
 id_to_paths = defaultdict(list)
-for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_GRANOLA | {"Daily Notes"})):
+for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_MEETINGS | {"Daily Notes"})):
     _, fm, _ = read_note(path)
     note_id = fm.get("id", "").strip()
     if note_id:
@@ -269,7 +268,7 @@ for note_id, paths in sorted(id_to_paths.items()):
             )
 
 # ── 6. Missing ID ─────────────────────────────────────────────────────────────
-for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_GRANOLA | {"Daily Notes"})):
+for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_MEETINGS | {"Daily Notes"})):
     _, fm, _ = read_note(path)
     note_id = fm.get("id", "").strip()
     if not note_id:
@@ -277,7 +276,7 @@ for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_GRANOLA | {"Daily Notes"
 
 # ── 7. Missing daily_note ─────────────────────────────────────────────────────
 # Also exclude vault-root daily notes (YYYY-MM-DD Weekday.md in root)
-for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_GRANOLA | {"Daily Notes"})):
+for path in sorted(all_notes(skip_dirs=IGNORE_DIRS_WITH_MEETINGS | {"Daily Notes"})):
     if path.parent == VAULT and DAILY_NOTE_PATTERN.match(path.name):
         continue  # current daily note in root — self-referential, skip
     _, fm, _ = read_note(path)
