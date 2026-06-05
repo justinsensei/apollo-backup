@@ -8,12 +8,112 @@ and runs local checks for ID conflicts, missing IDs, and missing daily notes.
 import os
 import re
 import subprocess
+import datetime
 from collections import defaultdict
 from pathlib import Path
 
 VAULT = Path("/home/justin.guest/vault")
 
-# 1. Run gbrain lint --fix to auto-fix and move files
+def reconcile_granola_meetings(vault_path):
+    meetings_dir = Path(vault_path) / "meetings"
+    if not meetings_dir.exists():
+        return
+        
+    print("Reconciling meetings from Granola...")
+    for path in meetings_dir.glob("*.md"):
+        filename = path.name
+        # Match YYYY-MM-DD at start of filename
+        date_match = re.match(r"^(\d{4}-\d{2}-\d{2})", filename)
+        if not date_match:
+            continue
+            
+        date_str = date_match.group(1)
+        try:
+            dt = datetime.date.fromisoformat(date_str)
+            weekday_lower = dt.strftime("%A").lower()
+            weekday_cap = dt.strftime("%A")
+        except ValueError:
+            continue
+            
+        text = path.read_text(encoding="utf-8", errors="replace")
+        
+        # Check if the file has standard frontmatter
+        has_frontmatter = False
+        fm_content = ""
+        body_content = text
+        
+        if text.startswith("---"):
+            fm_end = text.find("\n---", 3)
+            if fm_end > 0:
+                has_frontmatter = True
+                fm_content = text[3:fm_end]
+                body_content = text[fm_end+4:]
+                
+        # Parse fields from frontmatter if it exists
+        note_id = ""
+        daily_note = ""
+        category = ""
+        
+        if has_frontmatter:
+            id_match = re.search(r"^id:\s*[\"']?(\d+)[\"']?", fm_content, re.MULTILINE)
+            dn_match = re.search(r"^daily_note:\s*[\"']?([^\"'\n]+)[\"']?", fm_content, re.MULTILINE)
+            cat_match = re.search(r"^category:\s*[\"']?([^\"'\n]+)[\"']?", fm_content, re.MULTILINE)
+            if id_match:
+                note_id = id_match.group(1).strip()
+            if dn_match:
+                daily_note = dn_match.group(1).strip()
+            if cat_match:
+                category = cat_match.group(1).strip()
+                
+        needs_update = False
+        
+        if not note_id:
+            mtime = path.stat().st_mtime
+            mtime_dt = datetime.datetime.fromtimestamp(mtime)
+            if mtime_dt.strftime("%Y-%m-%d") == date_str:
+                time_part = mtime_dt.strftime("%H%M%S")
+            else:
+                time_part = "120000"
+            note_id = f"{date_str.replace('-', '')}{time_part}"
+            needs_update = True
+            
+        if not daily_note or "[[" not in daily_note:
+            daily_note = f"[[daily/{date_str}-{weekday_lower}|{date_str} {weekday_cap}]]"
+            needs_update = True
+            
+        if not category or "Meetings" not in category:
+            category = "[[Meetings]]"
+            needs_update = True
+            
+        # Clean body: strip leading whitespace and redundant separators
+        original_body = body_content
+        body_content = body_content.lstrip()
+        
+        # Clean up double hyphens / horizontal rules at top of body (Granola artifact)
+        if body_content.startswith("--\n") or body_content.startswith("--\r\n"):
+            body_content = body_content.split("\n", 1)[1].lstrip()
+            needs_update = True
+        elif body_content.startswith("-- ") or body_content.startswith("--\t"):
+            body_content = body_content.split("\n", 1)[1].lstrip()
+            needs_update = True
+        elif body_content.startswith("---\n") or body_content.startswith("---\r\n"):
+            body_content = body_content.split("\n", 1)[1].lstrip()
+            needs_update = True
+            
+        if body_content != original_body:
+            needs_update = True
+            
+        if needs_update:
+            # Construct clean frontmatter
+            new_fm = f"---\nid: {note_id}\ndaily_note: '{daily_note}'\ncategory: \"{category}\"\n---\n"
+            new_text = new_fm + body_content
+            path.write_text(new_text, encoding="utf-8")
+            print(f"  Fixed/Reconciled: {filename}")
+
+# 1. Reconcile raw Granola meetings from external syncing
+reconcile_granola_meetings(VAULT)
+
+# 2. Run gbrain lint --fix to auto-fix and move files
 print("Running gbrain lint...")
 subprocess.run(["gbrain", "lint", str(VAULT), "--fix"], capture_output=True, text=True)
 
