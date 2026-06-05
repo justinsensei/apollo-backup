@@ -315,6 +315,19 @@ gbrain reinit-pglite --embedding-model <provider:model> --embedding-dimensions <
 - **OpenRouter Embedding:** Model is `openrouter:openai/text-embedding-3-small` with `1536` dimensions.
 - **Google Gemini Embedding:** Model is `google:gemini-embedding-001` with `768` dimensions. Requires `GOOGLE_GENERATIVE_AI_API_KEY` in the environment.
 
+### Multi-Source Management and Constraints
+
+When adding additional content repositories (sources) to GBrain, be aware of these hard rules and workarounds:
+
+- **Overlap Guard (Nested Paths Blocked):** GBrain does not allow overlapping paths. Because the default source is registered at `~/vault`, you **cannot** register a subfolder (like `~/vault/sources/old-notes`) as a separate GBrain source. It will fail with `overlapping_path`.
+- **Git Requirement:** Any directory registered as a source **must** be a git-initialized repository (has `.git/` folder and at least one commit). If it is a raw folder, run `git init && git add . && git commit -m "Initial commit"` before syncing, otherwise `gbrain sync` will fail with `Not a git repository`.
+- **Sync Walker Exclusions:** The `gbrain sync` crawler (`collectSyncableFiles`) does not respect `.gitignore` folder recursion. It scans every directory recursively unless the folder starts with a dot (`.`), is named `node_modules`, or is named `ops`.
+- **The Dot-Folder Workaround:** If you want to keep backup or archive note directories inside your active vault without having `gbrain sync` index them under your `default` source (and without triggering the overlap guard), prefix the folder name with a dot (e.g., `~/vault/.sources/`) and add it to `~/vault/.gitignore`.
+- **Federation Settings:** When adding a new source, it defaults to `federated: false` (only searchable with `--source <id>`). To include it in unified, cross-source queries, run:
+  ```bash
+  gbrain sources federate <source-id>
+  ```
+
 ### Integrating or Migrating Historical Vaults/Graphs
 
 When migrating historical note archives (e.g., old Obsidian vaults, old Logseq graphs), we can either keep them separate via GBrain multi-source routing or perform a unified in-place merge:
