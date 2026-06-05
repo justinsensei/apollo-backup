@@ -118,6 +118,7 @@ These folders are managed by external apps with their own schemas. Never add or 
 To prevent vault dilution (low-signal machine data overriding curated personal knowledge), meeting files are partitioned into three distinct tiers:
 
 1. **Canonical Meeting Notes** (lives in `meetings/`): Curated, human-written, or polished meeting notes that represent verified personal knowledge. Only these files carry `category: "[[Meetings]]"` and are fully checked by standard vault hygiene.
+   * *Automation Note (Granola Reconciliation):* If raw Granola files sync directly to the `meetings/` folder with incomplete frontmatter (e.g. `granola_id`, `created`, `updated`, `attendees` instead of standard fields), the daily 6AM `vault_hygiene.py` script automatically intercepts and reconciles them. It generates the standard frontmatter (`id`, `daily_note`, `category: "[[Meetings]]"`) and cleans up formatting artifacts (like double rules `--` or `---` at the top of the body) in-place so they comply with gbrain and standard vault rules.
 2. **Raw Transcripts** (lives in `sources/meetings/transcripts/`): Auto-generated full transcripts from Granola. These carry `type: transcript` and **never** get a category property.
 3. **Automated Notes / Summaries** (lives in `sources/meetings/meeting_notes/`): Raw, unmodified AI-generated summaries synced directly from Granola or other tools. These carry `type: note` and live inside `sources/` to avoid polluting the canonical `meetings/` folder. They do not undergo standard vault hygiene checks.
 
