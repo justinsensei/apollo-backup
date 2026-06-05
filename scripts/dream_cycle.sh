@@ -6,6 +6,13 @@ if [ -f "$HOME/.hermes/.env" ]; then
 fi
 set +a
 
-echo "Starting automated gbrain dream cycle..."
-gbrain dream --stale
-echo "Dream cycle complete."
+log_dir="$HOME/.gbrain/logs"
+mkdir -p "$log_dir"
+log_file="$log_dir/dream-cron.log"
+
+# Run the dream cycle silently, logging all output
+if ! gbrain dream --stale > "$log_file" 2>&1; then
+    echo "❌ Automated dream cycle failed:"
+    cat "$log_file"
+    exit 1
+fi
