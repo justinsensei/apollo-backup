@@ -2,7 +2,7 @@ Justin has another agent named Hermes that handles infrastructure, plumbing, and
 §
 Email: read Gmail via Google OAuth. Tokens at `~/.hermes/google_tokens/{work,personal-main,personal-junk}.json`. Cross-account wrapper: `python3 ~/.hermes/skills/productivity/google-workspace/scripts/gws_multi.py --account all|<name>|<csv> gmail search "..." --max N`. Single-account: set `HERMES_GOOGLE_TOKEN_FILE` and call `google_api.py`. Read-only. Do NOT use himalaya.
 §
-Obsidian vault folder paths automatically classify page types in gbrain (meetings/, people/, projects/, companies/, concepts/). Standard templates (new_note, new_meeting, daily_note) live in utilities/templates/. Explicit category: frontmatter is no longer required for gbrain's taxonomy.
+Obsidian folder paths auto-classify gbrain page types (meetings/, people/, projects/, companies/, concepts/). Standard templates (new_note, new_meeting, daily_note) live in utilities/templates/. Frontmatter 'category' is redundant.
 §
 App Store Connect issue emails are not Justin's to handle — ignore them when capturing action items from email.
 §
@@ -19,3 +19,5 @@ Google Calendar has write access; Bes can directly schedule events on Justin's b
 Vault hygiene checks should ignore Copilot logs under Logs/Copilot/ and Granola logs.
 §
 Forwarded emails should not be copied to vault unless explicitly requested.
+§
+Obsidian horizontal rule: always use three hyphens `---` for a horizontal line, never two hyphens `--`.
