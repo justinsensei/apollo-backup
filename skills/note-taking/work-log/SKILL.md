@@ -163,7 +163,7 @@ Justin's Linear user-id can be cached. First time, look it up with `{ viewer { i
   >
   > Budget: 8 tool calls. If you exhaust it, return what you have and stop.
 
-**What this feeds:** completed tasks → "Today's Highlights"; incomplete due-today tasks → "Open Questions / Blockers."
+**What this feeds:** completed tasks → "## 🏆 Accomplishments"; incomplete due-today tasks → "## 🚀 Highlights & Decisions" (under a "Pending / Open Questions" sub-heading or bullet).
 
 ### Subagent F (optional) — recent git activity
 
