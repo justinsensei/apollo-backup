@@ -111,9 +111,18 @@ Daily notes are sometimes accidentally saved to `Notebook/` instead of `Daily No
 
 ## Templates
 
-- Templates live at `<vault>/Templates/` (not `Utilities/Templates/` — that's a stale path from the Cursor-era setup).
-- Daily Notes use `<vault>/Templates/Daily Note.md` (filename may vary; check the directory).
-- Default new notes use `<vault>/Templates/New Note.md` (has a blank `category:` field, which is correct for non-entity notes).
+- Templates live at `<vault>/utilities/templates/` (lowercase path is active in this vault).
+- Daily Notes use `<vault>/utilities/templates/daily_note.md`.
+- Default new notes use `<vault>/utilities/templates/new_note.md`.
+
+### GBrain Path-Driven Classification & Template Simplification
+With the transition to **gbrain** (using the `gbrain-personal` schema pack), page classification is folder-driven. gbrain maps directory prefixes dynamically:
+- `meetings/` / `meeting/` → `meeting`
+- `people/` / `person/` → `person`
+- `projects/` / `project/` → `project`
+- `notes/` / `note/` → `note`
+
+Because of this prefix mapping, explicit `category: "[[CategoryName]]"` frontmatter is technically redundant for gbrain indexing and search. However, templates should still provide `id` and `daily_note` fields because they are required by the `vault_hygiene.py` scripts.
 
 ## Templater syntax — DO NOT MODIFY
 
@@ -149,8 +158,8 @@ Template files use the **Templater plugin**, NOT core Obsidian templates. Templa
 Instead, use `cp` + `sed` to clone and modify:
 
 ```bash
-cp "<vault>/Templates/New Organization.md" "<vault>/Templates/New Category.md"
-sed -i 's/Organizations/Categories/' "<vault>/Templates/New Category.md"
+cp "<vault>/utilities/templates/new_organization.md" "<vault>/utilities/templates/new_category.md"
+sed -i 's/Organizations/Categories/' "<vault>/utilities/templates/new_category.md"
 ```
 
 Always `diff` the result against the source template afterward to confirm only the intended lines differ.
@@ -205,21 +214,21 @@ For the full vault structural audit (folder sizes, issue catalogue, what was fou
 
 An **entity** is any note with a `category:` frontmatter field. The canonical list of entity types lives in `<vault>/Categories/`. Each category note is itself an entity (`category: "[[Categories]]"`), including `Categories/Categories.md` which is self-referential.
 
-Current entity types (each has a file in `Categories/` and a template in `Templates/`):
+Current entity types (each has a file in `Categories/` and a template in `utilities/templates/`):
 
 | Entity type | Category note | Template |
 |---|---|---|
-| Meetings | `Categories/Meetings.md` | `Templates/New Meeting.md` |
-| Organizations | `Categories/Organizations.md` | `Templates/New Organization.md` |
-| People | `Categories/People.md` | `Templates/New Person.md` |
-| Projects | `Categories/Projects.md` | `Templates/New Project.md` |
-| Categories | `Categories/Categories.md` | `Templates/New Category.md` |
+| Meetings | `Categories/Meetings.md` | `utilities/templates/new_meeting.md` |
+| Organizations | `Categories/Organizations.md` | `utilities/templates/new_organization.md` |
+| People | `Categories/People.md` | `utilities/templates/new_person.md` |
+| Projects | `Categories/Projects.md` | `utilities/templates/new_project.md` |
+| Categories | `Categories/Categories.md` | `utilities/templates/new_category.md` |
 
 When creating a note of a given type, follow that type's template. When searching for notes by category, filter by `category: "[[CategoryName]]"`.
 
 **Note:** As of a May 2026 vault audit, the category notes in `Categories/` have been confirmed to already carry `category: "[[Categories]]"` (e.g. `Categories/Meetings.md` has it). The stale claim that they lacked this field is no longer accurate.
 
-### Templates (from `<vault>/Templates/`)
+### Templates (from `<vault>/utilities/templates/`)
 
 Entity templates (Meetings, People, Organizations, Projects) share the same frontmatter skeleton:
 ```yaml
