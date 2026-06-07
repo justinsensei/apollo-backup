@@ -61,7 +61,7 @@ daily_note: '[[daily/YYYY-MM-DD-weekday|YYYY-MM-DD Weekday]]'
     - Winchester
     - WT
   ```
-  Place `aliases` after the required three fields.
+  Place `aliases` after the required frontmatter fields (`id` and `daily_note`).
 
 - **`project`** — quoted wikilink, placed last. Only use if Justin specifies.
 
@@ -103,6 +103,8 @@ Grade 5 teacher at [[Winchester-Thurston School]].
 - `[[Jamie]]` — child, they/them
 - `[[Sam]]` — son (oldest)
 - `[[Rosie]]` — daughter (youngest)
+
+**Pronouns and Relationship Terms:** Align family relationship designations with their pronouns. Use gender-neutral terms like "Child" (instead of "Son" or "Daughter") for individuals who use "they/them" pronouns (e.g., `[[Jamie]]`).
 
 If Justin says "Sam" without context, it means `[[Sam]]` (his son). Same rule applies to all family members.
 
