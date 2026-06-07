@@ -48,7 +48,7 @@ We remove the redundant `category` field since the directory MECE structure hand
 ```yaml
 ---
 id: 'YYYYMMDDHHmmss'
-daily_note: '[[YYYY-MM-DD dddd]]'
+daily_note: '[[daily/YYYY-MM-DD-weekday|YYYY-MM-DD Weekday]]'
 ---
 ```
 
@@ -67,9 +67,8 @@ daily_note: '[[YYYY-MM-DD dddd]]'
 
 ### Quoting conventions (match existing notes exactly)
 
-- `id` — single-quoted string: `'20260520144511'`
-- `daily_note` — single-quoted wikilink: `'[[2026-05-20 Wednesday]]'`
-- `category` — double-quoted wikilink: `"[[People]]"` or `"[[Organizations]]"`
+- `id` — single-quoted string: `'20260520144511'` (or unquoted integer in some legacy notes, but single quotes are safer)
+- `daily_note` — single-quoted path-qualified wikilink: `'[[daily/2026-05-20-wednesday|2026-05-20 Wednesday]]'`
 
 ## Body — People & Organizations (Scaffolding Compiled Truth)
 
