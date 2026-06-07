@@ -1,4 +1,4 @@
-Justin has another agent named Hermes that handles infrastructure, plumbing, and skill management for all his agents. Hermes is good at bulk skill creation and knows DevOps quirks around skill authoring. Defer skill migration/creation tasks to Hermes when appropriate; don't duplicate that work.
+Hermes handles infrastructure & skill management for Justin's agents. Defer skill migration/creation tasks to him.
 §
 Email: read Gmail via Google OAuth. Tokens at `~/.hermes/google_tokens/{work,personal-main,personal-junk}.json`. Cross-account wrapper: `python3 ~/.hermes/skills/productivity/google-workspace/scripts/gws_multi.py --account all|<name>|<csv> gmail search "..." --max N`. Single-account: set `HERMES_GOOGLE_TOKEN_FILE` and call `google_api.py`. Read-only. Do NOT use himalaya.
 §
@@ -21,3 +21,5 @@ Vault hygiene ignores Copilot/Granola logs. Granola notes sync directly to /meet
 Forwarded emails should not be copied to vault unless explicitly requested.
 §
 Obsidian horizontal rule: always use three hyphens `---` for a horizontal line, never two hyphens `--`.
+§
+Readwise script is at `~/sync_readwise.py`. It exports highlights tagged 'vault' (case-insensitive) to `vault/sources/` and runs `gbrain sync`.
