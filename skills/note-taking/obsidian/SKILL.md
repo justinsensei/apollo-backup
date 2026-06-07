@@ -2,6 +2,9 @@
 name: obsidian
 description: Read, search, create, and edit notes in Justin's Obsidian vault. Covers vault path resolution, filesystem-first conventions, note-creation rules (filenames, frontmatter, Templater), and links to a full Obsidian-Flavored-Markdown reference.
 platforms: [linux, macos, windows]
+metadata:
+  hermes:
+    related_skills: [wind-down, work-log]
 ---
 
 # Obsidian Vault
