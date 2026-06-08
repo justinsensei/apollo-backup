@@ -2,7 +2,7 @@ Hermes handles infrastructure & skill management for Justin's agents. Defer skil
 §
 Email: read Gmail via Google OAuth. Tokens at `~/.hermes/google_tokens/{work,personal-main,personal-junk}.json`. Cross-account wrapper: `python3 ~/.hermes/skills/productivity/google-workspace/scripts/gws_multi.py --account all|<name>|<csv> gmail search "..." --max N`. Single-account: set `HERMES_GOOGLE_TOKEN_FILE` and call `google_api.py`. Read-only. Do NOT use himalaya.
 §
-Obsidian uses a flatter structure: people and companies live in contacts/; concepts and projects live in notes/. Meetings (meetings/) and daily notes (daily/) remain separate. Frontmatter 'type' overrides are used to enforce gbrain page types.
+Obsidian uses a flatter structure: people and companies live in contacts/; concepts and projects live in notes/. Meetings (meetings/) and daily notes (daily/) remain separate.
 §
 App Store Connect issue emails are not Justin's to handle — ignore them when capturing action items from email.
 §
@@ -22,4 +22,4 @@ Forwarded emails should not be copied to vault unless explicitly requested.
 §
 Obsidian horizontal rule: always use three hyphens `---` for a horizontal line, never two hyphens `--`.
 §
-Readwise script is at `~/sync_readwise.py`. It exports highlights tagged 'vault' (case-insensitive) to `vault/sources/` and runs `gbrain sync`.
+Readwise script is at ~/sync_readwise.py. It exports highlights tagged 'vault' (case-insensitive) to vault/sources/.
