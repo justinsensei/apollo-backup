@@ -220,53 +220,92 @@ def fetch_gws_counts(target_date):
     }
 
 def get_gbrain_activity(vault_path, last_briefing_dt):
-    # gbrain list --updated-after YYYY-MM-DD
-    # since updated-after only filters by date, we will fetch and then filter by exact file mtime
-    date_str = last_briefing_dt.strftime('%Y-%m-%d')
-    cmd = ["gbrain", "list", "--updated-after", date_str]
-    res = subprocess.run(cmd, capture_output=True, text=True)
-    if res.returncode != 0:
-        return {"error": res.stderr, "total_updated": 0, "type_counts": {}, "added_entities": {"person": [], "company": [], "concept": []}}
-    
     total_updated = 0
     type_counts = {}
     added_entities = {"person": [], "company": [], "concept": []}
     
-    for line in res.stdout.strip().split('\n'):
-        if not line:
-            continue
-        parts = line.split('\t')
-        if len(parts) < 3:
-            continue
-        slug, ptype, _ = parts[:3]
-        title = parts[3] if len(parts) > 3 else slug
-        
-        file_path = os.path.join(vault_path, slug + '.md')
-        if not os.path.exists(file_path):
-            continue
-            
-        mtime = datetime.fromtimestamp(os.path.getmtime(file_path))
-        if mtime < last_briefing_dt:
-            continue
-            
-        total_updated += 1
-        type_counts[ptype] = type_counts.get(ptype, 0) + 1
-        
-        if ptype in added_entities:
-            created_dt = None
-            with open(file_path, 'r') as f:
-                content = f.read()
-                id_match = re.search(r'^id:\s*(\d{14})', content, re.MULTILINE)
-                if id_match:
-                    id_str = id_match.group(1)
-                    try:
-                        created_dt = datetime.strptime(id_str, '%Y%m%d%H%M%S')
-                    except ValueError:
-                        pass
-            
-            if created_dt and created_dt >= last_briefing_dt:
-                added_entities[ptype].append({"slug": slug, "title": title})
+    # Folders to skip
+    skip_dirs = {".git", ".trash", ".cursor", ".claude", "_templates", "utilities", "Readwise"}
+    
+    for root, dirs, files in os.walk(vault_path):
+        # In-place modify dirs to skip unwanted directories
+        dirs[:] = [d for d in dirs if not d.startswith(".") and d not in skip_dirs]
+        for f in files:
+            if not f.endswith(".md") or f == "RESOLVER.md":
+                continue
                 
+            file_path = os.path.join(root, f)
+            try:
+                mtime = datetime.fromtimestamp(os.path.getmtime(file_path))
+                if mtime < last_briefing_dt:
+                    continue
+            except Exception:
+                continue
+                
+            # Get relative path as slug (no extension, forward slashes)
+            rel_path = os.path.relpath(file_path, vault_path)
+            slug = rel_path[:-3].replace(os.path.sep, '/')
+            
+            # Parse title & type from frontmatter or heading
+            title = f[:-3] # default to filename without extension
+            ptype = "note"  # default to note catch-all
+            content = ""
+            
+            try:
+                with open(file_path, 'r', encoding='utf-8', errors='replace') as file_obj:
+                    content = file_obj.read()
+                
+                # Check frontmatter
+                if content.startswith("---"):
+                    end_idx = content.find("\n---", 3)
+                    if end_idx > 0:
+                        fm = content[3:end_idx]
+                        type_match = re.search(r"^type:\s*[\"']?([a-zA-Z0-9_-]+)[\"']?", fm, re.MULTILINE)
+                        if type_match:
+                            ptype = type_match.group(1).strip()
+                            
+                        title_match = re.search(r"^title:\s*[\"']?([^\"'\n]+)[\"']?", fm, re.MULTILINE)
+                        if title_match:
+                            title = title_match.group(1).strip()
+                
+                # If title is still filename, try first H1 header in file
+                if title == f[:-3]:
+                    h1_match = re.search(r"^#\s+(.+)$", content, re.MULTILINE)
+                    if h1_match:
+                        title = h1_match.group(1).strip()
+            except Exception:
+                pass
+            
+            # Map specific directory patterns to types if untyped or default
+            if ptype == "note":
+                if slug.startswith("meetings/"):
+                    ptype = "meeting"
+                elif slug.startswith("daily/"):
+                    ptype = "daily"
+                elif slug.startswith("contacts/"):
+                    ptype = "person" # default contacts to person
+                elif slug.startswith("sources/"):
+                    ptype = "source"
+                elif slug.startswith("archive/"):
+                    ptype = "archive"
+            
+            total_updated += 1
+            type_counts[ptype] = type_counts.get(ptype, 0) + 1
+            
+            if ptype in added_entities:
+                created_dt = None
+                try:
+                    # Parse id from frontmatter
+                    id_match = re.search(r"^id:\s*[\"']?(\d{14})[\"']?", content, re.MULTILINE)
+                    if id_match:
+                        id_str = id_match.group(1)
+                        created_dt = datetime.strptime(id_str, "%Y%m%d%H%M%S")
+                except Exception:
+                    pass
+                    
+                if created_dt and created_dt >= last_briefing_dt:
+                    added_entities[ptype].append({"slug": slug, "title": title})
+                    
     return {
         "total_updated": total_updated,
         "type_counts": type_counts,
