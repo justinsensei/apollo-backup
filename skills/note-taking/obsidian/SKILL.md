@@ -104,9 +104,9 @@ Notes are organized into specific lowercase directories in the vault, which alig
 - **No Auto-Notes from Raw Streams:** Do not automatically create or add notes to the vault from raw emails, text messages, or Slack conversations. Rely strictly on daily work logs and explicit user requests to capture daily activities. This preserves vault hygiene and prevents taxonomy clutter.
 - **projects/**: Contains Project notes.
 - **companies/**: Contains Organization/Company notes.
-- **concepts/**: Contains structured concept/definition notes.
+- **concepts/**: Contains structured, permanent concept/definition notes (timeless mental models, frameworks, business principles, and cognitive architectures, e.g., *System 1 vs System 2*, *The Five Product Risks*, *Freemium Conversion Rules*).
 - **personal/**: Contains personal reflections and notes.
-- **notes/**: Contains quick fleeting scratchpads and brain dumps.
+- **notes/**: Contains quick fleeting scratchpads, brain dumps, and tactical/specific logs (family events, trips, medical logs, feature blueprints, project specs, meeting summaries, e.g., *Kennywood trip*, *Qulipta dosage logs*, *PostHog specs*, and notes tagged with `#quick_note`).
 - **daily/**: Contains both current and archived daily notes.
 
 ## Third-party managed folders — do not touch
