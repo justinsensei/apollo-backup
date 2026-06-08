@@ -2,6 +2,7 @@ model:
   default: gemini-flash-latest
   provider: gemini
   base_url: https://generativelanguage.googleapis.com/v1beta
+  max_tokens: 8192
 terminal:
   backend: local
   cwd: .
