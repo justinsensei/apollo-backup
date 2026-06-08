@@ -166,7 +166,7 @@ def _extract_message_body(msg: dict) -> str:
             if part.get("mimeType") == "text/plain" and part.get("body", {}).get("data"):
                 body = base64.urlsafe_b64decode(part["body"]["data"]).decode("utf-8", errors="replace")
                 break
-        if not body:
+        if not body.strip():
             for part in payload["parts"]:
                 if part.get("mimeType") == "text/html" and part.get("body", {}).get("data"):
                     body = base64.urlsafe_b64decode(part["body"]["data"]).decode("utf-8", errors="replace")
