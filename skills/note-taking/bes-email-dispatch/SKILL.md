@@ -123,3 +123,7 @@ For each message ID detected by the poller:
 - **Verify Writes:** After writing any note to the vault, verify the file exists and is non-empty before reporting success.
 - **Avoid Loop Guards:** Skip any emails sent by Bes himself to prevent infinite loops.
 - **Rate Limit:** Limit processing to at most 5 emails per cron tick. If there are more, report that the rest will be picked up next tick.
+
+## Troubleshooting & Pitfalls
+
+- **Empty plaintext parts in HTML emails:** Some systems/senders (like Expedia transactional emails) send `multipart/alternative` messages with a nearly empty text/plain part containing only `\r\n` (whitespace). Because `google_api.py` previously checked `if not body:`, this truthy whitespace caused it to skip extracting the actual HTML content. Always ensure `google_api.py` checks `if not body.strip():` when extracting bodies to correctly fall back to the rich HTML content.
