@@ -92,7 +92,7 @@ Use `mcp_todoist_add_tasks` to add a single task to Justin's Todoist **Inbox** (
 
 If Justin explicitly uses the following phrasing, support these specific paths:
 - **Person note:** *"Person note for <Name>"* or *"<Name> works at <Org>"* → Create/update `<lowercase-fullname-slug>.md` under `people/` using `New Person` frontmatter format.
-- **Append to existing note:** *"Add to <note title>"* or *"Append to <note title>"* → Find the closest match and append a dated bullet point.
+- **Append to existing note:** *"Add to <note title>"*, *"Append to <note title>"*, or *"Add [content] to the <note title> note"* → Find the closest match vault-wide (the user may say "in my inbox" or guess the wrong folder, but the note often resides in its correct MECE directory like `personal/trips/` or `projects/`) and append a dated bullet point (format: `- YYYY-MM-DD | Ingest — <context/details>`).
 - **Calendar scheduling:** *"Schedule this"* or *"Add this to my calendar"* → Parse event details and call `gws_multi.py --account personal-main|work calendar create`.
 
 ---
