@@ -270,7 +270,7 @@ python3 ~/.hermes/scripts/fetch_slack_brains.py
 
 8. **`reminders:read` scope is not installed.** Calling `reminders.list`
    via the Slack SDK will fail with `missing_scope`. The installed token
-   does not have this scope. Use `has:reminder` in a search query as a
+   does not have this scope. Use `is:saved` (for saved/starred messages) and `has:reminder` in a search query as a
    workaround (see "What do I have reminders set on?" in Common recipes).
    To get the real scope, Justin would need to re-authorize the Slack app
    with `reminders:read` added.
