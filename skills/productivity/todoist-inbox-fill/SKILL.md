@@ -71,20 +71,20 @@ Sources: **Slack, Gmail, Obsidian daily notes, Calendar, Linear, iMessages, Gran
 - **Skill:** `slack`
 - **Goal:** Find open actions for Justin in Slack today. Budget: 8 tool calls.
 - **Context:**
-  > Extract open actions from Slack for Justin. **Only surface messages where Justin has set a Slack reminder** — these are the clearest signal of intent to act.
+  > Extract open actions from Slack for Justin. **Only surface messages where Justin has saved the message or set a Slack reminder** — these are the clearest signal of intent to act.
   >
   > Run one search:
-  > 1. `python3 ${HERMES_HOME:-$HOME/.hermes}/skills/social-media/slack/scripts/slack.py search 'has:reminder after:<LOOKBACK_START>' --limit 50`
+  > 1. `python3 ${HERMES_HOME:-$HOME/.hermes}/skills/social-media/slack/scripts/slack.py search '(has:reminder OR is:saved) after:<LOOKBACK_START>' --limit 50`
   >
-  > `has:reminder` returns messages Justin flagged with Slack's native reminder feature. This is intentionally narrow — Justin sets reminders on things he means to act on, so false positives are rare.
+  > `is:saved` matches messages Justin has explicitly added to his "Saved items" (formerly starred messages) list. `has:reminder` matches reminders. Together, these represent "saved Slack reminders/messages" Justin means to act on.
   >
-  > Note: the word "reminder" appearing in message *text* (e.g. "Reminder: meeting at 3pm") can occasionally leak in. Drop these if they're clearly not reminder-flagged — use context and channel to judge.
-  >
-  > Drop: bot/automation messages, notifications, things that are clearly already done.
+  > Note: the word "reminder" appearing in message *text* (e.g. "Reminder: meeting at 3pm") can occasionally leak in via `has:reminder`. Drop these if they're clearly not reminder-flagged or saved — use context and channel to judge.
   >
   > **Command safety:** Do NOT pipe `slack.py` output into a language interpreter (`| python3 -c`, `| bash`, `| node -e`). The security scanner blocks these as `pipe_to_interpreter` (HIGH) and your run will halt for approval. If you need to inspect or reshape the JSON, use `jq`. Example:
   > ```bash
-  > python3 ${HERMES_HOME:-$HOME/.hermes}/skills/social-media/slack/scripts/slack.py search 'has:reminder after:<LOOKBACK_START>' --limit 50 \\
+  > python3 ${HERMES_HOME:-$HOME/.hermes}/skills/social-media/slack/scripts/slack.py search '(has:reminder OR is:saved) after:<LOOKBACK_START>' --limit 50 \
+  >   | jq -r '.[] | "\(.channel_name) | \(.username) | \(.permalink) | \(.text[:200])"'
+  > ```
   >   | jq -r '.[] | "\\(.channel_name) | \\(.username) | \\(.permalink) | \\(.text[:200])"'
   > ```
   > For non-trivial Python, write to a tempfile and run as `python3 /tmp/foo.py` — the file boundary is what satisfies the scanner.
