@@ -1,0 +1,69 @@
+---
+name: obsidian-organizations
+description: Use when creating or updating contact notes representing company, school, or institutional entities under Contacts/ with category "[[Organizations]]".
+version: 1.0.0
+author: Bes
+license: MIT
+metadata:
+  hermes:
+    tags: [obsidian, contacts, organizations, business]
+    related_skills: [obsidian, obsidian-contacts]
+---
+
+# Obsidian: Organizations Management
+
+## Overview
+This skill governs the structure and standard templates for institutional entities (companies, schools, partner organizations, clubs).
+
+---
+
+## Folder & Category
+- **Directory:** `/home/justin.guest/vault/Contacts/`
+- **Category link:** `category: "[[Organizations]]"`
+
+---
+
+## Creation and Update Workflow
+
+### Step 1 — Check for Duplicates
+Always search `/Contacts/` by name, acronym, or common alias before writing a new organization note.
+
+### Step 2 — Filename
+Use the capitalized, spaced official name as the filename:
+- `Waldorf School of Pittsburgh.md` (Not lowercase, not hyphenated).
+
+### Step 3 — Frontmatter Structure
+```yaml
+---
+id: 'YYYYMMDDHHmmss'
+daily_note: "[[Daily Notes/YYYY-MM-DD-weekday|YYYY-MM-DD Weekday]]"
+category: "[[Organizations]]"
+aliases:
+  - Acronym (e.g. WSP)
+  - Short Name
+---
+```
+
+### Step 4 — Body Layout
+Use the standard organizational profile layout:
+
+```markdown
+> Executive summary: brief description of who this organization is and our connection.
+
+## State
+- **Type:** School/Partner/Vendor/Employer
+- **Key Contacts:** [[Person Name]], [[Another Person]]
+
+## Open Threads
+- 
+
+---
+
+## Timeline
+- YYYY-MM-DD | Ingest — Context of creation / updates.
+```
+
+### Step 5 — Updating Timeline
+- Read the existing file first to preserve the layout.
+- Insert the new event chronologically at the top of the `## Timeline` section.
+- Maintain accurate mapping of members or contacts linked to this organization.

@@ -1,0 +1,34 @@
+---
+name: obsidian-logs
+description: Use when managing chronological directory structures for Daily Notes/ and Logs/Meetings/ and coordinating their sub-skills.
+version: 1.2.0
+author: Bes
+license: MIT
+metadata:
+  hermes:
+    tags: [obsidian, logs, folder-conventions]
+    related_skills: [obsidian, obsidian-daily-notes, obsidian-meetings]
+---
+
+# Obsidian Type: Chronological Directory Conventions
+
+## Overview
+This skill governs the structure and navigation of chronological log notes, pointing to focused sub-skills for daily journaling and meeting records.
+
+---
+
+## Directories & Sub-skills
+- **Daily Notes Directory:** `/home/justin.guest/vault/Daily Notes/`
+  - Sub-skill: **`obsidian-daily-notes`** (`category: "[[Daily Notes]]"`)
+- **Meetings Directory:** `/home/justin.guest/vault/Logs/Meetings/`
+  - Sub-skill: **`obsidian-meetings`** (`category: "[[Meetings]]"`)
+
+---
+
+## Folder-Level Rules
+
+- **Strict Date Formats:** Ensure all chronological filenames strictly adhere to their respective date patterns:
+  - Daily Notes: `YYYY-MM-DD-weekday.md` (lowercase weekday name).
+  - Meetings: `YYYY-MM-DD - Spaced Meeting Title.md`.
+- **Linking to Daily Notes:** Every chronological log file must link back to its creation day in its YAML `daily_note:` property.
+- **Archive Raw Logs:** Never leave raw files in the root `/meetings/` folder. Ensure the automated hygiene script pre-processes and moves them to `/Logs/Meetings/`.
