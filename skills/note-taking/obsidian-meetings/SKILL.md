@@ -56,10 +56,5 @@ category: "[[Meetings]]"
 
 ---
 
-## Granola Reconciliation Workflow
-Machine-generated meeting logs and transcripts from Granola drop directly into `/home/justin.guest/vault/meetings/`. To prevent clutter and ensure clean integration, they must be pre-processed and swept to `/Logs/Meetings/` by our vault hygiene automation:
-
-1. **Scan Source:** Checks for any files inside `/home/justin.guest/vault/meetings/`.
-2. **Inject standard frontmatter:** Parses the date from the file metadata or title, then inserts standard numeric `id` and `daily_note` links.
-3. **Format cleanup:** Strips double hyphens, double rules, or extraneous sync headers.
-4. **Relocation:** Saves the sanitized file to `/home/justin.guest/vault/Logs/Meetings/` and deletes the raw file from `/meetings/`.
+## Ingestion & Sync Pipeline
+- **Granola Sync:** Raw transcripts and notes dropped into `/meetings/` are automatically swept and processed into your formatted Meetings directory. This ingestion logic is handled by the **`bes-granola-ingest`** skill.
