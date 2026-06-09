@@ -321,18 +321,20 @@ Once Justin confirms → batch-add to Todoist Inbox with comments.
 
 ---
 
-### Phase 6 — Concept of the Day
+### Phase 6 — Daily Thought
 
-Present a random concept from the vault's `Notes/` directory. This concept should ideally be loaded from the cache file's `"concept_of_the_day"` field. If the cache is missing this field, select a random `.md` file containing `type: concept` from `/home/justin.guest/vault/Notes/` and display its title and full content.
+Present a random note (the Daily Thought) from the Thoughts (Opinions), Beliefs, or Sources categories. This should ideally be loaded from the cache file's `"daily_thought"` field. If the cache is missing this field, select a random `.md` file with `category: "[[Thoughts]]"`, `category: "[[Beliefs]]"`, or `category: "[[Sources]]"` from the vault, and display its title, category, and full content.
+
+Make sure it is clear which category the Daily Thought comes from (e.g., Opinions/Thoughts, Beliefs, or Sources).
 
 **Format:**
 ```
-💡 Concept of the Day — [[Notes/slug|Title]]
+💡 Daily Thought — [[<relative_path_no_extension>|Title]] (<Category>)
 
 [Full content of the note - keeping it markdown-formatted]
 
 ---
-Would you like to make any edits to this concept, or are we set for today?
+Would you like to make any edits to this note, or are we set for today?
 ```
 
 If Justin requests an edit to the note, use the `patch` or `write_file` tool to apply his changes, and confirm.
