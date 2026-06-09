@@ -50,14 +50,17 @@ Present the 5 suggestions as a numbered list in this exact format:
 ### Step 4: Approval & Transition
 Ask Justin which promotions he wants to approve. For each approved note:
 1. **Change Category:** Use `patch` to update the YAML `category: "[[<NewCategoryName>]]"` property.
-2. **For Thoughts $\rightarrow$ Beliefs (Tier 2 $\rightarrow$ Tier 3):**
+2. **Filename & Title Adjustment:** Update the file name and H1 title to conform to the category-specific naming conventions:
+   - If promoting to a **Belief** (or Reference, Project): Ensure the filename is strictly `Title.md` with no leading timestamp/ID. Rename the file and update the H1 title accordingly.
+   - If promoting to a **Thought** (or Note, Decision, Memory, Source): Ensure the filename is `ID Title.md`. Prepend the creation ID/timestamp if it was missing.
+3. **For Thoughts $\rightarrow$ Beliefs (Tier 2 $\rightarrow$ Tier 3):**
    - Synthesize the note's original body and all backlinked meeting/daily notes context to draft a high-quality, mature structure.
    - Draft **Core Tenets** (3 numbered, actionable pillars with bolded names) and **Application** guidelines (2 bulleted scenarios with bolded context).
    - Append these sections at the bottom of the file (under a horizontal rules `---` divider).
-3. **Run Link Hygiene Check:** Scan the promoted note's *outgoing links*. Since higher-tier notes *must not* link downward to lower tiers:
+4. **Run Link Hygiene Check:** Scan the promoted note's *outgoing links*. Since higher-tier notes *must not* link downward to lower tiers:
    - Identify any outgoing links pointing to raw Tier 1 notes (if promoting to Thought or Belief) or Tier 2 thoughts (if promoting to Belief).
    - Flag these downward links for Justin, or propose replacing them with plain text (e.g. converting `[[Raw Note]]` to plain text `Raw Note`) to preserve unidirectional flow.
-4. **Save Changes:** Perform the updates cleanly using `patch` and confirm success.
+5. **Save Changes:** Perform the updates cleanly using `patch` and confirm success.
 
 ---
 
