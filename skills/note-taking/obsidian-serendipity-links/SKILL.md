@@ -73,3 +73,16 @@ When Justin approves one or more links, update the source note using `patch`:
    ```
 4. Perform the file edit using `patch` (never overwrite the entire file with raw echo or cat).
 5. Confirm the edit succeeded and report back cleanly.
+
+---
+
+## Pitfalls & Safeguards
+
+### 1. Avoid Concept Duplication
+- **Check Before Creating:** When a suggested connection or discussion prompts the creation of a new conceptual note (such as a Belief or Thought), **always search the vault first** for any pre-existing notes on the same topic (using key terms, synonyms, or concept IDs).
+- **Merge into Canonical Notes:** If a pre-existing canonical note is found (e.g. `Willpower is limited 20250626165159` instead of creating `Willpower is a finite resource`):
+  1. Promote its category to `[[Beliefs]]` or `[[Thoughts]]` if it isn't set correctly yet.
+  2. Merge any new thoughts, tenets, or details from the current conversation directly into it.
+  3. Ensure all incoming and outgoing links to and from the previous notes are fully preserved and updated to point to this canonical note.
+  4. Delete the duplicate or redundant notes immediately to keep the vault clean.
+
