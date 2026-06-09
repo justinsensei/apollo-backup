@@ -42,6 +42,14 @@ This skill governs the structure and standard templates for two categories under
 
 ---
 
+## Preventing Concept & Note Duplication
+Before proposing, suggesting, or creating any new `[[Concepts]]` (or `[[References]]`), always scan the vault (specifically the `/Notes/` directory) for any existing notes with similar names, synonyms, or highly overlapping content, even if they are currently classified under `category: "[[Notes]]"`.
+- **Search First:** Use `search_files` to verify whether there is an existing raw note that covers the same conceptual territory.
+- **Consolidate & Promote over Creating Fresh:** If an existing raw note is found, do not create a duplicative new note. Instead, propose reclassifying the existing note to `[[Concepts]]`, merging any extra details if necessary.
+- **De-duplication & Pruning:** If multiple similar/duplicate notes exist (e.g., `Continuous interviewing.md` and `Continuous interviewing torres.md`), consolidate the best text, links, and references into a single canonical note under the `[[Concepts]]` category and delete/prune the redundant raw notes to keep the vault clean.
+
+---
+
 ## References vs. Ephemeral Project-Bound Notes
 - **References** are meant to be **permanent notes** that contain long-term value, guidelines, or checklists that Justin expects to refer to frequently over time (e.g., API documentation, general checklists, cheat sheets).
 - **Ephemeral checklists, plans, or migration guides** connected to specific, time-bound projects are NOT references. Do not categorize them as `[[References]]`; instead, categorize them under `[[Notes]]` or `[[Projects]]` so they stay organized with their respective projects.

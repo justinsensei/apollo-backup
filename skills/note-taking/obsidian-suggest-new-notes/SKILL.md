@@ -137,7 +137,7 @@ Core summary of the note topic.
 ---
 
 ## Common Pitfalls
-1. **Duplicate Creation & Overlap:** Before proposing a new Concept, Note, or Thought, search the entire vault (including `category: "[[Notes]]"` and `category: "[[Concepts]]"`) for any existing files with highly similar names or overlapping content. If an existing raw note or duplicate is found, recommend consolidating, merging, or reclassifying the existing note instead of creating a brand new one. This prevents polluting the vault with redundant nodes.
+1. **Duplicate Creation:** Before pitching any note title or suggesting a new Concept, check if a file with that name, a synonym, or overlapping content already exists in the vault (even if currently classified under `category: \"[[Notes]]\"`). If it exists, do not suggest a brand-new note. Instead, propose reclassifying, merging, and consolidating the existing notes according to the **Preventing Concept & Note Duplication** guidelines in `obsidian-references-sources`.
 2. **Path Misplacement:** Approved notes *must* always be written to the `/home/justin.guest/vault/inbox/` directory first, allowing manual review and triage later.
 3. **Overwriting Frontmatter:** Ensure frontmatter strings use single or double quotes around the ID and wikilink to avoid parsing breaks.
 
