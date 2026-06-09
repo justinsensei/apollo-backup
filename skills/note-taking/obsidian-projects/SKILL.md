@@ -18,7 +18,7 @@ This skill governs notes that act as central hubs for ongoing work initiatives, 
 ---
 
 ## Folder & Category
-- **Directory:** `/home/justin.guest/vault/Notes/`
+- **Directory:** `/home/justin.guest/vault/Notes/Projects/`
 - **Category link:** `category: "[[Projects]]"`
 
 ---
@@ -32,6 +32,7 @@ A Project or Travel note organizes timelines, tasks, objectives, and related sub
 id: 'YYYYMMDDHHmmss'
 daily_note: "[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
 category: "[[Projects]]"
+status: Active # Active, Complete, Dropped
 ---
 
 # Project Name / Travel Destination
@@ -39,7 +40,6 @@ category: "[[Projects]]"
 > Executive summary or purpose of the project/trip.
 
 ## State
-- **Status:** Active/On Hold/Planning/Completed
 - **Timeline:** Expected Start/End dates
 - **People Involved:** [[Person Name]], [[Another Person]]
 

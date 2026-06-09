@@ -32,7 +32,7 @@ Read the note content and title. Map the note to **exactly one** category from t
 | `category: "[[Thoughts]]"` | `Notes/` | **`obsidian-thoughts-beliefs`** |
 | `category: "[[Beliefs]]"` | `Notes/` | **`obsidian-thoughts-beliefs`** |
 | `category: "[[Decisions]]"` | `Notes/` | **`obsidian-decisions`** |
-| `category: "[[Projects]]"` | `Notes/` | **`obsidian-projects`** |
+| `category: "[[Projects]]"` | `Notes/Projects/` | **`obsidian-projects`** |
 | `category: "[[Daily Notes]]"` | `Daily Notes/` | **`obsidian-daily-notes`** |
 | `category: "[[Meetings]]"` | `Logs/Meetings/` | **`obsidian-meetings`** |
 | `category: "[[Categories]]"` | `Utilities/Categories/` | **`obsidian-utilities`** |
