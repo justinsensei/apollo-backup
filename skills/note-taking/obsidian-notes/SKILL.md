@@ -30,13 +30,9 @@ This skill governs the physical structure and coordinate mapping of the `/Notes/
 
 ## Folder-Level Rules
 
-### Distinguishing Scratchpads vs. Structured Concepts
-- **Scratchpads (note type):** Kept unstructured, focused on thoughts, brainstorms, or transient ideas.
-- **Structured Concepts (concept type):** Clearly defined terms, models, or entities. Keep these distinct to avoid conceptual drift.
-
 ### Naming Conventions
 - All files under `/Notes/` must use Spaced, Capitalized names.
-- Do not prefix concept or belief notes with timestamps or IDs in the filename.
+- Do not prefix belief or thoughts notes with timestamps or IDs in the filename.
 - If a note is a historical record, a timestamp can exist at the end of the filename (e.g. `Armor framework for avoiding burnout 20250621083744.md`).
 
 ### Aliases
