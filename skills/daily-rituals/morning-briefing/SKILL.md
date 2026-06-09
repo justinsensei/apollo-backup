@@ -176,34 +176,11 @@ Coming up this week:
 
 **On non-work days (or "day off"):** show personal calendar events only. Skip work account events.
 
-After presenting, wait for acknowledgment before Phase 3.
+After presenting, wait for acknowledgment before Phase 3 (Calendar event candidates).
 
 ---
 
-### Phase 3 — Near-term task triage
-
-Query Todoist for tasks with due dates or deadlines in the next 3 days (inclusive of today).
-
-**Rule:** Skip any tasks that are already in the "Now" project, or completed/cancelled tasks.
-Only present this if there are matching tasks. If none, skip directly to the next phase.
-
-**Format:**
-```
-📌 N tasks due or with deadlines in the next 3 days:
-
-1. [Project] Task name (due: Date/Time | deadline: Date)
-...
-
-Would you like to move any of these to "Now"?
-```
-
-Once Justin selects tasks, move them to the "Now" project.
-
-After presenting and handling any movements, wait for acknowledgment before Phase 4.
-
----
-
-### Phase 4 — Calendar inbox candidates
+### Phase 3 — Calendar event candidates
 
 Present the calendar event candidates from `inbox_candidates.calendar_events`.
 
@@ -220,14 +197,37 @@ Format:
 Which ones should I add directly to your Google Calendar?
 ```
 
-If `calendar_events` is empty, say "Nothing new to add to your calendar." and skip to Phase 4.5.
+If `calendar_events` is empty, say "Nothing new to add to your calendar." and skip to Phase 4.
 
 Once Justin confirms selections:
 - Schedule/create the events directly on the respective Google Calendar accounts (`work` or `personal-main`) using the calendar write capabilities (`gws_multi.py --account <name> calendar create --summary "..." --start "..." --end "..." --attendees "..." --description "..."`).
 - Only create a Todoist "Add to calendar:" task as an exceptional fallback if Justin specifically requests it or if the event timing/date is too ambiguous to schedule directly.
-- Report the scheduling confirmation with event details and links, then move to Phase 4.5.
+- Report the scheduling confirmation with event details and links, then move to Phase 4.
 
 **On non-work days / day off:** still run this phase but filter to personal events only (skip work Slack, work email sources).
+
+---
+
+### Phase 4 — Near-term task triage
+
+Query Todoist for tasks with due dates or deadlines in the next 3 days (inclusive of today).
+
+**Rule:** Skip any tasks that are already in the "Now" project, or completed/cancelled tasks.
+Only present this if there are matching tasks. If none, skip directly to Phase 5.
+
+**Format:**
+```
+📌 N tasks due or with deadlines in the next 3 days:
+
+1. [Project] Task name (due: Date/Time | deadline: Date)
+...
+
+Would you like to move any of these to "Now"?
+```
+
+Once Justin selects tasks, move them to the "Now" project.
+
+After presenting and handling any movements, wait for acknowledgment before Phase 5.
 
 ---
 
