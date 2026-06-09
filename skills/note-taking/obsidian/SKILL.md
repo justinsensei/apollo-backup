@@ -274,6 +274,13 @@ Different note types follow different filename rules, defined by the template fo
 - **Meeting notes**: `YYYY-MM-DD [Descriptive title]` — date prefix, then a short descriptive title.
 - **People / Organizations / Projects**: simple descriptive title, no timestamp (Templater renames to timestamp, but Bes should use a meaningful name instead). Example: `Bes Setup.md`, not `20260521094904.md`.
 
+### Converting kebab-case notes to normal-spaced case
+To batch-convert older kebab-case note filenames (such as `dhruv-sringari.md` or `2025-09-23-lunch-waves.md`) to normal-spaced titles with the first letter capitalized, and completely heal all internal wikilinks across the vault in a single pass, run:
+```bash
+python3 ~/.hermes/skills/note-taking/obsidian/scripts/rename_kebab_notes.py --vault /home/justin.guest/vault [--commit]
+```
+By default, the script runs in dry-run mode. Pass `--commit` to perform the actual file renames and content link healing. Excludes daily notes, third-party sources, and templates from renaming.
+
 ## YAML frontmatter
 
 Every note in this vault should have these fields:
