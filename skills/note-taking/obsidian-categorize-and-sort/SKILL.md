@@ -96,7 +96,18 @@ To avoid incorrect or naive categorization, always differentiate between the fol
 * *Exception:* Contact details imported or synced into `/sources/` from external systems should be migrated to `/Contacts/` under `category: "[[People]]"`.
 
 ### 3. Subjective Thoughts vs. Objective Concepts
-* **Personal Reflections:** Notes containing opinions, subjective philosophies, or career decision logs (e.g., *Leave raptor*, *Thoughts on fatphobia*) should be categorized as `[[Thoughts]]` or `[[Beliefs]]` (using sub-skill `obsidian-thoughts-beliefs`), even if their legacy metadata includes `type: concept`.
+* **Personal Reflections / Nuances between Thoughts, Beliefs, and Concepts:**
+  * **`[[Beliefs]]`**: Standardized, high-conviction product heuristics, proven playbook mistakes to avoid (e.g., *Common habit loop mistakes*), strict lifestyle constraints (e.g., *Keep the phone bricked*), and durable design/systems axioms. These are highly operational and directly govern active decision-making.
+  * **`[[Thoughts]]`**: Subjective, fluid, or evolving personal reflections, general routines (*Swim in the morning*), reading habits/philosophies (*You don't understand a book unless you've broken the spine*), and intellectual provocations.
+  * **`[[Concepts]]`**: Reserved strictly for *other people's* thinking (e.g., summarizing specific authors, models, or books) where you are capturing the source's framework rather than stating a fully adopted personal axiom.
+
+---
+
+## Bulk Categorization Pass Protocol
+When performing large-scale triage or classification sweeps (e.g., sorting notes in batches of 10):
+1. **Focus on Triage Only**: Do NOT attempt to groom, flesh out, or elaborate on the content of the notes during the sweep. Keep the momentum high. Defer detailed note grooming to later dedicated sessions.
+2. **Track with Temporary State**: Add a temporary tracker like `reviewed: false` to the frontmatter of target files. Switch it to `reviewed: true` along with the category update as each batch is approved.
+3. **Establish Stable Order**: Process files chronologically using the YYYYMMDDHHmmss timestamp in their ID or filename to trace the natural evolution of thoughts.
 
 ### 4. Guides/Checklists vs. Default Notes
 * **Guides and Handbooks:** Technical procedures, step-by-step migration guides, or checklists (e.g., *Mixpanel to Posthog migration guide*) should be categorized as `[[References]]` (using sub-skill `obsidian-references-sources`) rather than the default `[[Notes]]`.
