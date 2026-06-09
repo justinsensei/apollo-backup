@@ -1,15 +1,15 @@
 ---
-name: bes-email-dispatch
+name: bes-email-ingest
 description: Process an email that Justin forwarded to goff.justin+bes@gmail.com — parse the inline instruction (first line of body or subject prefix), turn the email into the right kind of Obsidian artifact (note, Person note update, append to existing note, ad-hoc judgment), and report back to Telegram. Read-only on Gmail.
-version: 1.1.0
+version: 1.2.0
 platforms: [linux, macos]
 metadata:
   hermes:
-    tags: [email, gmail, obsidian, dispatch, polling]
+    tags: [email, gmail, obsidian, ingest, polling]
     related_skills: [google-workspace, obsidian, polling-cron-agent]
 ---
 
-# Bes Email Dispatch
+# Bes Email Ingest
 
 Handler skill for the email-forwarding workflow. Justin forwards an email to `goff.justin+bes@gmail.com` with a one-line instruction at the top of the body (or just a subject prefix); a Gmail filter labels it `Bes/Inbox`; a poller (`poll_bes_inbox.py`) detects it and invokes this skill once per new message ID.
 
@@ -40,7 +40,7 @@ If the instruction is empty, has no keywords, or is just "Save as a note", defau
 
 ---
 
-## Action 1: File Email (Save to Vault)
+## Action 1: File Email (Save to Vault Inbox)
 
 ### Trigger Keywords
 - Contains: `File this`, `file this`, `file`, `save this`, `save`, `archive this`
@@ -57,7 +57,7 @@ All new notes must start with the `New Note` frontmatter (pre-evaluating Templat
 ```yaml
 ---
 id: "<YYYYMMDDHHmmss at write time, e.g. 20260520143157>"
-daily_note: "[[<YYYY-MM-DD dddd at write time, e.g. 2026-05-20 Wednesday>]]"
+daily_note: "[[Daily Notes/<YYYY-MM-DD Weekday>|YYYY-MM-DD Weekday]]"
 ---
 ```
 
@@ -89,7 +89,7 @@ All new email log notes must start with this frontmatter format:
 ```yaml
 ---
 id: "<YYYYMMDDHHmmss at write time>"
-daily_note: "[[<YYYY-MM-DD dddd at write time>]]"
+daily_note: "[[Daily Notes/<YYYY-MM-DD Weekday>|YYYY-MM-DD Weekday]]"
 category: "[[Emails]]"
 type: email
 original_url: "<Gmail message search link, e.g. https://mail.google.com/mail/u/0/#search/rfc822msgid:<Message-ID> or search query>"
@@ -146,7 +146,7 @@ For each message ID detected by the poller:
    - Create a Todoist task (`Task` / `TODO` / `to do`)
    - Or both!
 3. **Execute actions:**
-   - If filing: Generate and write the markdown note to `/home/justin.guest/vault/inbox/`.
+   - If filing: Generate and write the markdown note to `/home/justin.guest/vault/inbox/` or `/home/justin.guest/vault/Logs/Emails/`.
    - If creating a task: Call `mcp_todoist_add_tasks` and then `mcp_todoist_add_comments` with the email summary.
    - If both: Do both operations.
 4. **Report back:** Output a single concise line per email in your final response (for Telegram delivery):

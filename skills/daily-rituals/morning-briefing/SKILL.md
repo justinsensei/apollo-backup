@@ -257,15 +257,15 @@ Once Justin confirms → batch-add to Todoist Inbox with comments.
 
 ---
 
-### Phase 6 — Daily Thought
+### Phase 6 — Morning Thought
 
-Present a random note (the Daily Thought) from the Thoughts (Opinions), Beliefs, or Sources categories. This should ideally be loaded from the cache file's `"daily_thought"` field. If the cache is missing this field, select a random `.md` file with `category: "[[Thoughts]]"`, `category: "[[Beliefs]]"`, or `category: "[[Sources]]"` from the vault, and display its title, category, and full content.
+Present a random note (the Morning Thought) from the Thoughts (Opinions), Beliefs, or Sources categories. This should ideally be loaded from the cache file's `"daily_thought"` field. If the cache is missing this field, select a random `.md` file with `category: "[[Thoughts]]"`, `category: "[[Beliefs]]"`, or `category: "[[Sources]]"` from the vault, and display its title, category, and full content.
 
-Make sure it is clear which category the Daily Thought comes from (e.g., Opinions/Thoughts, Beliefs, or Sources).
+Make sure it is clear which category the Morning Thought comes from (e.g., Opinions/Thoughts, Beliefs, or Sources).
 
 **Format:**
 ```
-💡 Daily Thought — [[<relative_path_no_extension>|Title]] (<Category>)
+💡 Morning Thought — [[<relative_path_no_extension>|Title]] (<Category>)
 
 [Full content of the note - keeping it markdown-formatted]
 
@@ -332,7 +332,7 @@ US federal holidays auto-detected. Personal days off in `~/.hermes/days-off.txt`
 - **Calendar dedup is against the full 30-day snapshot** already in the cache. Don't re-fetch unless you need to.
 - **"Day off" filter applies per-phase.** Check it before each phase, not just once at the top.
 - **Vault hygiene is never blocking.** Always put it last, always frame it as "when you have a moment."
-- **Concept of the Day vs Daily Thought.** Since the migration away from gbrain, concepts no longer exist as a standalone category directory in the vault. Always select the "Daily Thought" from the superset of Thoughts, Beliefs, or Sources categories, and represent the Thoughts category as "Opinions / Thoughts" to align with the user's preference.
+- **Concept of the Day vs Morning Thought.** Since the migration away from gbrain, concepts no longer exist as a standalone category directory in the vault. Always select the "Morning Thought" from the superset of Thoughts, Beliefs, or Sources categories, and represent the Thoughts category as "Opinions / Thoughts" to align with the user's preference.
 - **Do not read the `.env` credential file directly.** The agent running under cron cannot read `${HERMES_HOME:-$HOME/.hermes}/.env` using direct file tools (like `read_file`) due to defense-in-depth safety blocks. Always run terminal commands with `.env` sourced in the shell context (`source ${HERMES_HOME:-$HOME/.hermes}/.env && python3 ...`) or rely on the host environment, rather than attempting to read/parse the credential file.
 - **Concept of the Day directory has changed.** Following the migration away from gbrain, concept files are located in `/home/justin.guest/vault/Notes/` instead of `/home/justin.guest/vault/concepts/`. Identify them by searching for markdown files containing `type: concept` or `type: "concept"` in their frontmatter, and completely avoid querying any deprecated `concepts/` directory.
 - **Cron RuntimeError & Max Iterations:** If the background phase fails with `RuntimeError: Morning, Justin! Ready to start your day?`, this indicates the agent hit its `max_iterations` limit during the cron run. The scheduler treats the incomplete run as a failure and raises a RuntimeError containing the final generated greeting text. Optimize background execution to use as few tool calls as possible (e.g. run consolidated scripts rather than many separate queries).
