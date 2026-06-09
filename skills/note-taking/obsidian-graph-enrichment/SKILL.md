@@ -54,6 +54,8 @@ Justin's notes are organized into a hierarchy of permanence and synthesis. Links
    - Can link to **one another** (e.g., a Belief linking to another Belief).
    - *Should NOT link back up to Thoughts or Tier 1 notes.*
 
+*Note: Linking between conceptual tiers (Thoughts to Thoughts, Thoughts to Beliefs, or Beliefs to Beliefs) is a reasoning-heavy task and is **NOT automated** by the signals script. Agents must manually establish or propose these conceptual links when drafting, editing, or organizing notes for Justin, following this strict direction rule.*
+
 ---
 
 ## Implications & Design Decisions
