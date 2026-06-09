@@ -35,7 +35,7 @@ This skill governs the structure and navigation of chronological log notes, poin
 ## Folder-Level Rules
 
 - **Strict Date Formats:** Ensure all chronological filenames strictly adhere to their respective date patterns:
-  - Daily Notes: `YYYY-MM-DD-weekday.md` (lowercase weekday name).
+  - Daily Notes: `YYYY-MM-DD Weekday.md` (capitalized weekday name).
   - Meetings: `YYYY-MM-DD - Spaced Meeting Title.md`.
 - **Linking to Daily Notes:** Every chronological log file must link back to its creation day in its YAML `daily_note:` property.
 - **Archive Raw Logs:** Never leave raw files in the root `/meetings/` folder. Ensure the automated hygiene script pre-processes and moves them to `/Logs/Meetings/`.

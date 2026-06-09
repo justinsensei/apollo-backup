@@ -269,7 +269,7 @@ If Justin selects any:
        ```yaml
        ---
        id: <timestamp_id> # YYYYMMDDHHmmss based on first message
-       daily_note: "[[<YYYY-MM-DD-weekday>]]"
+       daily_note: "[[<YYYY-MM-DD Weekday>]]"
        original_url: "<permalink>"
        source: "slack"
        channel: "<channel_name>"
@@ -288,7 +288,7 @@ If Justin selects any:
        ```yaml
        ---
        id: <timestamp_id> # YYYYMMDDHHmmss based on first email
-       daily_note: "[[<YYYY-MM-DD-weekday>]]"
+       daily_note: "[[<YYYY-MM-DD Weekday>]]"
        original_url: "<permalink>"
        source: "email"
        account: "<work | personal-main>"
@@ -333,7 +333,7 @@ If Justin selects any:
      ```yaml
      ---
      id: <timestamp_id> # YYYYMMDDHHmmss format based on current time
-     daily_note: "[[<YYYY-MM-DD-weekday>]]" # e.g. [[2026-06-09-tuesday]]
+     daily_note: "[[<YYYY-MM-DD Weekday>]]" # e.g. [[2026-06-09 Tuesday]]
      type: <person | organization>
      ---
      ```

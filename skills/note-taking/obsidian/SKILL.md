@@ -30,7 +30,7 @@ Every manual note must have a YAML frontmatter block containing at least these f
 ```yaml
 ---
 id: 'YYYYMMDDHHmmss'                 # Numerical string based on creation time
-daily_note: "[[Daily Notes/YYYY-MM-DD-weekday|YYYY-MM-DD Weekday]]" # Link to creation day
+daily_note: "[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]" # Link to creation day
 category: "[[CategoryName]]"         # Single category link (quoted wikilink)
 ---
 ```
@@ -40,7 +40,13 @@ category: "[[CategoryName]]"         # Single category link (quoted wikilink)
 
 ### Formatting Rules
 - **Horizontal Rules:** Always use exactly three hyphens `---` on a line by itself to represent a horizontal divider. Never use two hyphens or other symbols.
-- **Filename Case:** All regular notes (except Daily Notes and Meetings which use date prefixes) must be capitalized normal-spaced names, e.g. `Jamie's room.md`, `Aly Lalji.md`. Do not use kebab-case or lowercase hyphenated filenames.
+- **Filename Conventions:**
+  - **Daily Notes:** Must be `YYYY-MM-DD Weekday.md` (e.g. `2026-06-09 Tuesday.md`).
+  - **Notes, Decisions, Thoughts, Memories, Sources:** Must be `ID Title.md` (e.g. `20260609120000 Spaced Title.md`).
+  - **References, Beliefs, Projects:** Must be `Title.md` (e.g. `Spaced Title.md`).
+  - **Contacts (People/Organizations):** Must be `Title.md` (e.g. `Aly Lalji.md`, `SignLab.md`).
+  - **Meetings:** Must be `YYYY-MM-DD - Spaced Meeting Title.md` (e.g. `2026-06-09 - SignLab Product Alignment.md`).
+  - Do not use kebab-case, lowercase hyphenated, or otherwise incorrect filenames. All names must be capitalized, spaced titles following these rules.
 
 ### Git & Synchronization
 - Do NOT run `git` commands (add, commit, push) inside the vault. The background watcher `bes-vault-sync` handles commit and synchronization to GitHub automatically within seconds of filesystem writes.

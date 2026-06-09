@@ -29,7 +29,7 @@ A Decision Note is formatted to clearly outline the problem context, proposed op
 ```markdown
 ---
 id: 'YYYYMMDDHHmmss'
-daily_note: "[[Daily Notes/YYYY-MM-DD-weekday|YYYY-MM-DD Weekday]]"
+daily_note: "[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
 category: "[[Decisions]]"
 ---
 
@@ -67,5 +67,5 @@ Which option was chosen and why?
 
 ## Core Rules
 - **Accurate Attribution:** Always attribute the decision to the actual decision-maker. Do not assume or state Justin made a decision unless he explicitly did.
-- **Capitalized spaced names:** Use Capitalized spaced names for the filename (e.g. `Decision to shift to free to play.md`).
+- **Capitalized spaced names:** Use `ID Title.md` format for the filename (where ID is the creation timestamp, e.g. `20260609120000 Decision to shift to free to play.md`).
 - **No Pipe Tables:** Avoid using markdown pipe tables; represent trade-offs using clean bulleted list structures.

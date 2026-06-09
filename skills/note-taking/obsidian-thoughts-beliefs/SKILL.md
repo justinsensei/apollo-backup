@@ -19,9 +19,13 @@ This skill governs the categorization, formatting, and capture of unstructured p
 
 ## Folder & Category
 - **Directory:** `/home/justin.guest/vault/Notes/`
-- **Categories:**
-  - Raw personal reflections, emergent theories, or open questions: `category: "[[Thoughts]]"`
-  - Trusted frameworks, core guiding principles, or proven mental models: `category: "[[Beliefs]]"`
+- **Categories & Naming:**
+  - **Thoughts:** Raw personal reflections, emergent theories, or open questions.
+    - Category link: `category: "[[Thoughts]]"`
+    - Filename format: `ID Title.md` (e.g. `20260609120000 Spaced Title.md`).
+  - **Beliefs:** Trusted frameworks, core guiding principles, or proven mental models.
+    - Category link: `category: "[[Beliefs]]"`
+    - Filename format: `Title.md` (no timestamp prefix, e.g. `Spaced Title.md`).
 
 ---
 
@@ -33,7 +37,7 @@ Thoughts notes capture reflections, opinions, or ideas. They are open, structure
 ```markdown
 ---
 id: 'YYYYMMDDHHmmss'
-daily_note: "[[Daily Notes/YYYY-MM-DD-weekday|YYYY-MM-DD Weekday]]"
+daily_note: "[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
 category: "[[Thoughts]]"
 ---
 
@@ -54,7 +58,7 @@ Beliefs notes capture highly trusted, semi-permanent ideas, frameworks, and prin
 ```markdown
 ---
 id: 'YYYYMMDDHHmmss'
-daily_note: "[[Daily Notes/YYYY-MM-DD-weekday|YYYY-MM-DD Weekday]]"
+daily_note: "[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
 category: "[[Beliefs]]"
 ---
 

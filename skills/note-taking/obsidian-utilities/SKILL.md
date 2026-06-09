@@ -34,7 +34,7 @@ This skill governs the system configurations, automation scripts, metadata linti
 A consolidated hygiene script runs daily at 9PM (via a system cron job) at `~/.hermes/scripts/vault_hygiene.py`.
 
 ### Automated Cleanup Steps
-1. **Misplaced Daily Notes:** Scans the entire vault for any `YYYY-MM-DD-weekday.md` files outside the `/Daily Notes/` directory and moves them there.
+1. **Misplaced Daily Notes:** Scans the entire vault for any `YYYY-MM-DD Weekday.md` files outside the `/Daily Notes/` directory and moves them there.
 2. **Tag-to-Category Conversion:** Automatically converts inline tags in the body to their corresponding formal `category:` YAML property, removing the tag from the body text:
    - `#people`, `#person` $\rightarrow$ `category: "[[People]]"` (moves note to `/Contacts/`)
    - `#organization`, `#organizations` $\rightarrow$ `category: "[[Organizations]]"` (moves note to `/Contacts/`)

@@ -30,7 +30,7 @@ A Project or Travel note organizes timelines, tasks, objectives, and related sub
 ```markdown
 ---
 id: 'YYYYMMDDHHmmss'
-daily_note: "[[Daily Notes/YYYY-MM-DD-weekday|YYYY-MM-DD Weekday]]"
+daily_note: "[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
 category: "[[Projects]]"
 ---
 
@@ -60,5 +60,6 @@ category: "[[Projects]]"
 ---
 
 ## Naming Rules
-- Use CAPITALIZED normal-spaced names for project hubs (e.g., `SignLab Free to Play Shift.md`, `Telluride 2026.md`).
-- Never prefix with dates unless the project is historically tied to a specific season (e.g. `2025 budget updates.md`).
+- Filename format: `Title.md` (no timestamp prefix).
+- Use CAPITALIZED normal-spaced names for project hubs (e.g. `SignLab Free to Play Shift.md`, `Telluride 2026.md`).
+- Never prefix with dates/timestamps.

@@ -24,8 +24,8 @@ This skill governs the filename format, structure, templates, and standard secti
 ---
 
 ## Filename Conventions
-- Filename format: `YYYY-MM-DD-weekday.md` (lowercase weekday name, hyphen-separated).
-- Examples: `2026-06-09-tuesday.md`, `2026-06-14-sunday.md`.
+- Filename format: `YYYY-MM-DD Weekday.md` (capitalized weekday, space instead of hyphen after date).
+- Examples: `2026-06-09 Tuesday.md`, `2026-06-14 Sunday.md`.
 
 ---
 
@@ -36,7 +36,7 @@ A Daily Note is structured with an executive summary/callout followed by specifi
 ```markdown
 ---
 id: 'YYYYMMDDHHmmss'
-daily_note: "[[Daily Notes/YYYY-MM-DD-weekday|YYYY-MM-DD Weekday]]"
+daily_note: "[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
 category: "[[Daily Notes]]"
 ---
 

@@ -35,9 +35,9 @@ This skill governs the physical structure and coordinate mapping of the `/Notes/
 ## Folder-Level Rules
 
 ### Naming Conventions
-- All files under `/Notes/` must use Spaced, Capitalized names.
-- Do not prefix belief or thoughts notes with timestamps or IDs in the filename.
-- If a note is a historical record, a timestamp can exist at the end of the filename (e.g. `Armor framework for avoiding burnout 20250621083744.md`).
+- All files under `/Notes/` must use Spaced, Capitalized names, adhering to category-specific prefixing rules.
+- **Notes, Decisions, Thoughts, Memories, Sources:** Must be named `ID Title.md` (where ID is the creation timestamp, e.g. `20260609120000 Spaced Title.md`).
+- **References, Beliefs, Projects:** Must be named `Title.md` (no timestamp prefix, e.g. `Spaced Title.md`).
 
 ### Aliases
 - Ensure complex, conceptual, or heavily-referenced notes define clean `aliases:` lists in their YAML frontmatter. This allows effortless wikilinking without typing the full exact title every time.

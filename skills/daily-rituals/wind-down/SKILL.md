@@ -57,7 +57,7 @@ Draft today's work log, align with Justin, and write it to today's daily note.
 
 5. **Write the Finalized Work Log:**
    - Combine Justin's feedback with the draft.
-   - Find or create today's daily note in `<vault>/daily/<YYYY-MM-DD-weekday>.md` (create from template `<vault>/utilities/templates/daily_note.md` if missing, stripping Templater tags).
+   - Find or create today's daily note in `/home/justin.guest/vault/Daily Notes/YYYY-MM-DD Weekday.md` (create from template `/home/justin.guest/vault/Utilities/Templates/daily_note.md` if missing, stripping Templater tags).
    - Overwrite/replace the corresponding headings (`> [!summary]`, `## 📅 Schedule & Events`, `## 🚀 Highlights & Decisions`, `## 🏆 Accomplishments`) with your new synthesized content.
    - **Crucial:** Preserve the entire content of the `## 🗒 Notepad` section (including manual text written by Justin). Never modify or delete it.
    - Append the sources attribution footer at the very bottom.

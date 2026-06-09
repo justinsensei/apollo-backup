@@ -29,9 +29,13 @@ This skill governs the structure and standard templates for two categories under
 
 ## Folders & Categories
 - **Directory:** `/home/justin.guest/vault/Notes/` or `/home/justin.guest/vault/sources/` (automated external syncs).
-- **Categories:**
-  - Standard reference/checklists: `category: "[[References]]"`
-  - Book highlights, articles, paper summaries: `category: "[[Sources]]"`
+- **Categories & Naming:**
+  - **References:** Standard reference notes, checklists, lookup tables.
+    - Category link: `category: "[[References]]"`
+    - Filename format: `Title.md` (no timestamp prefix, e.g. `Spaced Title.md`).
+  - **Sources:** Book highlights, articles, paper summaries.
+    - Category link: `category: "[[Sources]]"`
+    - Filename format: `ID Title.md` (e.g. `20260609120000 Spaced Title.md`).
 
 ---
 
@@ -47,7 +51,7 @@ Reference notes should be highly scannable, starting with a clear purpose block 
 ```markdown
 ---
 id: 'YYYYMMDDHHmmss'
-daily_note: "[[Daily Notes/YYYY-MM-DD-weekday|YYYY-MM-DD Weekday]]"
+daily_note: "[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
 category: "[[References]]"
 ---
 

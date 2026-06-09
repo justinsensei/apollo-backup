@@ -36,7 +36,7 @@ Use the normal capitalized, spaced full name as the filename:
 ```yaml
 ---
 id: 'YYYYMMDDHHmmss'
-daily_note: "[[Daily Notes/YYYY-MM-DD-weekday|YYYY-MM-DD Weekday]]"
+daily_note: "[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
 category: "[[People]]"
 aliases:
   - Nickname
