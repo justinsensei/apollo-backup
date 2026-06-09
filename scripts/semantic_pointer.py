@@ -288,9 +288,8 @@ def index_vault(verbose=False):
                     VALUES (?, ?)
                 """, (para_id, p_emb_bytes))
                 
-            # Commit occasionally or at the end
-            if (idx + 1) % 20 == 0:
-                conn.commit()
+            # Commit after every file to preserve progress on interrupt
+            conn.commit()
                 
         except Exception as e:
             print(f"Error indexing {rel_path}: {e}")
