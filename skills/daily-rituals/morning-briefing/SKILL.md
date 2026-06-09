@@ -140,6 +140,11 @@ If `work_log_status` is `"skipped"` in the daily cache file, present only the va
   • People: [List of [[Contacts/slug|Title]] or "None"]
   • Companies: [List of [[Contacts/slug|Title]] or "None"]
   • Concepts: [List of [[Notes/slug|Title]] or "None"]
+
+[If vault hygiene Tier 2 issues exist in the cache, append right here:
+🗂 Vault hygiene — N items to look at when you have a moment:
+• sources/some-note.md — missing ID
+• ...]
 ```
 
 Keep it scannable. 4–6 bullets max for the work log section. If multiple days, don't repeat obvious context — synthesize across them. Don't recite every meeting; surface the consequential ones. Keep the vault section beautifully formatted with Wiki-links. If nothing was updated or added in the vault, output: *"No vault updates since yesterday morning."* for the vault section.
