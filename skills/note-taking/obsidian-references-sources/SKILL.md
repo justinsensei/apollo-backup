@@ -35,6 +35,12 @@ This skill governs the structure and standard templates for two categories under
 
 ---
 
+## References vs. Ephemeral Project-Bound Notes
+- **References** are meant to be **permanent notes** that contain long-term value, guidelines, or checklists that Justin expects to refer to frequently over time (e.g., API documentation, general checklists, cheat sheets).
+- **Ephemeral checklists, plans, or migration guides** connected to specific, time-bound projects are NOT references. Do not categorize them as `[[References]]`; instead, categorize them under `[[Notes]]` or `[[Projects]]` so they stay organized with their respective projects.
+
+---
+
 ## References Structure
 Reference notes should be highly scannable, starting with a clear purpose block followed by structured facts:
 
