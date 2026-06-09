@@ -14,6 +14,7 @@ metadata:
 
 - **Linked References:**
   - **[Resolving ID Conflicts](references/resolving-id-conflicts.md):** Step-by-step recipe to resolve clashing note identifiers.
+  - **[Refactoring Categories](references/refactoring-categories.md):** Step-by-step recipe and automation template for bulk category renaming.
 
 ## Overview
 This skill governs the system configurations, automation scripts, metadata linting, and automated tag sweeps designed to maintain perfect integrity across Justin's vault.
