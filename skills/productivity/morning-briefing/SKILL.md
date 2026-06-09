@@ -1,6 +1,6 @@
 ---
 name: morning-briefing
-description: "Interactive morning briefing for Justin — runs after the 7AM cron has done background work (work log change-detection, vault hygiene Tier 1, inbox gather). Walks through a multi-phase conversation: work log highlights (skipped if no changes since wind-down), gbrain activity summary, calendar summary, near-term task triage, calendar inbox candidates, general inbox candidates. Load this skill whenever Justin responds to the morning greeting or asks for his morning briefing."
+description: "Interactive morning briefing for Justin — runs after the 7AM cron has done background work (work log change-detection, vault hygiene Tier 1, inbox gather). Walks through a multi-phase conversation: work log highlights (skipped if no changes since wind-down), Second Brain vault activity summary, calendar summary, near-term task triage, calendar inbox candidates, general inbox candidates. Load this skill whenever Justin responds to the morning greeting or asks for his morning briefing."
 platforms: [linux]
 related_skills: [work-log, todoist-inbox-fill, obsidian-vault-hygiene, todoist]
 ---
@@ -14,7 +14,7 @@ This skill governs the **interactive phase** of the morning briefing. The 7AM cr
 - **Cache:** `~/.hermes/morning-briefing/YYYY-MM-DD.json` — written by cron, read here
 - **Days off:** `~/.hermes/days-off.txt` — personal non-holiday days off
 - **Work-day helper:** `python3.12 ~/.hermes/scripts/work_day.py <cmd> [date]`
-- **Change detector & gbrain scan:** `python3 ~/.hermes/scripts/check_morning_changes.py`
+- **Change detector & vault activity scan:** `python3 ~/.hermes/scripts/check_morning_changes.py`
 - **Vault:** `/home/justin.guest/vault` (or `$OBSIDIAN_VAULT_PATH`)
 
 ## Entry point
