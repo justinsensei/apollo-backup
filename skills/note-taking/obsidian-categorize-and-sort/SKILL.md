@@ -133,6 +133,9 @@ When performing large-scale triage or classification sweeps (e.g., sorting notes
 ### 4. Guides/Checklists vs. Default Notes
 * **Guides and Handbooks:** Technical procedures, step-by-step migration guides, or checklists (e.g., *Mixpanel to Posthog migration guide*) should be categorized as `[[References]]` (using sub-skill `obsidian-references-sources`) rather than the default `[[Notes]]`.
 
+### 5. Re-usable Decision Patterns & Equations vs. Concepts
+* **Decision Patterns & Equations:** Notes that capture established, re-usable decision patterns, standard mathematical equations, or product telemetry metrics (e.g., *Active user growth equation*, *Counting any action vs just specific actions*, *Setting stickiness goals*) must be categorized as `[[References]]` (using sub-skill `obsidian-references-sources`) rather than `[[Concepts]]` or `[[Thoughts]]`.
+
 ---
 
 ## Batch Triage Operations
@@ -152,3 +155,13 @@ When triaging or categorizing large numbers of notes in manual batches (e.g. bat
 - **Leaking Inbox:** Do not leave notes in `inbox/` once categorized. All processed notes must reside in their taxonomy folders.
 - **Ephemeral Project Guides as References:** Do not categorize temporary checklists or migration guides tied to a specific project as `[[References]]`. References are reserved for permanent, long-term lookup documents. Project-bound checklists/guides belong under `[[Notes]]` or `[[Projects]]`.
 - **Links Verification:** moves are generally safe since Obsidian auto-resolves links by note name regardless of folder structure.
+
+---
+
+## Batch Grooming Protocol (Large-Scale Triage)
+When the user requests to clean up, categorize, or groom a large backlog of notes:
+1. **Track Progress with a Temporary Property**: Initialize a temporary boolean flag in the YAML frontmatter of the target notes (e.g., `reviewed: false`). Update this to `reviewed: true` upon successful review and triage.
+2. **Review in Batches of 10**: Present the notes in chronological batches of 10, sorting by the note's ID (timestamp-based).
+3. **Minimize Redundancy**: When displaying the table or list of notes, omit columns or lines of redundant data (e.g., do not include a "Current Category" column if all notes in the backlog share the same baseline category).
+4. **Surface Backlog Progress**: For every batch presented, explicitly state how many notes remain in the backlog to be reviewed (excluding the active batch).
+
