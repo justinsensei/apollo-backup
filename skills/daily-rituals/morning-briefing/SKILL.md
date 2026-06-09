@@ -231,7 +231,7 @@ After presenting and handling any movements, wait for acknowledgment before Phas
 
 ---
 
-### Phase 4.5 — Source note candidates
+### Phase 5 — Source note candidates
 
 Present potential source note candidates (active Slack conversations and noteworthy primary-category emails from the last 36-48 hours) that Justin hasn't tagged with `🧠` or forwarded to Bes, but that are highly worthy of being turned into notes in his vault.
 
@@ -297,15 +297,15 @@ If Justin selects any:
        `python3 /home/justin.guest/.hermes/scripts/fetch_source_candidates.py --mark-email-processed <thread_id>`
    - Report the note(s) successfully saved.
 
-If no candidates are found, skip this phase entirely and proceed to Phase 4.7.
+If no candidates are found, skip this phase entirely and proceed to Phase 6.
 
 ---
 
-### Phase 4.7 — Discovered Contacts & Organizations
+### Phase 6 — Discovered Contacts & Organizations
 
 Present any discovered contacts or organizations (unresolved wikilinks found by the `check_vault_signals.py` script) from today's cache file (`discovered_contacts` field).
 
-If no discovered contacts are found in the cache, skip this phase entirely and proceed to Phase 5.
+If no discovered contacts are found in the cache, skip this phase entirely and proceed to Phase 7.
 
 Format:
 ```
@@ -353,7 +353,7 @@ If Justin selects any:
 
 ---
 
-### Phase 5 — Inbox candidates
+### Phase 7 — Inbox candidates
 
 Present the action-item candidates from `inbox_candidates.action_items`.
 
@@ -379,7 +379,7 @@ Once Justin confirms → batch-add to Todoist Inbox with comments.
 
 ---
 
-### Phase 6 — Daily Thought
+### Phase 8 — Daily Thought
 
 Present a random note (the Daily Thought) from the Thoughts (Opinions), Beliefs, or Sources categories. This should ideally be loaded from the cache file's `"daily_thought"` field. If the cache is missing this field, select a random `.md` file with `category: "[[Thoughts]]"`, `category: "[[Beliefs]]"`, or `category: "[[Sources]]"` from the vault, and display its title, category, and full content.
 
@@ -397,7 +397,7 @@ Would you like to make any edits to this note, or are we set for today?
 
 If Justin requests an edit to the note, use the `patch` or `write_file` tool to apply his changes, and confirm.
 
-After Phase 6 is complete, proceed to the "After all phases" wrap-up.
+After Phase 8 is complete, proceed to the "After all phases" wrap-up.
 
 ---
 
