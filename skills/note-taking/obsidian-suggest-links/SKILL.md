@@ -7,13 +7,21 @@ license: MIT
 metadata:
   hermes:
     tags: [obsidian, link-suggestions, suggest-links, notes, thoughts, beliefs]
-    related_skills: [obsidian, obsidian-graph-enrichment, obsidian-thoughts-beliefs]
+    related_skills: [obsidian, obsidian-graph-enrichment, obsidian-thoughts-beliefs, obsidian-suggest-new-notes, obsidian-suggest-promotions]
 ---
 
 # Obsidian: Suggest Links
 
 ## Overview
 This skill provides a randomized/seeded discovery mechanism to help Justin surface surprising cross-connections between existing ideas (`Thoughts` and `Beliefs`) in his vault. It runs an interactive loop where the agent samples notes, pitches exactly 5 candidate connections matching the link hierarchy, and updates the notes with any approved links.
+
+---
+
+## When to Use
+- **Trigger:** Justin asks to "suggest links", "suggest new connections", "find connections", or "spark some ideas".
+- **Don't use for:** 
+  - Suggesting brand new notes (use `obsidian-suggest-new-notes`).
+  - Promoting existing notes up the hierarchy (use `obsidian-suggest-promotions`).
 
 ---
 

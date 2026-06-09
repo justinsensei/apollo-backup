@@ -26,6 +26,9 @@ This skill governs the physical structure and coordinate mapping of the `/Notes/
   - **`obsidian-projects`**: For ongoing project hubs, travel, or milestones (`category: "[[Projects]]"`).
   - **`obsidian-references-sources`**: For factsheets or Readwise web clips (`category: "[[References]]"` or `category: "[[Sources]]"`).
   - **`obsidian-graph-enrichment`**: Rules and link hierarchy conventions for maintaining a clean note graph.
+  - **`obsidian-suggest-links`**: Proactively find surprising linkages among Thoughts and Beliefs.
+  - **`obsidian-suggest-new-notes`**: Proactively discover and initialize new notes from log files.
+  - **`obsidian-suggest-promotions`**: Proactively promote notes up the hierarchical tiers.
 
 ---
 
