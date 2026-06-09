@@ -100,7 +100,7 @@ If no candidates are found, skip this phase entirely and proceed to Phase 2.
 
 ### Phase 2 — Discovered Contacts & Organizations
 
-Present any discovered contacts or organizations (unresolved wikilinks found by the `check_vault_signals.py` script) from today's cache file (`discovered_contacts` field).
+Present any discovered contacts or organizations (unresolved wikilinks found by the `check_vault_signals.py` script) from today's cache file at `~/.hermes/morning-briefing/YYYY-MM-DD.json` (under the `discovered_contacts` field).
 
 If no discovered contacts are found in the cache, skip this phase entirely and proceed to Phase 3.
 
@@ -157,7 +157,7 @@ If no discovered contacts are found, proceed to Phase 3.
 Review persistent reference sources, articles, or transcripts added or updated today.
 
 1. **Find Today's Sources:**
-   - Scan `/home/justin.guest/vault/sources/` for files modified in the last 24 hours (using `find ~/vault/sources -mtime -1 -type f` or `search_files`).
+   - Scan `/home/justin.guest/vault/Logs/Sources/` for files modified in the last 24 hours (using `find ~/vault/Logs/Sources -mtime -1 -type f` or `search_files`).
    - Check if any new source files contain `daily_note: "[[<TODAY_DATE> ...]]"` in their frontmatter.
 
 2. **Summarize Today's Sources:**
