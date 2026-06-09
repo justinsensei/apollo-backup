@@ -40,6 +40,7 @@ category: "[[CategoryName]]"         # Single category link (quoted wikilink)
 
 ### Formatting Rules
 - **Horizontal Rules:** Always use exactly three hyphens `---` on a line by itself to represent a horizontal divider. Never use two hyphens or other symbols.
+- **Timeline Spacing:** When appending to or formatting the `## Timeline` section, ensure there is exactly one empty line between the `## Timeline` heading and the first bullet, and exactly zero empty lines between individual timeline bullets (bullets should form a compact, single-spaced list).
 - **Filename Conventions:**
   - **Daily Notes:** Must be `YYYY-MM-DD Weekday.md` (e.g. `2026-06-09 Tuesday.md`).
   - **Notes, Decisions, Thoughts, Memories, Sources:** Must be `ID Title.md` (e.g. `20260609120000 Spaced Title.md`).
