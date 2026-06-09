@@ -10,7 +10,7 @@ def get_recent_files(vault_path, hours=48):
     target_folders = [
         'Daily Notes',
         'Logs/Meetings',
-        'Logs/Readings'
+        'Logs/Sources'
     ]
     
     cutoff_time = time.time() - (hours * 3600)
