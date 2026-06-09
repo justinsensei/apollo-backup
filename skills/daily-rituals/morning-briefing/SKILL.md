@@ -94,19 +94,32 @@ If the cache file doesn't exist (cron failed or hasn't run yet), run the backgro
 
 ## Phase sequence
 
-### Phase 1 — Work log highlights
+### Phase 1 — Work log highlights & Vault updates
 
-**Skip entirely if:** `is_work_day` is false OR Justin said "day off" OR `work_log_status` is `"skipped"` in the daily cache file (which means no changes have occurred in the external sources since the wind-down routine / previous work log run).
+**Skip entirely if:** `is_work_day` is false OR Justin said "day off".
 
-If `work_log_status` is `"skipped"`, output:
-*"I skipped yesterday's work log highlights since nothing changed after your wind-down wrap-up."*
-Then, move directly to **Phase 1.5**.
+If `work_log_status` is `"skipped"` in the daily cache file, present only the vault activity summary under "Vault Updates":
+
+**Format for skipped work log:**
+```
+📋 Work log — [Day, Mon DD]
+
+*Yesterday's work log was skipped since nothing changed after your wind-down wrap-up.*
+
+**Vault updates since yesterday morning:**
+• Updated: [N pages across M types, e.g., "1 note, 3 concepts"]
+• Newly Added:
+  • People: [List of [[Contacts/slug|Title]] or "None"]
+  • Companies: [List of [[Contacts/slug|Title]] or "None"]
+  • Concepts: [List of [[Notes/slug|Title]] or "None"]
+```
 
 **If `is_work_day` is true and `work_log_status` is NOT `"skipped"`:**
 
 1. Load `work_log_dates` from cache (computed by cron using `work_day.py logs_to_summarize`)
 2. For each date in `work_log_dates`, read the `# 📋 Work Log` section from the daily note in vault
 3. Synthesize highlights across all dates into a single brief summary
+4. Read the `vault_activity` section from the daily cache file (`~/.hermes/morning-briefing/YYYY-MM-DD.json`). If the cache file or `"vault_activity"` section is missing or has status `"error"`, run the scan script live to retrieve the summary: `python3 ~/.hermes/scripts/check_morning_changes.py`
 
 **Format:**
 ```
@@ -115,11 +128,18 @@ Then, move directly to **Phase 1.5**.
 • [2–4 bullet highlights — most important things that happened]
 • Decisions: [1–2 if any, otherwise omit]
 • Still open: [1–2 blockers/open questions, if any]
+
+**Vault updates since yesterday morning:**
+• Updated: [N pages across M types, e.g., "1 note, 3 concepts"]
+• Newly Added:
+  • People: [List of [[Contacts/slug|Title]] or "None"]
+  • Companies: [List of [[Contacts/slug|Title]] or "None"]
+  • Concepts: [List of [[Notes/slug|Title]] or "None"]
 ```
 
-Keep it scannable. 4–6 bullets max. If multiple days, don't repeat obvious context — synthesize across them. Don't recite every meeting; surface the consequential ones.
+Keep it scannable. 4–6 bullets max for the work log section. If multiple days, don't repeat obvious context — synthesize across them. Don't recite every meeting; surface the consequential ones. Keep the vault section beautifully formatted with Wiki-links. If nothing was updated or added in the vault, output: *"No vault updates since yesterday morning."* for the vault section.
 
-If no work log entries exist for the dates (notes missing or no Work Log section), say so briefly and move on. Don't block on it.
+If no work log entries exist for the dates (notes missing or no Work Log section), present the vault updates, note the missing work log, and move on. Don't block on it.
 
 **If the user asks you to generate the missing daily note / work log:**
 - Gather yesterday's raw materials from Slack, Linear, GWS, and Todoist (using `/home/justin.guest/bes-backup/skills/note-taking/work-log/references/direct_execution.py` or parallel subagents).
@@ -127,34 +147,9 @@ If no work log entries exist for the dates (notes missing or no Work Log section
 - Synthesize them into a complete daily note and work log following the `work-log` skill and the `<vault>/Templates/Daily Note.md` template.
 - Write the daily note to the vault archive (`Daily Notes/YYYY-MM-DD DayName.md`).
 - Update the morning briefing cache file (`~/.hermes/morning-briefing/YYYY-MM-DD.json`) to set `work_log_status: "ok"`, remove the `work_log_error`, and clear `vault_hygiene` issues if resolved.
-- Present the synthesized work log highlights and proceed to Phase 1.5.
+- Present the synthesized work log highlights and proceed to Phase 2.
 
-After presenting, **wait for acknowledgment or a question** before moving to Phase 1.5. Don't immediately dump everything at once.
-
----
-
-### Phase 1.5 — Second Brain activity summary
-
-Read the `vault_activity` section from the daily cache file (`~/.hermes/morning-briefing/YYYY-MM-DD.json`).
-
-If the cache file or `"vault_activity"` section is missing or has status `"error"`, run the scan script live to retrieve the summary:
-`python3 ~/.hermes/scripts/check_morning_changes.py`
-
-**Format:**
-```
-🧠 Second Brain — Activity since yesterday morning
-
-• Updated: [N pages across M types, e.g., "1 note, 3 concepts"]
-
-Newly Added:
-• People: [List of [[Contacts/slug|Title]] or "None"]
-• Companies: [List of [[Contacts/slug|Title]] or "None"]
-• Concepts: [List of [[Notes/slug|Title]] or "None"]
-```
-
-Keep it concise and beautifully formatted with Wiki-links. If nothing was updated or added, output: *"No second brain updates since yesterday."*
-
-After presenting, **wait for acknowledgment or a question** before moving to Phase 2.
+After presenting, **wait for acknowledgment or a question** before moving to Phase 2. Don't immediately dump everything at once.
 
 ---
 

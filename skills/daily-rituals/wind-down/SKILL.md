@@ -13,7 +13,7 @@ metadata:
 # 🌅 Daily Wind-Down & Wrap-Up
 
 This skill governs the **interactive daily wind-down and wrap-up session** for Justin.
-It runs in the late afternoon/evening when Justin is ready to close his workday, clear his head, and organize his second brain for tomorrow.
+It runs in the late afternoon/evening when Justin is ready to close his workday, clear his head, and organize his vault for tomorrow.
 
 ## Triggers
 
