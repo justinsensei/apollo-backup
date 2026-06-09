@@ -32,7 +32,7 @@ A Project or Travel note organizes timelines, tasks, objectives, and related sub
 id: 'YYYYMMDDHHmmss'
 daily_note: "[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
 category: "[[Projects]]"
-status: Active # Active, Complete, Dropped
+status: Active # Active, Inactive
 ---
 
 # Project Name / Travel Destination
