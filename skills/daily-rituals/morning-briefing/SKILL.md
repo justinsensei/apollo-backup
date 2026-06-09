@@ -291,17 +291,7 @@ After Phase 6 is complete, proceed to the "After all phases" wrap-up.
 
 ### After all phases
 
-If vault hygiene Tier 2 issues exist in the cache, append a brief report at the end:
-
-```
-🗂 Vault hygiene — N items to look at when you have a moment:
-• sources/some-note.md — missing ID
-• ...
-```
-
-Don't block on this or ask for immediate action. It's informational.
-
-Then close out: *"That's everything. Have a good [day/weekend/Monday]."* (Match the day.)
+Close out: *"That's everything. Have a good [day/weekend/Monday]."* (Match the day.)
 
 ---
 
@@ -341,7 +331,7 @@ US federal holidays auto-detected. Personal days off in `~/.hermes/days-off.txt`
 - **Multiple work-log dates:** synthesize, don't concatenate. Justin doesn't want to read Friday's full log on Monday — he wants the 3-line version.
 - **Calendar dedup is against the full 30-day snapshot** already in the cache. Don't re-fetch unless you need to.
 - **"Day off" filter applies per-phase.** Check it before each phase, not just once at the top.
-- **Vault hygiene is never blocking.** Always put it last, always frame it as "when you have a moment."
+- **Vault hygiene is never blocking.** Always present it right after the work log highlights and vault updates section (Phase 1), and always frame it as "when you have a moment."
 - **Concept of the Day vs Morning Thought.** Since the migration away from gbrain, concepts no longer exist as a standalone category directory in the vault. Always select the "Morning Thought" from the superset of Thoughts, Beliefs, or Sources categories, and represent the Thoughts category as "Opinions / Thoughts" to align with the user's preference.
 - **Do not read the `.env` credential file directly.** The agent running under cron cannot read `${HERMES_HOME:-$HOME/.hermes}/.env` using direct file tools (like `read_file`) due to defense-in-depth safety blocks. Always run terminal commands with `.env` sourced in the shell context (`source ${HERMES_HOME:-$HOME/.hermes}/.env && python3 ...`) or rely on the host environment, rather than attempting to read/parse the credential file.
 - **Concept of the Day directory has changed.** Following the migration away from gbrain, concept files are located in `/home/justin.guest/vault/Notes/` instead of `/home/justin.guest/vault/concepts/`. Identify them by searching for markdown files containing `type: concept` or `type: "concept"` in their frontmatter, and completely avoid querying any deprecated `concepts/` directory.
