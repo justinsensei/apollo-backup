@@ -259,7 +259,7 @@ If Justin selects any:
 1. For each selected item:
    - **For Slack conversations:**
      - Synthesize a high-quality summary showing "who said what" clearly. Do NOT store verbatim Slack messages; store only summaries with retrieval metadata.
-     - Write to `/home/justin.guest/vault/Logs/Slack/YYYY-MM-DD-slug.md`.
+     - Write to `/home/justin.guest/vault/Logs/Slack/YYYY-MM-DD - Spaced Title.md`.
      - Structure the YAML frontmatter for Slack logs:
        ```yaml
        ---
@@ -278,7 +278,7 @@ If Justin selects any:
        `python3 /home/justin.guest/.hermes/scripts/fetch_slack_brains.py --mark-processed <channel_id> <ts>`
    - **For Emails:**
      - Synthesize a high-quality summary of the email thread showing clearly what was discussed, decided, or requested. Do NOT store verbatim email text; store only summaries with retrieval metadata.
-     - Write to `/home/justin.guest/vault/Logs/Email/YYYY-MM-DD-slug.md`.
+     - Write to `/home/justin.guest/vault/Logs/Emails/YYYY-MM-DD - Spaced Subject.md`.
      - Structure the YAML frontmatter for email logs:
        ```yaml
        ---
@@ -292,7 +292,7 @@ If Justin selects any:
        ---
        ```
      - Append a link and one-sentence gist to today's daily note notepad under `## 🗒 Notepad`:
-       `* [[Logs/Email/<filename>|Email summary]]: <One-sentence-gist>.`
+       `* [[Logs/Emails/<filename>|Email summary]]: <One-sentence-gist>.`
      - Run the command to mark it processed:
        `python3 /home/justin.guest/.hermes/scripts/fetch_source_candidates.py --mark-email-processed <thread_id>`
    - Report the log(s) successfully saved.
