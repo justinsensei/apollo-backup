@@ -112,6 +112,11 @@ If `work_log_status` is `"skipped"` in the daily cache file, present only the va
   • People: [List of [[Contacts/slug|Title]] or "None"]
   • Companies: [List of [[Contacts/slug|Title]] or "None"]
   • Concepts: [List of [[Notes/slug|Title]] or "None"]
+
+[If vault hygiene Tier 2 issues exist in the cache, append right here:
+🗂 Vault hygiene — N items to look at when you have a moment:
+• sources/some-note.md — missing ID
+• ...]
 ```
 
 **If `is_work_day` is true and `work_log_status` is NOT `"skipped"`:**

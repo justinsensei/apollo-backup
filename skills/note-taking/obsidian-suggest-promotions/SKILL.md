@@ -14,7 +14,7 @@ metadata:
 
 ## Overview
 This skill governs the semantic evaluation and promotion of notes up Justin's unidirectional three-tier vault hierarchy:
-1. **Tier 1 (Raw/Ephemeral Inputs):** `[[Notes]]`, `[[Sources]]`, `[[Decisions]]`, `[[Memory]]`
+1. **Tier 1 (Raw/Ephemeral Inputs):** `[[Notes]]`, `[[Sources]]`, `[[Decisions]]`, `[[Memories]]`
 2. **Tier 2 (Emergent/Synthesized Thoughts):** `[[Thoughts]]`
 3. **Tier 3 (Permanent/Conviction Beliefs):** `[[Beliefs]]`
 

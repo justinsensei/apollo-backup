@@ -62,10 +62,10 @@ To avoid incorrect or naive categorization, always differentiate between the fol
 
 ### 1. Conceptual/Methodology Notes vs. Logs
 * **Linguistic Overlap:** Notes discussing "meetings," "interviews," "syncs," or "conversations" as general methodologies or abstract concepts (e.g., *Zettelkasten for product development*, *Continuous interviewing*) must stay in `/Notes/` under `category: "[[Notes]]"`. Do not naively sort them into `/Logs/Meetings/` just because their title matches keywords.
-* **Meeting Prep/Agendas:** Personal talking points or draft agendas written *prior* to a meeting represent personal planning files and should reside in `/Notes/` (as `[[Notes]]` or `[[Memory]]`). Only actual collaborative records of conversations/outcomes belong in `/Logs/Meetings/` as `[[Meetings]]`.
+* **Meeting Prep/Agendas:** Personal talking points or draft agendas written *prior* to a meeting represent personal planning files and should reside in `/Notes/` (as `[[Notes]]` or `[[Memories]]`). Only actual collaborative records of conversations/outcomes belong in `/Logs/Meetings/` as `[[Meetings]]`.
 
 ### 2. Interaction Logs vs. Contact Profiles
-* **Interaction Logs:** A quick note recording a specific interaction (e.g., "Emailed Andrew Novak about room design") contains a person's name in the title but is transactional and belongs in `/Notes/` or `/Memory/` (under `category: "[[Notes]]"` or `category: "[[Memory]]"`).
+* **Interaction Logs:** A quick note recording a specific interaction (e.g., "Emailed Andrew Novak about room design") contains a person's name in the title but is transactional and belongs in `/Notes/` (under `category: "[[Notes]]"` or `category: "[[Memories]]"`).
 * **Contact Profiles:** Only actual profiles, bios, or contact directories (e.g., `/Contacts/Andrew novak.md`) belong in `/Contacts/` under `category: "[[People]]"`.
 * *Exception:* Contact details imported or synced into `/sources/` from external systems should be migrated to `/Contacts/` under `category: "[[People]]"`.
 
