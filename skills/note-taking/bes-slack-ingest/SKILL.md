@@ -44,6 +44,13 @@ Below the frontmatter, format the note body cleanly:
 
 ---
 
+## Key Decision Propagation (Proactive Behavior)
+If the summarized Slack conversation contains any critical product/business decisions, pivots, or explicit recommendations (such as pausing or abandoning a feature/initiative):
+1. **Highlight in Summary:** Ensure the decision is clearly highlighted and called out in the Slack note's `Executive Summary`.
+2. **Propagate to Daily Note:** Locate the active Daily Note (`Daily Notes/YYYY-MM-DD Weekday.md`) and immediately update its Notepad or Highlights section to reflect this decision (linking to the newly created Slack log note). This ensures synchronous, vault-wide alignment of operations.
+
+---
+
 ## CLI Sync / Processing Command
 To retrieve candidates and process them, the background poller runs:
 - `python3 /home/justin.guest/.hermes/scripts/fetch_slack_brains.py --mark-processed <channel_id> <ts>`
