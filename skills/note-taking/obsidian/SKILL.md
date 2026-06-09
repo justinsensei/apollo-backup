@@ -242,18 +242,18 @@ category: "[[Thoughts]]"
 
 | Target Folder | Target Category Link | Description / Type |
 |---|---|---|
-| `contacts/` | `category: "[[People]]"` | Individual contacts, friends, family, collaborators (`Type: Contacts`). |
-| `contacts/` | `category: "[[Organizations]]"` | Companies, schools, institutions, legal entities (`Type: Contacts`). |
-| `notes/` | `category: "[[Notes]]"` | Default category for structured, semi-structured, and raw textual notes (`Type: Notes`). |
-| `notes/` | `category: "[[References]]"` | Useful facts, cheat sheets, guidelines, checklists (`Type: Notes`). |
-| `notes/` | `category: "[[Sources]]"` | What others say (summaries, articles, web clips) (`Type: Notes`). |
-| `notes/` | `category: "[[Thoughts]]"` | Personal/ideas, current opinions, research questions (`Type: Notes`). |
-| `notes/` | `category: "[[Beliefs]]"` | Trusted models, core guiding principles (`Type: Notes`). |
-| `notes/` | `category: "[[Decisions]]"` | Team or individual decisions and reasoning logs (`Type: Notes`). |
-| `notes/` | `category: "[[Projects]]"` | Hubs for notes about ongoing work, milestones, travel/trips (`Type: Notes`). |
-| `logs/` | `category: "[[Daily Notes]]"` | Daily notes containing schedules and work logs (`Type: Logs`). |
-| `logs/` | `category: "[[Meetings]]"` | Chronological meeting agendas, summaries, outcomes (`Type: Logs`). |
-| `utilities/` | `category: "[[Categories]]"` | Category representation notes themselves, stored in `utilities/categories/` (`Type: Utilities`). |
+| `Contacts/` | `category: "[[People]]"` | Individual contacts, friends, family, collaborators (`Type: Contacts`). |
+| `Contacts/` | `category: "[[Organizations]]"` | Companies, schools, institutions, legal entities (`Type: Contacts`). |
+| `Notes/` | `category: "[[Notes]]"` | Default category for structured, semi-structured, and raw textual notes (`Type: Notes`). |
+| `Notes/` | `category: "[[References]]"` | Useful facts, cheat sheets, guidelines, checklists (`Type: Notes`). |
+| `Notes/` | `category: "[[Sources]]"` | What others say (summaries, articles, web clips) (`Type: Notes`). |
+| `Notes/` | `category: "[[Thoughts]]"` | Personal/ideas, current opinions, research questions (`Type: Notes`). |
+| `Notes/` | `category: "[[Beliefs]]"` | Trusted models, core guiding principles (`Type: Notes`). |
+| `Notes/` | `category: "[[Decisions]]"` | Team or individual decisions and reasoning logs (`Type: Notes`). |
+| `Notes/` | `category: "[[Projects]]"` | Hubs for notes about ongoing work, milestones, travel/trips (`Type: Notes`). |
+| `Logs/` | `category: "[[Daily Notes]]"` | Daily notes containing schedules and work logs (`Type: Logs`). |
+| `Logs/` | `category: "[[Meetings]]"` | Chronological meeting agendas, summaries, outcomes (`Type: Logs`). |
+| `Utilities/` | `category: "[[Categories]]"` | Category representation notes themselves, stored in `Utilities/Categories/` (`Type: Utilities`). |
 
 ---
 
@@ -284,7 +284,7 @@ When Bes creates any of these notes (bypassing Templater), substitute the Templa
 Different note types follow different filename rules, defined by the template for that type:
 
 - **Default** (most notes): `[Descriptive title] YYYYMMDDHHmmss` — descriptive title followed by file-created timestamp.
-- **Daily Notes**: `YYYY-MM-DD-weekday.md` (lowercase weekday name, hyphen-separated, e.g. `2026-06-04-thursday.md`). All daily notes are stored directly inside the `logs/daily/` directory.
+- **Daily Notes**: `YYYY-MM-DD-weekday.md` (lowercase weekday name, hyphen-separated, e.g. `2026-06-04-thursday.md`). All daily notes are stored directly inside the `Logs/Daily/` directory.
 - **Weekly Reviews**: `YYYY-MM-DD Weekly Review` (using the Friday date).
 - **Meeting notes**: `YYYY-MM-DD [Descriptive title]` — date prefix, then a short descriptive title.
 - **People / Organizations / Projects**: simple descriptive title, no timestamp (Templater renames to timestamp, but Bes should use a meaningful name instead). Example: `Bes Setup.md`, not `20260521094904.md`.
