@@ -59,9 +59,10 @@ The 7AM cron writes `~/.hermes/morning-briefing/YYYY-MM-DD.json` with this struc
       "concept": []
     }
   },
-  "concept_of_the_day": {
-    "path": "Notes/the-fox-vs-the-hedgehog-20260603165252.md",
-    "title": "The Fox vs. the Hedgehog"
+  "daily_thought": {
+    "path": "Notes/Thoughts on fatphobia 20260128135845.md",
+    "title": "Thoughts on Fatphobia",
+    "category": "Opinions / Thoughts"
   }
 }
 ```
@@ -76,7 +77,7 @@ If the cache file doesn't exist (cron failed or hasn't run yet), run the backgro
 3. **Run the change detection script live:**
    `python3 ~/.hermes/scripts/check_morning_changes.py`
 4. **Write the recovery cache file manually:**
-   Construct and write the complete JSON cache to `/home/justin.guest/.hermes/morning-briefing/YYYY-MM-DD.json` containing the correct values for `date`, `is_work_day`, `work_log_dates`, `work_log_status` ("skipped" if the target date daily note is already fully populated, "ok" if generated), `vault_hygiene` (run `python3 run_tier1_hygiene.py` inline to get the tier1_summary), `vault_activity` parsed from step 3, and a randomly selected concept of the day under `concept_of_the_day` (selected from `/home/justin.guest/vault/Notes/` by finding a markdown file containing `type: concept`).
+   Construct and write the complete JSON cache to `/home/justin.guest/.hermes/morning-briefing/YYYY-MM-DD.json` containing the correct values for `date`, `is_work_day`, `work_log_dates`, `work_log_status` ("skipped" if the target date daily note is already fully populated, "ok" if generated), `vault_hygiene` (run `python3 run_tier1_hygiene.py` inline to get the tier1_summary), `vault_activity` parsed from step 3, and a randomly selected note under `daily_thought` (selected from Thoughts/Opinions, Beliefs, or Sources categories in the vault).
 5. **Proceed with Phase 1 presentation:**
    Present Phase 1 highlights/status based on the newly written recovery cache.
 
