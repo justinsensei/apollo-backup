@@ -137,7 +137,7 @@ Core summary of the note topic.
 ---
 
 ## Common Pitfalls
-1. **Duplicate Creation:** Before pitching a note title, check if a file with that name or a strong synonym already exists in the vault. If it exists, suggest a linkage or update instead.
+1. **Duplicate Creation & Overlap:** Before proposing a new Concept, Note, or Thought, search the entire vault (including `category: "[[Notes]]"` and `category: "[[Concepts]]"`) for any existing files with highly similar names or overlapping content. If an existing raw note or duplicate is found, recommend consolidating, merging, or reclassifying the existing note instead of creating a brand new one. This prevents polluting the vault with redundant nodes.
 2. **Path Misplacement:** Approved notes *must* always be written to the `/home/justin.guest/vault/inbox/` directory first, allowing manual review and triage later.
 3. **Overwriting Frontmatter:** Ensure frontmatter strings use single or double quotes around the ID and wikilink to avoid parsing breaks.
 

@@ -85,6 +85,7 @@ When a Thought is promoted, append the synthesized sections:
 ## Common Pitfalls
 1. **Ignoring Link Hygiene:** Promoting a note to a Belief while leaving outgoing links to random raw meeting notes violates the unidirectional graph rule. You *must* flag and clean up downward links.
 2. **Generic Tenets:** For Thoughts $\rightarrow$ Beliefs promotions, do not use generic placeholder tenets. Read the backlinked context and write highly specific, tailored principles matching Justin's product management style.
+3. **Overlooking Vault Duplicates:** Before proposing any note for promotion or reclassification (e.g., raw `[[Notes]]` to `[[Concepts]]`), search the vault for other notes with highly similar, overlapping, or identical content (which might still be in the `[[Notes]]` category). Always suggest consolidating or merging these duplicates as part of the promotion process rather than leaving redundant nodes.
 
 ---
 
