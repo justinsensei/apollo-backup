@@ -24,7 +24,7 @@ The cron sends: *"Morning, Justin! Ready to start your day?"*
 
 Justin's reply determines the flow:
 - **"yes" / any affirmative** → full briefing (all phases)
-- **"day off" / "taking the day off" / similar** → skip Phase 1; run Phases 2–5 with personal-only filter
+- **"day off" / "taking the day off" / similar** → skip Phase 1; run remaining phases with personal-only filter
 - **no response within the session** → nothing; cron already ran background jobs
 
 ## Cache file schema
