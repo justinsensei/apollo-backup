@@ -50,17 +50,17 @@ The 7AM cron writes `~/.hermes/morning-briefing/YYYY-MM-DD.json` with this struc
     "calendar_events": [...],
     "action_items": [...]
   },
-  "gbrain_activity": {
+  "vault_activity": {
     "total_updated": 4,
     "type_counts": {"daily": 1, "concept": 3},
     "added_entities": {
-      "person": [{"slug": "people/jeev-sahoo", "title": "Jeev Sahoo"}],
+      "person": [{"slug": "Contacts/jeev-sahoo", "title": "Jeev Sahoo"}],
       "company": [],
       "concept": []
     }
   },
   "concept_of_the_day": {
-    "path": "concepts/the-fox-vs-the-hedgehog-20260603165252.md",
+    "path": "Notes/the-fox-vs-the-hedgehog-20260603165252.md",
     "title": "The Fox vs. the Hedgehog"
   }
 }
@@ -75,20 +75,12 @@ If the cache file doesn't exist (cron failed or hasn't run yet), run the backgro
    `python3.12 ~/.hermes/scripts/work_day.py logs_to_summarize`
 3. **Run the change detection script live:**
    `python3 ~/.hermes/scripts/check_morning_changes.py`
-4. **Inspect the nightly dream cycle log:**
-   Read `~/.gbrain/logs/dream-cron.log` to check for success/failure and parse stats (e.g., embedded chunks, duration, schema suggestions).
-5. **Write the recovery cache file manually:**
-   Construct and write the complete JSON cache to `/home/justin.guest/.hermes/morning-briefing/YYYY-MM-DD.json` containing the correct values for `date`, `is_work_day`, `work_log_dates`, `work_log_status` ("skipped" if the target date daily note is already fully populated, "ok" if generated), `vault_hygiene` (run `python3 run_tier1_hygiene.py` inline to get the tier1_summary), `dream_cycle`, `gbrain_activity` parsed from step 3, and a randomly selected concept of the day under `concept_of_the_day` (selected from `/home/justin.guest/vault/concepts/`).
-6. **Proceed with Phase 0/1 presentation:**
-   Open with the dream cycle parenthetical status check (Phase 0) and present Phase 1 highlights/status based on the newly written recovery cache.
+4. **Write the recovery cache file manually:**
+   Construct and write the complete JSON cache to `/home/justin.guest/.hermes/morning-briefing/YYYY-MM-DD.json` containing the correct values for `date`, `is_work_day`, `work_log_dates`, `work_log_status` ("skipped" if the target date daily note is already fully populated, "ok" if generated), `vault_hygiene` (run `python3 run_tier1_hygiene.py` inline to get the tier1_summary), `vault_activity` parsed from step 3, and a randomly selected concept of the day under `concept_of_the_day` (selected from `/home/justin.guest/vault/Notes/` by finding a markdown file containing `type: concept`).
+5. **Proceed with Phase 1 presentation:**
+   Present Phase 1 highlights/status based on the newly written recovery cache.
 
 ## Phase sequence
-
-### Phase 0 — Dream Cycle Verification (Brief check-in)
-
-Before walking through the interactive phases, check the top-level `"dream_cycle"` field in the daily cache file (`~/.hermes/morning-briefing/YYYY-MM-DD.json`).
-- **If status is "ok":** Open with a very brief, delightful one-sentence parenthesis about your overnight synthesis (e.g. *"By the way, the overnight dream cycle successfully processed and embedded N chunks across M pages in X.Ys!"*). This should be a tiny "status update" that shows things are working perfectly.
-- **If status is "error" or "missing":** Do NOT start with this. Keep the opening positive and push the failure note to the bottom of the entire morning briefing, listing it under the vault hygiene section (e.g. *`Dream cycle failed: [error log]`*) so Justin can review it without disrupting his morning focus.
 
 ### Phase 1 — Work log highlights
 
