@@ -46,3 +46,11 @@ If the script reports duplicate ID conflicts, follow the classification and reso
 Regularly verify that link targets are correct and not broken.
 - Verify that newly moved notes didn't break external scripts.
 - Review and clean up empty tags or stray formatting rules.
+
+---
+
+### Step 4 — Timeline & List Spacing Hygiene
+When notes undergo automated or manual editing (including script-based timeline additions):
+- **Timeline Heading Spacing:** Ensure there is exactly one empty line between the `## Timeline` heading and the first bullet point list item.
+- **Bullet List Compaction:** Ensure there are NO empty lines between individual bullet list items (they should remain compact list items, not double-spaced).
+- **Script-Based Append Pitfall:** When appending bullets dynamically in Python, do not include leading newlines inside the bullet string (e.g., use `- Item` instead of `\n- Item`) to prevent joins from creating compounding empty lines.
