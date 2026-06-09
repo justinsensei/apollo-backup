@@ -291,7 +291,59 @@ If Justin selects any:
        `python3 /home/justin.guest/.hermes/scripts/fetch_source_candidates.py --mark-email-processed <thread_id>`
    - Report the note(s) successfully saved.
 
-If no candidates are found, skip this phase entirely and proceed to Phase 5.
+If no candidates are found, skip this phase entirely and proceed to Phase 4.7.
+
+---
+
+### Phase 4.7 — Discovered Contacts & Organizations
+
+Present any discovered contacts or organizations (unresolved wikilinks found by the `check_vault_signals.py` script) from today's cache file (`discovered_contacts` field).
+
+If no discovered contacts are found in the cache, skip this phase entirely and proceed to Phase 5.
+
+Format:
+```
+👤 N discovered contact / organization candidates:
+
+**People**
+1. [Name] — first mentioned in [[context_file]]
+
+**Organizations**
+2. [Name] — first mentioned in [[context_file]]
+...
+
+Would you like me to create contact notes for any of these? (e.g. "yes, 1 as organization", "create 2", or "skip")
+```
+
+If Justin selects any:
+1. For each selected item, create a new file in `/home/justin.guest/vault/Contacts/<Name>.md`.
+2. Format the contact note following these strict standards:
+   * Frontmatter:
+     ```yaml
+     ---
+     id: <timestamp_id> # YYYYMMDDHHmmss format based on current time
+     daily_note: "[[<YYYY-MM-DD-weekday>]]" # e.g. [[2026-06-09-tuesday]]
+     type: <person | organization>
+     ---
+     ```
+   * Markdown body:
+     ```markdown
+     > Executive summary: Briefing for <Name>.
+
+     ## State
+     - **Role:** 
+     - **Company:** 
+     - **Relationship:** 
+
+     ## Open Threads
+     - 
+
+     ---
+
+     ## Timeline
+     - <Date> | Discovered — Mentioned in [[<context_file_relative_path_no_ext>|<context_file_title>]].
+     ```
+3. Report success and confirm creation.
 
 ---
 
