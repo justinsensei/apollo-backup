@@ -22,6 +22,8 @@ This skill governs the structure and navigation of chronological log notes, poin
   - Sub-skill: **`obsidian-daily-notes`** (`category: "[[Daily Notes]]"`)
 - **Meetings Directory:** `/home/justin.guest/vault/Logs/Meetings/`
   - Sub-skill: **`obsidian-meetings`** (`category: "[[Meetings]]"`)
+- **Readwise Directory:** `/home/justin.guest/vault/Logs/Readwise/`
+  - Synced automatically via `sync_readwise.py` (`category: "[[Readwise]]"`)
 
 ---
 

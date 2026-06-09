@@ -64,6 +64,7 @@ Notes are categorized with a single `category` YAML property containing a quoted
 | `Notes/` | `category: "[[Projects]]"` | Hubs for notes about ongoing work, milestones, travel | `obsidian-projects` |
 | `Daily Notes/` | `category: "[[Daily Notes]]"` | Daily notes containing schedules and work logs | `obsidian-daily-notes` |
 | `Logs/` | `category: "[[Meetings]]"` | Chronological meeting agendas, summaries, outcomes | `obsidian-meetings` |
+| `Logs/` | `category: "[[Readwise]]"` | Raw logs of what I've been reading (plus highlights) | |
 | `Utilities/` | `category: "[[Categories]]"` | Category representation notes themselves (in `Utilities/Categories/`) | `obsidian-utilities` |
 
 ---
