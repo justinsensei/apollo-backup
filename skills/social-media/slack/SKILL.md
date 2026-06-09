@@ -148,7 +148,7 @@ If Justin reacts to a message with the `🧠` (brain) emoji, use `scripts/fetch_
    python3 ${HERMES_HOME:-$HOME/.hermes}/skills/social-media/slack/scripts/fetch_slack_brains.py --list-new
    ```
 2. For each new item:
-   - Generate a summarized Obsidian note in `sources/slack/YYYY-MM-DD-slug.md`.
+   - Generate a summarized Slack log in `Logs/Slack/YYYY-MM-DD-slug.md`.
    - Update today's daily note with a link and one-sentence gist under `## 🗒 Notepad` or `## 🚀 Highlights & Decisions`.
    - Mark the item as processed so it is never duplicated:
      ```bash
