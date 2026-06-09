@@ -1,6 +1,6 @@
 ---
 name: morning-briefing
-description: "Interactive morning briefing for Justin — runs after the 7AM cron has done background work (work log change-detection, vault hygiene Tier 1, inbox gather). Walks through a multi-phase conversation: work log highlights (skipped if no changes since wind-down), Second Brain vault activity summary, calendar summary, near-term task triage, calendar inbox candidates, general inbox candidates. Load this skill whenever Justin responds to the morning greeting or asks for his morning briefing."
+description: "Interactive morning briefing for Justin — runs after the 7AM cron has done background work (work log change-detection, vault hygiene Tier 1, inbox gather). Walks through a multi-phase conversation: work log highlights (including vault updates, skipped if no changes since wind-down), calendar summary, near-term task triage, calendar inbox candidates, general inbox candidates. Load this skill whenever Justin responds to the morning greeting or asks for his morning briefing."
 platforms: [linux]
 related_skills: [work-log, todoist-inbox-fill, obsidian-vault-hygiene, todoist]
 ---
