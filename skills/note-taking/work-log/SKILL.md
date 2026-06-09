@@ -24,19 +24,18 @@ Read `OBSIDIAN_VAULT_PATH` from env (typically `/home/justin.guest/vault` inside
 
 ## Step 2 — Find or create the target daily note
 
-Daily-note filename format in this vault: `YYYY-MM-DD-weekday.md` (lowercase weekday name, hyphen-separated, e.g., `2026-06-04-thursday.md`). They are stored inside the `<vault>/daily/` directory.
+Daily-note filename format in this vault: `YYYY-MM-DD Weekday.md` (capitalized weekday name, space-separated, e.g., `2026-06-04 Thursday.md`). They are stored inside the `/home/justin.guest/vault/Daily Notes/` directory.
 
 Check if the daily note for the target date already exists:
-1. Search for `<vault>/daily/<YYYY-MM-DD-weekday>.md`.
-2. Fall back to checking `<vault>/<YYYY-MM-DD dddd>.md` or `<vault>/Daily Notes/<YYYY-MM-DD dddd>.md`.
+1. Search for `/home/justin.guest/vault/Daily Notes/<YYYY-MM-DD Weekday>.md`.
 
 **Auto-Creation of Daily Note:**
 If the target daily note does not exist, you must **automatically create it** from the template so the process never fails due to a missing note.
-1. Read the template from `<vault>/utilities/templates/daily_note.md`.
+1. Read the template from `/home/justin.guest/vault/Utilities/Templates/daily_note.md`.
 2. Replace any Templater expressions with real values:
    - For `id`, use `<TARGET_DATE_NOSYMBOLS>080000` (e.g., `20260605080000` for `2026-06-05`).
    - Strip out any remaining `<% ... %>` or `<%* ... %>` tags or placeholder texts to make it a clean, ready-to-use note.
-3. Write the initialized note to `<vault>/daily/<YYYY-MM-DD-weekday>.md`.
+3. Write the initialized note to `/home/justin.guest/vault/Daily Notes/<YYYY-MM-DD Weekday>.md`.
 4. Proceed with generating and writing the work log / record blocks into this newly created file.
 
 ## Step 3 — Gather raw material (parallel, one subagent per source)
