@@ -1,7 +1,7 @@
 ---
 name: obsidian
 description: Core settings, paths, frontmatter schemas, and baseline conventions for Justin's Obsidian vault.
-version: 1.2.0
+version: 1.3.0
 author: Bes
 license: MIT
 metadata:
@@ -30,7 +30,7 @@ Every manual note must have a YAML frontmatter block containing at least these f
 ```yaml
 ---
 id: 'YYYYMMDDHHmmss'                 # Numerical string based on creation time
-daily_note: "[[Logs/Daily/YYYY-MM-DD-weekday|YYYY-MM-DD Weekday]]" # Link to creation day
+daily_note: "[[Daily Notes/YYYY-MM-DD-weekday|YYYY-MM-DD Weekday]]" # Link to creation day
 category: "[[CategoryName]]"         # Single category link (optional but standard)
 ---
 ```
