@@ -97,7 +97,77 @@ Help Justin empty his Obsidian "inbox" so quick notes and scratchpads land in th
 
 ---
 
-### Phase 3 — Source Review
+### Phase 3 — Log Candidates
+
+Present potential log candidates (active Slack conversations and noteworthy primary-category emails from the last 36-48 hours) that Justin hasn't tagged with `🧠` or forwarded to Bes, but that are highly worthy of being turned into logs in his vault.
+
+Run the unified script live to fetch candidates:
+`python3 /home/justin.guest/.hermes/scripts/fetch_source_candidates.py`
+
+If candidates (Slack or Email) are found:
+- Show them with sequential numbers across both Slack and Email candidates.
+- Format:
+  ```
+  📋 N potential log candidates:
+
+  **Slack Conversations**
+  1. [\#channel-name] Topic or Preview — participants: Alice, Bob, Justin
+  2. [\#channel-name] Topic or Preview — participants: Endre, Justin
+
+  **Emails**
+  3. [Email/<account>] Subject line — from: Sender Name (Date)
+  ...
+
+  Would you like to turn any of these conversations into logs in your vault? (e.g. "yes, 1", "save 1 and 3", or "skip")
+  ```
+
+If Justin selects any:
+1. For each selected item:
+   - **For Slack conversations:**
+     - Synthesize a high-quality summary showing "who said what" clearly. Do NOT store verbatim Slack messages; store only summaries with retrieval metadata.
+     - Write to `/home/justin.guest/vault/Logs/Slack/YYYY-MM-DD - Spaced Title.md`.
+     - Structure the YAML frontmatter for Slack logs:
+       ```yaml
+       ---
+       id: <timestamp_id> # YYYYMMDDHHmmss based on first message
+       daily_note: "[[<YYYY-MM-DD Weekday>]]"
+       original_url: "<permalink>"
+       category: "[[Slack]]"
+       channel: "<channel_name>"
+       participants:
+         - "Participant Name"
+       ---
+       ```
+     - Append a link and one-sentence gist to today's daily note notepad under `## 🗒 Notepad`:
+       `* [[Logs/Slack/<filename>|Slack summary]]: <One-sentence-gist>.`
+     - Run the command to mark it processed:
+       `python3 /home/justin.guest/.hermes/scripts/fetch_slack_brains.py --mark-processed <channel_id> <ts>`
+   - **For Emails:**
+     - Synthesize a high-quality summary of the email thread showing clearly what was discussed, decided, or requested. Do NOT store verbatim email text; store only summaries with retrieval metadata.
+     - Write to `/home/justin.guest/vault/Logs/Emails/YYYY-MM-DD - Spaced Subject.md`.
+     - Structure the YAML frontmatter for email logs:
+       ```yaml
+       ---
+       id: <timestamp_id> # YYYYMMDDHHmmss based on first email
+       daily_note: "[[<YYYY-MM-DD Weekday>]]"
+       original_url: "<permalink>"
+       category: "[[Emails]]"
+       account: "<work | personal-main>"
+       participants:
+         - "Sender Name"
+       ---
+       ```
+     - Append a link and one-sentence gist to today's daily note notepad under `## 🗒 Notepad`:
+       `* [[Logs/Emails/<filename>|Email summary]]: <One-sentence-gist>.`
+     - Run the command to mark it processed:
+       `python3 /home/justin.guest/.hermes/scripts/fetch_source_candidates.py --mark-email-processed <thread_id>`
+   - Report the log(s) successfully saved.
+
+If no candidates are found, skip this phase entirely and proceed to Phase 4.
+
+---
+
+### Phase 4 — Source Review
 
 Review persistent reference sources, articles, or transcripts added or updated today.
 
@@ -117,7 +187,7 @@ Review persistent reference sources, articles, or transcripts added or updated t
 
 ---
 
-### Phase 4 — Tomorrow's Calendar Preview & Close-out
+### Phase 5 — Tomorrow's Calendar Preview & Close-out
 
 Preview tomorrow's schedule to establish mental readiness, coordinate upcoming tasks, and close out the day.
 
