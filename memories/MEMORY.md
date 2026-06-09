@@ -27,3 +27,5 @@ Default new conceptual notes to category 'Notes' (with timestamp ID) unless tria
 Vault convention: Raw notes can contain embedded processing instructions directed at Bes using inline tasks ("- [ ] @bes <task>") or comment blocks ("%% bes-instructions ... %%").
 §
 Weekly summaries are requested manually on the first day of the week and delivered directly to the requesting Telegram conversation instead of running on a schedule.
+§
+Notes that capture established, re-usable decision patterns are categorized under References.
