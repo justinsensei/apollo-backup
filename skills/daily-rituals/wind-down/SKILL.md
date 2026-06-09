@@ -119,8 +119,9 @@ Would you like me to create contact notes for any of these? (e.g. "yes, 1 as org
 ```
 
 If Justin selects any:
-1. For each selected item, create a new file in `/home/justin.guest/vault/Contacts/<Name>.md`.
-2. Format the contact note following these strict standards:
+1. For each selected item, check if `/home/justin.guest/vault/Contacts/<Name>.md` already exists.
+2. If the file exists, do NOT overwrite or truncate it (as it contains precious history/timeline entries). Instead, patch the file to insert the standard frontmatter, executive summary, and state sections at the very top, preserving any existing content (like `## Timeline` and its entries) underneath.
+3. If the file does not exist, create a new file and format the contact note following these strict standards:
    * Frontmatter:
      ```yaml
      ---
