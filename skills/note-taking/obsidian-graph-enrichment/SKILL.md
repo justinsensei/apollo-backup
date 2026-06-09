@@ -71,3 +71,32 @@ Rather than manually updating a high-level Thought or Belief to list all resourc
 - **Thoughts** (Category: `[[Thoughts]]`) are emergent, open reflections, research questions, or current opinions.
 - **Beliefs** (Category: `[[Beliefs]]`) are highly trusted, semi-permanent frameworks, convictions, or proven mental models.
 - Concepts must prove their durability to move from a Thought to a Belief.
+
+---
+
+## Automated Entity Enrichment (Vault Signals)
+While conceptual entities (Thoughts, Beliefs) rely on manual backlinks to form timelines, physical entities (Contacts/People, Organizations) and Projects utilize an automated enrichment mechanism.
+
+### How It Works (`check_vault_signals.py`)
+A scheduled script scans the vault for modified markdown files since the last run watermark and enriches existing entity notes automatically:
+
+1. **Entity Directory Mapping:**
+   - **People & Organizations:** Managed under `/Contacts/` with categories `[[People]]` and `[[Organizations]]`.
+   - **Projects:** Managed under `/Notes/` with category `[[Projects]]` and `type: project` frontmatter.
+
+2. **Trigger-on-Mention Detection:**
+   - The script matches text inside newly modified files against existing entity names, their filenames, or configured `aliases` (defined in the entity's frontmatter).
+   - Both explicit wikilinks (e.g., `[[Dave Rohrl]]`) and plain-text mentions (e.g., "shared this with Dave Rohrl") trigger enrichment.
+
+3. **Automatic Timeline Appending:**
+   - When a match is found, the script automatically writes a timestamped reference to the target entity's `## Timeline` section:
+     ```markdown
+     ## Timeline
+     - YYYY-MM-DD | Mentioned in [[Path/To/Source-Note|Source Note Title]]
+     ```
+   - This ensures a zero-effort log of interactions, source clippings, and project meetings accumulates directly in the contact's or project's note.
+
+4. **Candidate Discovery (Unresolved Links):**
+   - The script also extracts unresolved wikilinks (e.g., `[[John Doe]]` when no `John Doe.md` file exists).
+   - These are surfaced as candidate entities during the Morning Briefing, giving Justin a simple, one-click way to initialize new Contacts.
+
