@@ -22,6 +22,7 @@ This skill governs the physical structure and coordinate mapping of the `/Notes/
 - **Sub-skills (Categories):**
   - **`obsidian-thoughts-beliefs`**: For raw reflections or core principles (`category: "[[Thoughts]]"` or `category: "[[Beliefs]]"`).
   - **`obsidian-decisions`**: For trade-offs, architecture decisions, and reasoning logs (`category: "[[Decisions]]"`).
+  - **`Memory`**: For journal-like personal notes, conversations, and good days (`category: "[[Memory]]"`).
   - **`obsidian-projects`**: For ongoing project hubs, travel, or milestones (`category: "[[Projects]]"`).
   - **`obsidian-references-sources`**: For factsheets or Readwise web clips (`category: "[[References]]"` or `category: "[[Sources]]"`).
 

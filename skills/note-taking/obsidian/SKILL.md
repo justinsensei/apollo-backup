@@ -61,6 +61,7 @@ Notes are categorized with a single `category` YAML property containing a quoted
 | `Notes/` | `category: "[[Thoughts]]"` | Personal/ideas, current opinions, research questions | `obsidian-thoughts-beliefs` |
 | `Notes/` | `category: "[[Beliefs]]"` | Trusted models, core guiding principles | `obsidian-thoughts-beliefs` |
 | `Notes/` | `category: "[[Decisions]]"` | Team or individual decisions and reasoning logs | `obsidian-decisions` |
+| `Notes/` | `category: "[[Memory]]"` | Journal-like personal notes of things I want to remember | |
 | `Notes/` | `category: "[[Projects]]"` | Hubs for notes about ongoing work, milestones, travel | `obsidian-projects` |
 | `Daily Notes/` | `category: "[[Daily Notes]]"` | Daily notes containing schedules and work logs | `obsidian-daily-notes` |
 | `Logs/` | `category: "[[Meetings]]"` | Chronological meeting agendas, summaries, outcomes | `obsidian-meetings` |
