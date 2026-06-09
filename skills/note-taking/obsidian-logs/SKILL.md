@@ -17,6 +17,11 @@ This skill governs the structure and navigation of chronological log notes, poin
 
 ---
 
+- **Linked References:**
+  - **[Readwise Highlights Sync](references/readwise-sync.md):** Rules, directory conventions, and schema standardizations for Readwise raw logs.
+
+---
+
 ## Directories & Sub-skills
 - **Daily Notes Directory:** `/home/justin.guest/vault/Daily Notes/`
   - Sub-skill: **`obsidian-daily-notes`** (`category: "[[Daily Notes]]"`)
