@@ -1,6 +1,6 @@
 Hermes handles infra/skills. Defer migrations/creations to Justin.
 §
-Gmail (read-only): Tokens at `~/.hermes/google_tokens/`. Multi-account search: `python3 ~/.hermes/skills/productivity/google-workspace/scripts/gws_multi.py --account all|name gmail search "..."`. Single-account: set `HERMES_GOOGLE_TOKEN_FILE` and run `google_api.py`. Do NOT use himalaya.
+Gmail (read-only): tokens under ~/.hermes/google_tokens/. Search via gws_multi.py. Do not use himalaya.
 §
 Obsidian routes: Contacts/, Notes/, Logs/ (Meetings/Emails/Slack/Sources), Daily Notes/ (Tier 1 log input), Utilities/. Dividers: always `---`.
 §
@@ -25,3 +25,5 @@ User prefers modular, composable skills (no monolithic files).
 With the exception of 'Willpower is limited', the user has reverted all Thoughts and Beliefs back to Notes, finding the manual Thoughts/Beliefs categorization unsatisfactory. Default all conceptual and reflection notes to category 'Notes' with an ID prefix.
 §
 Vault convention: Raw notes can contain embedded processing instructions directed at Bes using inline tasks ("- [ ] @bes <task>") or comment blocks ("%% bes-instructions ... %%").
+§
+Weekly summaries are requested manually on the first day of the week and delivered directly to the requesting Telegram conversation instead of running on a schedule.
