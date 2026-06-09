@@ -174,7 +174,7 @@ def delete_document_index(cursor, rel_path):
     # Delete paragraphs by ID matching prefix
     cursor.execute("DELETE FROM vec_paragraphs WHERE paragraph_id LIKE ?", (f"{rel_path}#%",))
 
-def index_vault(verbose=False):
+def index_vault(verbose=False, batch_size=30):
     conn = get_db_connection()
     init_db(conn)
     cursor = conn.cursor()
@@ -212,7 +212,6 @@ def index_vault(verbose=False):
         if rel_path in db_files:
             db_mtime, db_hash = db_files[rel_path]
             if mtime != db_mtime:
-                # Check hash to see if content actually changed
                 with open(full_path, "r", encoding="utf-8", errors="replace") as f:
                     content = f.read()
                 file_hash = hashlib.md5(content.encode("utf-8")).hexdigest()
@@ -230,71 +229,102 @@ def index_vault(verbose=False):
         
     print(f"Found {len(pending_files)} new/modified files to index.")
     
-    # Process files
-    for idx, (rel_path, full_path, mtime, file_hash) in enumerate(pending_files):
-        if verbose or (idx + 1) % 50 == 0 or idx + 1 == len(pending_files):
-            print(f"Indexing [{idx+1}/{len(pending_files)}]: {rel_path}")
+    # We process pending files in batches of `batch_size` (e.g. 30 files at a time)
+    for idx_start in range(0, len(pending_files), batch_size):
+        chunk_files = pending_files[idx_start:idx_start+batch_size]
+        print(f"Indexing batch [{idx_start+1}-{min(idx_start+batch_size, len(pending_files))}/{len(pending_files)}]...")
+        
+        parsed_docs = []
+        texts_to_embed = []
+        
+        # 1. Parse and extract all texts for this batch
+        for rel_path, full_path, mtime, file_hash in chunk_files:
+            try:
+                frontmatter, body, paragraphs = parse_markdown_file(full_path)
+                title = os.path.basename(full_path)[:-3]
+                category = get_category_from_path(rel_path, frontmatter)
+                
+                doc_text = body[:8000]
+                
+                # Keep track of indices for matching embeddings later
+                doc_index = len(texts_to_embed)
+                texts_to_embed.append(doc_text)
+                
+                para_indices = []
+                for chunk_idx, p_text in paragraphs:
+                    para_indices.append((chunk_idx, p_text, len(texts_to_embed)))
+                    texts_to_embed.append(p_text)
+                    
+                parsed_docs.append({
+                    "rel_path": rel_path,
+                    "mtime": mtime,
+                    "file_hash": file_hash,
+                    "title": title,
+                    "category": category,
+                    "doc_index": doc_index,
+                    "paragraphs": para_indices
+                })
+            except Exception as e:
+                print(f"Error parsing {rel_path}: {e}")
+                
+        # 2. Bulk embed all texts
+        if not texts_to_embed:
+            continue
             
         try:
-            # Parse file
-            frontmatter, body, paragraphs = parse_markdown_file(full_path)
-            title = os.path.basename(full_path)[:-3]
-            category = get_category_from_path(rel_path, frontmatter)
-            
-            # Prepare texts to embed
-            # 1. Document-level text: first 8000 chars of body
-            doc_text = body[:8000]
-            
-            # 2. Paragraph-level texts
-            para_texts = [p[1] for p in paragraphs]
-            
-            # Call batch embed
-            all_texts = [doc_text] + para_texts
-            embeddings = get_embeddings_batch(all_texts)
-            
-            if not embeddings:
-                continue
-                
-            doc_emb = embeddings[0]
-            para_embs = embeddings[1:]
-            
-            # Delete old entries
-            delete_document_index(cursor, rel_path)
-            
-            # Insert document cache
-            cursor.execute("""
-                INSERT INTO document_cache (path, mtime, hash, title, category, last_indexed)
-                VALUES (?, ?, ?, ?, ?, ?)
-            """, (rel_path, mtime, file_hash, title, category, time.strftime("%Y-%m-%dT%H:%M:%SZ")))
-            
-            # Insert vec_documents
-            doc_emb_bytes = struct.pack(f"{len(doc_emb)}f", *doc_emb)
-            cursor.execute("""
-                INSERT INTO vec_documents (document_path, embedding)
-                VALUES (?, ?)
-            """, (rel_path, doc_emb_bytes))
-            
-            # Insert paragraphs & vec_paragraphs
-            for (chunk_idx, p_text), p_emb in zip(paragraphs, para_embs):
-                para_id = f"{rel_path}#{chunk_idx}"
-                cursor.execute("""
-                    INSERT INTO paragraphs (id, document_path, chunk_index, content, char_count)
-                    VALUES (?, ?, ?, ?, ?)
-                """, (para_id, rel_path, chunk_idx, p_text, len(p_text)))
-                
-                p_emb_bytes = struct.pack(f"{len(p_emb)}f", *p_emb)
-                cursor.execute("""
-                    INSERT INTO vec_paragraphs (paragraph_id, embedding)
-                    VALUES (?, ?)
-                """, (para_id, p_emb_bytes))
-                
-            # Commit after every file to preserve progress on interrupt
-            conn.commit()
-                
+            embeddings = get_embeddings_batch(texts_to_embed)
         except Exception as e:
-            print(f"Error indexing {rel_path}: {e}")
+            print(f"Error generating embeddings for batch: {e}")
+            continue
             
-    conn.commit()
+        if not embeddings or len(embeddings) != len(texts_to_embed):
+            print(f"Warning: Got {len(embeddings)} embeddings for {len(texts_to_embed)} texts. Skipping batch.")
+            continue
+            
+        # 3. Write all docs to database in a single transaction
+        for doc in parsed_docs:
+            try:
+                rel_path = doc["rel_path"]
+                doc_emb = embeddings[doc["doc_index"]]
+                
+                # Delete old entries
+                delete_document_index(cursor, rel_path)
+                
+                # Insert document cache
+                cursor.execute("""
+                    INSERT INTO document_cache (path, mtime, hash, title, category, last_indexed)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                """, (rel_path, doc["mtime"], doc["file_hash"], doc["title"], doc["category"], time.strftime("%Y-%m-%dT%H:%M:%SZ")))
+                
+                # Insert vec_documents
+                doc_emb_bytes = struct.pack(f"{len(doc_emb)}f", *doc_emb)
+                cursor.execute("""
+                    INSERT INTO vec_documents (document_path, embedding)
+                    VALUES (?, ?)
+                """, (rel_path, doc_emb_bytes))
+                
+                # Insert paragraphs & vec_paragraphs
+                for chunk_idx, p_text, global_idx in doc["paragraphs"]:
+                    para_id = f"{rel_path}#{chunk_idx}"
+                    p_emb = embeddings[global_idx]
+                    
+                    cursor.execute("""
+                        INSERT INTO paragraphs (id, document_path, chunk_index, content, char_count)
+                        VALUES (?, ?, ?, ?, ?)
+                    """, (para_id, rel_path, chunk_idx, p_text, len(p_text)))
+                    
+                    p_emb_bytes = struct.pack(f"{len(p_emb)}f", *p_emb)
+                    cursor.execute("""
+                        INSERT INTO vec_paragraphs (paragraph_id, embedding)
+                        VALUES (?, ?)
+                    """, (para_id, p_emb_bytes))
+                    
+            except Exception as e:
+                print(f"Error writing index for {doc['rel_path']}: {e}")
+                
+        # Commit after each batch
+        conn.commit()
+        
     print("Indexing complete!")
 
 def search_semantic(query, limit=5, search_type="doc"):
