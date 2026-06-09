@@ -79,9 +79,9 @@ def get_candidates(vault_path, seed=None):
                 fm = parse_frontmatter(content)
                 category = fm.get('category', '')
                 
-                # We care about: Notes, Sources, and Thoughts
+                # We care about: Notes, Concepts, and Thoughts
                 cat_lower = category.lower()
-                is_tier1 = '[[notes]]' in cat_lower or '[[sources]]' in cat_lower
+                is_tier1 = '[[notes]]' in cat_lower or '[[concepts]]' in cat_lower
                 is_tier2 = '[[thoughts]]' in cat_lower
                 
                 if is_tier1 or is_tier2:
@@ -91,7 +91,7 @@ def get_candidates(vault_path, seed=None):
                     candidates.append({
                         "path": os.path.relpath(path, vault_path),
                         "title": title,
-                        "category": "Notes/Sources" if is_tier1 else "Thoughts",
+                        "category": "Notes/Concepts" if is_tier1 else "Thoughts",
                         "body": body[:1200]  # First 1200 chars for analysis
                     })
             except Exception:

@@ -1,6 +1,6 @@
 ---
 name: obsidian-suggest-new-notes
-description: Suggest brand new Notes, Sources, Decisions, or Thoughts based on a temporal scan of active logs over the last 48 hours, and initialize approved notes in the inbox.
+description: Suggest brand new Notes, Concepts, Decisions, or Thoughts based on a temporal scan of active logs over the last 48 hours, and initialize approved notes in the inbox.
 version: 1.0.0
 author: Bes
 license: MIT
@@ -13,7 +13,7 @@ metadata:
 # Obsidian: Suggest New Notes
 
 ## Overview
-This skill scans recent logs (Daily Notes, Meetings, and Readings) to identify conceptual gaps, insights, or missing definitions that are ripe for being captured as dedicated files. When Justin approves a suggestion, Bes immediately initializes the note in the `inbox/` directory with correct YAML frontmatter and a standard template.
+This skill scans recent logs (Daily Notes, Meetings, and Sources) to identify conceptual gaps, insights, or missing definitions that are ripe for being captured as dedicated files. When Justin approves a suggestion, Bes immediately initializes the note in the `inbox/` directory with correct YAML frontmatter and a standard template.
 
 ---
 
@@ -34,7 +34,7 @@ Run the lookback script to get recent log content (truncates automatically to av
 ### Step 2: Analyze & Curate
 Analyze the returned logs and select exactly **5 candidate new notes**. Curate a balanced mix across these categories:
 - **`Notes`**: Conceptual mappings or raw ideas (Category: `[[Notes]]`).
-- **`Sources`**: Summaries of books, articles, or tools mentioned (Category: `[[Sources]]`).
+- **`Concepts`**: Summaries of books, articles, or tools mentioned (Category: `[[Concepts]]`).
 - **`Decisions`**: Strategic, product, or architectural decisions made (Category: `[[Decisions]]`).
 - **`Thoughts`**: Open research questions, emergent opinions, or theories (Category: `[[Thoughts]]`).
 
@@ -73,14 +73,13 @@ What is the core idea or reflection? Keep it atomic.
 - Open questions...
 ```
 
-### 2. Sources Template
+### 2. Concepts Template
 ```markdown
 ---
 id: 'YYYYMMDDHHmmss'
 daily_note: "[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
-category: "[[Sources]]"
+category: "[[Concepts]]"
 ---
-#source
 
 ### Citation
 **Title** [Title]
