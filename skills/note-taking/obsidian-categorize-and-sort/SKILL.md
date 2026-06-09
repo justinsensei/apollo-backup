@@ -163,6 +163,20 @@ When triaging or categorizing large numbers of notes in manual batches (e.g. bat
 
 ---
 
+## Batch Categorization / Triage Protocol
+
+When performing bulk or batch-based categorization/triage of vault notes:
+
+1. **Initialize Tracking:** Safely insert a temporary checkbox property (`reviewed: false`) into the frontmatter of all candidate files in the target set to track progress.
+2. **Retrieve Batches:** Process files in sequential batches of **exactly 10**, sorted chronologically using their 14-digit timestamp ID.
+3. **Presentation Guidelines:**
+   - **Remaining Count:** Always state clearly at the very beginning how many notes are left to review (excluding the current batch).
+   - **Omit Redundancy:** Use a concise markdown table. Do NOT include a "Current Category" column if all notes in the batch share the same initial category.
+   - **Proactive Pruning:** Propose deleting files that are obsolete, redundant, or blank stubs.
+4. **Apply Approvals:** Run a clean update script to apply approved categories, move files to their designated folders (e.g., projects to `/Notes/Projects/`), rename files if category conventions require it (e.g., removing timestamp prefixes for Beliefs), and set `reviewed: true`.
+
+---
+
 ## Batch Grooming Protocol (Large-Scale Triage)
 When the user requests to clean up, categorize, or groom a large backlog of notes:
 1. **Track Progress with a Temporary Property**: Initialize a temporary boolean flag in the YAML frontmatter of the target notes (e.g., `reviewed: false`). Update this to `reviewed: true` upon successful review and triage.
