@@ -22,10 +22,8 @@ Readwise script is at ~/sync_readwise.py. It exports highlights tagged 'vault' (
 §
 User prefers modular, composable skills (no monolithic files).
 §
-Default new conceptual notes to category 'Notes' (with timestamp ID) unless triaged. When promoting notes to 'Concepts', ensure they have a direct source link and check for duplicate files first to prevent redundancies.
+Default new notes to 'Notes' (with timestamp ID). Triaging: established, re-usable decision patterns are References; fleeting/troubleshooting logs remain Notes; personal reflections are Thoughts; general models are Concepts.
 §
 Vault convention: Raw notes can contain embedded processing instructions directed at Bes using inline tasks ("- [ ] @bes <task>") or comment blocks ("%% bes-instructions ... %%").
 §
 Weekly summaries are requested manually on the first day of the week and delivered directly to the requesting Telegram conversation instead of running on a schedule.
-§
-Notes that capture established, re-usable decision patterns are categorized under References.
