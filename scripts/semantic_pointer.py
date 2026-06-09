@@ -229,9 +229,9 @@ def index_vault(verbose=False, batch_size=30):
         
     print(f"Found {len(pending_files)} new/modified files to index.")
     
-    # Sort to prioritize Logs/ and Daily Notes/ (Tier 1 logs)
+    # Sort to prioritize Logs/ first, then Daily Notes/, then others
     pending_files.sort(key=lambda x: (
-        0 if "Logs/" in x[0] or "Daily Notes/" in x[0] else 1,
+        0 if "Logs/" in x[0] else (1 if "Daily Notes/" in x[0] else 2),
         x[0]
     ))
     
