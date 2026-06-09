@@ -26,7 +26,7 @@ All synced Readwise log notes must strictly adhere to the following template:
 ---
 id: 'YYYYMMDDHHmmss'                 # Single-quoted string matching latest highlight's timestamp
 daily_note: "[[Daily Notes/YYYY-MM-DD-weekday|YYYY-MM-DD Weekday]]" # Standardized daily note link
-category: "[[Readwise]]"             # Quoted category wikilink
+category: "[[Readings]]"             # Quoted category wikilink
 ---
 ```
 
@@ -39,4 +39,4 @@ category: "[[Readwise]]"             # Quoted category wikilink
 ---
 
 ## Maintenance & Migration
-If raw highlights are found in `vault/sources/` (a common historical legacy), they must be migrated to `vault/Logs/Readwise/` and sanitized to match this schema, removing any `#source` tags in the process.
+If raw highlights are found in `vault/sources/` (a common historical legacy), they must be migrated to `vault/Logs/Readings/` and sanitized to match this schema, removing any `#source` tags in the process.
