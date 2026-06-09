@@ -123,9 +123,9 @@ After presenting, **wait for acknowledgment or a question** before moving to Pha
 
 ### Phase 1.5 — Second Brain activity summary
 
-Read the `gbrain_activity` section from the daily cache file (`~/.hermes/morning-briefing/YYYY-MM-DD.json`).
+Read the `vault_activity` section from the daily cache file (`~/.hermes/morning-briefing/YYYY-MM-DD.json`).
 
-If the cache file or `"gbrain_activity"` section is missing or has status `"error"`, run the scan script live to retrieve the summary:
+If the cache file or `"vault_activity"` section is missing or has status `"error"`, run the scan script live to retrieve the summary:
 `python3 ~/.hermes/scripts/check_morning_changes.py`
 
 **Format:**
@@ -134,10 +134,10 @@ If the cache file or `"gbrain_activity"` section is missing or has status `"erro
 
 • Updated: [N pages across M types, e.g., "1 note, 3 concepts"]
 
-Added by gbrain:
-• People: [List of [[people/slug|Title]] or "None"]
-• Companies: [List of [[companies/slug|Title]] or "None"]
-• Concepts: [List of [[concepts/slug|Title]] or "None"]
+Newly Added:
+• People: [List of [[Contacts/slug|Title]] or "None"]
+• Companies: [List of [[Contacts/slug|Title]] or "None"]
+• Concepts: [List of [[Notes/slug|Title]] or "None"]
 ```
 
 Keep it concise and beautifully formatted with Wiki-links. If nothing was updated or added, output: *"No second brain updates since yesterday."*
@@ -322,11 +322,11 @@ Once Justin confirms → batch-add to Todoist Inbox with comments.
 
 ### Phase 6 — Concept of the Day
 
-Present a random concept from the vault concepts directory (`<vault>/concepts/`). This concept should ideally be loaded from the cache file's `"concept_of_the_day"` field. If the cache is missing this field, select a random `.md` file from `/home/justin.guest/vault/concepts/` and display its title and full content.
+Present a random concept from the vault's `Notes/` directory. This concept should ideally be loaded from the cache file's `"concept_of_the_day"` field. If the cache is missing this field, select a random `.md` file containing `type: concept` from `/home/justin.guest/vault/Notes/` and display its title and full content.
 
 **Format:**
 ```
-💡 Concept of the Day — [[concepts/slug|Title]]
+💡 Concept of the Day — [[Notes/slug|Title]]
 
 [Full content of the note - keeping it markdown-formatted]
 
