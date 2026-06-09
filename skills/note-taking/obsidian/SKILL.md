@@ -44,7 +44,7 @@ category: "[[CategoryName]]"         # Single category link (quoted wikilink)
 - **Filename Conventions:**
   - **Daily Notes:** Must be `YYYY-MM-DD Weekday.md` (e.g. `2026-06-09 Tuesday.md`).
   - **Notes, Decisions, Thoughts, Memories, Concepts:** Must be `ID Title.md` (e.g. `20260609120000 Spaced Title.md`).
-  - **References, Beliefs:** Must be `Title.md` under `Notes/` (e.g. `Spaced Title.md`).
+  - **References, Beliefs, Sources:** Must be `Title.md` (no timestamp prefix, e.g. `Spaced Title.md`).
   - **Projects:** Must be `Title.md` under `Notes/Projects/` (e.g. `Spaced Title.md`).
   - **Contacts (People/Organizations):** Must be `Title.md` (e.g. `Aly Lalji.md`, `SignLab.md`).
   - **Meetings:** Must be `YYYY-MM-DD - Spaced Meeting Title.md` (e.g. `2026-06-09 - SignLab Product Alignment.md`).
