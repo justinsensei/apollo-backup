@@ -16,8 +16,10 @@ VAULT = Path("/home/justin.guest/vault")
 
 def reconcile_granola_meetings(vault_path):
     meetings_dir = Path(vault_path) / "meetings"
-    if not meetings_dir.exists():
-        return
+    meetings_dir.mkdir(parents=True, exist_ok=True)
+    
+    dest_dir = Path(vault_path) / "logs" / "meetings"
+    dest_dir.mkdir(parents=True, exist_ok=True)
         
     print("Reconciling meetings from Granola...")
     
@@ -103,7 +105,7 @@ def reconcile_granola_meetings(vault_path):
             needs_update = True
             
         if not daily_note or "[[" not in daily_note:
-            daily_note = f"[[daily/{date_str}-{weekday_lower}|{date_str} {weekday_cap}]]"
+            daily_note = f"[[logs/daily/{date_str}-{weekday_lower}|{date_str} {weekday_cap}]]"
             needs_update = True
             
         # Clean body: strip leading whitespace and redundant separators
@@ -124,12 +126,22 @@ def reconcile_granola_meetings(vault_path):
         if body_content != original_body:
             needs_update = True
             
+        # Construct clean content and write to logs/meetings/
+        new_fm = f"---\nid: {note_id}\ndaily_note: '{daily_note}'\n---\n"
+        new_text = new_fm + body_content
+        dest_path = dest_dir / filename
+        dest_path.write_text(new_text, encoding="utf-8")
+        
         if needs_update:
-            # Construct clean frontmatter
-            new_fm = f"---\nid: {note_id}\ndaily_note: '{daily_note}'\n---\n"
-            new_text = new_fm + body_content
-            path.write_text(new_text, encoding="utf-8")
-            print(f"  Fixed/Reconciled: {filename}")
+            print(f"  Fixed/Reconciled and moved: {filename}")
+        else:
+            print(f"  Moved: {filename}")
+            
+        # Delete original file
+        try:
+            path.unlink()
+        except Exception as e:
+            print(f"  Error deleting original raw file {filename}: {e}")
 
 # 1. Reconcile raw Granola meetings from external syncing
 reconcile_granola_meetings(VAULT)
