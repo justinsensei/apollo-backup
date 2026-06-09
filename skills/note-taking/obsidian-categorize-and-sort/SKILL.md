@@ -133,6 +133,11 @@ When performing large-scale triage or classification sweeps (e.g., sorting notes
 ### 4. Guides/Checklists vs. Default Notes
 * **Guides and Handbooks:** Technical procedures, step-by-step migration guides, or checklists (e.g., *Mixpanel to Posthog migration guide*) should be categorized as `[[References]]` (using sub-skill `obsidian-references-sources`) rather than the default `[[Notes]]`.
 
+### 5. Re-usable Decision Patterns vs. Fleeting Operations
+* **References (`[[References]]`):** Notes that capture established, re-usable decision patterns, formulas, equations, or industry benchmarks (e.g., *5 Percent Rule for freemium*, *Active user growth equation*, *Counting any action vs just specific actions*) should be categorized as `[[References]]`.
+* **Thoughts (`[[Thoughts]]`):** Notes that capture personal strategic critiques, qualitative assessments, opinions, or career reflections (e.g., *Signlab K12 GTM*, *Heuristics in the habit loop*).
+* **Notes (`[[Notes]]`):** Notes that capture highly temporal, transient, or fleeting tactical operations, specific troubleshooting records, specific research logs/outputs, temporary schedules, or tool setups (e.g., *Claude vs Perplexity*, *Lovable subscription*, *Ski season dates*) should remain in the default `[[Notes]]` category.
+
 ### 5. Re-usable Decision Patterns & Equations vs. Concepts
 * **Decision Patterns & Equations:** Notes that capture established, re-usable decision patterns, standard mathematical equations, or product telemetry metrics (e.g., *Active user growth equation*, *Counting any action vs just specific actions*, *Setting stickiness goals*) must be categorized as `[[References]]` (using sub-skill `obsidian-references-sources`) rather than `[[Concepts]]` or `[[Thoughts]]`.
 
