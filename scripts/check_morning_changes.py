@@ -336,8 +336,8 @@ def main():
     linear_count = fetch_linear_count(target_date, env)
     gws_counts = fetch_gws_counts(target_date)
     
-    # Get GBrain activity
-    gbrain_act = get_gbrain_activity(vault_path, last_briefing_dt)
+    # Get Vault activity
+    vault_act = get_vault_activity(vault_path, last_briefing_dt)
     
     out = {
         "target_date": target_date,
@@ -352,7 +352,7 @@ def main():
             "gmail_personal": gws_counts["gmail_personal"],
             "calendar": gws_counts["calendar"]
         },
-        "gbrain_activity": gbrain_act
+        "vault_activity": vault_act
     }
     
     print(json.dumps(out, indent=2))
