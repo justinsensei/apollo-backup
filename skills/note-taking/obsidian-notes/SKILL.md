@@ -7,7 +7,7 @@ license: MIT
 metadata:
   hermes:
     tags: [obsidian, notes, folder-conventions]
-    related_skills: [obsidian, obsidian-thoughts-beliefs, obsidian-decisions, obsidian-projects, obsidian-references-sources]
+    related_skills: [obsidian, obsidian-thoughts-beliefs, obsidian-decisions, obsidian-projects, obsidian-references-sources, obsidian-graph-enrichment]
 ---
 
 # Obsidian Type: Notes Directory Conventions
@@ -25,6 +25,7 @@ This skill governs the physical structure and coordinate mapping of the `/Notes/
   - **`Memory`**: For journal-like personal notes, conversations, and good days (`category: "[[Memory]]"`).
   - **`obsidian-projects`**: For ongoing project hubs, travel, or milestones (`category: "[[Projects]]"`).
   - **`obsidian-references-sources`**: For factsheets or Readwise web clips (`category: "[[References]]"` or `category: "[[Sources]]"`).
+  - **`obsidian-graph-enrichment`**: Rules and link hierarchy conventions for maintaining a clean note graph.
 
 ---
 

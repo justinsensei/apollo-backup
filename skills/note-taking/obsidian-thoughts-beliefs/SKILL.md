@@ -7,7 +7,7 @@ license: MIT
 metadata:
   hermes:
     tags: [obsidian, notes, thoughts, beliefs, mental-models]
-    related_skills: [obsidian, obsidian-notes]
+    related_skills: [obsidian, obsidian-notes, obsidian-graph-enrichment]
 ---
 
 # Obsidian: Thoughts & Beliefs Log
