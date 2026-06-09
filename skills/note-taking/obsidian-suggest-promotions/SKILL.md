@@ -39,6 +39,7 @@ Run the candidate discovery script to pull a pool of Tier 1 and Tier 2 notes alo
 ### Step 2: Semantic Analysis
 Analyze the returned notes and their backlink snippets to choose exactly **5 promotion recommendations**:
 - **Tier 1 $\rightarrow$ Tier 2 (Note/Concept $\rightarrow$ Thought):** Select notes that have transitioned from a simple copy-paste clipping or scratchpad into an active research question, opinion, or emergent theory.
+- **Notes $\rightarrow$ Concepts (Tier 1 Reclassification):** When proposing to reclassify raw `[[Notes]]` to `[[Concepts]]`, only suggest or show notes that have a direct, explicit link to a source note (typically located under `Logs/Sources/` or representing external books/articles/papers). Do not propose conceptual notes for reclassification if they lack direct source citation links.
 - **Tier 2 $\rightarrow$ Tier 3 (Thought $\rightarrow$ Belief):** Select thoughts that represent highly trusted, stable, foundational mental models or playbooks that Justin frequently backlinks to or cites across multiple meetings or daily notes.
 
 ### Step 3: Present the Pitch
