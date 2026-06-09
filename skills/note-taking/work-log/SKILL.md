@@ -215,6 +215,7 @@ Enumerate shipped accomplishments. Group or list:
 - Completed Todoist tasks (e.g., `✓ [Project/Category] Task name`)
 - Closed Linear issues
 - Commits shipped or PRs merged
+- Vault updates: list any manual notes created, modified, or reorganized in your vault (e.g., `✓ [Vault] Created: [[Notes/some-thought|Some Thought]]` or `✓ [Vault] Updated: [[Contacts/some-person|Some Person]]`)
 
 ## Step 5 — Update the daily note
 
