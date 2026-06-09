@@ -112,3 +112,35 @@ A scheduled script scans the vault for modified markdown files since the last ru
      - Compile the complete list of **main participants** and update the frontmatter `participants` list.
      - **Enforce the Constraints:** Remove any point-by-point summaries, individual thoughts, quotes, or decisions from standard Slack log bodies, keeping them strictly as lightweight pointers. (Pointers can link to formal Decisions or Thoughts, but must not replicate their details internally).
 
+---
+
+## Semantic Pointer & AI Memory Integration
+
+The Semantic Pointer is a high-performance, lightweight local semantic memory utility designed to solve the **Synonym Problem** (regex failing to map synonyms) and the **Historical Blindspot** (new thoughts lacking retrospective links to old archived logs).
+
+### System Script Details
+- **Path:** `~/.hermes/scripts/semantic_pointer.py`
+- **Database:** `~/.hermes/state/semantic_memory.db` (utilizes `sqlite-vec` extension and `gemini-embedding-2` embeddings).
+- **Indexing Speed:** Multi-file parallel batching indexes **180+ files per minute**.
+
+### Key Workflows
+
+#### 1. On-Demand Historical Bridging
+When writing or reviewing a Tier 2 Thought or Tier 3 Belief note, use the Semantic Pointer to retroactively scan older Tier 1 logs (Meetings, Readings, Slack, Daily Notes) and automatically append/update a clean, markdown-compliant `## Related Logs` block at the bottom of the note:
+```bash
+python3 ~/.hermes/scripts/semantic_pointer.py bridge "vault/Notes/Target Note.md" --limit 5 --commit
+```
+
+#### 2. Semantic Context Pruning (Synthesis)
+For synthesis, research, or summarization tasks, instead of flooding your context window with entire log files, pull the most semantically dense, highly-relevant paragraphs from across the entire vault history using context pruning:
+```bash
+python3 ~/.hermes/scripts/semantic_pointer.py prune "your search topic" --limit 10
+```
+
+#### 3. General Semantic Search
+Run vector similarity queries across either full documents (`--type doc`) or individual paragraph chunks (`--type para`):
+```bash
+python3 ~/.hermes/scripts/semantic_pointer.py search "search query" --type doc --limit 5
+```
+
+
