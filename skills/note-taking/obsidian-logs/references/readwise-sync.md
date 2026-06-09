@@ -6,9 +6,9 @@ Readwise data consists of raw highlight dumps and reading logs. These are chrono
 ---
 
 ## Directory & Category
-- **Path:** `/home/justin.guest/vault/Logs/Readwise/`
-- **Category:** `category: "[[Readwise]]"`
-- **Category Metadata File:** `vault/Utilities/Categories/Readwise.md` (`Type: Logs`)
+- **Path:** `/home/justin.guest/vault/Logs/Readings/`
+- **Category:** `category: "[[Readings]]"`
+- **Category Metadata File:** `vault/Utilities/Categories/Readings.md` (`Type: Logs`)
 
 ---
 
