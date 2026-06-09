@@ -22,7 +22,7 @@ Readwise script is at ~/sync_readwise.py. It exports highlights tagged 'vault' (
 §
 User prefers modular, composable skills (no monolithic files).
 §
-With the exception of 'Willpower is limited', the user has reverted all Thoughts and Beliefs back to Notes, finding the manual Thoughts/Beliefs categorization unsatisfactory. Default all conceptual and reflection notes to category 'Notes' with an ID prefix.
+Default new conceptual notes to category 'Notes' (with timestamp ID) unless triaged. When promoting notes to 'Concepts', ensure they have a direct source link and check for duplicate files first to prevent redundancies.
 §
 Vault convention: Raw notes can contain embedded processing instructions directed at Bes using inline tasks ("- [ ] @bes <task>") or comment blocks ("%% bes-instructions ... %%").
 §
