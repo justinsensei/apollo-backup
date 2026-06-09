@@ -117,23 +117,49 @@ def add_timeline_entry(entity_path, event_date, source_rel_path, source_title):
             content += f"\n\n## Timeline\n- {event_date} | Mentioned in [[{slug}|{source_title}]]\n"
         else:
             idx = timeline_match.end()
-            # Find insertion point: insert right after ## Timeline
-            # Let's see if there is whitespace or existing entries
-            lines = content[idx:].split('\n')
-            inserted = False
-            for i, line in enumerate(lines):
-                # Look for first bullet or non-empty line
-                if line.strip().startswith('-'):
-                    # Insert right above the first timeline bullet to keep it chronological or reverse chronological (we place newest at top under ## Timeline)
-                    new_bullet = f"\n- {event_date} | Mentioned in [[{slug}|{source_title}]]"
-                    lines.insert(i, new_bullet)
-                    inserted = True
-                    break
-            if not inserted:
-                # If no bullets exist yet under ## Timeline
-                lines.insert(0, f"\n- {event_date} | Mentioned in [[{slug}|{source_title}]]")
+            # Parse everything after ## Timeline
+            tail = content[idx:]
+            
+            # Find all bullets under ## Timeline
+            lines = tail.split('\n')
+            bullets = []
+            other_lines = []
+            reached_non_timeline = False
+            
+            for line in lines:
+                striped = line.strip()
+                if reached_non_timeline:
+                    other_lines.append(line)
+                elif striped.startswith('-'):
+                    bullets.append(line)
+                elif striped == '':
+                    continue # skip extra blank lines under Timeline
+                elif striped.startswith('---') or striped.startswith('#'):
+                    # Reached divider or another heading, exit timeline section
+                    reached_non_timeline = True
+                    other_lines.append(line)
+                else:
+                    # Some other non-bullet content, means we exited the timeline section
+                    reached_non_timeline = True
+                    other_lines.append(line)
+                    
+            # Add the new bullet at the top of the bullets list (reverse chronological)
+            new_bullet = f"- {event_date} | Mentioned in [[{slug}|{source_title}]]"
+            bullets.insert(0, new_bullet)
+            
+            # Reconstruct tail: one blank line after ## Timeline, then bullets, then one blank line, then the rest
+            new_tail_parts = []
+            new_tail_parts.append("") # exactly one empty line after heading
+            for b in bullets:
+                new_tail_parts.append(b)
                 
-            content = content[:idx] + '\n'.join(lines)
+            if other_lines:
+                new_tail_parts.append("")
+                new_tail_parts.extend(other_lines)
+            else:
+                new_tail_parts.append("") # trailing newline
+                
+            content = content[:idx] + '\n'.join(new_tail_parts)
             
         with open(entity_path, 'w', encoding='utf-8') as f:
             f.write(content)
