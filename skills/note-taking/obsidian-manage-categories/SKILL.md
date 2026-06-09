@@ -85,5 +85,5 @@ Use `patch` for targeted edits. Review the full list of affected notes before ma
 
 - Do NOT use Templater syntax in category notes — resolve timestamps to literal values.
 - Template files DO use Templater syntax — copy from an existing template rather than writing from scratch.
-- Category note filename is just the category name (e.g., `Resources.md`), no timestamp.
+- Category note filename is just the category name (e.g., `Resources.md`), no timestamp. Category notes must reside under `Utilities/Categories/` and carry a `Type: <Folder>` property inside the body defining their parent folder.
 - Do not run git commands on the vault; `bes-vault-sync` auto-commits.
