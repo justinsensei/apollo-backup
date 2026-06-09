@@ -88,7 +88,7 @@ If the cache file doesn't exist (cron failed or hasn't run yet), run the backgro
 3. **Run the change detection script live:**
    `python3 ~/.hermes/scripts/check_morning_changes.py`
 4. **Write the recovery cache file manually:**
-   Construct and write the complete JSON cache to `/home/justin.guest/.hermes/morning-briefing/YYYY-MM-DD.json` containing the correct values for `date`, `is_work_day`, `work_log_dates`, `work_log_status` ("skipped" if the target date daily note is already fully populated, "ok" if generated), `vault_hygiene` (run `python3 run_tier1_hygiene.py` inline to get the tier1_summary), `vault_activity` parsed from step 3, and a randomly selected note under `daily_thought` (selected from Thoughts/Opinions, Beliefs, or Sources categories in the vault).
+   Construct and write the complete JSON cache to `/home/justin.guest/.hermes/morning-briefing/YYYY-MM-DD.json` containing the correct values for `date`, `is_work_day`, `work_log_dates`, `work_log_status` ("skipped" if the target date daily note is already fully populated, "ok" if generated), `vault_hygiene` (run `python3 run_tier1_hygiene.py` inline to get the tier1_summary), `vault_activity` parsed from step 3, and a randomly selected note under `daily_thought` (selected from Thoughts/Opinions, Beliefs, or Concepts categories in the vault).
 5. **Proceed with Phase 1 presentation:**
    Present Phase 1 highlights/status based on the newly written recovery cache.
 
@@ -269,9 +269,9 @@ Once Justin confirms → batch-add to Todoist Inbox with comments.
 
 ### Phase 6 — Morning Thought
 
-Present a random note (the Morning Thought) from the Thoughts (Opinions), Beliefs, or Sources categories. This should ideally be loaded from the cache file's `"daily_thought"` field. If the cache is missing this field, select a random `.md` file with `category: "[[Thoughts]]"`, `category: "[[Beliefs]]"`, or `category: "[[Sources]]"` from the vault, and display its title, category, and full content.
+Present a random note (the Morning Thought) from the Thoughts (Opinions), Beliefs, or Sources categories. This should ideally be loaded from the cache file's `"daily_thought"` field. If the cache is missing this field, select a random `.md` file with `category: "[[Thoughts]]"`, `category: "[[Beliefs]]"`, or `category: "[[Concepts]]"` from the vault, and display its title, category, and full content.
 
-Make sure it is clear which category the Morning Thought comes from (e.g., Opinions/Thoughts, Beliefs, or Sources).
+Make sure it is clear which category the Morning Thought comes from (e.g., Opinions/Thoughts, Beliefs, or Concepts).
 
 **Format:**
 ```
@@ -332,7 +332,7 @@ US federal holidays auto-detected. Personal days off in `~/.hermes/days-off.txt`
 - **Calendar dedup is against the full 30-day snapshot** already in the cache. Don't re-fetch unless you need to.
 - **"Day off" filter applies per-phase.** Check it before each phase, not just once at the top.
 - **Vault hygiene is never blocking.** Always present it right after the work log highlights and vault updates section (Phase 1), and always frame it as "when you have a moment."
-- **Concept of the Day vs Morning Thought.** Since the migration away from gbrain, concepts no longer exist as a standalone category directory in the vault. Always select the "Morning Thought" from the superset of Thoughts, Beliefs, or Sources categories, and represent the Thoughts category as "Opinions / Thoughts" to align with the user's preference.
+- **Concept of the Day vs Morning Thought.** Since the migration away from gbrain, concepts no longer exist as a standalone category directory in the vault. Always select the "Morning Thought" from the superset of Thoughts, Beliefs, or Concepts categories, and represent the Thoughts category as "Opinions / Thoughts" to align with the user's preference.
 - **Do not read the `.env` credential file directly.** The agent running under cron cannot read `${HERMES_HOME:-$HOME/.hermes}/.env` using direct file tools (like `read_file`) due to defense-in-depth safety blocks. Always run terminal commands with `.env` sourced in the shell context (`source ${HERMES_HOME:-$HOME/.hermes}/.env && python3 ...`) or rely on the host environment, rather than attempting to read/parse the credential file.
 - **Concept of the Day directory has changed.** Following the migration away from gbrain, concept files are located in `/home/justin.guest/vault/Notes/` instead of `/home/justin.guest/vault/concepts/`. Identify them by searching for markdown files containing `type: concept` or `type: "concept"` in their frontmatter, and completely avoid querying any deprecated `concepts/` directory.
 - **Discrepancy in Daily Thought / Morning Thought Path:** The morning briefing cache might specify a path with the timestamp ID appended (e.g., `Notes/Thoughts on signlab k12 gtm proposal 20250808153818.md`), whereas the actual file in the vault may have the timestamp ID prepended (e.g., `Notes/20250808153818 Thoughts on signlab k12 gtm proposal.md`). If a note's path is not found directly as specified in the cache, always use `search_files` with a wildcard query containing the title or timestamp to locate the actual file before reporting it missing.
