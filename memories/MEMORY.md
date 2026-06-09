@@ -1,8 +1,8 @@
-Hermes handles infrastructure & skill management for Justin's agents. Defer skill migration/creation tasks to him.
+Hermes handles infra/skills. Defer migrations/creations to Justin.
 §
-Email: read Gmail via Google OAuth. Tokens at `~/.hermes/google_tokens/{work,personal-main,personal-junk}.json`. Cross-account wrapper: `python3 ~/.hermes/skills/productivity/google-workspace/scripts/gws_multi.py --account all|<name>|<csv> gmail search "..." --max N`. Single-account: set `HERMES_GOOGLE_TOKEN_FILE` and call `google_api.py`. Read-only. Do NOT use himalaya.
+Gmail (read-only): Tokens at `~/.hermes/google_tokens/`. Multi-account search: `python3 ~/.hermes/skills/productivity/google-workspace/scripts/gws_multi.py --account all|name gmail search "..."`. Single-account: set `HERMES_GOOGLE_TOKEN_FILE` and run `google_api.py`. Do NOT use himalaya.
 §
-Obsidian routes: Contacts/, Notes/, Logs/ (Meetings/Emails/Slack/Sources), Daily Notes/, Utilities/. Daily Notes are Tier 1 inputs (logs) for graph rules.
+Obsidian routes: Contacts/, Notes/, Logs/ (Meetings/Emails/Slack/Sources), Daily Notes/ (Tier 1 log input), Utilities/. Dividers: always `---`.
 §
 App Store Connect issue emails are not Justin's to handle — ignore them when capturing action items from email.
 §
@@ -18,10 +18,10 @@ Granola notes sync to meetings/ and are reconciled and moved to Logs/Meetings/ v
 §
 Forwarded emails should not be copied to vault unless explicitly requested.
 §
-Obsidian dividers: always three hyphens `---`.
-§
 Readwise script is at ~/sync_readwise.py. It exports highlights tagged 'vault' (case-insensitive) to vault/Logs/Sources/.
 §
-User prefers building modular, composable skills (no monolithic files) to grow custom agent solutions on top of Bes.
+User prefers modular, composable skills (no monolithic files).
 §
 With the exception of 'Willpower is limited', the user has reverted all Thoughts and Beliefs back to Notes, finding the manual Thoughts/Beliefs categorization unsatisfactory. Default all conceptual and reflection notes to category 'Notes' with an ID prefix.
+§
+Vault convention: Raw notes can contain embedded processing instructions directed at Bes using inline tasks ("- [ ] @bes <task>") or comment blocks ("%% bes-instructions ... %%").
