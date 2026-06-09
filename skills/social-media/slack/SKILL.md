@@ -216,7 +216,7 @@ python3 ~/.hermes/scripts/fetch_slack_brains.py --mark-processed <channel_id> <p
 ```
 
 ## Pitfalls
-Justin uses a `🧠` (brain) emoji to flag Slack conversations that should be preserved in his vault as notes under `sources/slack/` (which is mapped as a `slack` page type in `gbrain-personal`).
+Justin uses a `🧠` (brain) emoji to flag Slack conversations that should be preserved in his vault as notes under `sources/slack/`.
 
 There is a dedicated cron job ("Slack Brain Note Capture") running every 2 hours that automates this workflow:
 1. Runs `fetch_slack_brains.py` to fetch messages where Justin (`U095LHMC4UW`) added a `🧠` reaction.

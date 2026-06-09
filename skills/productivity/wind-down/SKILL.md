@@ -73,22 +73,18 @@ Help Justin empty his Obsidian "inbox" so quick notes and scratchpads land in th
 
 2. **Read & Classify Inbox Notes:**
    - For each file in the inbox, read its first few lines using `read_file`.
-   - Determine its primary focus and suggest the correct target folder under `/home/justin.guest/vault/`:
-     - **`people/`** — if primarily about a specific person (e.g., school events, family notes, colleague profiles).
-     - **`meetings/`** — if a record of a discussion, sync, or calendar meeting.
-     - **`projects/`** — if related to an active initiative or project.
-     - **`companies/`** — if about an external company or organization.
-     - **`personal/`** — if highly private family/personal scratchpad.
-     - **`concepts/`** — if a general idea, definition, topic, or structured knowledge.
-     - **`notes/`** — if an unstructured scratchpad, quick thought, or fleeting note.
+   - Determine its primary focus and suggest the correct target category and folder under `/home/justin.guest/vault/`:
+     - **`Contacts/`** (Category: `[[People]]` or `[[Organizations]]`) — if about a person, family member, or company/institution.
+     - **`Logs/Meetings/`** (Category: `[[Meetings]]`) — if a meeting sync, agenda, or discussion record.
+     - **`Notes/`** (Category: `[[Thoughts]]`, `[[Beliefs]]`, `[[Memory]]`, `[[Decisions]]`, `[[Projects]]`, `[[References]]`, `[[Sources]]`, or `[[Notes]]`) — if conceptual, ideas, principles, personal memories, decisions, project hubs, reference guides, or raw notes.
 
 3. **Present Triage Options to Justin:**
    - List the inbox notes and your suggested folder movements in a clean, numbered list:
      ```
      📥 N items in your vault inbox:
-     1. `Nana pride 20260607093335.md` → move to `people/` (Notes on Nana and Pride event)
-     2. `Jamie lawn 20260607093304.md` → move to `people/` (Notes on Jamie mowing the lawn)
-     3. `20260605162856.md` → move to `notes/` (Quick scratchpad on...)
+     1. `Nana pride 20260607093335.md` → move to `Contacts/` (Category: `[[People]]`) (Notes on Nana and Pride event)
+     2. `Jamie lawn 20260607093304.md` → move to `Contacts/` (Category: `[[People]]`) (Notes on Jamie mowing the lawn)
+     3. `20260605162856.md` → move to `Notes/` (Category: `[[Thoughts]]`) (Quick thought on...)
      ...
      Shall I move these as suggested, or would you like to route them differently?
      ```
