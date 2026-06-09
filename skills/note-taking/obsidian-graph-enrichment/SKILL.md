@@ -99,7 +99,16 @@ A scheduled script scans the vault for modified markdown files since the last ru
      ```
    - This ensures a zero-effort log of interactions, source clippings, and project meetings accumulates directly in the contact's or project's note.
 
-4. **Candidate Discovery (Unresolved Links):**
+3.  **Candidate Discovery (Unresolved Links):**
    - The script also extracts unresolved wikilinks (e.g., `[[John Doe]]` when no `John Doe.md` file exists).
    - These are surfaced as candidate entities during the Morning Briefing, giving Justin a simple, one-click way to initialize new Contacts.
+
+4.  **Slack Ingestion & Inbox-First Landing:**
+   - Ingested notes triggered by Slack custom emoji reactions (`:jg_log:` for standard logs, `:jg_decision:` for decisions) are always written directly into the `/inbox/` folder first (e.g., `inbox/YYYY-MM-DD - Slack - [Title].md` or `inbox/YYYY-MM-DD - Decision - [Title].md`).
+   - Standard Slack logs are kept **minimalist** upon creation, containing only frontmatter metadata (participant lists, source links) and a brief, 2-3 sentence Topic Description.
+   - During subsequent vault enrichment, triage, or Vault Jam runs:
+     - Review newly created Slack logs from `/inbox/` or `/Logs/Slack/`.
+     - Refine and write a polished **2-3 sentence Topic Description** pointer.
+     - Compile the complete list of **main participants** and update the frontmatter `participants` list.
+     - **Enforce the Constraints:** Remove any point-by-point summaries, individual thoughts, quotes, or decisions from standard Slack log bodies, keeping them strictly as lightweight pointers. (Pointers can link to formal Decisions or Thoughts, but must not replicate their details internally).
 
