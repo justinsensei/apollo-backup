@@ -59,7 +59,8 @@ status: Active # Active, Complete, Dropped
 
 ---
 
-## Naming Rules
+## Naming Rules & Casing
 - Filename format: `Title.md` (no timestamp prefix).
-- Use CAPITALIZED normal-spaced names for project hubs (e.g. `SignLab Free to Play Shift.md`, `Telluride 2026.md`).
+- **Casing and Sync Alignment:** Match project names exactly with external task trackers (e.g. Todoist project names). Capitalize proper nouns, acronyms, and specific names (e.g. `ADHD Treatment 2026`, `AI Agents 2026 H1`, `B2C`, `K12`, `Emerald Isle 2026`), but keep general common words lowercase/sentence-case (e.g., `Ascend membership`, `B2C expansion strategy`, `K12 special ed strategy`, `Migrating old notes`).
+- Avoid blanket Title Case capitalization that could break synchronization with external lists.
 - Never prefix with dates/timestamps.
