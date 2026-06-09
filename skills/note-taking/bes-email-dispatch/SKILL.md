@@ -80,8 +80,8 @@ Below the frontmatter, format the note body cleanly:
 
 ### Storage Destination
 - Create a new markdown note inside the **`Logs/Emails/`** directory of his vault:
-  `/home/justin.guest/vault/Logs/Emails/YYYY-MM-DD-subject-slug.md`
-  *(Where `YYYY-MM-DD` is the current date, and `subject-slug` is a cleaned, lowercase, hyphen-separated version of the cleaned subject).*
+  `/home/justin.guest/vault/Logs/Emails/YYYY-MM-DD - Spaced Subject.md`
+  *(Where `YYYY-MM-DD` is the current date, and `Spaced Subject` is a cleaned, capitalized, spaced version of the subject).*
 
 ### Note Structure & Frontmatter
 All new email log notes must start with this frontmatter format:
