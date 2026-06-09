@@ -62,7 +62,7 @@ Justin's notes are organized into a hierarchy of permanence and synthesis. Links
 Rather than manually updating a high-level Thought or Belief to list all resources, events, or decisions associated with it:
 - Link *from* the specific Tier 1 note (e.g., a meeting log or reading clipping) *to* the high-level Thought/Belief.
 - Use Obsidian's **Backlinks Pane** on the Thought or Belief note to view the chronological evolution of that idea over time.
-- **Naming Rule:** To make this timeline clear, ensure all Tier 1 files (Daily Notes, Meetings, Decisions, Memories) utilize consistent naming styles (especially date prefixes/suffixes where appropriate, such as daily notes or historical logs) so they list chronologically in the backlinks.
+- **Timeline Ordering:** No date prefixes or timestamps are required in the filenames of Tier 1 notes (Notes, Sources, Decisions, Memories) to maintain a chronological timeline. Instead, rely entirely on Obsidian's native **Backlinks pane sorting** (e.g., sorting the list by "Created time" or "Modified time") to view the chronological progression of ideas over time. This preserves clean, normal-spaced capitalized titles across the entire vault without sacrificing the temporal view.
 
 ### 2. Low-Friction Writing
 - It is always easier to link *from* what you are currently writing (the context of today's work or a newly encountered source) *to* a pre-existing stable concept. You do not need to interrupt your flow to edit a long-standing permanent note.
