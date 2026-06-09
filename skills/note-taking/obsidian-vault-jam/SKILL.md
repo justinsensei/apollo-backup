@@ -33,6 +33,11 @@ Before proposing connections, run a diagnostic scan and check for newly mentione
     `python3 ~/.hermes/scripts/vault_hygiene.py`
 2.  **Present Summary:** Summarize any unresolved layout issues, duplicate IDs, or entity mentions discovered. Proactively resolve simple fixes (like moving misplaced daily notes to `/Daily Notes/`) and report what was resolved.
 3.  **Entity Candidates:** Present any newly discovered, unresolved contact or organization link candidates (if any were flagged). Offer to initialize them now before proceeding.
+4.  **Review Slack Logs (Enrichment):** Find any Slack logs (`Logs/Slack/*.md`) created since the previous vault enrichment run. For each newly created log:
+    *   Read the original conversation/thread if needed.
+    *   Synthesize a brief, **2-3 sentence Topic Description** as a pointer.
+    *   Compile the final list of **main participants** and update the frontmatter `participants` list.
+    *   **Enforce the Constraints:** Remove any point-by-point summaries, quotes, thoughts, or decisions from the note's body, replacing them strictly with the simple Topic Description pointer format.
 
 ---
 
