@@ -1,6 +1,6 @@
 ---
 name: obsidian-notes
-description: Use when managing the Notes/ directory, conceptual mapping, and coordinating Thoughts, Beliefs, Decisions, Projects, References, and Sources categories.
+description: Use when managing the Notes/ directory, conceptual mapping, and coordinating Thoughts, Beliefs, Decisions, Projects, References, and Concepts categories.
 version: 1.0.0
 author: Bes
 license: MIT
@@ -24,7 +24,7 @@ This skill governs the physical structure and coordinate mapping of the `/Notes/
   - **`obsidian-decisions`**: For trade-offs, architecture decisions, and reasoning logs (`category: "[[Decisions]]"`).
   - **`Memories`**: For journal-like personal notes, conversations, and good days (`category: "[[Memories]]"`).
   - **`obsidian-projects`**: For ongoing project hubs, travel, or milestones (`category: "[[Projects]]"`).
-  - **`obsidian-references-sources`**: For factsheets or Readwise web clips (`category: "[[References]]"` or `category: "[[Sources]]"`).
+  - **`obsidian-references-sources`**: For factsheets or conceptual summaries (`category: "[[References]]"` or `category: "[[Concepts]]"`).
   - **`obsidian-graph-enrichment`**: Rules and link hierarchy conventions for maintaining a clean note graph.
   - **`obsidian-suggest-links`**: Proactively find surprising linkages among Thoughts and Beliefs.
   - **`obsidian-suggest-new-notes`**: Proactively discover and initialize new notes from log files.
@@ -36,7 +36,7 @@ This skill governs the physical structure and coordinate mapping of the `/Notes/
 
 ### Naming Conventions
 - All files under `/Notes/` must use Spaced, Capitalized names, adhering to category-specific prefixing rules.
-- **Notes, Decisions, Thoughts, Memories, Sources:** Must be named `ID Title.md` (where ID is the creation timestamp, e.g. `20260609120000 Spaced Title.md`).
+- **Notes, Decisions, Thoughts, Memories, Concepts:** Must be named `ID Title.md` (where ID is the creation timestamp, e.g. `20260609120000 Spaced Title.md`).
 - **References, Beliefs, Projects:** Must be named `Title.md` (no timestamp prefix, e.g. `Spaced Title.md`).
 
 ### Rationale for Naming

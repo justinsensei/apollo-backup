@@ -42,9 +42,8 @@ category: "[[CategoryName]]"         # Single category link (quoted wikilink)
 - **Horizontal Rules:** Always use exactly three hyphens `---` on a line by itself to represent a horizontal divider. Never use two hyphens or other symbols.
 - **Heading & Bullet Spacing:** Ensure exactly one blank line exists between any heading (such as `## Timeline` or `## State`) and its subsequent content or bullet lists. Do not allow multiple consecutive blank lines to accumulate. Bulleted lists should be kept compact with zero blank lines between siblings.
 - **Filename Conventions:**
-- **Filename Conventions:**
   - **Daily Notes:** Must be `YYYY-MM-DD Weekday.md` (e.g. `2026-06-09 Tuesday.md`).
-  - **Notes, Decisions, Thoughts, Memories, Sources:** Must be `ID Title.md` (e.g. `20260609120000 Spaced Title.md`).
+  - **Notes, Decisions, Thoughts, Memories, Concepts:** Must be `ID Title.md` (e.g. `20260609120000 Spaced Title.md`).
   - **References, Beliefs:** Must be `Title.md` under `Notes/` (e.g. `Spaced Title.md`).
   - **Projects:** Must be `Title.md` under `Notes/Projects/` (e.g. `Spaced Title.md`).
   - **Contacts (People/Organizations):** Must be `Title.md` (e.g. `Aly Lalji.md`, `SignLab.md`).
@@ -67,15 +66,15 @@ Notes are categorized with a single `category` YAML property containing a quoted
 | `Contacts/` | `category: "[[Organizations]]"` | Companies, schools, institutions, legal entities | `obsidian-organizations` |
 | `Notes/` | `category: "[[Notes]]"` | Default category for conceptual, structured, or raw notes | `obsidian-notes` |
 | `Notes/` | `category: "[[References]]"` | Useful facts, cheat sheets, guidelines, checklists | `obsidian-references-sources` |
-| `Notes/` | `category: "[[Sources]]"` | Summaries, book reviews, articles, web clips | `obsidian-references-sources` |
-| `Notes/` | `category: "[[Thoughts]]"` | Personal/ideas, current opinions, research questions | `obsidian-thoughts-beliefs` |
-| `Notes/` | `category: "[[Beliefs]]"` | Trusted models, core guiding principles | `obsidian-thoughts-beliefs` |
+| `Notes/` | `category: "[[Concepts]]"` | Other people's thinking, summaries, book reviews, articles | `obsidian-references-sources` |
+| `Notes/` | `category: "[[Thoughts]]"` | Personal ideas, current opinions, research questions | `obsidian-thoughts-beliefs` |
+| `Notes/` | `category: "[[Beliefs]]"` | Evolved concepts/thoughts - trusted models, core guiding principles | `obsidian-thoughts-beliefs` |
 | `Notes/` | `category: "[[Decisions]]"` | Team or individual decisions and reasoning logs | `obsidian-decisions` |
 | `Notes/` | `category: "[[Memories]]"` | Journal-like personal notes of things I want to remember | |
 | `Notes/Projects/` | `category: "[[Projects]]"` | Hubs for notes about ongoing work, milestones, travel | `obsidian-projects` |
 | `Daily Notes/` | `category: "[[Daily Notes]]"` | Daily notes containing schedules and work logs | `obsidian-daily-notes` |
 | `Logs/` | `category: "[[Meetings]]"` | Chronological meeting agendas, summaries, outcomes | `obsidian-meetings` |
-| `Logs/` | `category: "[[Readwise]]"` | Raw logs of what I've been reading (plus highlights) | |
+| `Logs/` | `category: "[[Sources]]"` | Raw reading notes and bibliographical information | |
 | `Utilities/` | `category: "[[Categories]]"` | Category representation notes themselves (in `Utilities/Categories/`) | `obsidian-utilities` |
 
 ---
