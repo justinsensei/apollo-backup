@@ -88,3 +88,12 @@ Optional secondary elaboration paragraph providing deeper conceptual context or 
 ## Sources
 * [[Source Note or Book Link]]
 ```
+
+---
+
+## Reversion & Promotion Constraints (June 2026)
+- **Default to Notes:** Mass or manual promotion of existing notes to Thoughts and Beliefs has proven unsatisfactory and was completely reverted in June 2026. All conceptual and personal reflection notes must default to `category: "[[Notes]]"`.
+- **Strict Exception:** Only highly structured, long-conviction mental models (such as `Willpower is limited`) should remain or be categorized as `category: "[[Beliefs]]"`.
+- **Naming Enforcement on Reversion:** When reverting Thoughts/Beliefs back to Notes, ensure their filename includes the proper 14-digit `ID ` prefix (e.g. `20250523170601 Title.md`), utilizing the `id` field from the note's frontmatter.
+- **Do Not Push Promotion:** Never automatically or proactively migrate notes to `Thoughts` or `Beliefs` without explicit user request.
+

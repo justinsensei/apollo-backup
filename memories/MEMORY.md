@@ -24,4 +24,4 @@ Readwise script is at ~/sync_readwise.py. It exports highlights tagged 'vault' (
 §
 User prefers building modular, composable skills (no monolithic files) to grow custom agent solutions on top of Bes.
 §
-Thoughts/Beliefs/Sources replace concepts. Obsidian link hierarchy flows upward: Tier 1 (Notes/Sources/Decisions/Memories) -> Tier 2 (Thoughts) -> Tier 3 (Beliefs), using date backlinks sorting rather than prefix naming. Beliefs require Core Tenets and Application sections.
+With the exception of 'Willpower is limited', the user has reverted all Thoughts and Beliefs back to Notes, finding the manual Thoughts/Beliefs categorization unsatisfactory. Default all conceptual and reflection notes to category 'Notes' with an ID prefix.
