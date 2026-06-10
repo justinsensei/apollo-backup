@@ -4,6 +4,9 @@ description: "Interactive daily wrap-up: 1. Log candidates; 2. Discovered contac
 version: 1.3.0
 author: Bes
 license: MIT
+platforms:
+  - linux
+  - macos
 metadata:
   hermes:
     tags: [productivity, wind-down, daily-routine, work-log, inbox-triage, sources, calendar, hygiene]
@@ -11,6 +14,8 @@ metadata:
 ---
 
 # 🌅 Daily Wind-Down & Wrap-Up
+
+## Overview
 
 This skill governs the **interactive daily wind-down and wrap-up session** for Justin.
 It runs in the late afternoon/evening when Justin is ready to close his workday, clear his head, and organize his vault for tomorrow.
@@ -335,3 +340,13 @@ Preview tomorrow's schedule to establish mental readiness, coordinate upcoming t
 - **Dangling Closing Dividers:** Ensure any automated or manual procedure that adds or updates properties writes back the closing divider (`---`) on a *fresh line*. Writing it without an intervening newline will append it directly to the end of the last property string (e.g., `daily_note: '...'---`), which corrupts properties.
 - **Non-Unique Aliases Guard:** Always skip auto-linking any alias that is non-unique (shared by more than one distinct contact path) to avoid incorrect connections in the vault.
 - **Timelines Deactivation:** Active bot-enriched timeline enrichment is completely deactivated. Do not append `## Timeline` bullets to contact cards; rely on Obsidian's native Backlinks panel instead.
+
+## Verification Checklist
+
+- [ ] All 6 phases completed in strict interactive sequence.
+- [ ] Today's Notepad section in the daily note preserved completely intact without modification or truncation.
+- [ ] Frontmatter properties (`id`, `daily_note`, `category`) checked and validated for all triaged notes.
+- [ ] Misplaced daily notes and logs successfully reorganized using `vault_hygiene.py`.
+- [ ] Discovered contacts drafted in the inbox, and existing contact cards updated in place without relocation.
+- [ ] Work log draft synthesized with accurate attribution of decisions, and written to today's daily note.
+- [ ] Tomorrow's schedule fetched and presented with timezone-aware calendar offsets.
