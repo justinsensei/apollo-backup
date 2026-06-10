@@ -1,8 +1,11 @@
 import os
 import json
 import re
+import argparse
 from collections import defaultdict
 from datetime import datetime, timedelta
+
+from vault_entities import STOP_WORDS, get_existing_entities, get_project_entities
 
 def load_watermark():
     path = os.path.expanduser('~/.hermes/state/vault_signals_watermark.json')
@@ -39,98 +42,66 @@ def extract_date_from_file(file_path, content):
     mtime = os.path.getmtime(file_path)
     return datetime.fromtimestamp(mtime).strftime('%Y-%m-%d')
 
-def get_existing_entities(vault_path):
-    entities = {}
-    
-    # Helper to parse a contact file
-    def parse_contact_file(file_path, filename):
-        ptype = 'person'
-        aliases = []
-        title = filename[:-3]
-        is_contact = False
-        try:
-            with open(file_path, encoding='utf-8', errors='replace') as file_obj:
-                content = file_obj.read()
-                
-                # Check if it's a contact (important for inbox files)
-                m_cat = re.search(r'^category:\s*["\']?\[\[(People|Organizations)\]\]["\']?', content, re.MULTILINE)
-                m_type = re.search(r'^type:\s*[\'"]?([a-zA-Z0-9_-]+)[\'"]?', content, re.MULTILINE)
-                
-                if m_cat or m_type:
-                    is_contact = True
-                    
-                if m_type:
-                    ptype = m_type.group(1).strip()
-                elif m_cat:
-                    ptype = 'person' if m_cat.group(1) == 'People' else 'organization'
-                    
-                # Parse aliases
-                m_aliases = re.search(r'^aliases:\s*\n((?:\s*-\s*.*?\n)+)', content, re.MULTILINE)
-                if m_aliases:
-                    aliases = [a.strip()[1:].strip().strip('"\'') for a in m_aliases.group(1).split('\n') if a.strip().startswith('-')]
-        except Exception:
-            pass
-        return is_contact, ptype, title, aliases
+def discover_project_candidates(content, entities, all_vault_filenames, context_file=None):
+    candidates = []
+    project_entities = get_project_entities(entities)
+    project_keys = {k.lower() for k in project_entities}
+    for ent in project_entities.values():
+        project_keys.add(ent["title"].lower())
+        for alias in ent.get("aliases", []):
+            project_keys.add(alias.lower())
 
-    # 1. Contacts (People and Organizations)
-    contacts_dir = os.path.join(vault_path, 'Contacts')
-    if os.path.exists(contacts_dir):
-        for f in os.listdir(contacts_dir):
-            if f.endswith('.md'):
-                file_path = os.path.join(contacts_dir, f)
-                _, ptype, title, aliases = parse_contact_file(file_path, f)
-                name_key = f[:-3].lower()
-                entities[name_key] = {
-                    "path": file_path,
-                    "type": ptype,
-                    "title": title,
-                    "aliases": aliases
-                }
-                
-    # Also scan inbox for untriaged contacts
-    inbox_dir = os.path.join(vault_path, 'inbox')
-    if os.path.exists(inbox_dir):
-        for f in os.listdir(inbox_dir):
-            if f.endswith('.md'):
-                file_path = os.path.join(inbox_dir, f)
-                is_contact, ptype, title, aliases = parse_contact_file(file_path, f)
-                if is_contact:
-                    name_key = f[:-3].lower()
-                    entities[name_key] = {
-                        "path": file_path,
-                        "type": ptype,
-                        "title": title,
-                        "aliases": aliases
-                    }
-                
-    # 2. Projects (from Notes/Projects/)
-    projects_dir = os.path.join(vault_path, 'Notes', 'Projects')
-    if os.path.exists(projects_dir):
-        for f in os.listdir(projects_dir):
-            if f.endswith('.md'):
-                file_path = os.path.join(projects_dir, f)
-                try:
-                    with open(file_path, encoding='utf-8', errors='replace') as file_obj:
-                        content = file_obj.read()
-                        name_key = f[:-3].lower()
-                        # Clean up trailing date suffix if present in name_key
-                        # e.g., adhd treatment 2026 -> adhd treatment
-                        clean_name = re.sub(r'\s*\d{4,14}$', '', f[:-3]).lower().strip()
-                        
-                        entities[name_key] = {
-                            "path": file_path,
-                            "type": "project",
-                            "title": f[:-3],
-                            "aliases": [clean_name] if clean_name != name_key else []
-                        }
-                except Exception:
-                    pass
-                    
-    return entities
+    contact_keys = set()
+    for ent in entities.values():
+        if ent.get("type") != "project":
+            contact_keys.add(ent["title"].lower())
+            for alias in ent.get("aliases", []):
+                contact_keys.add(alias.lower())
 
-def add_timeline_entry(entity_path, event_date, source_rel_path, source_title):
-    # Disabled. We now rely on Obsidian's Backlinks panel.
-    return False
+    content_no_links = re.sub(r"\[\[([^\]]+)\]\]", r"\1", content)
+    matches_2 = re.findall(r"\b([A-Z][a-zA-Z0-9]+)\s+([A-Z][a-zA-Z0-9]+)\b", content_no_links)
+    matches_3 = re.findall(
+        r"\b([A-Z][a-zA-Z0-9]+)\s+([A-Z][a-zA-Z0-9]+)\s+([A-Z][a-zA-Z0-9]+)\b",
+        content_no_links,
+    )
+
+    raw_names = []
+    for m in matches_3:
+        raw_names.append(" ".join(m))
+    for m in matches_2:
+        name = " ".join(m)
+        if not any(name in n for n in raw_names):
+            raw_names.append(name)
+
+    project_stop = STOP_WORDS | {
+        "sign", "lab", "daily", "notes", "slack", "thread", "email", "context",
+        "resolution", "options", "trade", "offs", "original", "channel", "date",
+        "decision", "topic", "description", "participants", "meeting", "granola",
+        "north", "america", "united", "states", "new", "york", "san", "francisco",
+    }
+
+    for name in raw_names:
+        name_lower = name.lower()
+        words = name_lower.split()
+        if any(w in project_stop for w in words):
+            continue
+        if any(len(w) < 2 for w in words):
+            continue
+        if name_lower in all_vault_filenames:
+            continue
+        if name_lower in project_keys or name_lower in contact_keys:
+            continue
+        if name_lower in entities:
+            continue
+
+        candidates.append({
+            "name": name,
+            "type": "project",
+            "context_file": context_file,
+        })
+
+    return candidates
+
 
 def scan_file_for_signals(file_path, content, entities, vault_path, event_date, enriched_counts):
     # Disabled. We now rely on Obsidian's Backlinks panel.
@@ -305,6 +276,68 @@ def scan_file_for_unresolved_links(file_path, content, entities, vault_path, all
             
     return discovered
 
+def run_project_discovery(vault_path, now_dt):
+    """Live scan for project name candidates (wind-down Phase 2b)."""
+    entities = get_existing_entities(vault_path)
+    all_vault_filenames = get_all_vault_filenames(vault_path)
+    today = now_dt.strftime("%Y-%m-%d")
+    skip_dirs = {".git", ".trash", ".cursor", ".claude", "_templates", "utilities", "Utilities", "Readwise"}
+    all_candidates = []
+
+    for root, dirs, files in os.walk(vault_path):
+        dirs[:] = [d for d in dirs if not d.startswith(".") and d not in skip_dirs]
+        for f in files:
+            if not f.endswith(".md"):
+                continue
+            file_path = os.path.join(root, f)
+            rel = os.path.relpath(file_path, vault_path).replace("\\", "/")
+            if not rel.startswith(("inbox/", "Inputs/", "Logs/")):
+                continue
+            if not re.search(rf"\b{today}\b", f) and not re.search(rf"\b{today}\b", rel):
+                try:
+                    mtime = datetime.fromtimestamp(os.path.getmtime(file_path))
+                    if mtime.date() != now_dt.date():
+                        continue
+                except Exception:
+                    continue
+            try:
+                with open(file_path, encoding="utf-8", errors="replace") as fh:
+                    content = fh.read()
+                ctx = os.path.relpath(file_path, vault_path).replace("\\", "/")
+                all_candidates.extend(
+                    discover_project_candidates(content, entities, all_vault_filenames, ctx)
+                )
+            except Exception:
+                pass
+
+    unmatched_path = os.path.expanduser("~/.hermes/state/integrate_entities_unmatched.json")
+    if os.path.exists(unmatched_path):
+        try:
+            with open(unmatched_path, encoding="utf-8") as fh:
+                unmatched_data = json.load(fh)
+            for cand in unmatched_data.get(today, {}).get("project_candidates", []):
+                all_candidates.append({
+                    "name": cand,
+                    "type": "project",
+                    "context_file": "integrate_entities_unmatched",
+                })
+        except Exception:
+            pass
+
+    deduped = {}
+    for item in all_candidates:
+        key = item["name"].lower()
+        if key not in deduped:
+            deduped[key] = item
+
+    out = {
+        "status": "ok",
+        "date": today,
+        "discovered_projects": list(deduped.values()),
+    }
+    print(json.dumps(out, indent=2))
+    return out
+
 def scan_file_for_ambiguous_mentions(file_path, content, entities, key_to_paths, ambiguous_keys, vault_path):
     discovered = []
     
@@ -332,8 +365,21 @@ def scan_file_for_ambiguous_mentions(file_path, content, entities, key_to_paths,
     return discovered
 
 def main():
+    parser = argparse.ArgumentParser(description="Scan vault for signals and discovery candidates")
+    parser.add_argument(
+        "--discover-projects",
+        action="store_true",
+        help="Run live project discovery scan (wind-down Phase 2b)",
+    )
+    args = parser.parse_args()
+
     vault_path = os.environ.get('OBSIDIAN_VAULT_PATH', '/home/justin.guest/vault')
     now_dt = datetime.now()
+
+    if args.discover_projects:
+        run_project_discovery(vault_path, now_dt)
+        return
+
     watermark_dt = load_watermark()
     
     print(f"Scanning vault signals since: {watermark_dt.isoformat()}")
