@@ -62,3 +62,9 @@ To prevent auto-generated notes from colliding on generic first names (e.g., `An
 - **Never create a generic first-name contact file** (e.g. `andy.md` or `andrew.md`) unless the person is uniquely known by only that single name. If a generic first-name file exists and is polluted with multiple people's timelines, perform an LLM-driven deduplication to split them into their respective capitalized full-name files (e.g. `Andy Goff.md` and `Andy Masley.md`), and delete the generic file.
 - **Alias Resolution**: Ensure that any unique nickname/alias (like `Larry` for `Andrew Lawrence`) is registered in the main file's frontmatter `aliases` list. This prevents the unresolved links scanner from proposing a duplicate card for the nickname.
 - **Contextual Verification**: When analyzing legacy timeline entries to untangle them, verify the context (e.g. family mentions like Pat/Kath/Meghan for family, or professional terms like architect/design/surveyor for contractors, or topics like pretending to learn for references) to ensure accurate attribution.
+
+### Step 5 — Speech-to-Text & Mishearing Normalization
+Granola or other automated transcription tools occasionally mishear names or introduce spelling variations (e.g. transcribing **"Dhruv"** as **"Drew"**, or spelling **"Kristina"** as **"Christina"**). When such homophone or mishearing clusters are identified:
+1. **Consolidate to Actual Name**: Merge the timelines, rename the note to the person's capitalized, correct full name, and delete the misheard/alternate contact note.
+2. **Add Alias**: Register the misheard spelling (e.g. `Drew`, `Christina`) in the frontmatter `aliases:` list of the consolidated contact note, so future automated speech-to-text references map correctly.
+3. **Vault-Wide Update**: Do a global search-and-replace for wikilinks pointing to the old/misheard spelling (e.g. replacing `[[Drew]]` or `[[drew]]` with `[[Dhruv]]`), keeping your note links perfectly clean.
