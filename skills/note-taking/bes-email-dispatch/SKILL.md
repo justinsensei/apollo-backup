@@ -164,3 +164,8 @@ For each message ID detected by the poller:
 ## Troubleshooting & Pitfalls
 
 - **Empty plaintext parts in HTML emails:** Some systems/senders (like Expedia transactional emails) send `multipart/alternative` messages with a nearly empty text/plain part containing only `\r\n` (whitespace). Because `google_api.py` previously checked `if not body:`, this truthy whitespace caused it to skip extracting the actual HTML content. Always ensure `google_api.py` checks `if not body.strip():` when extracting bodies to correctly fall back to the rich HTML content.
+- **Gmail Token Expiry / Revocation (`invalid_grant` or traceback):** If the poller cron or load context script fails with `invalid_grant` or a traceback involving `gmail_search`, the OAuth credentials for `personal-main` may have expired. Instruct the user to re-authenticate by running:
+  ```bash
+  python3 ~/.hermes/skills/productivity/google-workspace/scripts/setup.py --revoke
+  ```
+  And then follow the standard setup flow to generate a new token.
