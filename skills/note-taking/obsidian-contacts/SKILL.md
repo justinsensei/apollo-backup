@@ -35,12 +35,24 @@ Before writing any contact file, always search both `/Contacts/` and `/inbox/` b
 - If the contact does not exist anywhere, create the new note in the `/inbox/` directory.
 
 ### Step 2 — Filename Capitalization
-All files (whether in `/inbox/` or `/Contacts/`) must use standard Capitalized, spaced names:
-- `Aly Lalji.md`
-- `SignLab.md`
-- Do not use lowercase or hyphenated slug names.
+All files (whether in `/inbox/` or `/Contacts/`) must use standard Capitalized, spaced names (prefer full names over first-name-only filenames):
+- Correct: `Andy Goff.md`, `Andrew Novak.md`, `Kristina Kennedy.md`
+- Incorrect: `andy.md`, `andrew.md`, `christina.md`
+- Avoid first-name-only filenames unless the person is universally referred to by that name and has no last name in context. Using first-name-only names leads to severe timeline pollution and generic name collisions from books, articles, or other public figures (e.g., `Andy Grove`, `Andrew Chen`, `David Deutsch`).
 
-### Step 3 — Mapping Connections
+### Step 3 — Handling Aliases to Prevent Collisions
+To enable short-name links while keeping filenames unique:
+1. Save the file under the full name (e.g., `Kristina Kennedy.md`).
+2. Add the first name or nickname in the frontmatter `aliases:` field:
+   ```yaml
+   aliases:
+     - Kristina
+     - Kristina Kennedy
+     - Christina
+   ```
+3. The background scripts will automatically match the first name as an alias without generating duplicate candidate notes or polluting timelines.
+
+### Step 4 — Mapping Connections
 - Individual people notes must link to their respective organizations (e.g. `- **Company:** [[SignLab]]`).
 - Organizations must link to their key representatives.
 - Maintain family connections accurately using spaced wikilinks (e.g. `[[Sam]]'s teacher`, `[[Nana]]'s friend`).
