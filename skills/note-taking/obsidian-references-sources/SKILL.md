@@ -1,7 +1,7 @@
 ---
 name: obsidian-references-sources
 description: Use when creating or recording cheat sheets, factsheets, guidelines, or other people's conceptual summaries under Notes/.
-version: 1.0.0
+version: 1.1.0
 author: Bes
 license: MIT
 metadata:
@@ -25,10 +25,8 @@ This skill governs the structure and standard templates for two categories under
 
 ---
 
----
-
 ## Folders & Categories
-- **Directory:** `/home/justin.guest/vault/Notes/` or `/home/justin.guest/vault/Logs/Sources/` (automated external syncs).
+- **Directory:** `/home/justin.guest/vault/Notes/` (or `/home/justin.guest/vault/inbox/` when drafting).
 - **Categories & Naming:**
   - **References:** Standard reference notes, checklists, lookup tables.
     - Category link: `category: "[[References]]"`
@@ -47,12 +45,6 @@ Before proposing, suggesting, or creating any new `[[Concepts]]` (or `[[Referenc
 - **Search First:** Use `search_files` to verify whether there is an existing raw note that covers the same conceptual territory.
 - **Consolidate & Promote over Creating Fresh:** If an existing raw note is found, do not create a duplicative new note. Instead, propose reclassifying the existing note to `[[Concepts]]`, merging any extra details if necessary.
 - **De-duplication & Pruning:** If multiple similar/duplicate notes exist (e.g., `Continuous interviewing.md` and `Continuous interviewing torres.md`), consolidate the best text, links, and references into a single canonical note under the `[[Concepts]]` category and delete/prune the redundant raw notes to keep the vault clean.
-
----
-
-## References vs. Ephemeral Project-Bound Notes
-- **References** are meant to be **permanent notes** that contain long-term value, guidelines, or checklists that Justin expects to refer to frequently over time (e.g., API documentation, general checklists, cheat sheets).
-- **Ephemeral checklists, plans, or migration guides** connected to specific, time-bound projects are NOT references. Do not categorize them as `[[References]]`; instead, categorize them under `[[Notes]]` or `[[Projects]]` so they stay organized with their respective projects.
 
 ---
 
@@ -78,6 +70,29 @@ category: "[[References]]"
 
 ## Facts & Lookup Tables
 - Labeled facts or lists of properties.
+```
+
+---
+
+## Concepts Structure
+Concept notes are simplified narratives that explain a theory, mental model, or concept without any initial heading (since the filename carries the title).
+
+- **Drafting Location:** Always draft new concepts in the inbox (`vault/inbox/`) so the user can tweak and move them later.
+
+```markdown
+---
+daily_note: "[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
+id: YYYYMMDDHHmmss
+category: "[[Concepts]]"
+---
+[Concise narrative explaining the concept (1-2 short paragraphs) covering:]
+- What the concept represents / core definition
+- Its mechanics or how it operates
+- Why it matters / context
+
+# Related
+- [[Link to relevant note or log]]
+- [[Link to another log]]
 ```
 
 ---
