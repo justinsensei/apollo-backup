@@ -303,7 +303,7 @@ def match_projects(text, entities, channel=None, explicit_project=None, ambiguou
         if len(top_hits) == 1:
             matched[top_hits[0]["path"]] = top_hits[0]
         else:
-            for _, ent in top_hits:
+            for ent in top_hits:
                 candidates.append(ent["title"])
 
     return list(matched.values()), candidates

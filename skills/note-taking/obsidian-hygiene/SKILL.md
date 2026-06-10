@@ -110,6 +110,8 @@ This utility verifies:
 2. Expecting auto-link in Readings — immutability guard prevents it.
 3. Confusing Layer 2 `[[Sources]]` (compiled, `Notes/`) with raw Readings (`Inputs/Readings/`).
 4. Auto-moving wrong-folder notes — hygiene reports only; wind-down EIIRP triages moves.
+5. **Multi-Match Unpacking Gotchas**: In the underlying matching pipeline of `vault_entities.py` (which `vault_hygiene.py` relies on for Granola reconciliations), if multiple project hubs score equally, trying to unpack the candidate list as a tuple (`for _, ent in top_hits`) rather than iterating plain dictionaries (`for ent in top_hits`) triggers a `ValueError: too many values to unpack (expected 2)`.
+6. **Mismatched Test Directories**: Contact paths in the vault migrated from root `/Contacts/` to `/Notes/Contacts/`. If entity unit tests (e.g., `test_integrate_entities.py`) fail to align mock directories with `/Notes/Contacts/`, contact matches will fail silently. Always keep test environments aligned with active production schemas.
 
 ## Verification Checklist
 
