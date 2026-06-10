@@ -27,3 +27,5 @@ Default new notes to 'Notes' (timestamp ID). Draft decisions in inbox using simp
 Weekly summaries are requested manually on the first day of the week and delivered directly to the requesting Telegram conversation instead of running on a schedule.
 §
 Any new contact (people or companies) created by Bes must land in /home/justin.guest/vault/inbox/. Existing contacts in Contacts/ are updated in place and never relocated.
+§
+Vault signals scan script (check_vault_signals.py) is read-only. Timelines are disabled in favor of native Obsidian Backlinks.
