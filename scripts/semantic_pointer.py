@@ -160,7 +160,7 @@ def get_category_from_path(rel_path, frontmatter):
             if len(parts) > 2:
                 return parts[1]
             return "Logs"
-        if parts[0] == "Daily Notes":
+        if parts[0] == "Daily Notes" or (parts[0] == "Notes" and len(parts) > 1 and parts[1] == "Daily Notes"):
             return "Daily Notes"
         if parts[0] == "Notes" and len(parts) > 2 and parts[1] == "Projects":
             return "Projects"
@@ -231,7 +231,7 @@ def index_vault(verbose=False, batch_size=30):
     
     # Sort to prioritize Inputs/ (or legacy Logs/) first, then Daily Notes/
     pending_files.sort(key=lambda x: (
-        0 if ("Inputs/" in x[0] or "Logs/" in x[0]) else (1 if "Daily Notes/" in x[0] else 2),
+        0 if ("Inputs/" in x[0] or "Logs/" in x[0]) else (1 if "Daily Notes/" in x[0] or "Notes/Daily Notes/" in x[0] else 2),
         x[0]
     ))
     

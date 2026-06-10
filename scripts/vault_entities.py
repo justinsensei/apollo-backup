@@ -105,7 +105,7 @@ def parse_project_file(file_path, filename):
 def get_existing_entities(vault_path):
     entities = {}
 
-    contacts_dir = os.path.join(vault_path, "Contacts")
+    contacts_dir = os.path.join(vault_path, "Notes", "Contacts")
     if os.path.exists(contacts_dir):
         for f in os.listdir(contacts_dir):
             if f.endswith(".md"):

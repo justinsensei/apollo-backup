@@ -28,7 +28,7 @@ def save_watermark(now_dt):
 def extract_date_from_file(file_path, content):
     # Try parsing YYYY-MM-DD from frontmatter daily_note
     # e.g., daily_note: "[[2026-06-08-monday]]"
-    m_daily = re.search(r'daily_note:\s*["\']?\[\[(?:Daily Notes/)?(\d{4}-\d{2}-\d{2})[^\]]*\]\]["\']?', content)
+    m_daily = re.search(r'daily_note:\s*["\']?\[\[(?:Notes/Daily Notes/|Daily Notes/)?(\d{4}-\d{2}-\d{2})[^\]]*\]\]["\']?', content)
     if m_daily:
         return m_daily.group(1)
         
@@ -210,7 +210,9 @@ def scan_file_for_unresolved_links(file_path, content, entities, vault_path, all
     
     for link in links:
         link_clean = link.strip()
-        if link_clean.startswith('Contacts/'):
+        if link_clean.startswith('Notes/Contacts/'):
+            link_name = link_clean[15:]
+        elif link_clean.startswith('Contacts/'):
             link_name = link_clean[9:]
         else:
             link_name = link_clean

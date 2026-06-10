@@ -50,7 +50,7 @@ def expected_folder_prefix(category, vault_path):
         "Meetings": f"{base}/Meetings/",
         "Emails": f"{base}/Emails/",
         "Slack": f"{base}/Slack/",
-        "Scraps": f"{base}/Scraps/",
+        "Scraps": "",
         "Sources": "Notes/",
         "Notes": "Notes/",
         "Thoughts": "Notes/",
@@ -68,7 +68,7 @@ def acceptable_folder_prefixes(category, vault_path):
     vault = Path(vault_path)
     base_inputs = str(inputs_base(vault_path)).replace("\\", "/")
     base_logs = str(vault / "Logs").replace("\\", "/")
-    input_cats = {"Readings", "Meetings", "Emails", "Slack", "Scraps"}
+    input_cats = {"Readings", "Meetings", "Emails", "Slack"}
     if category in input_cats:
         prefixes = [f"{base_inputs}/{category}/"]
         if (vault / "Logs").exists() and base_inputs != base_logs:
@@ -197,7 +197,7 @@ def auto_link_text(text, entities, current_file_title):
     return '\n'.join(lines)
 
 def auto_link_recent_daily_notes(vault_path, entities):
-    daily_notes_dir = Path(vault_path) / "Daily Notes"
+    daily_notes_dir = Path(vault_path) / "Notes" / "Daily Notes"
     if not daily_notes_dir.exists():
         return
         
@@ -327,7 +327,7 @@ def reconcile_granola_meetings(vault_path):
                 needs_update = True
                 
             if not daily_note or "[[" not in daily_note:
-                daily_note = f"[[Daily Notes/{date_str}-{weekday_lower}|{date_str} {weekday_cap}]]"
+                daily_note = f"[[{date_str} {weekday_cap}]]"
                 needs_update = True
                 
             # Clean body: strip leading whitespace and redundant separators
@@ -498,6 +498,9 @@ for root, dirs, files in os.walk(VAULT):
                     wrong_folder.append((rel_str_f, category, expected or "Notes/Projects/"))
             elif category == "Readings" and rel_str_f.startswith("Notes/"):
                 wrong_folder.append((rel_str_f, category, expected or prefixes[0]))
+            elif category == "Scraps":
+                if "/" in rel_str_f:
+                    wrong_folder.append((rel_str_f, category, "Vault Root (/)"))
             elif prefixes and not any(rel_str_f.startswith(p.rstrip("/")) for p in prefixes):
                 wrong_folder.append((rel_str_f, category, expected or prefixes[0]))
 

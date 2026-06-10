@@ -51,6 +51,8 @@ ORPHAN_EXCLUDE_PREFIXES = (
     "Logs/",
     "Daily Notes/",
     "Contacts/",
+    "Notes/Daily Notes/",
+    "Notes/Contacts/",
     "Readwise/",
     "meetings/",
     "Utilities/",
