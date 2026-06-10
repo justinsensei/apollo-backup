@@ -1,7 +1,7 @@
 ---
 name: obsidian-contacts
 description: Use when managing the Contacts/ directory, preventing duplicate notes, and coordinating People and Organizations categories.
-version: 1.4.0
+version: 1.5.0
 author: Bes
 license: MIT
 metadata:
