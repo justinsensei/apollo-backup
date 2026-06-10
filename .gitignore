@@ -170,9 +170,8 @@ skills/productivity/manage-projects/**/__pycache__/
 !skills/apple/imessage/
 !skills/apple/imessage/SKILL.md
 
-# Tracked customization of bundled skill: software-development/hermes-agent-skill-authoring
-# Adds pitfall about scanner-tripping command shapes (pipe_to_interpreter, etc.)
+# Custom skill: software-development/bes-skill-authoring
 # Only SKILL.md is patched — no references/scripts customized.
 !skills/software-development/
-!skills/software-development/hermes-agent-skill-authoring/
-!skills/software-development/hermes-agent-skill-authoring/SKILL.md
+!skills/software-development/bes-skill-authoring/
+!skills/software-development/bes-skill-authoring/SKILL.md
