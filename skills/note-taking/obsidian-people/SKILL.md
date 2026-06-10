@@ -28,7 +28,8 @@ This skill governs the structure and standard templates for individual person no
 
 ### Step 1 — Check for Duplicates
 Always search both `/Contacts/` and `/inbox/` by name, first name, or common alias before writing a new note.
-- If the note already exists in either folder, update the existing note in-place.
+- **Relocation Boundary**: Only brand-new contacts created by Bes should land in `/home/justin.guest/vault/inbox/`. Never relocate or move existing contact notes already in `/home/justin.guest/vault/Contacts/` (created by Justin or prior processes) to the inbox. Always update them in-place.
+- If the note already exists in either folder, update the existing note in-place in its current folder.
 - If the note does not exist anywhere, create a brand-new note in `/home/justin.guest/vault/inbox/`.
 
 ### Step 2 — Filename

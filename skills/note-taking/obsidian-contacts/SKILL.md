@@ -31,7 +31,7 @@ This skill governs the physical structure and coordinate mapping of the `/Contac
 ### Step 1 — Check for Duplicates
 Before writing any contact file, always search both `/Contacts/` and `/inbox/` by name, first name, last name, abbreviation, or known aliases.
 - Use `search_files(target='files', path='/home/justin.guest/vault/Contacts')` and `search_files(target='files', path='/home/justin.guest/vault/inbox')`.
-- It is critical to update existing biography files in their current location (whether in `/Contacts/` or `/inbox/`) rather than creating overlapping notes.
+- **Relocation Boundary**: Only brand-new contacts created by Bes should land in `/home/justin.guest/vault/inbox/`. Never relocate or move existing contact notes already in `/home/justin.guest/vault/Contacts/` (created by Justin or prior processes) to the inbox. Always update them in-place.
 - If the contact does not exist anywhere, create the new note in the `/inbox/` directory.
 
 ### Step 2 — Filename Capitalization
