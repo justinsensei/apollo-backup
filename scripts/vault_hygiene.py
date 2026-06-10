@@ -14,7 +14,182 @@ from pathlib import Path
 
 VAULT = Path("/home/justin.guest/vault")
 
+def get_existing_entities(vault_path):
+    entities = {}
+    
+    def parse_contact_file(file_path, filename):
+        ptype = 'person'
+        aliases = []
+        title = filename[:-3]
+        is_contact = False
+        try:
+            with open(file_path, encoding='utf-8', errors='replace') as file_obj:
+                content = file_obj.read()
+                m_cat = re.search(r'^category:\s*["\']?\[\[(People|Organizations)\]\]["\']?', content, re.MULTILINE)
+                m_type = re.search(r'^type:\s*[\'"]?([a-zA-Z0-9_-]+)[\'"]?', content, re.MULTILINE)
+                if m_cat or m_type:
+                    is_contact = True
+                if m_type:
+                    ptype = m_type.group(1).strip()
+                elif m_cat:
+                    ptype = 'person' if m_cat.group(1) == 'People' else 'organization'
+                m_aliases = re.search(r'^aliases:\s*\n((?:\s*-\s*.*?\n)+)', content, re.MULTILINE)
+                if m_aliases:
+                    aliases = [a.strip()[1:].strip().strip('"\'') for a in m_aliases.group(1).split('\n') if a.strip().startswith('-')]
+        except Exception:
+            pass
+        return is_contact, ptype, title, aliases
+
+    contacts_dir = os.path.join(vault_path, 'Contacts')
+    if os.path.exists(contacts_dir):
+        for f in os.listdir(contacts_dir):
+            if f.endswith('.md'):
+                file_path = os.path.join(contacts_dir, f)
+                _, ptype, title, aliases = parse_contact_file(file_path, f)
+                name_key = f[:-3].lower()
+                entities[name_key] = {
+                    "path": file_path,
+                    "type": ptype,
+                    "title": title,
+                    "aliases": aliases
+                }
+                
+    inbox_dir = os.path.join(vault_path, 'inbox')
+    if os.path.exists(inbox_dir):
+        for f in os.listdir(inbox_dir):
+            if f.endswith('.md'):
+                file_path = os.path.join(inbox_dir, f)
+                is_contact, ptype, title, aliases = parse_contact_file(file_path, f)
+                if is_contact:
+                    name_key = f[:-3].lower()
+                    entities[name_key] = {
+                        "path": file_path,
+                        "type": ptype,
+                        "title": title,
+                        "aliases": aliases
+                    }
+                
+    projects_dir = os.path.join(vault_path, 'Notes', 'Projects')
+    if os.path.exists(projects_dir):
+        for f in os.listdir(projects_dir):
+            if f.endswith('.md'):
+                file_path = os.path.join(projects_dir, f)
+                try:
+                    with open(file_path, encoding='utf-8', errors='replace') as file_obj:
+                        content = file_obj.read()
+                        name_key = f[:-3].lower()
+                        clean_name = re.sub(r'\s*\d{4,14}$', '', f[:-3]).lower().strip()
+                        entities[name_key] = {
+                            "path": file_path,
+                            "type": "project",
+                            "title": f[:-3],
+                            "aliases": [clean_name] if clean_name != name_key else []
+                        }
+                except Exception:
+                    pass
+                    
+    return entities
+
+def auto_link_text(text, entities, current_file_title):
+    all_keys = []
+    for ent_key, ent_info in entities.items():
+        title = ent_info["title"]
+        all_keys.append((title, ent_info))
+        for alias in ent_info.get("aliases", []):
+            if len(alias) >= 3:
+                all_keys.append((alias, ent_info))
+                
+    all_keys.sort(key=lambda x: len(x[0]), reverse=True)
+    
+    lines = text.split('\n')
+    in_code_block = False
+    
+    for i, line in enumerate(lines):
+        if line.strip().startswith('```'):
+            in_code_block = not in_code_block
+            continue
+        if in_code_block or line.strip().startswith('#'):
+            continue
+            
+        links = []
+        def mask_link(match):
+            links.append(match.group(0))
+            return f"__LINK_MASK_{len(links)-1}__"
+            
+        code_spans = []
+        def mask_code(match):
+            code_spans.append(match.group(0))
+            return f"__CODE_MASK_{len(code_spans)-1}__"
+            
+        masked_line = re.sub(r'\[\[[^\]]+\]\]', mask_link, line)
+        masked_line = re.sub(r'`[^`]+`', mask_code, masked_line)
+        
+        for key, ent_info in all_keys:
+            if key.lower() == current_file_title.lower():
+                continue
+                
+            pattern = rf'\b{re.escape(key)}\b'
+            new_links = []
+            
+            def replace_key(match):
+                matched_text = match.group(0)
+                slug = os.path.basename(ent_info["path"])[:-3]
+                if slug.lower() == matched_text.lower():
+                    link_str = f"[[{slug}]]"
+                else:
+                    link_str = f"[[{slug}|{matched_text}]]"
+                new_links.append(link_str)
+                return f"__NEW_LINK_MASK_{len(new_links)-1}__"
+                
+            masked_line = re.sub(pattern, replace_key, masked_line, flags=re.IGNORECASE)
+            
+            for idx, link_str in enumerate(new_links):
+                masked_line = masked_line.replace(f"__NEW_LINK_MASK_{idx}__", link_str)
+                
+        for idx, link_str in enumerate(links):
+            masked_line = masked_line.replace(f"__LINK_MASK_{idx}__", link_str)
+        for idx, code_str in enumerate(code_spans):
+            masked_line = masked_line.replace(f"__CODE_MASK_{idx}__", code_str)
+            
+        lines[i] = masked_line
+        
+    return '\n'.join(lines)
+
+def auto_link_recent_daily_notes(vault_path, entities):
+    daily_notes_dir = Path(vault_path) / "Daily Notes"
+    if not daily_notes_dir.exists():
+        return
+        
+    print("Auto-linking recent daily notes...")
+    now = datetime.datetime.now()
+    seven_days_ago = now - datetime.timedelta(days=7)
+    
+    for path in daily_notes_dir.glob("*.md"):
+        try:
+            mtime = datetime.datetime.fromtimestamp(path.stat().st_mtime)
+            if mtime > seven_days_ago:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                
+                has_frontmatter = False
+                fm_content = ""
+                body_content = text
+                if text.startswith("---"):
+                    fm_end = text.find("\n---", 3)
+                    if fm_end > 0:
+                        has_frontmatter = True
+                        fm_content = text[:fm_end+4]
+                        body_content = text[fm_end+4:]
+                        
+                linked_body = auto_link_text(body_content, entities, path.name[:-3])
+                if linked_body != body_content:
+                    new_text = fm_content + linked_body
+                    path.write_text(new_text, encoding="utf-8")
+                    print(f"  Auto-linked contacts in daily note: {path.name}")
+        except Exception as e:
+            print(f"  Error auto-linking daily note {path.name}: {e}")
+
 def reconcile_granola_meetings(vault_path):
+    entities = get_existing_entities(vault_path)
     meetings_dir = Path(vault_path) / "meetings"
     meetings_dir.mkdir(parents=True, exist_ok=True)
     
@@ -125,6 +300,12 @@ def reconcile_granola_meetings(vault_path):
                 needs_update = True
                 
             if body_content != original_body:
+                needs_update = True
+                
+            # Auto-link known entities in the meeting body
+            linked_body = auto_link_text(body_content, entities, filename[:-3])
+            if linked_body != body_content:
+                body_content = linked_body
                 needs_update = True
                 
             if is_raw or needs_update:
