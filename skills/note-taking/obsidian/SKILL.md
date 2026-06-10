@@ -96,7 +96,7 @@ Notes are categorized with a single `category` YAML property containing a quoted
 |---|---|---|---|
 | `Contacts/` | `category: "[[People]]"` | Individual contacts, friends, family, collaborators | `obsidian-people` |
 | `Contacts/` | `category: "[[Organizations]]"` | Companies, schools, institutions, legal entities | `obsidian-organizations` |
-| `Notes/` | `category: "[[Notes]]"` | Default category for conceptual, structured, or raw notes | `obsidian-notes` |
+| `Notes/` | `category: "[[Notes]]"` | Compiled, factual supporting notes | `obsidian-notes` |
 | `Notes/` | `category: "[[Sources]]"` | Compiled bibliographical records per work; links down to raw Readings | `llm-wiki` |
 | `Notes/` | `category: "[[References]]"` | Useful facts, cheat sheets, guidelines, checklists | `obsidian-references-sources` |
 | `Notes/` | `category: "[[Concepts]]"` | Other people's models/theories extracted from Sources | `obsidian-references-sources` |
@@ -110,6 +110,7 @@ Notes are categorized with a single `category` YAML property containing a quoted
 | `Inputs/Readings/` | `category: "[[Readings]]"` | Raw reading imports — Readwise, clippings (immutable) | `llm-wiki` |
 | `Inputs/Emails/` | `category: "[[Emails]]"` | Email thread summaries | `bes-email-dispatch` |
 | `Inputs/Slack/` | `category: "[[Slack]]"` | Slack conversation summaries | `slack` |
+| `Inputs/Scraps/` | `category: "[[Scraps]]"` | Fleeting brain dumps, raw quick-captures, scraps | `obsidian-notes` |
 | `Utilities/` | `category: "[[Categories]]"` | Category definition notes (`Utilities/Categories/`) | `obsidian-utilities` |
 
 ---
