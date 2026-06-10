@@ -18,13 +18,13 @@ This skill governs the capture and structured recording of individual or team de
 ---
 
 ## Folder & Category
-- **Directory:** `/home/justin.guest/vault/Notes/`
+- **Directory:** Always draft decision notes in the inbox: `/home/justin.guest/vault/inbox/` (the user will review and move them later).
 - **Category link:** `category: "[[Decisions]]"`
 
 ---
 
 ## Note Layout & Structure
-A Decision Note is formatted to clearly outline the problem context, proposed options, and the reasoning for the final choice.
+A Decision Note is a simplified narrative highlighting the context, shift, and implications.
 
 ```markdown
 ---
@@ -32,40 +32,21 @@ id: 'YYYYMMDDHHmmss'
 daily_note: "[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
 category: "[[Decisions]]"
 ---
+## Decision: Spaced Capitalized Topic Name
+[Concise narrative of the decision (1-2 short paragraphs) covering:]
+- What was the status quo before the decision
+- What changed our minds & why (with accurate attribution to the actual decision-maker)
+- What might cause us to change our minds later (if applicable)
 
-# Decision: Spaced Capitalized Topic Name
-
-- **Date:** YYYY-MM-DD
-- **Decision Maker:** [[Person Who Made Call]] (e.g. [[Justin Goff]], or a colleague)
-- **Status:** Proposed/Approved/Superceded
-
----
-
-## Context & Problem
-What is the problem being addressed? Why is it a problem now?
-
-## Options Considered
-Detailed overview of options.
-
-### Option 1: Description
-- **Pros:** 
-- **Cons:** 
-
-### Option 2: Description
-- **Pros:** 
-- **Cons:** 
-
----
-
-## Decision & Reasoning
-Which option was chosen and why? 
-
-> Highlight any trade-offs accepted or constraints discovered.
+## Related
+- [[Link to relevant note or log]]
+- [[Link to another log]]
 ```
 
 ---
 
 ## Core Rules
 - **Accurate Attribution:** Always attribute the decision to the actual decision-maker. Do not assume or state Justin made a decision unless he explicitly did.
-- **Capitalized spaced names:** Use `ID Title.md` format for the filename (where ID is the creation timestamp, e.g. `20260609120000 Decision to shift to free to play.md`).
-- **No Pipe Tables:** Avoid using markdown pipe tables; represent trade-offs using clean bulleted list structures.
+- **Capitalized spaced names:** Use `ID Title.md` format for the filename (where ID is the creation timestamp, e.g. `20260609170500 Pause app-to-web payment flow.md`).
+- **Drafting Location:** Always place new decision notes in the inbox folder (`vault/inbox/`).
+- **No Pipe Tables:** Avoid using markdown pipe tables; represent trade-offs or lists using clean bulleted list structures.
