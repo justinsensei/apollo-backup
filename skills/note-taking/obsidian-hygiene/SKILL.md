@@ -56,6 +56,11 @@ In June 2026, Justin transitioned away from bot-enriched timeline sections in fa
 - **Unresolved Link & Plain-Text Discovery:** The signals script (`check_vault_signals.py`) has been refactored to be read-only. It scans for both bracketed unresolved links AND plain-text candidates of new contacts (not yet in the vault) and feeds them to the Morning Briefing as candidates for contact card creation.
 - **Manual Timeline Spacing (Legacy):** If any manual timelines are edited or maintained, keep exactly one empty line between the heading and the first item, with no blank lines between individual bullet points.
 
+### Ambiguity & Non-Unique Alias Rules
+- **Non-Unique Aliases:** If multiple contacts share the same alias (e.g. `'aunt lindy'` shared by `Linda Massie` and `Linda Lash`), the vault hygiene process flags this under a `## 🔴 Non-unique aliases` diagnostics header.
+- **Auto-Linker Safeguard:** To prevent making wrong connections, the auto-linker explicitly detects and skips any alias that is non-unique (shared by more than one distinct contact path).
+- **Interactive Resolution (Briefing):** When `check_vault_signals.py` detects an unlinked plain-text mention of an ambiguous alias, it logs it under `ambiguous_mentions` in `vault_signals_last_run.json`. This is surfaced in Phase 1 of the Morning Briefing under `❓ Ambiguous mentions`. When Justin clarifies the target (e.g. "I meant Linda Massie"), the agent must use the `patch` tool to replace the plain text in the context file with the correct link (e.g. `[[Linda Massie|Aunt Lindy]]`) and confirm the fix.
+
 ---
 
 ### Step 5 — Frontmatter Parsing and Overwrite Pitfalls
