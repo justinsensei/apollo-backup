@@ -76,10 +76,10 @@ To avoid naive categorization, distinguish clearly between the five main types u
 ### 4. Concepts (`[[Concepts]]`) — Others' Theories & Models
 * **Criteria**: Summaries and breakdowns of *other people's* models, frameworks, academic theories, or book/article insights (e.g. *Continuous interviewing*, *User story maps*, *Expert generalists*, *System 1 works by association*).
 
-### 5. Notes (`[[Notes]]`) — Fleeting & Operational Records
-* **Criteria**: Highly temporal, transient, or fleeting tactical operations, specific API troubleshooting logs, tool setup scripts, meeting agendas, temporary schedules, or software configurations (e.g. *Claude vs Perplexity*, *Lovable subscription*, *Ski season dates*).
-* **Product Briefs & Sketches**: Early product concepts, software feature briefs, and technical strategy sketches (e.g. *Bestie product concept*, *Bestie tech strategy sketch*, *On ADHD productivity apps*) should be kept in `[[Notes]]` rather than up-promoted to Concepts, Thoughts, or Projects.
-* **Rule**: Keep these in `category: "[[Notes]]"`. They are ephemeral, factual logs that do not represent concepts or deep strategic reflections.
+### 5. Notes (`[[Notes]]`) — Compiled Factual Support
+* **Criteria**: Compiled, extracted, semi-structured notes that support or relate to Thoughts, Concepts, Projects, Decisions, or Beliefs. They are more factual, less opinionated, and less conceptual than other kinds of notes. Less permanent and less universally applicable than References (e.g. *Claude vs Perplexity*, *Lovable subscription*, *Posthog data check*, *Subscriber research plan*, *Ski season dates*).
+* **Product Briefs & Sketches**: Early product concepts, software feature briefs, and technical strategy sketches (e.g. *Bestie product concept*, *Bestie tech strategy sketch*) should be kept in `[[Notes]]` rather than up-promoted to Concepts, Thoughts, or Projects.
+* **Rule**: Keep these in `category: "[[Notes]]"`. They are organized, factual supporting assets.
 
 ### 6. Projects (`[[Projects]]`) — Active & Bounded Efforts
 * **Criteria**: Hubs tracking active, bounded, multi-step efforts (like LLC shutdowns, career transitions, home renovations, and major software launches).
@@ -87,6 +87,10 @@ To avoid naive categorization, distinguish clearly between the five main types u
 
 ### 7. Empty Stubs & Obsolete Drafts (Active Pruning)
 * **Rule**: Do not try to categorize empty placeholder notes, incomplete stubs, or obsolete structural outlines (e.g. *Discovering the right problems*, *My note taking system* stubs). Proactively propose deleting them from the filesystem.
+
+### 8. Scraps (`[[Scraps]]`) — Fleeting Internal Quick-Captures
+* **Criteria**: Fleeting brain dumps, off-the-cuff jottings, scratchpad-style reflections, unrefined jottings, and work-in-progress scraps (e.g. *Where I am this morning*, *On ADHD productivity apps* early draft, fleeting thoughts about code/WIP).
+* **Rule**: Keep these in `category: "[[Scraps]]"`. These are highly temporal, messy, private, and require zero formatting. They reside in `Inputs/Scraps/`.
 
 ---
 

@@ -16,7 +16,7 @@ Google Calendar has write access; Bes can directly schedule events on Justin's b
 §
 Readwise script is at ~/sync_readwise.py. It exports highlights tagged 'vault' (case-insensitive) to vault/Inputs/Readings/ (migrate from Logs/Sources/).
 §
-Default new notes to 'Notes' (timestamp ID). Draft decisions in inbox using simplified narrative. Triaging: References (patterns), Thoughts (reflections), Concepts (models).
+Default quick-captures to 'Scraps' (timestamp ID, in Inputs/Scraps/) and factual support to 'Notes' (in Notes/). Decisions in inbox. Triaging: References, Thoughts, Concepts.
 §
 Any new contact (people or companies) created by Bes must land in /home/justin.guest/vault/inbox/. Existing contacts in Contacts/ are updated in place and never relocated.
 §
