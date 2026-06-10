@@ -27,3 +27,5 @@ Default new notes to 'Notes' (timestamp ID). Draft decisions in inbox using simp
 Vault convention: Raw notes can contain embedded processing instructions directed at Bes using inline tasks ("- [ ] @bes <task>") or comment blocks ("%% bes-instructions ... %%").
 §
 Weekly summaries are requested manually on the first day of the week and delivered directly to the requesting Telegram conversation instead of running on a schedule.
+§
+Any new contact (people or companies) created by Bes must land in /home/justin.guest/vault/inbox/. Existing contacts in Contacts/ are updated in place and never relocated.

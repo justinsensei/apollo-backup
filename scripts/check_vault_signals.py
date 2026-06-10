@@ -301,6 +301,15 @@ def scan_file_for_unresolved_links(file_path, content, entities, vault_path, all
         if link_key in all_vault_filenames:
             continue
             
+        # Check if matches any existing entity's alias
+        is_alias = False
+        for ent_info in entities.values():
+            if ent_info.get('aliases') and any(alias.lower() == link_key for alias in ent_info['aliases']):
+                is_alias = True
+                break
+        if is_alias:
+            continue
+            
         if link_key not in entities:
             # Unresolved!
             # Basic type inference
