@@ -1,7 +1,7 @@
 ---
 name: wind-down
 description: "Interactive daily wrap-up: 1. Log candidates; 2. Discovered contacts; 3. Source review; 4. Vault inbox triage; 5. Work log draft/write; 6. Next day's calendar preview."
-version: 1.1.0
+version: 1.2.0
 author: Bes
 license: MIT
 metadata:
@@ -119,9 +119,9 @@ Would you like me to create contact notes for any of these? (e.g. "yes, 1 as org
 ```
 
 If Justin selects any:
-1. For each selected item, check if `/home/justin.guest/vault/Contacts/<Name>.md` already exists.
-2. If the file exists, do NOT overwrite or truncate it (as it contains precious history/timeline entries). Instead, patch the file to insert the standard frontmatter, executive summary, and state sections at the very top, preserving any existing content (like `## Timeline` and its entries) underneath.
-3. If the file does not exist, create a new file and format the contact note following these strict standards:
+1. For each selected item, check if the contact file already exists in `/home/justin.guest/vault/Contacts/<Name>.md` OR in `/home/justin.guest/vault/inbox/<Name>.md`.
+2. If the file exists in either location, do NOT overwrite or truncate it (as it contains precious history/timeline entries). Instead, patch the file in its current location to insert the standard frontmatter, executive summary, and state sections at the very top, preserving any existing content (like `## Timeline` and its entries) underneath.
+3. If the file does not exist in either location, create a new file in the inbox directory `/home/justin.guest/vault/inbox/<Name>.md` and format the contact note following these strict standards:
    * Frontmatter:
      ```yaml
      ---
@@ -147,7 +147,7 @@ If Justin selects any:
      ## Timeline
      - <Date> | Discovered — Mentioned in [[<context_file_relative_path_no_ext>|<context_file_title>]].
      ```
-3. Report success and confirm creation.
+3. Report success and confirm creation in the inbox directory.
 
 If no discovered contacts are found, proceed to Phase 3.
 
