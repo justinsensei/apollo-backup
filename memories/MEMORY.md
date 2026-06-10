@@ -26,4 +26,4 @@ Tier-3 semantic lint (`wiki_semantic_lint.py`) runs monthly (1st, 8am cron `a3f8
 §
 Vault chronological logging is active; logs are appended to Utilities/log.md.
 §
-Forwarded emails processed by Bes default to the Inputs/Emails/ directory as logs.
+Forwarded emails processed by Bes default to the Inputs/Emails/ directory as inputs.

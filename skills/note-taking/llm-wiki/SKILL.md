@@ -135,6 +135,7 @@ One-time `Logs/` → `Inputs/` via `scripts/migrate_logs_to_inputs.py`. See [tax
 5. Running integrate-full from cron without approval — light pass only in autonomous runs.
 6. Generating dense, bulky notes during query synthesis — keep integrations and syntheses highly atomic and focused, avoiding oversized multi-topic summaries.
 7. Attempting to write timeline or related inputs lists to contact or project notes — automated timelines are disabled in favor of native backlinks; only update project `## State` on decisions/status.
+8. Neglecting Log Maintenance: Failing to append to `Utilities/log.md` on every ingest makes files untraceable and breaks Karpathy-style chronological auditing.
 
 ## Verification Checklist
 
