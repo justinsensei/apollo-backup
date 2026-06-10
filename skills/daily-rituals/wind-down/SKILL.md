@@ -388,6 +388,7 @@ Preview tomorrow's schedule to establish mental readiness, coordinate upcoming t
 ## Pitfalls & Defensive Rules
 
 - **Preserve the Notepad:** Always load today's daily note first, find the `## 🗒 Notepad` section, and keep its contents completely intact.
+- **Inputs Terminology:** Always refer to Slack threads, emails, and other primary-category sources as "inputs" rather than "logs" in both conversations and note frontmatter, as per the updated vault schema.
 - **Accurate Attribution:** When drafting highlights and decisions from emails or meeting notes, ensure decisions are attributed to the correct person (e.g., Anya, Nana, teachers, etc.) rather than assuming Justin made them.
 - **Escape Slack Channels:** Always write `#channel-name` as `\#channel-name` inside the daily note so Obsidian doesn't parse it as a tag.
 - **Dynamic Timezone Offset:** When fetching calendar events, always calculate and append the local timezone offset (e.g. `-04:00` or `-05:00`) to `--start` and `--end` to prevent boundary events from leaking from yesterday or tomorrow.
