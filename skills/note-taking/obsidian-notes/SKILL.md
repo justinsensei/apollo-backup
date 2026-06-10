@@ -25,6 +25,8 @@ This skill governs the physical structure and coordinate mapping of the `/Notes/
   - **`Memories`**: For journal-like personal notes, conversations, and good days (`category: "[[Memories]]"`).
   - **`obsidian-projects`**: For ongoing project hubs, travel, or milestones (`category: "[[Projects]]"`).
   - **`obsidian-references-sources`**: For factsheets or conceptual summaries (`category: "[[References]]"` or `category: "[[Concepts]]"`).
+  - **`obsidian-people` / `obsidian-organizations`**: For contact notes representing individuals or entities (`category: "[[People]]"` or `category: "[[Organizations]]"`, stored under `/Notes/Contacts/`).
+  - **`obsidian-daily-notes`**: For chronological logs and agendas (`category: "[[Daily Notes]]"`, stored under `/Notes/Daily Notes/`).
   - **`obsidian-graph-enrichment`**: Rules and link hierarchy conventions for maintaining a clean note graph.
   - **`obsidian-suggest-links`**: Proactively find surprising linkages among Thoughts and Beliefs.
   - **`obsidian-suggest-new-notes`**: Proactively discover and initialize new notes from log files.

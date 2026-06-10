@@ -1,6 +1,6 @@
 ---
 name: obsidian-people
-description: Use when creating or updating contact notes representing individual people (family, friends, colleagues) under Contacts/ or inbox/ with category "[[People]]".
+description: Use when creating or updating contact notes representing individual people (family, friends, colleagues) under Notes/Contacts/ or inbox/ with category "[[People]]".
 version: 1.1.0
 author: Bes
 license: MIT

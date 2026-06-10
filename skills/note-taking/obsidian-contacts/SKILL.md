@@ -13,13 +13,13 @@ metadata:
 # Obsidian Type: Contacts Directory Conventions
 
 ## Overview
-This skill governs the physical structure and coordinate mapping of the `/Contacts/` top-level directory in Justin's vault.
+This skill governs the physical structure and coordinate mapping of the `/Notes/Contacts/` directory in Justin's vault.
 
 ---
 
 ## Directory & Sub-skills
 - **New Contacts Landing Directory:** `/home/justin.guest/vault/inbox/`
-- **Permanent Contacts Directory:** `/home/justin.guest/vault/Contacts/`
+- **Permanent Contacts Directory:** `/home/justin.guest/vault/Notes/Contacts/`
 - **Sub-skills (Categories):**
   - **`obsidian-people`**: For individual contacts, family members, friends, or colleagues (`category: "[[People]]"`).
   - **`obsidian-organizations`**: For companies, schools, legal entities, or institutions (`category: "[[Organizations]]"`).
@@ -32,13 +32,13 @@ This skill governs the physical structure and coordinate mapping of the `/Contac
 ## Folder-Level Rules
 
 ### Step 1 — Check for Duplicates
-Before writing any contact file, always search both `/Contacts/` and `/inbox/` by name, first name, last name, abbreviation, or known aliases.
-- Use `search_files(target='files', path='/home/justin.guest/vault/Contacts')` and `search_files(target='files', path='/home/justin.guest/vault/inbox')`.
-- **Relocation Boundary**: Only brand-new contacts created by Bes should land in `/home/justin.guest/vault/inbox/`. Never relocate or move existing contact notes already in `/home/justin.guest/vault/Contacts/` (created by Justin or prior processes) to the inbox. Always update them in-place.
+Before writing any contact file, always search both `/Notes/Contacts/` and `/inbox/` by name, first name, last name, abbreviation, or known aliases.
+- Use `search_files(target='files', path='/home/justin.guest/vault/Notes/Contacts')` and `search_files(target='files', path='/home/justin.guest/vault/inbox')`.
+- **Relocation Boundary**: Only brand-new contacts created by Bes should land in `/home/justin.guest/vault/inbox/`. Never relocate or move existing contact notes already in `/home/justin.guest/vault/Notes/Contacts/` (created by Justin or prior processes) to the inbox. Always update them in-place.
 - If the contact does not exist anywhere, create the new note in the `/inbox/` directory.
 
 ### Step 2 — Filename Capitalization
-All files (whether in `/inbox/` or `/Contacts/`) must use standard Capitalized, spaced names (prefer full names over first-name-only filenames):
+All files (whether in `/inbox/` or `/Notes/Contacts/`) must use standard Capitalized, spaced names (prefer full names over first-name-only filenames):
 - Correct: `Andy Goff.md`, `Andrew Novak.md`, `Kristina Kennedy.md`
 - Incorrect: `andy.md`, `andrew.md`, `christina.md`
 - Avoid first-name-only filenames unless the person is universally referred to by that name and has no last name in context. Using first-name-only names leads to severe timeline pollution and generic name collisions from books, articles, or other public figures (e.g., `Andy Grove`, `Andrew Chen`, `David Deutsch`).
@@ -61,7 +61,7 @@ To prevent automatic link-hijacking and timeline pollution from background analy
    * Perform a vault-wide regex/content search to classify mentions into distinct, actual individuals based on family/work context.
    * Filter out non-person matches (authors, books, hardware, random names).
    * Create separate files for newly discovered people in the `/inbox/` directory.
-   * Update existing profiles in-place under `/Contacts/` with clean timelines.
+   * Update existing profiles in-place under `/Notes/Contacts/` with clean timelines.
    * Delete the polluted generic file and clean up any false timeline entries in related contacts' notes (e.g., in `oleksii.md` or `Kristina Kennedy.md`).
 
 ### Step 5 — Filename & Link Capitalization

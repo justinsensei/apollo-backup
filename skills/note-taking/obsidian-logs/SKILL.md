@@ -1,6 +1,6 @@
 ---
 name: obsidian-logs
-description: Use when managing chronological directory structures for Daily Notes/ and Inputs/ directories and coordinating their sub-skills.
+description: Use when managing chronological directory structures for Notes/Daily Notes/ and Inputs/ directories and coordinating their sub-skills.
 version: 1.3.0
 author: Bes
 license: MIT
@@ -23,7 +23,7 @@ This skill governs the structure and navigation of chronological log notes and r
 ---
 
 ## Directories & Sub-skills
-- **Daily Notes Directory:** `/home/justin.guest/vault/Daily Notes/`
+- **Daily Notes Directory:** `/home/justin.guest/vault/Notes/Daily Notes/`
   - Sub-skill: **`obsidian-daily-notes`** (`category: "[[Daily Notes]]"`)
 - **Meetings Directory:** `/home/justin.guest/vault/Inputs/Meetings/`
   - Sub-skill: **`obsidian-meetings`** (`category: "[[Meetings]]"`)

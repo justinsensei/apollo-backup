@@ -1,6 +1,6 @@
 ---
 name: obsidian-daily-notes
-description: Use when creating or formatting chronological daily notes under Daily Notes/ with category "[[Daily Notes]]".
+description: Use when creating or formatting chronological daily notes under Notes/Daily Notes/ with category "[[Daily Notes]]".
 version: 1.0.0
 author: Bes
 license: MIT
@@ -18,7 +18,7 @@ This skill governs the filename format, structure, templates, and standard secti
 ---
 
 ## Folder & Category
-- **Directory:** `/home/justin.guest/vault/Daily Notes/`
+- **Directory:** `/home/justin.guest/vault/Notes/Daily Notes/`
 - **Category link:** `category: "[[Daily Notes]]"`
 
 ---
