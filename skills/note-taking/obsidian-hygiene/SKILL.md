@@ -79,10 +79,16 @@ Cron (`vault_hygiene_cron.py`) surfaces all 🔴 and taxonomy-relevant ⚠️ se
 | `[[Sources]]` (compiled) | `Notes/` |
 | `[[Thoughts]]`, `[[Concepts]]`, etc. | `Notes/` per obsidian triage table |
 
-## Hygiene vs llm-wiki
+## Hygiene tiers
 
-- **obsidian-hygiene:** structural (this skill)
-- **llm-wiki `references/lint.md`:** semantic (contradictions, stale summaries) — on demand
+| Tier | Owner | Schedule |
+|------|-------|----------|
+| Tier 1 auto-fix | `vault_hygiene.py` | Daily (morning briefing Job B, wind-down, 9pm cron) |
+| Tier 2 structural report | `vault_hygiene_cron.py` → Telegram | Daily 9pm when issues |
+| Tier 3 semantic report | `wiki_semantic_lint.py` | Monthly 1st + on-demand |
+
+- **obsidian-hygiene:** tiers 1–2 (this skill)
+- **llm-wiki `references/lint.md`:** tier 3 — orphans (inbound), stale summaries, contradictions
 - **obsidian-suggest-promotions:** maturity ladder — unchanged
 
 ---

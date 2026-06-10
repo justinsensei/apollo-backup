@@ -16,6 +16,7 @@ This skill governs the **interactive phase** of the morning briefing. The 7AM cr
 - **Work-day helper:** `python3.12 ~/.hermes/scripts/work_day.py <cmd> [date]`
 - **Change detector & vault activity scan:** `python3 ~/.hermes/scripts/check_morning_changes.py`
 - **Vault signals scan script:** `scripts/check_vault_signals.py` (copied to `~/.hermes/scripts/check_vault_signals.py`) — read-only scan that gathers unresolved contact candidates (active timeline enrichment is disabled in favor of native Obsidian Backlinks)
+- **Tier-3 semantic lint state:** `~/.hermes/state/semantic_lint_last.json` — written by monthly `wiki_semantic_lint_cron.py`; surfaced once in Phase 1
 - **Vault:** `/home/justin.guest/vault` (or `$OBSIDIAN_VAULT_PATH`)
 
 ## Entry point
@@ -117,6 +118,12 @@ If `work_log_status` is `"skipped"` in the daily cache file, present only the va
 🗂 Vault hygiene — N items to look at when you have a moment:
 • sources/some-note.md — missing ID
 • ...]
+
+[If `~/.hermes/state/semantic_lint_last.json` exists with `"surfaced": false` and non-empty `tier3_issues` (monthly wiki lint), append:
+🧠 Wiki semantic lint — N items from the monthly pass:
+• Notes/foo.md — maturity orphan (Concepts)
+• ...
+After presenting, set `"surfaced": true` in that JSON file.]
 ```
 
 **If `is_work_day` is true and `work_log_status` is NOT `"skipped"`:**
@@ -145,6 +152,8 @@ If `work_log_status` is `"skipped"` in the daily cache file, present only the va
 🗂 Vault hygiene — N items to look at when you have a moment:
 • sources/some-note.md — missing ID
 • ...]
+
+[If `~/.hermes/state/semantic_lint_last.json` exists with `"surfaced": false` and non-empty `tier3_issues`, append wiki semantic lint block (same format as skipped-work-log branch above). Set `"surfaced": true` after presenting.]
 
 [If ambiguous plain-text mentions exist in `vault_signals_last_run.json` (unlinked names matching duplicate aliases), append right here:
 ❓ Ambiguous mentions — N items to resolve:

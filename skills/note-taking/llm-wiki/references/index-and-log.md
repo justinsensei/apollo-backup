@@ -42,6 +42,10 @@ After commit + `bes-pull`, create `Utilities/log.md` from `skills/note-taking/ll
 - Log `source-compile` lines in log.md when Sources are created or refreshed
 - No index.md maintenance
 
+## Lint log entries
+
+Tier-3 monthly passes append a `lint` line (see [lint.md](lint.md)). Full reports live in `Utilities/reports/semantic-lint-YYYY-MM-DD.md`.
+
 ## Deferred: Utilities/index.md
 
-A human browse catalog (`index.md`) is **not** maintained. Agents use `semantic_pointer.py`, folder taxonomy, and frontmatter instead. Revisit at semantic lint (item 5) only if a curated catalog becomes necessary — until then, `log.md` + semantic search suffice.
+A human browse catalog (`index.md`) is **not** maintained. Agents use `semantic_pointer.py`, folder taxonomy, and frontmatter instead.

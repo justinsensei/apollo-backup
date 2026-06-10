@@ -105,9 +105,13 @@ Confirm with Justin before bulk mature-note edits.
 
 See [integrate-query.md](references/integrate-query.md). Search → synthesize → file to appropriate category when durability threshold met → integrate-light log append. Template: [query-synthesis.md](templates/query-synthesis.md). Interactive sessions only — not cron.
 
-## Semantic lint
+## Semantic lint (tier-3)
 
-See [lint.md](references/lint.md). Run `vault_hygiene.py` first (structural). Then check stale summaries, contradictions, missing Source promotions.
+See [lint.md](references/lint.md).
+
+**Monthly cron** (`wiki_semantic_lint_cron.py`, 1st of month): deterministic orphans, stale summaries, promotion gaps, link chains, contradiction candidates → `Utilities/reports/semantic-lint-*.md` + `~/.hermes/state/semantic_lint_last.json`.
+
+**On-demand:** Run `vault_hygiene.py` first (structural), then `wiki_semantic_lint.py`. Agent reviews contradiction candidates — never auto-edit Beliefs.
 
 ## Boundaries
 

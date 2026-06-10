@@ -78,12 +78,19 @@ URL validation on markdown links in `Inputs/Readings/` (legacy: `Logs/Sources/`,
 ### ID conflicts / Missing ID / Missing daily_note
 Report but never auto-fix.
 
-## Hygiene vs llm-wiki lint split
+## Hygiene tiers
 
-| Check | Owner |
-|-------|-------|
-| ID, ghost links, orphans, wrong folder, URLs, legacy paths | `vault_hygiene.py` / `obsidian-hygiene` |
-| Contradictions, stale compiled summaries | `llm-wiki` `references/lint.md` (on-demand) |
+| Tier | Check | Owner | Schedule |
+|------|-------|-------|----------|
+| 1 | Auto-fix (Granola, tags, daily notes, entity auto-link) | `vault_hygiene.py` | Daily |
+| 2 | Structural report (ID, ghosts, zero in+out orphans, folders, URLs) | `vault_hygiene_cron.py` | Daily 9pm |
+| 3 | Semantic report (inbound orphans, stale Sources, promotion gaps, contradiction candidates) | `wiki_semantic_lint.py` | Monthly 1st + on-demand |
+
+Cron job ids: tier 2 → `0b12d967fdf6`; tier 3 → `a3f8c2e91b04`.
+
+| Workflow | Owner |
+|----------|-------|
+| Contradiction adjudication, Source refresh | `llm-wiki` integrate-full / agent on-demand |
 | Reading→Source promotion | `llm-wiki` integrate-full only |
 | Notes→Thoughts→Beliefs promotion | `obsidian-suggest-promotions` (unchanged) |
 

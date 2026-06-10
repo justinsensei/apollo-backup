@@ -31,3 +31,5 @@ Any new contact (people or companies) created by Bes must land in /home/justin.g
 Vault signals scan script (check_vault_signals.py) is read-only. Timelines are disabled in favor of native Obsidian Backlinks.
 §
 Durable interactive syntheses → `Notes/` via `llm-wiki` integrate-query + `Utilities/log.md` append.
+§
+Tier-3 semantic lint (`wiki_semantic_lint.py`) runs monthly (1st, 8am cron `a3f8c2e91b04`). Report-only — orphans (inbound), stale Sources, promotion gaps, contradiction candidates. State: `~/.hermes/state/semantic_lint_last.json`. Structural lint stays in `vault_hygiene.py`.

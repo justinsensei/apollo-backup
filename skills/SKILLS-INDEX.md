@@ -4,7 +4,7 @@ Tracked agent-authored and customized skills in `bes-backup/skills/`.
 
 | Skill | Category | Description |
 |-------|----------|-------------|
-| llm-wiki | note-taking | Compounding wiki: Inputs / Sources / integrate-light/full/query |
+| llm-wiki | note-taking | Compounding wiki: Inputs / Sources / integrate-light/full/query/lint |
 | obsidian | note-taking | Core vault conventions, triage routing |
 | obsidian-hygiene | note-taking | Structural vault hygiene operator docs |
 | bes-email-dispatch | note-taking | Forwarded email → vault dispatch |

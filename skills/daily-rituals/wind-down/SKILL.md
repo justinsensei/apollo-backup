@@ -281,7 +281,9 @@ Wait for Justin's confirmation or feedback at the end of the EIIRP report (Step 
    - For all other inbox notes requiring human judgment, compile your recommended movements and renames into the final report.
 
 5. **Step 5: integrate-full (Wiki Compile)**
-   - Load `llm-wiki` skill. Run integrate-full for today's scope: Reading→Source promotion, project/contact cross-refs, contradiction flags.
+   - If `~/.hermes/state/semantic_lint_last.json` has a report from the last 7 days, mention the issue count and report path before compiling.
+   - Load `llm-wiki` skill. Run integrate-full for today's scope: Reading→Source promotion, project/contact cross-refs, contradiction flags. Use tier-3 report items (stale summaries, promotion gaps) as compile scope when present.
+   - On-demand full semantic pass: `python3 ~/.hermes/scripts/wiki_semantic_lint.py` after `vault_hygiene.py` — see `llm-wiki` `references/lint.md`.
    - Confirm with Justin before bulk edits to mature notes. Maturity promotion stays in `obsidian-suggest-promotions`.
 
 6. **Step 6: Verification (Link & Orphan Audit)**
