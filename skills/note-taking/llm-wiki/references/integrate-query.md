@@ -85,6 +85,11 @@ Use [query-synthesis template](../templates/query-synthesis.md). Required sectio
 - Link to Sources when they exist; never skip Source to link Reading directly from Concepts
 - Use shortest-path wikilinks per obsidian skill
 
+## Strict Quality & Style Standards
+
+- **Atomicity:** Keep all synthesized notes atomic, concise, and sharply focused. Avoid overly dense, macro-level multi-page essays that try to summarize large philosophies at once. Justin prefers atomic, bite-sized synthesis notes.
+- **Timelines:** Note that automated timeline and related inputs appends on projects/contacts are completely disabled. Running `integrate_entities.py` on the query note will strictly update the `## State` section of referenced projects *only* when there's an explicit status/decision, with zero timeline writes.
+
 ## Frontmatter
 
 Standard obsidian schema with `id`, `daily_note`, `category`. Timestamp-prefixed filename for Notes/Thoughts/Concepts; title-only for Beliefs/References-style if canonical.
