@@ -145,6 +145,83 @@ def get_all_vault_filenames(vault_path):
                 filenames.add(f[:-3].lower())
     return filenames
 
+def discover_plain_text_candidates(content, entities, all_vault_filenames):
+    candidates = []
+    
+    # Remove markdown link brackets to avoid matching links (which are already handled)
+    # e.g. [[Dave Rohrl]] -> Dave Rohrl
+    content_no_links = re.sub(r'\[\[([^\]]+)\]\]', r'\1', content)
+    
+    # Match two or three capitalized words
+    # e.g., Samir Patwardhan, Atomic Jolt, Raptor Technologies
+    matches_2 = re.findall(r'\b([A-Z][a-zA-Z]+)\s+([A-Z][a-zA-Z]+)\b', content_no_links)
+    matches_3 = re.findall(r'\b([A-Z][a-zA-Z]+)\s+([A-Z][a-zA-Z]+)\s+([A-Z][a-zA-Z]+)\b', content_no_links)
+    
+    # Combine matches
+    raw_names = []
+    for m in matches_3:
+        raw_names.append(" ".join(m))
+    for m in matches_2:
+        # Only add if not already part of a matched 3-word phrase
+        name = " ".join(m)
+        if not any(name in n for n in raw_names):
+            raw_names.append(name)
+            
+    stop_words = {
+        'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december',
+        'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday',
+        'obsidian', 'github', 'posthog', 'revenuecat', 'customer', 'linear', 'google', 'slack', 'zoom', 'teams', 'signlab', 'duolingo', 'powerschool',
+        'revenue', 'product', 'sprint', 'engineering', 'design', 'marketing', 'roadmap', 'quarter', 'weekly', 'monthly', 'meeting', 'standup', 'sync',
+        'project', 'note', 'thought', 'belief', 'concept', 'reference', 'decision', 'source', 'sources', 'agenda', 'action', 'items', 'next', 'steps',
+        'yesterday', 'tomorrow', 'today', 'pittsburgh', 'united', 'states', 'canada', 'america', 'europe', 'brazil', 'pakistan', 'australia',
+        'classroom', 'classrooms', 'lessons', 'lesson', 'teacher', 'teachers', 'student', 'students', 'school', 'schools', 'education', 'edtech',
+        'app', 'web', 'mobile', 'native', 'stripe', 'payments', 'payment', 'flow', 'webinars', 'webinar', 'campaign', 'campaigns', 'advertising',
+        'analytics', 'replays', 'replay', 'session', 'sessions', 'cohort', 'cohorts', 'retention', 'activation', 'onboarding', 'refactor',
+        'heloc', 'citizens', 'bank', 'taxes', 'personal', 'work', 'log', 'logs', 'briefing', 'morning', 'thought', 'thoughts', 'opinions',
+        'gratitude', 'thank', 'thanks', 'happy', 'good', 'great', 'awesome', 'amazing', 'beautiful', 'wonderful', 'perfect', 'excellent'
+    }
+    
+    for name in raw_names:
+        name_lower = name.lower()
+        
+        # Split and check if any word is a stop word or if the whole name is a stop word
+        words = name_lower.split()
+        if any(w in stop_words for w in words):
+            continue
+            
+        # Skip if any word is less than 3 chars (except common initials)
+        if any(len(w) < 3 for w in words if w not in ['de', 'st', 'jr', 'sr']):
+            continue
+            
+        # Skip if it is already in the vault as a filename
+        if name_lower in all_vault_filenames:
+            continue
+            
+        # Skip if it's already an existing entity or alias
+        if name_lower in entities:
+            continue
+            
+        is_alias = False
+        for ent_info in entities.values():
+            if ent_info.get('aliases') and any(alias.lower() == name_lower for alias in ent_info['aliases']):
+                is_alias = True
+                break
+        if is_alias:
+            continue
+            
+        # Success! Found a new candidate
+        ptype = 'person'
+        org_indicators = ['school', 'group', 'company', 'foundation', 'club', 'association', 'lab', 'academy', 'technology', 'technologies', 'clinic', 'hospital', 'solutions', 'partners', 'associates', 'ventures', 'studios', 'consulting']
+        if any(ind in name_lower for ind in org_indicators):
+            ptype = 'organization'
+            
+        candidates.append({
+            "name": name,
+            "type": ptype
+        })
+        
+    return candidates
+
 def scan_file_for_unresolved_links(file_path, content, entities, vault_path, all_vault_filenames):
     discovered = []
     
@@ -218,6 +295,12 @@ def scan_file_for_unresolved_links(file_path, content, entities, vault_path, all
                 "type": ptype,
                 "context_file": os.path.relpath(file_path, vault_path)
             })
+            
+    # Find all plain-text contact candidates
+    plain_candidates = discover_plain_text_candidates(content, entities, all_vault_filenames)
+    for cand in plain_candidates:
+        cand["context_file"] = os.path.relpath(file_path, vault_path)
+        discovered.append(cand)
             
     return discovered
 
