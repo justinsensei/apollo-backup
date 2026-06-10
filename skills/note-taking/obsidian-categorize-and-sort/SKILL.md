@@ -27,6 +27,7 @@ Read the note content and title. Map the note to **exactly one** category from t
 | `category: "[[People]]"` | `Contacts/` | **`obsidian-people`** |
 | `category: "[[Organizations]]"` | `Contacts/` | **`obsidian-organizations`** |
 | `category: "[[Notes]]"` | `Notes/` | **`obsidian-notes`** |
+| `category: "[[Scraps]]"` | `Inputs/Scraps/` | **`obsidian-notes`** |
 | `category: "[[References]]"` | `Notes/` | **`obsidian-references-sources`** |
 | `category: "[[Sources]]"` | `Notes/` | **`obsidian-references-sources`** |
 | `category: "[[Thoughts]]"` | `Notes/` | **`obsidian-thoughts-beliefs`** |
