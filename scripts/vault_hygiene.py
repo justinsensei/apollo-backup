@@ -404,6 +404,9 @@ for ent_key, ent_info in entities.items():
 
 duplicate_aliases = []
 for alias, paths in sorted(alias_to_paths.items()):
+    # Ignore blank, single-character, or non-alphanumeric aliases (e.g. '--' or junk)
+    if len(alias.strip()) < 2 or not re.search(r'[a-zA-Z0-9]', alias):
+        continue
     unique_paths = list(set(paths))
     if len(unique_paths) > 1:
         shared_files = ", ".join(str(Path(p).relative_to(VAULT)) for p in unique_paths)
