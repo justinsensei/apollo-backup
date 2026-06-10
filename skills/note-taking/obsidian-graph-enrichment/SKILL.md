@@ -94,14 +94,11 @@ A scheduled script scans the vault for modified markdown files since the last ru
    - The script matches text inside newly modified files against existing entity names, their filenames, or configured `aliases` (defined in the entity's frontmatter).
    - Both explicit wikilinks (e.g., `[[Dave Rohrl]]`) and plain-text mentions (e.g., "shared this with Dave Rohrl") trigger enrichment.
 
-3. **Automatic Timeline Appending:**
-   - When a match is found, the script automatically writes a timestamped reference to the target entity's `## Timeline` section:
-     ```markdown
-     ## Timeline
-     - YYYY-MM-DD | Mentioned in [[Source Note Title]]
-     ```
-   - Clean shortest-path wikilinks are used to avoid path clutter and ensure durability.
-   - This ensures a zero-effort log of interactions, source clippings, and project meetings accumulates directly in the contact's or project's note.
+3. **Timelines Disabled (Rely on Backlinks):**
+   - **Timelines and related input lists on contacts and projects are disabled in favor of native backlinks.** 
+   - No automated scripts are allowed to write chronological timeline bullets to contact or project files. This eliminates file write churn, sync conflicts, and false-positive logging.
+   - Instead, the backlinks pane on the contact or project note is sorted by created or modified time to dynamically reconstruct the chronological interaction history.
+   - Project notes only receive automated updates in their `## State` section when a concrete decision or status update is parsed.
 
 3.  **Candidate Discovery (Unresolved Links):**
    - The script also extracts unresolved wikilinks (e.g., `[[John Doe]]` when no `John Doe.md` file exists).
