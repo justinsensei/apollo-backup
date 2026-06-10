@@ -44,5 +44,12 @@ As notes become less ephemeral and more authoritative, we de-emphasize the date 
 1. **Temporality:** More ephemeral, lower-tier notes are more "temporal"—their sequence and place in time matter more.
 2. **At-a-Glance Context:** This distinction makes it easy to tell immediately from the note's title whether you are looking at a canonical/authoritative document (project, person, belief, reference) or an ephemeral/temporal one.
 
+### Evolution Path (The Scraps-to-Beliefs Pipeline)
+Raw capture flows up the hierarchy as it is refined:
+- **`[[Scraps]]` (Tier 1):** Raw internal brain dumps in `/Scratchpad/ID Title.md`.
+- **`[[Notes]]` (Tier 2):** Compiled, factual supporting notes in `/Notes/ID Title.md`.
+- **`[[Thoughts]]` (Tier 2):** Emergent opinions or concepts in `/Notes/ID Title.md`.
+- **`[[Beliefs]]` / `[[References]]` (Tier 3):** Canonical, stable patterns in `/Notes/Title.md`.
+
 ### Aliases
 - Ensure complex, conceptual, or heavily-referenced notes define clean `aliases:` lists in their YAML frontmatter. This allows effortless wikilinking without typing the full exact title every time.
