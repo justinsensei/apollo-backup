@@ -1,6 +1,7 @@
 import os
 import json
 import re
+from collections import defaultdict
 from datetime import datetime, timedelta
 
 def load_watermark():
@@ -339,6 +340,15 @@ def main():
     
     # Load all existing entities
     entities = get_existing_entities(vault_path)
+    
+    # Identify non-unique (ambiguous) aliases
+    key_to_paths = defaultdict(list)
+    for ent_key, ent_info in entities.items():
+        key_to_paths[ent_info["title"].lower()].append(ent_info["path"])
+        for alias in ent_info.get("aliases", []):
+            key_to_paths[alias.lower()].append(ent_info["path"])
+            
+    ambiguous_keys = {k for k, paths in key_to_paths.items() if len(set(paths)) > 1}
     
     # Find all modified markdown files
     modified_files = []
