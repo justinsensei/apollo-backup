@@ -25,3 +25,5 @@ Query syntheses → inbox/ on creation via llm-wiki, printed in channel, log.md 
 Tier-3 semantic lint (`wiki_semantic_lint.py`) runs monthly (1st, 8am cron `a3f8c2e91b04`). Report-only — orphans (inbound), stale Sources, promotion gaps, contradiction candidates. State: `~/.hermes/state/semantic_lint_last.json`. Structural lint stays in `vault_hygiene.py`.
 §
 Vault chronological logging is active; logs are appended to Utilities/log.md.
+§
+Forwarded emails processed by Bes default to the Inputs/Emails/ directory as logs.
