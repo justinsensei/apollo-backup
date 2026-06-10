@@ -41,7 +41,7 @@ A consolidated hygiene script runs daily at 9PM (via a system cron job) at `~/.h
 2. **Tag-to-Category Conversion:** Automatically converts inline tags in the body to their corresponding formal `category:` YAML property, removing the tag from the body text:
    - `#people`, `#person` $\rightarrow$ `category: "[[People]]"` (moves note to `/Contacts/`)
    - `#organization`, `#organizations` $\rightarrow$ `category: "[[Organizations]]"` (moves note to `/Contacts/`)
-   - `#meeting`, `#meetings` $\rightarrow$ `category: "[[Meetings]]"` (moves note to `/Logs/Meetings/` — only if filename starts with `YYYY-MM-DD`)
+   - `#meeting`, `#meetings` $\rightarrow$ `category: "[[Meetings]]"` (moves note to `/Inputs/Meetings/` — only if filename starts with `YYYY-MM-DD`)
    - `#project`, `#projects` $\rightarrow$ `category: "[[Projects]]"` (moves note to `/Notes/` — only if filename starts with `YYYY-MM-DD`)
 3. **Identifier Diagnostics:** Runs diagnostic scans across all markdown files to detect:
    - Duplicate `id` frontmatter values.

@@ -1,14 +1,14 @@
-# Readwise Highlights Sync & Log Conventions
+# Readwise Highlights Sync & Input Conventions
 
 ## Overview
-Readwise data consists of raw highlight dumps and reading logs. These are chronological records of consumption, not conceptual synthesis. Therefore, they are treated as **Logs** rather than **Concepts** (which are reserved for hand-extracted summaries and insights).
+Readwise data consists of raw highlight dumps and reading logs. These are chronological records of consumption, not conceptual synthesis. Therefore, they are treated as **Readings under Inputs** rather than **Concepts** (which are reserved for hand-extracted summaries and insights).
 
 ---
 
 ## Directory & Category
-- **Path:** `/home/justin.guest/vault/Logs/Sources/`
-- **Category:** `category: "[[Sources]]"`
-- **Category Metadata File:** `vault/Utilities/Categories/Sources.md` (`Type: Logs`)
+- **Path:** `/home/justin.guest/vault/Inputs/Readings/`
+- **Category:** `category: "[[Readings]]"`
+- **Category Metadata File:** `vault/Utilities/Categories/Readings.md` (`Type: Inputs/Readings`)
 
 ---
 
@@ -26,7 +26,7 @@ All synced Readwise log notes must strictly adhere to the following template:
 ---
 id: 'YYYYMMDDHHmmss'                 # Single-quoted string matching latest highlight's timestamp
 daily_note: "[[YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]" # Standardized daily note link
-category: "[[Sources]]"             # Quoted category wikilink
+category: "[[Readings]]"             # Quoted category wikilink
 ---
 ```
 
@@ -39,4 +39,4 @@ category: "[[Sources]]"             # Quoted category wikilink
 ---
 
 ## Maintenance & Migration
-If raw highlights are found in `vault/sources/` (a common historical legacy), they must be migrated to `vault/Logs/Sources/` and sanitized to match this schema, removing any `#source` tags in the process.
+If raw highlights are found in `vault/sources/` or `vault/Logs/Sources/` (historical legacies), they must be migrated to `vault/Inputs/Readings/` and sanitized to match this schema, removing any `#source` tags in the process.
