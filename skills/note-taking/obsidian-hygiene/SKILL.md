@@ -23,7 +23,10 @@ This operational skill governs manual and automated procedures to maintain a cle
 ## The Hygiene Process
 
 ### Step 1 — Automated Script Execution
-Run the consolidated hygiene script at `~/.hermes/scripts/vault_hygiene.py` (which runs automatically daily at 9PM, or can be run manually) to check the health of the vault:
+Run the consolidated hygiene script at `~/.hermes/scripts/vault_hygiene.py` (which runs automatically daily at 9PM, or can be run manually) to check the health of the vault.
+
+*Note: If there are many newly modified or added files, the script will trigger a heavy semantic indexing run at the end. When running this script via the `terminal` tool, always pass a generous timeout parameter (e.g., `timeout: 180` or higher) to prevent a premature timeout error.*
+
 ```bash
 python3 ~/.hermes/scripts/vault_hygiene.py
 ```
