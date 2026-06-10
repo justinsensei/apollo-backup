@@ -1,22 +1,8 @@
 ---
 name: minecraft-modpack-server
-description: Use when working with minecraft modpack server. Host modded Minecraft
-  servers (CurseForge, Modrinth).
-platforms:
-- linux
-- macos
-metadata:
-  hermes:
-    tags:
-    - minecraft
-    - gaming
-    - server
-    - neoforge
-    - forge
-    - modpack
-version: 1.0.0
-author: Bes
-license: MIT
+description: "Host modded Minecraft servers (CurseForge, Modrinth)."
+tags: [minecraft, gaming, server, neoforge, forge, modpack]
+platforms: [linux, macos]
 ---
 
 # Minecraft Modpack Server Setup
@@ -199,12 +185,3 @@ Add hourly cron:
 - Check logs: `tail -f ~/minecraft-server/server/logs/latest.log`
 - Look for "Done (Xs)!" in the log = server is ready
 - Test connection: player adds server IP in Multiplayer
-## Common Pitfalls
-
-1. Skipping the skill and improvising paths or conventions.
-2. Hardcoding `/home/justin.guest/` instead of `$OBSIDIAN_VAULT_PATH` / `${HERMES_HOME}`.
-## Verification Checklist
-
-- [ ] Followed this skill's steps without contradicting `obsidian` core conventions
-- [ ] Used env-var path patterns where writing to vault or calling scripts
-- [ ] Did not manually `git commit` inside the vault

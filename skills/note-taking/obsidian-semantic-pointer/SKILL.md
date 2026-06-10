@@ -1,26 +1,13 @@
 ---
 name: obsidian-semantic-pointer
-description: Use when working with obsidian semantic pointer. Manage and operate the
-  Obsidian Semantic Pointer CLI for on-demand historical bridging, semantic search,
-  and context pruning.
+description: Manage and operate the Obsidian Semantic Pointer CLI for on-demand historical bridging, semantic search, and context pruning.
 version: 1.0.0
 author: Bes
 license: MIT
 metadata:
   hermes:
-    tags:
-    - obsidian
-    - semantic-pointer
-    - embeddings
-    - vector-search
-    - sqlite-vec
-    - note-taking
-    related_skills:
-    - obsidian-graph-enrichment
-    - obsidian-notes
-    - obsidian-logs
-platforms:
-- linux
+    tags: [obsidian, semantic-pointer, embeddings, vector-search, sqlite-vec, note-taking]
+    related_skills: [obsidian-graph-enrichment, obsidian-notes, obsidian-logs]
 ---
 
 # Obsidian: Semantic Pointer & AI Memory Integration
@@ -103,12 +90,3 @@ Ensure `GOOGLE_GENERATIVE_AI_API_KEY` is present in your environment:
 ```bash
 export GOOGLE_GENERATIVE_AI_API_KEY="AIzaSy..."
 ```
-## Common Pitfalls
-
-1. Skipping the skill and improvising paths or conventions.
-2. Hardcoding `/home/justin.guest/` instead of `$OBSIDIAN_VAULT_PATH` / `${HERMES_HOME}`.
-## Verification Checklist
-
-- [ ] Followed this skill's steps without contradicting `obsidian` core conventions
-- [ ] Used env-var path patterns where writing to vault or calling scripts
-- [ ] Did not manually `git commit` inside the vault

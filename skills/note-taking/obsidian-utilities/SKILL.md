@@ -1,25 +1,13 @@
 ---
 name: obsidian-utilities
-description: Use when managing vault hygiene, automatic linting, tag conversions,
-  ID conflicts, and the Utilities/ templates or categories folder.
+description: Use when managing vault hygiene, automatic linting, tag conversions, ID conflicts, and the Utilities/ templates or categories folder.
 version: 1.0.0
 author: Bes
 license: MIT
 metadata:
   hermes:
-    tags:
-    - obsidian
-    - utilities
-    - hygiene
-    - maintenance
-    - lint
-    - categories
-    related_skills:
-    - obsidian
-    - obsidian-notes
-    - obsidian-logs
-platforms:
-- linux
+    tags: [obsidian, utilities, hygiene, maintenance, lint, categories]
+    related_skills: [obsidian, obsidian-notes, obsidian-logs]
 ---
 
 # Obsidian Type: Utilities & Vault Hygiene
@@ -34,7 +22,7 @@ This skill governs the system configurations, automation scripts, metadata linti
 ---
 
 ## Directory Conventions
-- **Directory:** `${OBSIDIAN_VAULT_PATH:-/home/justin.guest/vault}/Utilities/`
+- **Directory:** `/home/justin.guest/vault/Utilities/`
 - **Sub-folders:**
   - `/Utilities/Categories/` (Category representation files).
   - `/Utilities/Templates/` (Reusable layouts and structural models).
@@ -58,12 +46,3 @@ A consolidated hygiene script runs daily at 9PM (via a system cron job) at `~/.h
    - Missing `id` properties.
    - Missing or malformed `daily_note` links.
 4. **Exclusions:** Ignores the `.git/`, `.trash/`, `Utilities/` templates, and automated external sync folders (like `sources/` or `meetings/`) to prevent processing raw incoming files prematurely.
-## Common Pitfalls
-
-1. Skipping the skill and improvising paths or conventions.
-2. Hardcoding `/home/justin.guest/` instead of `$OBSIDIAN_VAULT_PATH` / `${HERMES_HOME}`.
-## Verification Checklist
-
-- [ ] Followed this skill's steps without contradicting `obsidian` core conventions
-- [ ] Used env-var path patterns where writing to vault or calling scripts
-- [ ] Did not manually `git commit` inside the vault
