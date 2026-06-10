@@ -15,7 +15,7 @@ This skill governs the **interactive phase** of the morning briefing. The 7AM cr
 - **Days off:** `~/.hermes/days-off.txt` — personal non-holiday days off
 - **Work-day helper:** `python3.12 ~/.hermes/scripts/work_day.py <cmd> [date]`
 - **Change detector & vault activity scan:** `python3 ~/.hermes/scripts/check_morning_changes.py`
-- **Vault signals scan script:** `scripts/check_vault_signals.py` (copied to `~/.hermes/scripts/check_vault_signals.py`) — enriches existing contact notes and gathers candidates
+- **Vault signals scan script:** `scripts/check_vault_signals.py` (copied to `~/.hermes/scripts/check_vault_signals.py`) — read-only scan that gathers unresolved contact candidates (active timeline enrichment is disabled in favor of native Obsidian Backlinks)
 - **Vault:** `/home/justin.guest/vault` (or `$OBSIDIAN_VAULT_PATH`)
 
 ## Entry point
