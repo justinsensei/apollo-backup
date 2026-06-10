@@ -22,7 +22,7 @@ Readwise script is at ~/sync_readwise.py. It exports highlights tagged 'vault' (
 §
 User prefers modular, composable skills (no monolithic files).
 §
-Default new notes to 'Notes' (with timestamp ID). Triaging: established, re-usable decision patterns are References; fleeting/troubleshooting logs remain Notes; personal reflections are Thoughts; general models are Concepts.
+Default new notes to 'Notes' (timestamp ID). Draft decisions in inbox using simplified narrative. Triaging: References (patterns), Thoughts (reflections), Concepts (models).
 §
 Vault convention: Raw notes can contain embedded processing instructions directed at Bes using inline tasks ("- [ ] @bes <task>") or comment blocks ("%% bes-instructions ... %%").
 §
