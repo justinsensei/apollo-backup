@@ -133,16 +133,24 @@ def add_timeline_entry(entity_path, event_date, source_rel_path, source_title):
             content = f.read()
             
         # Check if already mentioned
-        # e.g., if source_rel_path is in the file
         slug = source_rel_path[:-3].replace(os.path.sep, '/')
-        if slug in content:
+        link_target = source_title if source_title.lower() != "cracking the pm career" else slug
+        
+        # Already cited if either target is linked
+        if f"[[{link_target}]]" in content or f"[[{link_target}|" in content or f"[[{slug}]]" in content or f"[[{slug}|" in content:
             return False # already cited
+            
+        # Format shortest-path wikilink
+        if link_target == source_title:
+            link_str = f"[[{source_title}]]"
+        else:
+            link_str = f"[[{link_target}|{source_title}]]"
             
         # Find ## Timeline section
         timeline_match = re.search(r'^## Timeline\s*$', content, re.MULTILINE)
         if not timeline_match:
             # If no timeline, append it at the bottom
-            content += f"\n\n## Timeline\n- {event_date} | Mentioned in [[{slug}|{source_title}]]\n"
+            content += f"\n\n## Timeline\n- {event_date} | Mentioned in {link_str}\n"
         else:
             idx = timeline_match.end()
             # Parse everything after ## Timeline
@@ -172,7 +180,7 @@ def add_timeline_entry(entity_path, event_date, source_rel_path, source_title):
                     other_lines.append(line)
                     
             # Add the new bullet at the top of the bullets list (reverse chronological)
-            new_bullet = f"- {event_date} | Mentioned in [[{slug}|{source_title}]]"
+            new_bullet = f"- {event_date} | Mentioned in {link_str}"
             bullets.insert(0, new_bullet)
             
             # Reconstruct tail: one blank line after ## Timeline, then bullets, then one blank line, then the rest
