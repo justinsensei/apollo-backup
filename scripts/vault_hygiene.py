@@ -11,8 +11,39 @@ import subprocess
 import datetime
 from collections import defaultdict
 from pathlib import Path
+import requests
+import urllib.parse
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 VAULT = Path("/home/justin.guest/vault")
+
+def verify_url(url):
+    try:
+        parsed = urllib.parse.urlparse(url)
+        if not (parsed.scheme and parsed.netloc) or parsed.scheme not in ("http", "https"):
+            return "Malformed URL"
+    except Exception:
+        return "Malformed URL"
+        
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+    try:
+        response = requests.head(url, headers=headers, timeout=3.0, allow_redirects=True, verify=False)
+        if response.status_code in (404, 405):
+            response = requests.get(url, headers=headers, timeout=3.0, allow_redirects=True, verify=False, stream=True)
+            
+        if response.status_code >= 400:
+            return f"HTTP {response.status_code}"
+        return None
+    except requests.exceptions.Timeout:
+        return "Timeout (3s)"
+    except requests.exceptions.ConnectionError:
+        return "Connection Error"
+    except Exception as e:
+        return f"Error: {type(e).__name__}"
 
 def get_existing_entities(vault_path):
     entities = {}
