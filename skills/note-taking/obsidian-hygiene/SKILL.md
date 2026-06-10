@@ -88,6 +88,19 @@ When designing or patching automated hygiene scripts that read, clean, and write
 - **Massive Re-indexing Overhead:** Constantly rewriting files modifies their `mtime` and hash, which triggers heavy background semantic embedding and indexing runs. Always check if real changes occurred before writing the file back to disk.
 - **Healing Corrupted Frontmatter:** If frontmatter properties become corrupted across many notes (due to missing closing dashes or merged properties-dashes), use the specialized recovery script at `/home/justin.guest/fix_frontmatter.py` to recursively heal them. The script automatically splits appended dashes on property lines and safely closes unclosed frontmatter blocks across the entire vault.
 
+---
+
+## Environment Diagnostics (Smoke Tests)
+To prevent silent background cron or tooling failures (such as expired API keys or path changes), run the environmental diagnostics utility at system startup or on-demand:
+```bash
+python3 ~/.hermes/scripts/smoke_test_env.py
+```
+This utility verifies:
+- Write access and existence of the active vault path (`/home/justin.guest/vault`).
+- Python dependency environment integrity (such as `requests`, `yaml`, `dotenv` packages).
+- Network reachability and authentication of critical integrations (**Todoist**, **Slack**, **Linear**, **Readwise**, and **OpenRouter**) with graceful timeouts (5s).
+- Outputs a formatted live console checklist and saves a structured, machine-readable JSON log at `~/.hermes/health_report.json`.
+
 ## Common Pitfalls
 
 1. Skipping the skill and improvising paths or conventions.
