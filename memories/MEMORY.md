@@ -14,8 +14,6 @@ Justin uses Apple Notes as a "filing cabinet" for references (previously in Obsi
 §
 Google Calendar has write access; Bes can directly schedule events on Justin's behalf (e.g., during morning briefings or from forwarded emails) using `gws_multi.py --account <name> calendar create` instead of creating 'Add to calendar' tasks in Todoist.
 §
-Readwise script is at ~/sync_readwise.py. It exports highlights tagged 'vault' (case-insensitive) to vault/Inputs/Readings/ (migrate from Logs/Sources/).
-§
 Scraps (ID) default under the vault root (/) as scratchpad. Notes are factual support. Inbox is for Bes-created reviews. Decisions in inbox.
 §
 Any new contact (people or companies) created by Bes must land in /home/justin.guest/vault/inbox/. Existing contacts in Notes/Contacts/ are updated in place and never relocated.
