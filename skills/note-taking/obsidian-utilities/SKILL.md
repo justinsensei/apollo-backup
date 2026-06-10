@@ -23,6 +23,8 @@ This skill governs the system configurations, automation scripts, metadata linti
 
 ## Directory Conventions
 - **Directory:** `/home/justin.guest/vault/Utilities/`
+- **Files:**
+  - `/Utilities/log.md` — append-only ingest audit trail (owned by **llm-wiki**; maintained by integrate-light / integrate-full / integrate-query).
 - **Sub-folders:**
   - `/Utilities/Categories/` (Category representation files).
   - `/Utilities/Templates/` (Reusable layouts and structural models).
