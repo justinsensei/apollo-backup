@@ -46,7 +46,7 @@ def find_daily_note(vault_path, target_date):
     weekday = t_dt.strftime('%A').lower()
     
     # Format 1: Daily Notes/2026-06-04-thursday.md or daily/2026-06-04-thursday.md
-    p1_new = os.path.join(vault_path, 'Daily Notes', f"{target_date}-{weekday}.md")
+    p1_new = os.path.join(vault_path, 'Notes', 'Daily Notes', f"{target_date}-{weekday}.md")
     if os.path.exists(p1_new):
         return p1_new
     p1 = os.path.join(vault_path, 'daily', f"{target_date}-{weekday}.md")
@@ -60,7 +60,7 @@ def find_daily_note(vault_path, target_date):
         return p2
         
     # Format 3: Daily Notes/YYYY-MM-DD dddd.md
-    p3 = os.path.join(vault_path, 'Daily Notes', f"{target_date} {day_name_cap}.md")
+    p3 = os.path.join(vault_path, 'Notes', 'Daily Notes', f"{target_date} {day_name_cap}.md")
     if os.path.exists(p3):
         return p3
         
@@ -284,9 +284,9 @@ def get_vault_activity(vault_path, last_briefing_dt):
                 if (slug.startswith("Inputs/Meetings/") or slug.startswith("Logs/Meetings/")
                         or slug.startswith("logs/meetings/") or slug.startswith("meetings/")):
                     ptype = "meeting"
-                elif slug.startswith("Daily Notes/") or slug.startswith("Logs/Daily/") or slug.startswith("logs/daily/") or slug.startswith("daily/"):
+                elif slug.startswith("Notes/Daily Notes/") or slug.startswith("Daily Notes/") or slug.startswith("Logs/Daily/") or slug.startswith("logs/daily/") or slug.startswith("daily/"):
                     ptype = "daily"
-                elif slug.startswith("Contacts/") or slug.startswith("contacts/"):
+                elif slug.startswith("Notes/Contacts/") or slug.startswith("Contacts/") or slug.startswith("contacts/"):
                     ptype = "person"
                 elif (slug.startswith("Inputs/Readings/") or slug.startswith("Logs/Sources/")
                         or slug.startswith("Logs/Readings/") or slug.startswith("sources/")):

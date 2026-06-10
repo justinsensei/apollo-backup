@@ -2,7 +2,7 @@ Hermes handles infra/skills. Defer migrations/creations to Justin.
 §
 Gmail (read-only): tokens under ~/.hermes/google_tokens/. Search via gws_multi.py. Do not use himalaya.
 §
-Obsidian routes: Contacts/, Notes/, Inputs/ (Readings/Meetings/Emails/Slack), Daily Notes/, Utilities/. Layer 2 compiled Sources in Notes/. Dividers: always `---`.
+Obsidian routes: Notes/Contacts/, Notes/Daily Notes/, Notes/, Inputs/ (Readings/Meetings/Emails/Slack), Utilities/. Layer 2 compiled Sources in Notes/. Dividers: always `---`.
 §
 App Store Connect issue emails are not Justin's to handle — ignore them when capturing action items from email.
 §
@@ -16,9 +16,9 @@ Google Calendar has write access; Bes can directly schedule events on Justin's b
 §
 Readwise script is at ~/sync_readwise.py. It exports highlights tagged 'vault' (case-insensitive) to vault/Inputs/Readings/ (migrate from Logs/Sources/).
 §
-Scraps (ID) default under /Scratchpad/ for raw capture. Notes are factual support. Inbox decisions use simplified narrative. Triage: References, Thoughts, Concepts.
+Scraps (ID) default under the vault root (/) as scratchpad. Notes are factual support. Inbox is for Bes-created reviews. Decisions in inbox.
 §
-Any new contact (people or companies) created by Bes must land in /home/justin.guest/vault/inbox/. Existing contacts in Contacts/ are updated in place and never relocated.
+Any new contact (people or companies) created by Bes must land in /home/justin.guest/vault/inbox/. Existing contacts in Notes/Contacts/ are updated in place and never relocated.
 §
 Vault signals scan script (check_vault_signals.py) is read-only. Timelines are disabled in favor of native Obsidian Backlinks.
 §
