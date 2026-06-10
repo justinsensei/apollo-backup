@@ -51,4 +51,4 @@ After `bes-email-dispatch` or `slack-brain` cron completes filing:
 2. Run integrate-light for each new file
 3. Run `python3 ~/.hermes/scripts/integrate_entities.py <ingest_rel_path> [--gist "..."]` for each new file
 4. Confirm one new line appended to `Utilities/log.md` with correct daily note wikilink
-5. Report hub updates: `→ updated [[Project]], [[Contact]]` when JSON report lists matches
+5. Report hub updates: `→ updated [[Project]] (State only)` on decisions when JSON report lists matches

@@ -49,7 +49,7 @@ Deep reference: [architecture](references/architecture.md) | [integrate-light](r
 | Pass | When | Actions |
 |------|------|---------|
 | **integrate-light** | Every explicit ingest; cron post-steps | Append `Utilities/log.md` with daily note wikilink. **Never modify Input bodies.** No index or notepad updates. |
-| **integrate-entities** | After integrate-light; meeting reconcile | Append hub sections on existing contacts/projects (Timeline, Related inputs, State on decisions). Update-only — no stub creation. |
+| **integrate-entities** | After integrate-light; meeting reconcile | Update existing projects' State sections on decisions/status-changes only. Timelines are disabled. Update-only — no stub creation. |
 | **integrate-full** | Wind-down Step 5; manual triggers | Reading→Source promotion, project/contact cross-refs, contradiction flags |
 | **integrate-query** | Interactive durable Q&A | Search → synthesize → write to `inbox/` when durability met (3+ notes, comparison/decision analysis, cross-project connection, explicit "file this", same topic twice) → print complete note in channel, log append. See [integrate-query.md](references/integrate-query.md). Template: [query-synthesis.md](templates/query-synthesis.md). |
 
