@@ -24,13 +24,13 @@ Unmatched project candidates accumulate at `~/.hermes/state/integrate_entities_u
 
 ## Symmetric entity model
 
-| Dimension | Contacts (`Contacts/` + typed `inbox/`) | Projects (`Notes/Projects/`) |
+| Dimension | Contacts (`Notes/Contacts/`) | Projects (`Notes/Projects/`) |
 |-----------|----------------------------------------|------------------------------|
-| Cron policy | Update existing only | Update existing only |
+| Cron policy | Read-only / backlink reliant | Update existing state only |
 | Discovery | Morning briefing → wind-down Phase 2 | **Wind-down Phase 2b only** |
-| Always append | `## Timeline` | `## Related inputs` + `## Timeline` |
-| On decisions | `## Timeline` with resolution gist | Above + `## State` bullet |
-| On meetings | `## Timeline` for attendees | Related inputs + Timeline; State if status language |
+| Timelines | Disabled (rely on native Backlinks) | Disabled (rely on native Backlinks) |
+| On decisions | Read-only / backlink reliant | Update `## State` bullet |
+| On meetings | Read-only / backlink reliant | Update `## State` if status language |
 | Ingest frontmatter | — | Set `project: "[[Name]]"` on single high-confidence match |
 | Aliases | Contact frontmatter | Project frontmatter |
 
