@@ -94,8 +94,8 @@ Notes are categorized with a single `category` YAML property containing a quoted
 
 | Target Folder | Target Category Link | Description / Type | Sub-skill Guidance |
 |---|---|---|---|
-| `Contacts/` | `category: "[[People]]"` | Individual contacts, friends, family, collaborators | `obsidian-people` |
-| `Contacts/` | `category: "[[Organizations]]"` | Companies, schools, institutions, legal entities | `obsidian-organizations` |
+| `Notes/Contacts/` | `category: "[[People]]"` | Individual contacts, friends, family, collaborators | `obsidian-people` |
+| `Notes/Contacts/` | `category: "[[Organizations]]"` | Companies, schools, institutions, legal entities | `obsidian-organizations` |
 | `Notes/` | `category: "[[Notes]]"` | Compiled, factual supporting notes | `obsidian-notes` |
 | `Notes/` | `category: "[[Sources]]"` | Compiled bibliographical records per work; links down to raw Readings | `llm-wiki` |
 | `Notes/` | `category: "[[References]]"` | Useful facts, cheat sheets, guidelines, checklists | `obsidian-references-sources` |
@@ -105,12 +105,12 @@ Notes are categorized with a single `category` YAML property containing a quoted
 | `Notes/` | `category: "[[Decisions]]"` | Team or individual decisions and reasoning logs | `obsidian-decisions` |
 | `Notes/` | `category: "[[Memories]]"` | Journal-like personal notes of things I want to remember | |
 | `Notes/Projects/` | `category: "[[Projects]]"` | Hubs for notes about ongoing work, milestones, travel | `obsidian-projects` |
-| `Daily Notes/` | `category: "[[Daily Notes]]"` | Daily notes containing schedules and work logs | `obsidian-daily-notes` |
+| `Notes/Daily Notes/` | `category: "[[Daily Notes]]"` | Daily notes containing schedules and work logs | `obsidian-daily-notes` |
 | `Inputs/Meetings/` | `category: "[[Meetings]]"` | Meeting agendas, summaries, outcomes (Granola reconcile) | `obsidian-meetings` |
 | `Inputs/Readings/` | `category: "[[Readings]]"` | Raw reading imports — Readwise, clippings (immutable) | `llm-wiki` |
 | `Inputs/Emails/` | `category: "[[Emails]]"` | Email thread summaries | `bes-email-dispatch` |
 | `Inputs/Slack/` | `category: "[[Slack]]"` | Slack conversation summaries | `slack` |
-| `Inputs/Scraps/` | `category: "[[Scraps]]"` | Fleeting brain dumps, raw quick-captures, scraps | `obsidian-notes` |
+| `[Vault Root]` | `category: "[[Scraps]]"` | Fleeting brain dumps, raw quick-captures, scraps | `obsidian-notes` |
 | `Utilities/` | `category: "[[Categories]]"` | Category definition notes (`Utilities/Categories/`) | `obsidian-utilities` |
 
 ---
