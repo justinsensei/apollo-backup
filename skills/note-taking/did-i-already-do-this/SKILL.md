@@ -16,7 +16,7 @@ Justin captures completed work in **Todoist** or **Obsidian**. Check in this ord
 Use `mcp_todoist_find_completed_tasks` with a relevant keyword search. Cast a wide date range if unsure when it might have happened.
 
 ## 2. Obsidian notes / work logs
-Use the `obsidian` skill to search notes. Work logs, meeting notes, and project notes are the most likely places. Search by keyword; also check dated work log entries if a rough timeframe is known.
+Use the `obsidian` skill to search notes. Work logs, meeting notes, and project notes are the most likely places. Search by keyword; also check dated work log entries if a rough timeframe is known. Include filed query syntheses (`category: [[Thoughts]]` notes with `## Question` sections) as search targets.
 
 ## 3. Session search (last resort)
 Use `session_search` to scan past conversation transcripts. Useful if the thing was discussed or decided here but may not have been formally captured anywhere.

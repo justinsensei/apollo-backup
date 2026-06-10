@@ -23,7 +23,7 @@ Deep reference: [architecture](references/architecture.md) | [integrate-light](r
 - After explicit ingest (email dispatch, Slack brain, Readwise, Granola reconcile)
 - "integrate this", "wiki integrate today", "compile today's ingests"
 - Wind-down EIIRP Step 5 (integrate-full)
-- Research Q&A that should persist in the vault (integrate-query)
+- Research Q&A that should persist in the vault (integrate-query): "what do my notes say about…", "compare X and Y", "synthesize everything on Z"
 - "run wiki lint" (semantic; structural → obsidian-hygiene)
 
 **Don't use for:** daily work logs (work-log), structural hygiene (obsidian-hygiene), maturity promotion (obsidian-suggest-promotions — **unchanged**).
@@ -51,7 +51,7 @@ Deep reference: [architecture](references/architecture.md) | [integrate-light](r
 | **integrate-light** | Every explicit ingest; cron post-steps | Append `Utilities/log.md` with daily note wikilink. **Never modify Input bodies.** No index or notepad updates. |
 | **integrate-entities** | After integrate-light; meeting reconcile | Append hub sections on existing contacts/projects (Timeline, Related inputs, State on decisions). Update-only — no stub creation. |
 | **integrate-full** | Wind-down Step 5; manual triggers | Reading→Source promotion, project/contact cross-refs, contradiction flags |
-| **integrate-query** | Interactive durable Q&A | Synthesize → file to maturity category + light pass |
+| **integrate-query** | Interactive durable Q&A | Search → synthesize → file when durability met (3+ notes, comparison/decision analysis, cross-project connection, explicit "file this", same topic twice) → maturity category + log append. See [integrate-query.md](references/integrate-query.md). Template: [query-synthesis.md](templates/query-synthesis.md). |
 
 Cron runs **integrate-light + integrate-entities**. No auto-vault from raw streams.
 
@@ -103,7 +103,7 @@ Confirm with Justin before bulk mature-note edits.
 
 ## integrate-query
 
-See [integrate-query.md](references/integrate-query.md). Search → synthesize → file to appropriate category → integrate-light.
+See [integrate-query.md](references/integrate-query.md). Search → synthesize → file to appropriate category when durability threshold met → integrate-light log append. Template: [query-synthesis.md](templates/query-synthesis.md). Interactive sessions only — not cron.
 
 ## Semantic lint
 
@@ -138,3 +138,6 @@ One-time `Logs/` → `Inputs/` via `scripts/migrate_logs_to_inputs.py`. See [tax
 - [ ] Compiled Sources have `## Raw inputs` with Reading links
 - [ ] Layer 3 notes untouched unless integrate-full explicitly scoped
 - [ ] obsidian-hygiene run for structural baseline before semantic lint
+- [ ] integrate-query: filed note exists with Question, Synthesis, Sources consulted sections
+- [ ] integrate-query: log line appended with `query` token
+- [ ] integrate-query: Sources consulted section populated with upstream wikilinks
