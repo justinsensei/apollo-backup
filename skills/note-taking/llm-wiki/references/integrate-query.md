@@ -40,14 +40,14 @@ Justin asks a research/knowledge question where the answer should persist:
 
 1. **Search** — `semantic_pointer.py search` + vault grep for relevant Inputs/Sources/Concepts/Projects/Contacts
 2. **Synthesize** — compose answer citing upstream links (Concept→Source→Reading)
-3. **Create or update** — see below
-4. **Post-file** — log append, optional entity integration, chat one-liner
+3. **Create or update** — if updating an existing note, update it in its current folder. If creating a new note, write it to the `inbox/` folder as `inbox/ID Title.md` (retaining correct `category` in frontmatter) for manual review.
+4. **Post-file** — print the complete note content in the chat channel, run log append, optional entity integration.
 
 ## Create vs update
 
 - **Search first** for existing note on same topic (title grep + semantic search)
-- If match: **append** `## YYYY-MM-DD update` section rather than duplicate
-- If no match: create new note from [query-synthesis template](../templates/query-synthesis.md)
+- If match: **append** `## YYYY-MM-DD update` section rather than duplicate (updating in place in its current directory)
+- If no match (creation): create new note from [query-synthesis template](../templates/query-synthesis.md) and save it directly in the `inbox/` directory as `inbox/ID Title.md` for manual review.
 
 ## Category routing
 

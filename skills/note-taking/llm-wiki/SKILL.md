@@ -51,7 +51,7 @@ Deep reference: [architecture](references/architecture.md) | [integrate-light](r
 | **integrate-light** | Every explicit ingest; cron post-steps | Append `Utilities/log.md` with daily note wikilink. **Never modify Input bodies.** No index or notepad updates. |
 | **integrate-entities** | After integrate-light; meeting reconcile | Append hub sections on existing contacts/projects (Timeline, Related inputs, State on decisions). Update-only — no stub creation. |
 | **integrate-full** | Wind-down Step 5; manual triggers | Reading→Source promotion, project/contact cross-refs, contradiction flags |
-| **integrate-query** | Interactive durable Q&A | Search → synthesize → file when durability met (3+ notes, comparison/decision analysis, cross-project connection, explicit "file this", same topic twice) → maturity category + log append. See [integrate-query.md](references/integrate-query.md). Template: [query-synthesis.md](templates/query-synthesis.md). |
+| **integrate-query** | Interactive durable Q&A | Search → synthesize → write to `inbox/` when durability met (3+ notes, comparison/decision analysis, cross-project connection, explicit "file this", same topic twice) → print complete note in channel, log append. See [integrate-query.md](references/integrate-query.md). Template: [query-synthesis.md](templates/query-synthesis.md). |
 
 Cron runs **integrate-light + integrate-entities**. No auto-vault from raw streams.
 
@@ -103,7 +103,7 @@ Confirm with Justin before bulk mature-note edits.
 
 ## integrate-query
 
-See [integrate-query.md](references/integrate-query.md). Search → synthesize → file to appropriate category when durability threshold met → integrate-light log append. Template: [query-synthesis.md](templates/query-synthesis.md). Interactive sessions only — not cron.
+See [integrate-query.md](references/integrate-query.md). Search → synthesize → write to `inbox/` for manual review when durability threshold met → print complete note in channel and run integrate-light log append. Template: [query-synthesis.md](templates/query-synthesis.md). Interactive sessions only — not cron.
 
 ## Semantic lint (tier-3)
 
@@ -142,6 +142,7 @@ One-time `Logs/` → `Inputs/` via `scripts/migrate_logs_to_inputs.py`. See [tax
 - [ ] Compiled Sources have `## Raw inputs` with Reading links
 - [ ] Layer 3 notes untouched unless integrate-full explicitly scoped
 - [ ] obsidian-hygiene run for structural baseline before semantic lint
-- [ ] integrate-query: filed note exists with Question, Synthesis, Sources consulted sections
+- [ ] integrate-query: filed note exists in `inbox/` with Question, Synthesis, Sources consulted sections
+- [ ] integrate-query: printed the complete created note in the chat channel for review
 - [ ] integrate-query: log line appended with `query` token
 - [ ] integrate-query: Sources consulted section populated with upstream wikilinks
