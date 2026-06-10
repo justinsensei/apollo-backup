@@ -46,6 +46,8 @@ This script performs:
 2. **Tag-to-Category Conversion:** Converts inline tags like `#people` or `#meeting` into formal category YAML frontmatter and removes the inline tag from the body.
 3. **Identifier & Alias Diagnostics:** Performs high-speed scans for missing or duplicate `id` keys, duplicate/non-unique aliases (alphanumeric, length >= 2), or malformed `daily_note` links.
 4. **Auto-Linking of Unlinked Mentions:** Automatically converts plain-text mentions of known contacts and projects (by title and aliases like "Tor", "Anya", "Dave") into proper wikilinks inside newly reconciled Granola meetings and Daily Notes modified within the last 7 days. If an alias is non-unique (shared by multiple contacts), it is explicitly skipped to prevent incorrect linking (see "Ambiguity & Non-Unique Alias Rules" below). This builds a robust, tight knowledge graph automatically without manual overhead.
+5. **Ghost Links & Orphan Notes Detection:** Audits the entire vault for unresolved Obsidian wikilinks (`[[LinkTarget]]`) pointing to non-existent notes (reported under `## ⚠️ Ghost Links`) and true orphan notes with zero incoming/outgoing links (reported under `## ⚠️ Orphan Notes`).
+6. **Parallel Citation & Web Source Validation:** Executes high-speed, parallel HTTP HEAD/GET checks with thread pools to validate external URLs inside literature/source notes in `/Logs/Sources/`, warning of any dead/unresolving URLs under `## ⚠️ Citation & Source Issues`.
 
 ---
 
