@@ -15,6 +15,9 @@ import requests
 import urllib.parse
 import urllib3
 
+from vault_entities import get_existing_entities, match_projects
+from integrate_entities import integrate_ingest, append_meeting_related
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 VAULT = Path(os.environ.get("OBSIDIAN_VAULT_PATH", "/home/justin.guest/vault"))
@@ -116,82 +119,6 @@ def verify_url(url):
         return "Connection Error"
     except Exception as e:
         return f"Error: {type(e).__name__}"
-
-def get_existing_entities(vault_path):
-    entities = {}
-    
-    def parse_contact_file(file_path, filename):
-        ptype = 'person'
-        aliases = []
-        title = filename[:-3]
-        is_contact = False
-        try:
-            with open(file_path, encoding='utf-8', errors='replace') as file_obj:
-                content = file_obj.read()
-                m_cat = re.search(r'^category:\s*["\']?\[\[(People|Organizations)\]\]["\']?', content, re.MULTILINE)
-                m_type = re.search(r'^type:\s*[\'"]?([a-zA-Z0-9_-]+)[\'"]?', content, re.MULTILINE)
-                if m_cat or m_type:
-                    is_contact = True
-                if m_type:
-                    ptype = m_type.group(1).strip()
-                elif m_cat:
-                    ptype = 'person' if m_cat.group(1) == 'People' else 'organization'
-                m_aliases = re.search(r'^aliases:\s*\n((?:\s*-\s*.*?\n)+)', content, re.MULTILINE)
-                if m_aliases:
-                    aliases = [a.strip()[1:].strip().strip('"\'') for a in m_aliases.group(1).split('\n') if a.strip().startswith('-')]
-        except Exception:
-            pass
-        return is_contact, ptype, title, aliases
-
-    contacts_dir = os.path.join(vault_path, 'Contacts')
-    if os.path.exists(contacts_dir):
-        for f in os.listdir(contacts_dir):
-            if f.endswith('.md'):
-                file_path = os.path.join(contacts_dir, f)
-                _, ptype, title, aliases = parse_contact_file(file_path, f)
-                name_key = f[:-3].lower()
-                entities[name_key] = {
-                    "path": file_path,
-                    "type": ptype,
-                    "title": title,
-                    "aliases": aliases
-                }
-                
-    inbox_dir = os.path.join(vault_path, 'inbox')
-    if os.path.exists(inbox_dir):
-        for f in os.listdir(inbox_dir):
-            if f.endswith('.md'):
-                file_path = os.path.join(inbox_dir, f)
-                is_contact, ptype, title, aliases = parse_contact_file(file_path, f)
-                if is_contact:
-                    name_key = f[:-3].lower()
-                    entities[name_key] = {
-                        "path": file_path,
-                        "type": ptype,
-                        "title": title,
-                        "aliases": aliases
-                    }
-                
-    projects_dir = os.path.join(vault_path, 'Notes', 'Projects')
-    if os.path.exists(projects_dir):
-        for f in os.listdir(projects_dir):
-            if f.endswith('.md'):
-                file_path = os.path.join(projects_dir, f)
-                try:
-                    with open(file_path, encoding='utf-8', errors='replace') as file_obj:
-                        content = file_obj.read()
-                        name_key = f[:-3].lower()
-                        clean_name = re.sub(r'\s*\d{4,14}$', '', f[:-3]).lower().strip()
-                        entities[name_key] = {
-                            "path": file_path,
-                            "type": "project",
-                            "title": f[:-3],
-                            "aliases": [clean_name] if clean_name != name_key else []
-                        }
-                except Exception:
-                    pass
-                    
-    return entities
 
 def auto_link_text(text, entities, current_file_title):
     # Find which keys are ambiguous (belonging to more than one distinct contact path)
@@ -425,6 +352,14 @@ def reconcile_granola_meetings(vault_path):
             if linked_body != body_content:
                 body_content = linked_body
                 needs_update = True
+
+            match_text = filename + "\n" + body_content
+            matched_projects, _ = match_projects(match_text, entities)
+            for proj in matched_projects:
+                new_body = append_meeting_related(body_content, proj["title"])
+                if new_body != body_content:
+                    body_content = new_body
+                    needs_update = True
                 
             if is_raw or needs_update:
                 new_fm = (
@@ -436,6 +371,16 @@ def reconcile_granola_meetings(vault_path):
                 new_text = new_fm + body_content
                 dest_path = dest_dir / filename
                 dest_path.write_text(new_text, encoding="utf-8")
+                rel_dest = str(dest_path.relative_to(vault_path)).replace("\\", "/")
+
+                try:
+                    integrate_report = integrate_ingest(vault_path, rel_dest)
+                    updated = integrate_report.get("updated", {})
+                    parts = updated.get("projects", []) + updated.get("contacts", [])
+                    if parts:
+                        print(f"  integrate-entities → {', '.join(parts)}")
+                except Exception as e:
+                    print(f"  integrate-entities error for {filename}: {e}")
                 
                 if needs_update:
                     print(f"  Fixed/Reconciled: {filename}")
