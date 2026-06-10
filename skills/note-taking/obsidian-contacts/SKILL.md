@@ -23,6 +23,7 @@ This skill governs the physical structure and coordinate mapping of the `/Contac
 - **Sub-skills (Categories):**
   - **`obsidian-people`**: For individual contacts, family members, friends, or colleagues (`category: "[[People]]"`).
   - **`obsidian-organizations`**: For companies, schools, legal entities, or institutions (`category: "[[Organizations]]"`).
+- **Background Automation Mechanics**: See [check_vault_signals_mechanics.md](references/check_vault_signals_mechanics.md) for how the automated background script runs, its failure modes, and how to troubleshoot duplicate or polluted timelines.
 - **Supporting Documentation:**
   - **`references/check_vault_signals_mechanics.md`**: Deep dive into background timeline automation, parsing engine logic, and duplicate prevention strategies.
 
