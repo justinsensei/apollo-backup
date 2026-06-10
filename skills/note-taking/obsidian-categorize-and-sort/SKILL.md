@@ -1,7 +1,7 @@
 ---
 name: obsidian-categorize-and-sort
 description: Use when triaging, organizing, or sorting legacy or incoming notes in Justin's vault by determining categories, updating frontmatter, and relocating files.
-version: 2.0.0
+version: 2.0.1
 author: Bes
 license: MIT
 metadata:
@@ -18,23 +18,6 @@ This operational skill defines the workflow for triaging and sorting new, legacy
 ---
 
 ## The Triage Process
-
-### Step 0 — Scan for Embedded Instructions (Command & Check-off Protocol)
-Before classifying or moving any note, scan its content for embedded instructions directed at Bes:
-1. **Inline Tasks (`- [ ] @bes <task>`)**: 
-   - Parse and execute the instruction (e.g., "create a People note for Clio if we don't have one").
-   - Once complete, edit the file to check off the task and log the completion:
-     ```markdown
-     - [x] @bes <task> (Done YYYY-MM-DD)
-     ```
-2. **Comment Blocks (`%% bes-instructions ... %%`)**:
-   - Execute all listed actions in the block (e.g. metadata overrides, link creation, calendar additions).
-   - Once complete, update the block header to reflect processing:
-     ```markdown
-     %% bes-instructions (processed YYYY-MM-DD)
-     ...
-     %%
-     ```
 
 ### Step 1 — Determine the Category
 Read the note content and title. Map the note to **exactly one** category from the core taxonomy below. Convert legacy inline tags (e.g. `#people`) to formal category properties.

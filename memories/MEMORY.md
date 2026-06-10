@@ -23,8 +23,7 @@ Readwise script is at ~/sync_readwise.py. It exports highlights tagged 'vault' (
 User prefers modular, composable skills (no monolithic files).
 §
 Default new notes to 'Notes' (timestamp ID). Draft decisions in inbox using simplified narrative. Triaging: References (patterns), Thoughts (reflections), Concepts (models).
-§
-Vault convention: Raw notes can contain embedded processing instructions directed at Bes using inline tasks ("- [ ] @bes <task>") or comment blocks ("%% bes-instructions ... %%").
+
 §
 Weekly summaries are requested manually on the first day of the week and delivered directly to the requesting Telegram conversation instead of running on a schedule.
 §
