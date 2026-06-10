@@ -19,7 +19,7 @@ Append-only record of ingests, compiles, and filed queries. Do not edit prior li
 - HH:MM | email | [[YYYY-MM-DD - Subject]] | Inputs/Emails/foo.md | [[2026-06-10 Tuesday]]
 - HH:MM | reading | [[Reading Title]] | Inputs/Readings/foo.md | [[2026-06-10 Tuesday]]
 - HH:MM | meeting | [[YYYY-MM-DD - Title]] | Inputs/Meetings/foo.md | [[2026-06-10 Tuesday]]
-- HH:MM | query | [[Synthesis Title]] | Notes/foo.md | [[2026-06-10 Tuesday]]
+- HH:MM | query | [[Synthesis Title]] | inbox/foo.md | [[2026-06-10 Tuesday]]
 - HH:MM | source-compile | [[Source Title]] | Notes/Title.md | [[2026-06-10 Tuesday]]
 ```
 
