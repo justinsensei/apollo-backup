@@ -50,6 +50,7 @@ def expected_folder_prefix(category, vault_path):
         "Meetings": f"{base}/Meetings/",
         "Emails": f"{base}/Emails/",
         "Slack": f"{base}/Slack/",
+        "Scraps": f"{base}/Scraps/",
         "Sources": "Notes/",
         "Notes": "Notes/",
         "Thoughts": "Notes/",
@@ -67,7 +68,7 @@ def acceptable_folder_prefixes(category, vault_path):
     vault = Path(vault_path)
     base_inputs = str(inputs_base(vault_path)).replace("\\", "/")
     base_logs = str(vault / "Logs").replace("\\", "/")
-    input_cats = {"Readings", "Meetings", "Emails", "Slack"}
+    input_cats = {"Readings", "Meetings", "Emails", "Slack", "Scraps"}
     if category in input_cats:
         prefixes = [f"{base_inputs}/{category}/"]
         if (vault / "Logs").exists() and base_inputs != base_logs:
