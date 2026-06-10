@@ -51,8 +51,10 @@ Justin asks a research/knowledge question where the answer should persist:
 
 ## Category routing
 
-| Answer type | Category | Folder | Default? |
-|-------------|----------|--------|----------|
+Query notes on creation are always placed in the `inbox/` folder for manual review, but their YAML frontmatter `category` is set based on the table below:
+
+| Answer type | Category | Final Target Folder (Post-Review) | Default? |
+|-------------|----------|-----------------------------------|----------|
 | Personal synthesis / take | `[[Thoughts]]` | `Notes/` | **Default** for personal synthesis |
 | Others' model extracted | `[[Concepts]]` | `Notes/` | External model extracted from sources |
 | Fleeting answer / working scratch | `[[Notes]]` | `Notes/` | Working scratch only |
@@ -73,9 +75,10 @@ Use [query-synthesis template](../templates/query-synthesis.md). Required sectio
 
 ## Post-file steps
 
-1. Append `Utilities/log.md` line: `HH:MM | query | [[Title]] | Notes/path.md | [[daily note]]` (integrate-light, `query` token). See [integrate-light.md](integrate-light.md).
+1. Append `Utilities/log.md` line: `HH:MM | query | [[Title]] | inbox/ID Title.md | [[daily note]]` (integrate-light, `query` token). See [integrate-light.md](integrate-light.md).
 2. If synthesis names matched project/contact hubs → run `integrate_entities.py` on the **new note** (optional, same as ingest)
-3. Chat closing: one quiet line — `→ filed [[Title]]` (Bes voice: minimal)
+3. Print the complete created note content directly in the chat channel (surrounded by markdown code blocks).
+4. Chat closing: one quiet line — `→ filed [[Title]] in inbox/` (Bes voice: minimal)
 
 ## Link rules
 
