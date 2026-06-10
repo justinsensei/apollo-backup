@@ -1,6 +1,6 @@
 ---
 name: wind-down
-description: "Interactive daily wrap-up: 1. Log candidates; 2. Discovered contacts; 2b. Discovered projects; 3. Source review; 4. Everything In Its Right Place (EIIRP) Vault Hygiene & Triage; 5. Work log draft/write; 6. Next day's calendar preview."
+description: "Interactive daily wrap-up: 1. Input candidates; 2. Discovered contacts; 2b. Discovered projects; 3. Source review; 4. Everything In Its Right Place (EIIRP) Vault Hygiene & Triage; 5. Work log draft/write; 6. Next day's calendar preview."
 version: 1.3.0
 author: Bes
 license: MIT
@@ -33,9 +33,9 @@ The wind-down session runs interactively in a strict, step-by-step sequence. Wai
 
 ---
 
-### Phase 1 — Log Candidates
+### Phase 1 — Input Candidates
 
-Present potential log candidates (active Slack conversations and noteworthy primary-category emails from the last 36-48 hours) that Justin hasn't tagged with `🧠` or forwarded to Bes, but that are highly worthy of being turned into logs in his vault.
+Present potential input candidates (active Slack conversations and noteworthy primary-category emails from the last 36-48 hours) that Justin hasn't tagged with `🧠` or forwarded to Bes, but that are highly worthy of being turned into inputs in his vault.
 
 Run the unified script live to fetch candidates:
 `python3 /home/justin.guest/.hermes/scripts/fetch_source_candidates.py`
@@ -44,7 +44,7 @@ If candidates (Slack or Email) are found:
 - Show them with sequential numbers across both Slack and Email candidates.
 - Format:
   ```
-  📋 N potential log candidates:
+  📋 N potential input candidates:
 
   **Slack Conversations**
   1. [\#channel-name] Topic or Preview — participants: Alice, Bob, Justin
@@ -54,7 +54,7 @@ If candidates (Slack or Email) are found:
   3. [Email/<account>] Subject line — from: Sender Name (Date)
   ...
 
-  Would you like to turn any of these conversations into logs in your vault? (e.g. "yes, 1", "save 1 and 3", or "skip")
+  Would you like to turn any of these conversations into inputs in your vault? (e.g. "yes, 1", "save 1 and 3", or "skip")
   ```
 
 If Justin selects any:
@@ -62,7 +62,7 @@ If Justin selects any:
    - **For Slack conversations:**
      - Synthesize a high-quality summary showing "who said what" clearly. Do NOT store verbatim Slack messages; store only summaries with retrieval metadata.
      - Write to `$OBSIDIAN_VAULT_PATH/Inputs/Slack/YYYY-MM-DD - Spaced Title.md`.
-     - Structure the YAML frontmatter for Slack logs:
+     - Structure the YAML frontmatter for Slack inputs:
        ```yaml
        ---
        id: <timestamp_id> # YYYYMMDDHHmmss based on first message
@@ -81,7 +81,7 @@ If Justin selects any:
    - **For Emails:**
      - Synthesize a high-quality summary of the email thread showing clearly what was discussed, decided, or requested. Do NOT store verbatim email text; store only summaries with retrieval metadata.
      - Write to `$OBSIDIAN_VAULT_PATH/Inputs/Emails/YYYY-MM-DD - Spaced Subject.md`.
-     - Structure the YAML frontmatter for email logs:
+     - Structure the YAML frontmatter for email inputs:
        ```yaml
        ---
        id: <timestamp_id> # YYYYMMDDHHmmss based on first email
@@ -97,7 +97,7 @@ If Justin selects any:
        `* [[Inputs/Emails/<filename>|Email summary]]: <One-sentence-gist>.`
      - Run the command to mark it processed:
        `python3 /home/justin.guest/.hermes/scripts/fetch_source_candidates.py --mark-email-processed <thread_id>`
-   - Report the log(s) successfully saved.
+   - Report the input(s) successfully saved.
 
 If no candidates are found, skip this phase entirely and proceed to Phase 2.
 
