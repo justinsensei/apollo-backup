@@ -145,9 +145,16 @@ If `work_log_status` is `"skipped"` in the daily cache file, present only the va
 🗂 Vault hygiene — N items to look at when you have a moment:
 • sources/some-note.md — missing ID
 • ...]
+
+[If ambiguous plain-text mentions exist in `vault_signals_last_run.json` (unlinked names matching duplicate aliases), append right here:
+❓ Ambiguous mentions — N items to resolve:
+• "Aunt Lindy" in [[Daily Notes/2026-06-09 Tuesday]] (candidates: [[Linda Massie]], [[Linda Lash]])
+• ...]
 ```
 
 Keep it scannable. 4–6 bullets max for the work log section. If multiple days, don't repeat obvious context — synthesize across them. Don't recite every meeting; surface the consequential ones. Keep the vault section beautifully formatted with Wiki-links. If nothing was updated or added in the vault, output: *"No vault updates since yesterday morning."* for the vault section.
+
+If the user clarifies an ambiguous mention (e.g. "I meant Linda Massie for Aunt Lindy"), use the `patch` tool to replace the plain-text alias in the context file with the correct link (e.g. `[[Linda Massie|Aunt Lindy]]`) and confirm the fix.
 
 If no work log entries exist for the dates (notes missing or no Work Log section), present the vault updates, note the missing work log, and move on. Don't block on it.
 
