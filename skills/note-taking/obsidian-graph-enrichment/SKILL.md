@@ -98,8 +98,9 @@ A scheduled script scans the vault for modified markdown files since the last ru
    - When a match is found, the script automatically writes a timestamped reference to the target entity's `## Timeline` section:
      ```markdown
      ## Timeline
-     - YYYY-MM-DD | Mentioned in [[Path/To/Source-Note|Source Note Title]]
+     - YYYY-MM-DD | Mentioned in [[Source Note Title]]
      ```
+   - Clean shortest-path wikilinks are used to avoid path clutter and ensure durability.
    - This ensures a zero-effort log of interactions, source clippings, and project meetings accumulates directly in the contact's or project's note.
 
 3.  **Candidate Discovery (Unresolved Links):**

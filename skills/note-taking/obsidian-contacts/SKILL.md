@@ -49,28 +49,27 @@ To enable short-name links while keeping filenames unique:
 2. Add the first name or nickname in the frontmatter `aliases:` field:
    ```yaml
    aliases:
-     ### Step 2 — Filename Capitalization
-     All files (whether in `/inbox/` or `/Contacts/`) must use standard Capitalized, spaced names:
-     - `Aly Lalji.md`
-     - `SignLab.md`
-     - Do not use lowercase or hyphenated slug names.
+     - Kristina
+   ```
 
-     ### Step 3 — Mapping Connections
-     - Individual people notes must link to their respective organizations (e.g. `- **Company:** [[SignLab]]`).
-     - Organizations must link to their key representatives.
-     - Maintain family connections accurately using spaced wikilinks (e.g. `[[Sam]]'s teacher`, `[[Nana]]'s friend`).
+### Step 4 — Naming & Alias Guidelines (Collision Prevention)
+To prevent automatic link-hijacking and timeline pollution from background analysis scripts (like `check_vault_signals.py`), follow these rules:
+1. **Avoid Overly Aggressive First-Name Aliases**: Never register overly generic, common first names (like `Mac`, `Georgia`, `Linda`, `Andrew`, `Andy`) as standalone aliases in a contact's frontmatter.
+   * *Why*: Standalone aliases like `Mac` will match unrelated system terms like `MacMini`, `macOS`, or `MacBook`. Standalone aliases like `Georgia` will match `Georgia Tech` or the US state of Georgia.
+2. **Qualify High-Collision Names**: For family members or close friends with highly common names, use their full name (e.g., `Georgia Sullivan`, `Linda Massie`, `Mac Lawrence`) as the primary file name, and only register specific non-colliding aliases in frontmatter (or omit generic first-name aliases entirely if they risk matching system or business terms).
+3. **Deduplication Triage Protocol**: If a generic contact (like `andy.md` or `david.md`) becomes polluted:
+   * Perform a vault-wide regex/content search to classify mentions into distinct, actual individuals based on family/work context.
+   * Filter out non-person matches (authors, books, hardware, random names).
+   * Create separate files for newly discovered people in the `/inbox/` directory.
+   * Update existing profiles in-place under `/Contacts/` with clean timelines.
+   * Delete the polluted generic file and clean up any false timeline entries in related contacts' notes (e.g., in `oleksii.md` or `Kristina Kennedy.md`).
 
-     ### Step 4 — Naming & Alias Guidelines (Collision Prevention)
-     To prevent automatic link-hijacking and timeline pollution from background analysis scripts (like `check_vault_signals.py`), follow these rules:
-     1. **Avoid Overly Aggressive First-Name Aliases**: Never register overly generic, common first names (like `Mac`, `Georgia`, `Linda`, `Andrew`, `Andy`) as standalone aliases in a contact's frontmatter.
-        * *Why*: Standalone aliases like `Mac` will match unrelated system terms like `MacMini`, `macOS`, or `MacBook`. Standalone aliases like `Georgia` will match `Georgia Tech` or the US state of Georgia.
-     2. **Qualify High-Collision Names**: For family members or close friends with highly common names, use their full name (e.g., `Georgia Sullivan`, `Linda Massie`, `Mac Lawrence`) as the primary file name, and only register specific non-colliding aliases in frontmatter (or omit generic first-name aliases entirely if they risk matching system or business terms).
-     3. **Deduplication Triage Protocol**: If a generic contact (like `andy.md` or `david.md`) becomes polluted:
-        * Perform a vault-wide regex/content search to classify mentions into distinct, actual individuals based on family/work context.
-        * Filter out non-person matches (authors, books, hardware, random names).
-        * Create separate files for newly discovered people in the `/inbox/` directory.
-        * Update existing profiles in-place under `/Contacts/` with clean timelines.
-        * Delete the polluted generic file and clean up any false timeline entries in related contacts' notes (e.g., in `oleksii.md` or `Kristina Kennedy.md`).
+### Step 5 — Filename & Link Capitalization
+- **Strict Capitalization:** Never write lowercase filenames for contacts or organizations (e.g. do not use `Anya volosskaya.md`, `duolingo.md`, `smartpass.md`).
+- **Standard Formatting:** 
+  - People: Capitalize both First and Last names (e.g., `Anya Volosskaya.md`, `Aly Lalji.md`, `Matt McIlvride.md`).
+  - Organizations: Use correct corporate casing (e.g., `Duolingo.md`, `SmartPass.md`, `PowerSchool.md`, `SignOn.md`, `SV Academy.md`).
+- **Renaming & Healing:** If contacts are found with incorrect lowercase filenames, use `git mv` to rename them, and run a vault-wide search-and-replace to update all internal links to use the correct casing, keeping your index perfectly coherent.
 
 ---
 
