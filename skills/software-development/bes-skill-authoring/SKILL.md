@@ -117,6 +117,34 @@ Pick the closest existing category. For Bes notes and workflows, `note-taking` o
 - **Major rewrite:** Use `skill_manage(action='edit', name=..., content=...)` to supply the full new content.
 - **Always verify** the edit — skills are living documents and should be maintained quietly as pitfalls arise.
 
+## Bidirectional Sync & Merge Conflict Resolution
+
+The personality repository (`~/bes-backup/`) is connected to remote GitHub (`origin/main`). In the background, the `bes-autocommit` systemd service watches `~/.hermes/` and automatically commits and pushes local updates (e.g. memories, cron job statuses, local skill updates) to `origin/main`.
+
+### Pulling Remote Updates (`bes-pull`)
+If you or Justin edit skills/config on another machine and push them to GitHub, run the custom `/home/justin.guest/.local/bin/bes-pull` script to fetch them.
+
+The script:
+1. Stops the background `bes-autocommit` service.
+2. Syncs any unsynced local changes from `~/.hermes/` to `~/bes-backup/` and commits them to prevent uncommitted conflict errors.
+3. Pulls and rebases from `origin/main`.
+4. Reverse-syncs the pulled updates from `~/bes-backup/` into `~/.hermes/`.
+5. Restarts the `bes-autocommit` service.
+
+### Resolving Merge Conflicts during `bes-pull`
+Because both the local VM and remote edits modify metadata and files concurrently, `bes-pull` might abort with a merge conflict. If this happens, follow this workflow to resolve it cleanly:
+
+1. **Reset to Clean Remote Baseline:** Reset your local branch to the remote state to clear any broken rebase state:
+   ```bash
+   git reset --hard origin/main
+   ```
+2. **Re-apply Local Changes Manually:** Inspect your local revisions against the remote version of the files, and use the `patch` tool to re-apply your custom local changes onto the clean remote baseline in `~/bes-backup/`.
+3. **Reverse Sync back to Live Environment:** Manually copy/rsync the updated files from the backup repo back to the live runtime environment under `~/.hermes/`:
+   ```bash
+   rsync -a --delete ~/bes-backup/skills/ ~/.hermes/skills/
+   ```
+4. **Auto-commit and Push:** Once the files are updated in `~/.hermes/`, the running background `bes-autocommit` service will automatically detect the changes, mirror them to `~/bes-backup/`, commit them, and push them to `origin/main` without conflicts.
+
 ## Common Pitfalls
 
 1. **Leading whitespace before `---`.** The validator checks `content.startswith("---")`; any leading blank line or BOM fails validation.
@@ -128,6 +156,10 @@ Pick the closest existing category. For Bes notes and workflows, `note-taking` o
 4. **Writing a skill that duplicates a peer.** Before creating, list skills and search. Prefer extending an existing skill to creating a narrow sibling.
 
 5. **Embedding scanner-tripping command shapes in skill content.** Inside each subagent context block, tell the agent which JSON parser to use (`jq` is installed everywhere) and forbid unsafe shapes explicitly (e.g. `cmd | python3 -c`, `cmd | bash`, `cmd | node -e`, or `curl | sh`).
+
+6. **Directly editing `~/bes-backup/` files without reverse-syncing.** If you edit files in `~/bes-backup/` directly and don't sync them back to `~/.hermes/`, the live environment won't see them, and any subsequent change in `~/.hermes/` will trigger `bes-autocommit` to overwrite your backup edits. Always reverse-sync to `~/.hermes/` after patching backup files.
+
+7. **Merge conflict loops during rebase.** Running `git rebase --continue` without resolving conflict markers can result in corrupted files containing diff markup, or skipping remote additions entirely. Always use `git reset --hard origin/main` followed by manual patching to resolve conflicts cleanly.
 
 ## Verification Checklist
 
