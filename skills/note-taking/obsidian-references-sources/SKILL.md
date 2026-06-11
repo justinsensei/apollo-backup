@@ -33,10 +33,10 @@ This skill governs the structure and standard templates for two categories under
     - Filename format: `Title.md` (no timestamp prefix, e.g. `Spaced Title.md`).
   - **Concepts:** Book summaries, articles, paper summaries, other people's thinking.
     - Category link: `category: "[[Concepts]]"`
-    - Filename format: `ID Title.md` (e.g. `20260609120000 Spaced Title.md`).
+    - Filename format: `Title ID.md` (e.g. `Spaced Title 20260609120000.md`).
   - **Sources (Logs):** Raw reading notes and bibliographical information (synced from Readwise).
     - Category link: `category: "[[Sources]]"`
-    - Filename format: `Title.md` (no timestamp prefix, e.g. `Spaced Title.md`).
+    - Filename format: `Title ID.md` (ID at the end, if retaining creation ID, e.g. `Spaced Title 20260609120000.md`).
 
 ---
 
@@ -110,4 +110,4 @@ To bypass these limitations reliably and retrieve clean markdown content:
   curl -s -L -A "Mozilla/5.0" "https://r.jina.ai/https://example.com/article-slug"
   ```
 - This retrieves a beautifully cleaned markdown conversion of the page, bypassing Cloudflare mitigation challenges and standard registration screens.
-- Process the retrieved markdown, select key arguments or synthesis, and write it as a new note with a `category: "[[Concepts]]"` property under `Notes/` following the filename convention `ID Title.md`.
+- Process the retrieved markdown, select key arguments or synthesis, and write it as a new note with a `category: "[[Concepts]]"` property under `Notes/` following the filename convention `Title ID.md`.

@@ -47,6 +47,6 @@ category: "[[Decisions]]"
 
 ## Core Rules
 - **Accurate Attribution:** Always attribute the decision to the actual decision-maker. Do not assume or state Justin made a decision unless he explicitly did.
-- **Capitalized spaced names:** Use `ID Title.md` format for the filename (where ID is the creation timestamp, e.g. `20260609170500 Pause app-to-web payment flow.md`).
+- **Capitalized spaced names:** Use `Title ID.md` format for the filename (where ID is the creation timestamp, e.g. `Pause app-to-web payment flow 20260609170500.md`).
 - **Drafting Location:** Always place new decision notes in the inbox folder (`vault/inbox/`).
 - **No Pipe Tables:** Avoid using markdown pipe tables; represent trade-offs or lists using clean bulleted list structures.

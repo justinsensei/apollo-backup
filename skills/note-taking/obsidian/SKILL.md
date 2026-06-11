@@ -22,17 +22,17 @@ The vault utilizes a unidirectional, three-tier conceptual hierarchy to manage t
 
 1. **Tier 1 (Raw & Ephemeral Inputs):**
    - *Categories:* `[[Scraps]]` (default for quick-capture), `[[Concepts]]` (others' thinking), `[[Decisions]]`, `[[Memories]]`.
-   - *Filename Format:* `ID Title.md` (e.g., `20260610120000 Spaced Title.md`).
+   - *Filename Format:* `Title ID.md` (e.g., `Spaced Title 20260610120000.md`).
    - *Role:* Scratchpads, raw brain dumps, source clippings, or raw logs. Almost everything defaults to `[[Scraps]]`.
 
 2. **Tier 2 (Emergent, Synthesized & Factual Supporting Notes):**
    - *Categories:* `[[Notes]]` (compiled factual support), `[[Thoughts]]` (opinions/theories).
-   - *Filename Format:* `ID Title.md` (retains creation ID/timestamp).
+   - *Filename Format:* `Title ID.md` (retains creation ID/timestamp at the end).
    - *Role:* Personal ideas, active theories, open research questions, or compiled factual information supporting higher tiers.
 
 3. **Tier 3 (Permanent & Conviction Beliefs):**
    - *Categories:* `[[Beliefs]]` (guiding models), `[[References]]` (checklists/cheat sheets).
-   - *Filename Format:* `Title.md` (no timestamp prefix, signaling permanence and authority).
+   - *Filename Format:* For `[[References]]`, `Title.md` (no ID string in the filename). For `[[Beliefs]]`, `Title ID.md` (ID at the end, if retaining creation ID).
    - *Role:* Trusted, highly stable playbooks. Beliefs require a specific structure (core thesis, exactly 3 **Core Tenets**, and 2 **Application** scenarios).
 
 **Core Hierarchy Rules:**
@@ -73,8 +73,8 @@ category: "[[CategoryName]]"         # Single category link (quoted shortest-pat
 - **Heading & Bullet Spacing:** Ensure exactly one blank line exists between any heading (such as `## Timeline` or `## State`) and its subsequent content or bullet lists. Do not allow multiple consecutive blank lines to accumulate. Bulleted lists should be kept compact with zero blank lines between siblings.
 - **Filename Conventions:**
   - **Daily Notes:** Must be `YYYY-MM-DD Weekday.md` (e.g. `2026-06-09 Tuesday.md`).
-  - **Notes, Decisions, Thoughts, Memories, Concepts, Scraps:** Must be named `ID Title.md` (e.g. `20260609120000 Spaced Title.md`).
-  - **References, Beliefs, Sources (compiled):** Must be `Title.md` (no timestamp prefix, e.g. `Spaced Title.md`).
+  - **Notes, Decisions, Thoughts, Memories, Concepts, Scraps, Beliefs, Sources (compiled):** Must be named `Title ID.md` with the ID at the end (e.g. `Spaced Title 20260609120000.md`).
+  - **References:** Must be named `Title.md` with no ID string in the filename (e.g. `Spaced Title.md`).
   - **Readings (raw inputs):** `Title.md` or Readwise-exported names under `Inputs/Readings/` (no forced rename).
   - **Projects:** Must be `Title.md` under `Notes/Projects/` (e.g. `Spaced Title.md`).
   - **Contacts (People/Organizations):** Must be `Title.md` (e.g. `Aly Lalji.md`, `SignLab.md`).
