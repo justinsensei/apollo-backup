@@ -245,7 +245,7 @@ If the daily note does not contain these sections yet, convert it to the new str
 At the very bottom of the note (after the notepad, or as a small footer block), append the sources attribution line:
 ```markdown
 ---
-*Sources: Slack (12 msgs / 4 channels) | Linear (5 issues) | Gmail work (8 threads), personal-main (1) | Calendar (4 events / 3 accts) | Todoist (N completed, M open) | vault git (X files) | daily note + chat.*
+*Sources: Slack (12 msgs / 4 channels) | Linear (5 issues) | Gmail work (8 threads), personal-main (1) | Calendar (4 events / 3 accts) | Todoist (N completed, M open) | vault git (X files) | session history (K chats) | daily note + chat.*
 ```
 
 Do NOT add a separate frontmatter block. Do NOT modify any other manual content.
