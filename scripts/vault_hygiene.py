@@ -51,7 +51,7 @@ def expected_folder_prefix(category, vault_path):
         "Meetings": f"{base}/Meetings/",
         "Emails": f"{base}/Emails/",
         "Slack": f"{base}/Slack/",
-        "Scraps": "",
+        "Scraps": "inbox/",
         "Sources": "Notes/",
         "Notes": "Notes/",
         "Thoughts": "Notes/",
