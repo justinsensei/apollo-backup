@@ -11,7 +11,7 @@ metadata:
 
 # Bes Email Dispatch
 
-Handler skill for the email-forwarding workflow. Justin forwards an email to `goff.justin+bes@gmail.com` with a one-line instruction at the top of the body (or just a subject prefix); a Gmail filter labels it `Bes/Inbox`; a poller (`poll_bes_inbox.py`) detects it and invokes this skill once per new message ID.
+Handler skill for the email-forwarding workflow. Justin forwards an email to `goff.justin+bes@gmail.com` with a one-line instruction at the top of the body (or just a subject prefix); a Gmail filter labels it `Bes/Inbox`; the consolidated cron job **"Unified Brain Feeds Ingest"** (`284c08eb12b7`) executes the poller (`poll_bes_inbox.py --json`) to detect new message IDs alongside other feeds.
 
 This skill is **read-only on Gmail**. It never archives, marks read, or replies. The source of truth for "has Bes seen this?" is the watermark file (`~/.hermes/state/bes-inbox-watermark.json`), not Gmail label state.
 
