@@ -222,54 +222,6 @@
       "profile": null
     },
     {
-      "id": "8d6cfdd42fd4",
-      "name": "Slack Brain Note Capture",
-      "prompt": "[IMPORTANT: You are running as a scheduled cron job. DELIVERY: Your final response will be automatically delivered to the user \u2014 do NOT use send_message or try to deliver the output yourself. Just produce your report/output as your final response and the system handles the rest. SILENT: If there is genuinely nothing new to report, respond with exactly \"[SILENT]\" (nothing else) to suppress delivery. Never combine [SILENT] with content \u2014 either report your findings normally, or say [SILENT] and nothing more.]\n\n## Script Output\nThe following data was collected by a pre-run script. Use it as context for your analysis.\n\nThe output of the fetcher script `fetch_slack_brains.py` is injected below:\n\n---\nIf the output is empty `[]` or has no items, stop immediately. Output absolutely nothing (or just '[SILENT]') and terminate. Do not write any files, do not edit daily notes, and do not send any message.\n\nIf there are new items, process them one by one. For each item:\n1. Determine the reaction type: `jg_log` or `jg_decision` based on the `\"reaction_type\"` field in the JSON item.\n2. Determine the date of the conversation (from the `ts` or messages timestamps) in YYYY-MM-DD format.\n3. Determine a spaced capitalized Title based on the topic.\n\n4. **ALL INGESTED NOTES MUST BE ADDED TO THE INBOX FIRST!**\n   - Save the file under: `/home/justin.guest/vault/inbox/`\n\n5. **Generate the Note Content based on Reaction Type:**\n\n   ### Path A: If reaction_type is \"jg_log\":\n   - **Filename:** `YYYY-MM-DD - Slack - [Title].md`\n   - **Properties (Frontmatter):**\n     ```yaml\n     ---\n     id: '<timestamp_id>'  # YYYYMMDDHHmmss format based on message ts\n     daily_note: \"[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]\" # e.g. [[Daily Notes/2026-06-09 Tuesday|2026-06-09 Tuesday]]\n     category: \"[[Slack]]\"\n     channel: \"<channel_name>\"\n     original_url: \"<permalink>\"\n     participants:\n       - \"<Participant A>\"\n       - \"<Participant B>\"\n     ---\n     ```\n   - **Note Body Layout:**\n     ```markdown\n     # \ud83d\udcac Slack Thread: [Title]\n\n     - **Channel:** #<channel_name>\n     - **Date:** YYYY-MM-DD\n     - **Original Thread:** [Slack Link](<permalink>)\n\n     ---\n\n     ## \ud83c\udfaf Topic Description\n     [A brief, 1-2 sentence temporary description of the topic discussed. Acts as a simple pointer to the conversation without point-by-point summaries, thoughts, decisions, or quotes.]\n     ```\n\n   ### Path B: If reaction_type is \"jg_decision\":\n   - **Filename:** `YYYY-MM-DD - Decision - [Title].md`\n   - **Properties (Frontmatter):**\n     ```yaml\n     ---\n     id: '<timestamp_id>'  # YYYYMMDDHHmmss format based on message ts\n     daily_note: \"[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]\"\n     category: \"[[Decisions]]\"\n     channel: \"<channel_name>\"\n     original_url: \"<permalink>\"\n     participants:\n       - \"<Participant A>\"\n       - \"<Participant B>\"\n     ---\n     ```\n   - **Note Body Layout:**\n     ```markdown\n     # \ud83c\udfaf Decision: [Title]\n\n     - **Channel:** #<channel_name>\n     - **Date:** YYYY-MM-DD\n     - **Original Thread:** [Slack Link](<permalink>)\n\n     ---\n\n     ## \ud83d\udcdd Context\n     [A brief, 2-3 sentence context explaining the problem or trade-off discussed in the Slack thread.]\n\n     ## \u2696\ufe0f Options & Trade-offs\n     - [Option A]: [Trade-offs/consequences]\n     - [Option B]: [Trade-offs/consequences]\n\n     ## \ud83c\udfc1 Resolution\n     [The final decision or recommendation made by the team, highlighting who made it.]\n     ```\n\n6. Write the file to `/home/justin.guest/vault/inbox/<filename>`.\n7. Update today's daily note:\n   - Today's date is determined at runtime based on the system date (e.g. `2026-06-09`).\n   - The daily note path is `/home/justin.guest/vault/Daily Notes/<YYYY-MM-DD Weekday>.md`.\n   - Read today's daily note, locate the `## \ud83d\uddd2 Notepad` section, and append a clean bullet inside it:\n     - For logs: `* [[inbox/<filename>|Slack summary]]: <One-sentence topic summary>`.\n     - For decisions: `* [[inbox/<filename>|Decision]]: <One-sentence decision summary>`.\n     Keep all other content in the notepad intact. Do NOT overwrite his manual notes.\n8. Mark the conversation as processed to avoid duplicate processing:\n   - Run the command: `python3 /home/justin.guest/.hermes/scripts/fetch_slack_brains.py --mark-processed <channel_id> <ts>`\n9. Once all items are successfully written and marked processed, load llm-wiki and run integrate-light for each new file: append Utilities/log.md only (daily note wikilink as last field). Do not update index.md or daily notepad via integrate-light. Do not modify Input bodies beyond initial filing.\n10. Run `python3 ~/.hermes/scripts/integrate_entities.py <ingest_rel_path> [--gist \"...\"]` for each new file. For jg_decision, pass resolution text as --gist (feeds project ## State). Optionally set `project:` in ingest frontmatter when channel-map or title match is obvious before calling the script.\n11. Output a clear, concise summary of what was saved as your final response so it is sent to Justin on Telegram. Include hub updates: `\u2192 updated [[Project]], [[Contact]]`.\n\nInclude absolute file paths for all operations. Verify files exist before reading/writing. Be extremely quiet if there's nothing to process.",
-      "skills": [
-        "llm-wiki"
-      ],
-      "skill": null,
-      "model": null,
-      "provider": null,
-      "base_url": null,
-      "script": "fetch_slack_brains.py",
-      "no_agent": false,
-      "context_from": null,
-      "schedule": {
-        "kind": "interval",
-        "minutes": 120,
-        "display": "every 120m"
-      },
-      "schedule_display": "every 120m",
-      "repeat": {
-        "times": null,
-        "completed": 66
-      },
-      "enabled": true,
-      "state": "scheduled",
-      "paused_at": null,
-      "paused_reason": null,
-      "created_at": "2026-06-05T16:29:12.718659-04:00",
-      "next_run_at": "2026-06-11T07:24:10.981261-04:00",
-      "last_run_at": "2026-06-11T05:24:10.981261-04:00",
-      "last_status": "ok",
-      "last_error": null,
-      "last_delivery_error": null,
-      "deliver": "origin",
-      "origin": {
-        "platform": "telegram",
-        "chat_id": "8612970484",
-        "chat_name": "Justin Goff",
-        "thread_id": null
-      },
-      "enabled_toolsets": [
-        "terminal",
-        "file"
-      ],
-      "workdir": null,
-      "profile": null
-    },
-    {
       "id": "bb9152d836ca",
       "name": "Linear Brain Note Capture",
       "prompt": "[IMPORTANT: You are running as a scheduled cron job. DELIVERY: Your final response will be automatically delivered to the user \u2014 do NOT use send_message or try to deliver the output yourself. Just produce your report/output as your final response and the system handles the rest. SILENT: If there is genuinely nothing new to report, respond with exactly \"[SILENT]\" (nothing else) to suppress delivery. Never combine [SILENT] with content \u2014 either report your findings normally, or say [SILENT] and nothing more.]\n\n## Script Output\nThe following data was collected by a pre-run script. Use it as context for your analysis.\n\nThe output of the fetcher script `fetch_linear_brains.py` is injected below:\n\n---\nIf the output is empty `[]` or has no items, stop immediately. Output absolutely nothing (or just '[SILENT]') and terminate. Do not write any files, do not edit daily notes, and do not send any message.\n\nIf there are new items, process them one by one. For each item:\n1. Determine the date of the comment/update (from its `createdAt` timestamp) in YYYY-MM-DD format.\n2. Determine a spaced capitalized Title based on the topic.\n3. ALL INGESTED NOTES MUST BE ADDED TO THE INBOX FIRST!\n   - Save the file under: `/home/justin.guest/vault/inbox/`\n4. Generate the Note Content:\n   - Filename: `YYYY-MM-DD - Linear - [Title].md`\n   - Properties (Frontmatter):\n     ```yaml\n     ---\n     id: '<timestamp_id>'  # YYYYMMDDHHmmss format based on createdAt\n     daily_note: \"[[Daily Notes/YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]\" # e.g. [[Daily Notes/2026-06-11 Thursday|2026-06-11 Thursday]]\n     category: \"[[Linear]]\"\n     original_url: \"<permalink>\"\n     author: \"<author_name>\"\n     associated_with: \"<associated_entity_wikilink_or_title>\"\n     ---\n     ```\n   - Note Body Layout:\n     ```markdown\n     # \ud83d\udce5 Linear Capture: [Title]\n\n     - **Author:** <author_name>\n     - **Date:** YYYY-MM-DD\n     - **Original Link:** [Linear Comment/Update](<url>)\n     - **Type:** <type: Comment / Project Update / Initiative Update>\n\n     ---\n\n     ## \ud83d\udcdd Marked Content\n     > <body of the comment or update, with its markdown formatting preserved>\n\n     ## \ud83c\udfaf Context Summary\n     - **Associated Entity:** <Associated issue, doc, project, or initiative details. If it's a project update, summarize the project that the update is about.>\n     - **Summary of Thread:** <Grab the text of the comment/update, summarize the thread and the thing the comment/update is associated with (issue, doc, project, initiative; if it's an update, summarize the project or initiative that the update is about). Include any other comments/replies/context provided in the JSON to compile a rich summary.>\n     ```\n5. Write the file to `/home/justin.guest/vault/inbox/<filename>`.\n6. Update today's daily note:\n   - Today's date is determined at runtime based on the system date (e.g. `2026-06-11`).\n   - The daily note path is `/home/justin.guest/vault/Daily Notes/<YYYY-MM-DD Weekday>.md`.\n   - Read today's daily note, locate the `## \ud83d\uddd2 Notepad` section, and append a clean bullet inside it:\n     `* [[inbox/<filename>|Linear Capture]]: <One-sentence summary of the capture>`\n     Keep all other content in the notepad intact. Do NOT overwrite his manual notes.\n7. Mark the item as processed to avoid duplicate processing:\n   - Run the command: `python3 /home/justin.guest/.hermes/scripts/fetch_linear_brains.py --mark-processed <id>`\n8. Once all items are successfully written and marked processed, load llm-wiki and run integrate-light for each new file: append Utilities/log.md only. Do not update index.md or daily notepad via integrate-light. Do not modify Input bodies.\n9. Run `python3 ~/.hermes/scripts/integrate_entities.py <ingest_rel_path>` for each new file.\n10. Output a clear, concise summary of what was saved as your final response so it is sent to Justin. Include hub updates: `\u2192 updated [[Project]], [[Contact]]` if any.\n\nInclude absolute file paths for all operations. Verify files exist before reading/writing. Be extremely quiet if there's nothing to process.",
@@ -318,5 +270,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-06-11T07:05:57.078836-04:00"
+  "updated_at": "2026-06-11T07:13:29.376400-04:00"
 }
