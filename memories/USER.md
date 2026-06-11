@@ -2,7 +2,7 @@ Head of Product at SignLab (B2C sign language edtech). Alumnus of Duolingo/Power
 §
 Todoist structure: status-based Projects (Now, Next, Soon, Maybe Later), Shopping, and Inbox. No Work/Home/Other top-level projects or GTD sub-projects.
 §
-Week ends Sunday. Captures completions. No auto-vault additions from raw mail/text/Slack; rely strictly on work logs & explicit requests.
+Week ends Sun. Captures completions. No auto-vault additions from raw feeds.
 §
 Justin prefers filter views over native Todoist sidebar (Today, Inbox, etc.) — finds them cluttered. When creating any Todoist task, always add a one-sentence comment immediately after — source + why it became a task.
 §

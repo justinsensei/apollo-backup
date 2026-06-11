@@ -48,15 +48,14 @@ aliases:
 ```
 
 ### Step 4 — Body Layout
-Use the simplified personal profile layout:
+Use the simplified personal profile layout. The body should only contain a brief, clean description of who they are and their role. Do NOT include any "State" sections, Roles, Relationships, or Family lists.
+
+**Important Constraints:**
+- **No Family Relationship Deduction:** Do not attempt to automatically deduce or populate family relationships. Justin will always maintain these manually.
+- **No Third-Person Phrasing:** Avoid third-person phrasing such as "Justin's ___". Keep descriptions objective and concise.
 
 ```markdown
-Short description of who they are and their role (avoid third-person phrasing like "Justin's ___").
-
-## State
-- **Role:** Role or title (e.g., Architect, Teacher)
-- **Relationship:** Connection (e.g., Professional Contractor, Friend, Family)
-- **Family:** [[Spouse]] (spouse) [[Child]] (child) (if applicable, single line, no bullets)
+Short description of who they are and their role.
 ```
 
 ### Step 5 — Rely on Backlinks
