@@ -23,3 +23,5 @@ Linear capture: Poller fetch_linear_brains.py queries comments and updates with 
 Obsidian frontmatter category links (e.g., [[People]]) must be double-quoted (e.g., "[[People]]").
 §
 Always query and use Telegram/cron session history (titles/summaries from state.db) as a core input when creating work logs for Justin, ensuring that all Bes/Vault development chat sessions are captured.
+§
+The ~/.hermes/ directory on the VM is a live runtime directory, NOT a Git repository. Never run git init or git commands inside ~/.hermes/ or its subfolders (such as ~/.hermes/skills/). The actual Git repository for system-state backups is ~/bes-backup/. Always perform git commits, pushes, and status checks inside ~/bes-backup/ instead.
