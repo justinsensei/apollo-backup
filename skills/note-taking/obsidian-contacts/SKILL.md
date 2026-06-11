@@ -23,9 +23,6 @@ This skill governs the physical structure and coordinate mapping of the `/Notes/
 - **Sub-skills (Categories):**
   - **`obsidian-people`**: For individual contacts, family members, friends, or colleagues (`category: "[[People]]"`).
   - **`obsidian-organizations`**: For companies, schools, legal entities, or institutions (`category: "[[Organizations]]"`).
-- **Background Automation Mechanics**: See [check_vault_signals_mechanics.md](references/check_vault_signals_mechanics.md) for how the automated background script runs, its failure modes, and how to troubleshoot duplicate or polluted timelines.
-- **Supporting Documentation:**
-  - **`references/check_vault_signals_mechanics.md`**: Deep dive into background timeline automation, parsing engine logic, and duplicate prevention strategies.
 
 ---
 
@@ -52,7 +49,18 @@ To enable short-name links while keeping filenames unique:
      - Kristina
    ```
 
-### Step 4 — Naming & Alias Guidelines (Collision Prevention)
+### Step 4 — Frontmatter Identifiers and No Daily Note Link
+- **Unique Timestamp-Based ID:** Every contact file must have a unique 14-digit ID (`id: "YYYYMMDDHHMMSS"`) in its frontmatter, based on its file creation/birth timestamp (e.g., `stat -c %W`). If there is an ID conflict with any other file in the vault, resolve it by tweaking the last digit or two (e.g., incrementing it).
+- **No Daily Note Property:** Contacts do not require a `daily_note:` link. Do NOT add `daily_note:` to frontmatter for any contact, and exclude contacts (both People and Organizations) from daily-note audits in vault hygiene.
+
+### Step 5 — Simple People Template Guidelines
+For people notes (`category: "[[People]]"`), keep the template simple:
+1. **No Open Threads or Timeline:** Do not include "Open Threads" or "Timeline" sections. Rely entirely on native backlinks for navigation.
+2. **Short Description:** Start right after the frontmatter with a plain, short description (no blockquotes, no "Justin's" third-person references).
+3. **State Section:** Include a `## State` section with `Role:` and `Relationship:`.
+4. **Family Line:** If relevant, include a `Family:` key with a single-line list of family members (e.g. `- **Family:** [[Spouse]] (spouse) [[Child]] (child)`). Do not use bullet points or nested lists for family members.
+
+### Step 6 — Naming & Alias Guidelines (Collision Prevention)
 To prevent automatic link-hijacking and timeline pollution from background analysis scripts (like `check_vault_signals.py`), follow these rules:
 1. **Avoid Overly Aggressive First-Name Aliases**: Never register overly generic, common first names (like `Mac`, `Georgia`, `Linda`, `Andrew`, `Andy`) as standalone aliases in a contact's frontmatter.
    * *Why*: Standalone aliases like `Mac` will match unrelated system terms like `MacMini`, `macOS`, or `MacBook`. Standalone aliases like `Georgia` will match `Georgia Tech` or the US state of Georgia.
