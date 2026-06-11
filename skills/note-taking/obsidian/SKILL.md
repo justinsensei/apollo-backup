@@ -111,7 +111,7 @@ Notes are categorized with a single `category` YAML property containing a quoted
 | `Inputs/Emails/` | `category: "[[Emails]]"` | Email thread summaries | `bes-email-dispatch` |
 | `Inputs/Slack/` | `category: "[[Slack]]"` | Slack conversation summaries | `slack` |
 | `Inputs/Telegram/` | `category: "[[Telegram]]"` | Telegram session summaries | `bes-telegram-ingest` |
-| `[Vault Root]` | `category: "[[Scraps]]"` | Fleeting brain dumps, raw quick-captures, scraps | `obsidian-notes` |
+| inbox/ | category: "[[Scraps]]" | Fleeting brain dumps, raw quick-captures, scraps | `obsidian-notes` |
 | `Utilities/` | `category: "[[Categories]]"` | Category definition notes (`Utilities/Categories/`) | `obsidian-utilities` |
 
 ---

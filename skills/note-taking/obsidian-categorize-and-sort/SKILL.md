@@ -27,7 +27,7 @@ Read the note content and title. Map the note to **exactly one** category from t
 | `category: "[[People]]"` | `Contacts/` | **`obsidian-people`** |
 | `category: "[[Organizations]]"` | `Contacts/` | **`obsidian-organizations`** |
 | `category: "[[Notes]]"` | `Notes/` | **`obsidian-notes`** |
-| `category: "[[Scraps]]"` | `Inputs/Scraps/` | **`obsidian-notes`** |
+| `category: "[[Scraps]]"` | inbox/ | **`obsidian-notes`** |
 | `category: "[[References]]"` | `Notes/` | **`obsidian-references-sources`** |
 | `category: "[[Sources]]"` | `Notes/` | **`obsidian-references-sources`** |
 | `category: "[[Thoughts]]"` | `Notes/` | **`obsidian-thoughts-beliefs`** |
@@ -90,7 +90,7 @@ To avoid naive categorization, distinguish clearly between the five main types u
 
 ### 8. Scraps (`[[Scraps]]`) — Fleeting Internal Quick-Captures
 * **Criteria**: Fleeting brain dumps, off-the-cuff jottings, scratchpad-style reflections, unrefined jottings, and work-in-progress scraps (e.g. *Where I am this morning*, *On ADHD productivity apps* early draft, fleeting thoughts about code/WIP).
-* **Rule**: Keep these in `category: "[[Scraps]]"`. These are highly temporal, messy, private, and require zero formatting. They reside in `Inputs/Scraps/`.
+* **Rule**: Keep these in `category: "[[Scraps]]"`. These are highly temporal, messy, private, and require zero formatting. They reside in `inbox/`.
 
 ---
 
