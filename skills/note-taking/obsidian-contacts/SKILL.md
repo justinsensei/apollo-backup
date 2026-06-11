@@ -71,6 +71,15 @@ To prevent automatic link-hijacking and timeline pollution from background analy
   - Organizations: Use correct corporate casing (e.g., `Duolingo.md`, `SmartPass.md`, `PowerSchool.md`, `SignOn.md`, `SV Academy.md`).
 - **Renaming & Healing:** If contacts are found with incorrect lowercase filenames, use `git mv` to rename them, and run a vault-wide search-and-replace to update all internal links to use the correct casing, keeping your index perfectly coherent.
 
+### Step 6 — Contact ID Convention (Strict ID Uniqueness)
+- **Every contact must have a unique ID** field in its frontmatter:
+  ```yaml
+  id: "YYYYMMDDHHMMSS"
+  ```
+- **ID Generation**: The ID is based on the file creation/birth timestamp formatted as a 14-digit string `YYYYMMDDHHMMSS`. On Linux, this birth timestamp can be fetched via `stat -c %W` (falling back to modification time if birth time is unavailable).
+- **ID Uniqueness**: Before assigning an ID to a contact (whether creating a new one or repairing an existing one), verify that the ID is completely unique across the entire vault (check other notes' IDs as well).
+- **Conflict Resolution**: If the generated ID is already in use (common when notes are imported or created in batches), tweak the last digit or two (e.g. increment) until a completely unique ID is obtained.
+
 ---
 
 ## Pitfalls & Safeguards
