@@ -14,60 +14,37 @@ metadata:
 
 ## Overview
 
-This skill has two primary functions:
-
-1.  Creating general reference notes like cheat sheets, factsheets, and summaries of external concepts.
-2.  Executing the formal workflow for compiling raw, immutable `Inputs/Readings` into refined, mutable `Notes/Sources` that can be linked to from other parts of the vault.
-
-This skill absorbs the `integrate-full` workflow from the deprecated `llm-wiki` skill.
+This skill facilitates the creation of "reading notes" (`Source` notes) from raw `Reading` inputs. It transforms the previous bibliographic function into an active knowledge-synthesis task, where a human is always in the loop. The process is driven by an interactive script that generates a summary of a reading and creates a new, properly formatted `Source` note in the vault.
 
 ## When to Use
 
--   When Justin asks to create a reference note, cheat sheet, or factsheet.
--   When explicitly triggered to process the day's or a specific project's readings ("compile today's readings", "extract sources for [[Project]]").
--   As a step in the `wind-down` ritual.
+-   When you want to work through your backlog of readings and create synthesized notes.
+-   As part of a routine like `wind-down` to process one or two articles.
+-   When you have a specific topic in mind and want to find relevant readings to summarize.
 
-## Readings → Sources Workflow
+## Invocation Workflows
 
-This is the formal process for promoting a raw input into a structured source that can be used for synthesis.
+This skill can be invoked in three ways via its main script (`scripts/main.py`):
 
-**Trigger:** Manual, on-demand. Not run from cron automatically.
+1.  **Manual, Unseeded:**
+    - **Trigger:** Run the skill with no arguments.
+    - **Process:** The script presents a random selection of 5 `Readings` that do not have a corresponding `Source` note. You can choose one to process, request another batch of 5, or exit. Once a reading is chosen, a `Source` note is generated.
+    - **Loop:** After creation, the skill will ask if you want to process another.
 
-**Process:** For each `Reading` note in scope, create or update a corresponding `Source` note in `Notes/`.
+2.  **Manual, Seeded:** (To be implemented)
+    - **Trigger:** Run the skill with a seed keyword or topic.
+    - **Process:** The script will find up to 5 relevant `Readings` matching the seed. You choose one to process into a `Source` note.
+    - **Loop:** After creation, you can process another from the same topic, provide a new seed, or exit.
 
-### Source Note Template
+3.  **Automatic, Sub-skill:**
+    - **Trigger:** Called from another skill (e.g., `wind-down`) with a `--mode=single-run` flag.
+    - **Process:** Same as the unseeded manual process, but it exits immediately after the first `Source` note is created, without offering another loop.
 
-```yaml
----
-id: 'YYYYMMDDHHmmss'
-daily_note: "[[YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
-category: "[[Sources]]"
----
+## Implementation Notes
 
-# Title of Source Material
-
-- **Author:** [Author Name]
-- **URL:** [Original URL]
-- **Type:** book | article | paper | video
-
-## Summary
-A Bes-compiled synthesis of the key ideas from the raw input. This summary is kept up-to-date by subsequent runs of this skill.
-
-## Raw inputs
-- [[Link to the original Reading note]]
-
-## Related
-- [[Links to Concepts or Projects that use this source]]
-```
-
-### Key Principles
-
--   **Link Direction:** The proper link hierarchy is `Concept` → `Source` → `Reading`. Never link a `Concept` or `Thought` directly to a `Reading` if a `Source` note for it exists.
--   **Confirmation:** Always confirm with Justin before performing bulk creations or edits of `Source` notes.
--   **Atomicity:** Each `Source` note should correspond to a single `Reading`.
+-   **Core Logic:** The core extraction is handled by `scripts/create_source_note.py`. This script takes a path to a `Reading`, generates a summary using an LLM call, and creates the new `Source` file in `Notes/Sources/`.
+-   **Interactive Wrapper:** The main workflow is managed by `scripts/main.py`, which finds unprocessed readings and handles user interaction.
 
 ## Pitfalls
 
--   **Compiling into Reading bodies:** `Inputs` are immutable. The compiled summary and metadata belong exclusively in the `Source` note.
--   **Linking directly to Readings:** Bypassing the `Source` note breaks the intended knowledge graph structure and makes it difficult to track how raw information is synthesized.
--   **Automatic Execution:** This workflow requires judgment and synthesis, and should not be run automatically from cron without explicit approval for the batch.
+-   **LLM Invocation in Scripts:** During development, using `hermes-agent delegate-task` within the script proved unreliable for simple text generation, failing due to subagent configuration complexities. The implementation was changed to use `hermes-agent prompt`, which is a more direct and robust method for getting a simple model completion from a script. For complex, multi-tool sub-tasks, `delegate-task` remains the right choice, but for single-shot generation, `prompt` is preferred.
