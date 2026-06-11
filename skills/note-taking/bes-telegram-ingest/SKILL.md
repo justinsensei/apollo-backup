@@ -17,8 +17,7 @@ Captures flagged Telegram conversation sessions as structured, searchable summar
 These records summarize the session's context, capture key takeaways or next steps, and store the metadata required to look up the complete, raw transcripts in the local session database (`state.db`).
 
 ## Synced Path
-- Initial Creation: `/home/justin.guest/vault/inbox/YYYY-MM-DD - Telegram - [Title].md` (e.g., `2026-06-11 - Telegram - Background Ingestion of Flagged Telegram Sessions.md`)
-- Triage Folder: `Inputs/Telegram/` (moved during wind-down or manual triage)
+- Initial Creation / Folder: `/home/justin.guest/vault/Inputs/Telegram/YYYY-MM-DD - Telegram - [Title].md` (e.g., `2026-06-11 - Telegram - Background Ingestion of Flagged Telegram Sessions.md`)
 - Category: `[[Telegram]]`
 
 ---
@@ -46,7 +45,7 @@ A `MessageReactionHandler` is configured in `gateway/platforms/telegram.py` to l
 ---
 
 ## Background Plumbing (Cron & Poller)
-A background poller script `fetch_telegram_brains.py` runs on a schedule (e.g. every 120 minutes) as part of a scheduled cron job:
+A background poller script `fetch_telegram_brains.py` runs on a schedule (every 30 minutes) as part of a scheduled cron job:
 - **Scan Phase:** Queries `state.db` for sessions that are either marked `brain_flagged = 1` or contain a user message with the `"🧠"` string, where `ingested = 0`.
 - **Extraction Phase:** Formats the session metadata and raw message history, printing it as JSON to be digested by the background agent.
 - **Mark Phase:** Runs with `--mark-processed <SESSION_ID>` to set `ingested = 1` in `state.db`.
@@ -79,7 +78,4 @@ Below the frontmatter, the body is structured as follows:
 ## Summary
 - **Topic A:** [Provide a concise, high-quality summary of the session: what was discussed, decisions made, and any open questions.]
 - **Topic B:** [Concise statement, attributing decisions/takeaways accurately]
-
-## Transcript Highlights
-- **User**: [Clean, selective markdown transcript highlights filtering out tool/system clutter and focusing on high-value user/assistant exchanges.]
 ```
