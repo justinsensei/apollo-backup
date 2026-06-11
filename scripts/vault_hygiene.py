@@ -690,21 +690,25 @@ for root, dirs, files in os.walk(VAULT):
                     text = new_text
 
         if category:
-            expected = expected_folder_prefix(category, VAULT)
-            prefixes = acceptable_folder_prefixes(category, VAULT)
-            if category == "Sources":
-                if not rel_str_f.startswith("Notes/") or rel_str_f.startswith("Notes/Projects/"):
-                    wrong_folder.append((rel_str_f, category, expected or "Notes/"))
-            elif category == "Projects":
-                if not rel_str_f.startswith("Notes/Projects/"):
-                    wrong_folder.append((rel_str_f, category, expected or "Notes/Projects/"))
-            elif category == "Readings" and rel_str_f.startswith("Notes/"):
-                wrong_folder.append((rel_str_f, category, expected or prefixes[0]))
-            elif category == "Scraps":
-                if "/" in rel_str_f:
-                    wrong_folder.append((rel_str_f, category, "Vault Root (/)"))
-            elif prefixes and not any(rel_str_f.startswith(p.rstrip("/")) for p in prefixes):
-                wrong_folder.append((rel_str_f, category, expected or prefixes[0]))
+            if rel_str_f.startswith("inbox/"):
+                # Any note in the inbox is in a valid temporary landing/review state
+                pass
+            else:
+                expected = expected_folder_prefix(category, VAULT)
+                prefixes = acceptable_folder_prefixes(category, VAULT)
+                if category == "Sources":
+                    if not rel_str_f.startswith("Notes/") or rel_str_f.startswith("Notes/Projects/"):
+                        wrong_folder.append((rel_str_f, category, "Notes/"))
+                elif category == "Projects":
+                    if not rel_str_f.startswith("Notes/Projects/"):
+                        wrong_folder.append((rel_str_f, category, "Notes/Projects/"))
+                elif category == "Readings" and rel_str_f.startswith("Notes/"):
+                    wrong_folder.append((rel_str_f, category, expected or prefixes[0]))
+                elif category == "Scraps":
+                    if not rel_str_f.startswith("inbox/"):
+                        wrong_folder.append((rel_str_f, category, "inbox/"))
+                elif prefixes and not any(rel_str_f.startswith(p.rstrip("/")) for p in prefixes):
+                    wrong_folder.append((rel_str_f, category, expected or prefixes[0]))
 
         if category == "Sources" and rel_str_f.startswith("Notes/") and not rel_str_f.startswith("Notes/Projects/"):
             raw_section = re.search(r"^## Raw inputs\s*$", text, re.MULTILINE | re.IGNORECASE)
