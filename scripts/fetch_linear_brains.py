@@ -94,11 +94,13 @@ def main():
     viewer_id, viewer_name = get_viewer_id()
 
     # Define reaction filters for the query
-    # Match emoji name "obsidian_jg" or customEmojiId "3edcb6ac-42df-4ef3-8bf4-c6a6b21c8124"
+    # Match emoji name "obsidian_jg", brain emoji, or customEmojiId "3edcb6ac-42df-4ef3-8bf4-c6a6b21c8124"
     emoji_filter = {
         "reactions": {
             "or": [
                 {"emoji": {"eq": "obsidian_jg"}},
+                {"emoji": {"eq": "🧠"}},
+                {"emoji": {"eq": "brain"}},
                 {"customEmojiId": {"eq": "3edcb6ac-42df-4ef3-8bf4-c6a6b21c8124"}}
             ]
         }
@@ -296,7 +298,7 @@ def main():
         # Verify Justin added the reaction
         has_justin_reaction = False
         for rxn in node.get("reactions", []):
-            is_obsidian = rxn.get("emoji") == "obsidian_jg"
+            is_obsidian = rxn.get("emoji") in ["obsidian_jg", "🧠", "brain"]
             is_justin = rxn.get("user", {}).get("id") == viewer_id
             if is_obsidian and is_justin:
                 has_justin_reaction = True
@@ -332,7 +334,7 @@ def main():
         # Verify Justin added the reaction
         has_justin_reaction = False
         for rxn in node.get("reactions", []):
-            is_obsidian = rxn.get("emoji") == "obsidian_jg"
+            is_obsidian = rxn.get("emoji") in ["obsidian_jg", "🧠", "brain"]
             is_justin = rxn.get("user", {}).get("id") == viewer_id
             if is_obsidian and is_justin:
                 has_justin_reaction = True
@@ -364,7 +366,7 @@ def main():
         # Verify Justin added the reaction
         has_justin_reaction = False
         for rxn in node.get("reactions", []):
-            is_obsidian = rxn.get("emoji") == "obsidian_jg"
+            is_obsidian = rxn.get("emoji") in ["obsidian_jg", "🧠", "brain"]
             is_justin = rxn.get("user", {}).get("id") == viewer_id
             if is_obsidian and is_justin:
                 has_justin_reaction = True
