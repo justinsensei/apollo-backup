@@ -79,7 +79,7 @@ category: "[[CategoryName]]"         # Single category link (quoted shortest-pat
   - **Projects:** Must be `Title.md` under `Notes/Projects/` (e.g. `Spaced Title.md`).
   - **Contacts (People/Organizations):** Must be `Title.md` (e.g. `Aly Lalji.md`, `SignLab.md`).
   - **Meetings:** Must be `YYYY-MM-DD - Spaced Meeting Title.md` (e.g. `2026-06-09 - SignLab Product Alignment.md`).
-  - Do not use kebab-case, lowercase hyphenated, or otherwise incorrect filenames. All names must be capitalized, spaced titles following these rules.
+  - Do not use kebab-case, lowercase hyphenated, or otherwise incorrect filenames. All names must be capitalized, spaced titles following these rules. Filenames are automatically normalized and healed for correct acronym casing (e.g., `AI`, `ADHD`, `B2C`) and proper nouns by the `vault_hygiene` pipeline.
   - **Rationale:** As notes become less ephemeral and more authoritative (moving up the hierarchy), the date and/or ID is de-emphasized or omitted in the filename. Ephemeral, lower-tier notes are highly temporal (their place in time and sequence matters more), whereas canonical/authoritative notes (projects, people, beliefs, references) should stand out visually and contextually by title alone.
 
 ### Git & Synchronization
