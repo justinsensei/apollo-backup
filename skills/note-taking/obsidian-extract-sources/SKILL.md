@@ -1,7 +1,7 @@
 ---
 name: obsidian-extract-sources
 description: An interactive workflow for compiling immutable `Inputs/Readings` into mutable, summary-focused `Notes/Sources`.
-version: 1.2.0
+version: 1.3.0
 author: Bes
 license: MIT
 metadata:
@@ -34,12 +34,38 @@ The process is designed to be interactive. It finds unprocessed readings, allows
 -   **Creation:** Upon confirmation, the new `Source` note is written to the `inbox/` directory, not directly into `Notes/Sources/`. This allows for manual review and triage.
 -   **Looping:** The interactive session should offer to process another reading, get a new batch, or exit.
 
+## Interactive Execution Steps (Native Workflow)
+
+Do **NOT** write, execute, or maintain any Python or Shell scripts to handle this skill. Avoid spawning background subprocesses or CLI invocations of `hermes-agent prompt` or `hermes-agent delegate-task`. Perform the entire workflow natively inside your main conversation using your primary toolsets:
+
+1. **Find Unprocessed Readings (using `terminal`):**
+   Run a `ripgrep` (`rg`) command or similar in `terminal` to list files inside `Inputs/Readings/` that do not have a corresponding file with the same name in `Notes/Sources/` or `inbox/`.
+2. **Present a Selection (using `clarify`):**
+   Take a random sample of 5 unprocessed reading file paths, and present their names as choice items to the user via the `clarify` tool.
+3. **Read File Content (using `read_file`):**
+   Once the user selects a reading, use the `read_file` tool to read the entire text content.
+4. **Generate Summary (Natively):**
+   Do **NOT** call external models or subprocesses. Generate the summary natively in your own thinking process. Format the note content with:
+   - Frontmatter containing:
+     - `id`: Unique timestamp ID (YYYYMMDDHHMMSS).
+     - `daily_note`: Wikilink to today's daily note (e.g. `[[2026-06-11 Thursday]]`).
+     - `category`: `[[Sources]]`.
+     - `reading`: Wikilink to the raw reading file.
+   - Markdown header with the reading title.
+   - A structured, insightful Markdown summary of the reading.
+5. **Show Preview & Confirm (using `clarify`):**
+   Present the exact generated Markdown file content to the user in the chat, and use the `clarify` tool with multiple choice options ("Yes, create it" and "No, cancel") to get explicit confirmation.
+6. **Create the Note (using `write_file`):**
+   Upon explicit user confirmation, write the completed Markdown note to the vault's `inbox/` path.
+7. **Offer to Loop (using `clarify`):**
+   Ask if they want to process another reading, pull a fresh batch, or finish.
+
 ## Implementation Pitfalls & Lessons Learned
 
 -   **Discovery of Unprocessed Readings:**
-    -   **Failed Approach:** An initial attempt to use a Python script with `os.walk` to find unprocessed readings by checking for backlinks became overly complex and repeatedly failed in difficult-to-debug ways. This approach is brittle.
-    -   **Correct Approach:** A much more robust and transparent method is to use the `terminal` tool with `ripgrep` (`rg`). A simple `rg -L -v "filename"` check against the `Notes/Sources/` and `inbox/` directories is sufficient to determine if a `Reading` has already been processed. Avoid complex, stateful Python file I/O for simple discovery tasks.
+    -   *Failed Approach:* An initial attempt to use a complex, stateful Python script with `os.walk` to find unprocessed readings by checking for backlinks proved fragile and difficult to debug.
+    -   *Correct Approach:* Use a simple, stateless `terminal` invocation with `ripgrep` (`rg`) or `find` to check the filesystem directly.
 
--   **LLM Invocation in Scripts:**
-    -   **Problematic:** Using `hermes-agent delegate-task` from a Python script for simple text generation proved unreliable. It introduces unnecessary complexity and potential configuration issues for the subagent.
-    -   **Preferred:** The `hermes-agent prompt` command is a more direct, simple, and robust method for getting a model completion from within a script. For single-shot text generation, it is the superior choice. `delegate-task` should be reserved for complex sub-tasks requiring their own tool use and reasoning loops.
+-   **Subprocess Inception (CRITICAL PITFALL):**
+    -   *Problematic:* Writing a script that calls a subprocess invoking the `hermes-agent` CLI is an extreme anti-pattern. Banners, status updates, and decorative outputs from the CLI pollute `stdout` captures and corrupt the programmatic parse blocks, causing catastrophic loop failures and 404 model mismatches.
+    -   *Rule:* **Never call `hermes-agent` inside a script.** Always stay native and handle reasoning/text generation directly in your own active context. If you need text summarized, read the file and summarize it yourself.
