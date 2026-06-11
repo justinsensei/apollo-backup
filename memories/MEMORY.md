@@ -12,7 +12,7 @@ Justin uses Apple Notes as a "filing cabinet" for references (previously in Obsi
 §
 Google Calendar has write access; Bes can directly schedule events on Justin's behalf (e.g., during morning briefings or from forwarded emails) using `gws_multi.py --account <name> calendar create` instead of creating 'Add to calendar' tasks in Todoist.
 §
-New contacts to vault/inbox/ (existing in Notes/Contacts/ updated in place). Scraps to root (/). Forwarded emails to Inputs/Emails/. Inbox holds Bes-created reviews, Decisions, and Query syntheses.
+New contacts to vault/inbox/ (existing in Notes/Contacts/ updated in place). Scraps to inbox/. Forwarded emails to Inputs/Emails/. Inbox holds Bes-created reviews, Decisions, and Query syntheses.
 §
 Timelines are disabled in favor of native Backlinks. check_vault_signals.py is read-only, and integrate_entities.py only updates project State on decisions.
 §

@@ -4,6 +4,7 @@ description: Core settings, paths, frontmatter schemas, baseline conventions, an
 version: 1.4.0
 author: Bes
 license: MIT
+platforms: [linux, macos]
 metadata:
   hermes:
     tags: [obsidian, core, conventions, paths, frontmatter, triage, sorting]

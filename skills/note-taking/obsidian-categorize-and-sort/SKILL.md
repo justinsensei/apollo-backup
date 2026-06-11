@@ -4,6 +4,7 @@ description: Use when triaging, organizing, or sorting legacy or incoming notes 
 version: 2.0.1
 author: Bes
 license: MIT
+platforms: [linux, macos]
 metadata:
   hermes:
     tags: [obsidian, operations, triage, sorting, taxonomy]

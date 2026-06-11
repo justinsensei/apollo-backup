@@ -4,6 +4,7 @@ description: Use when managing the Notes/ directory, conceptual mapping, and coo
 version: 1.0.0
 author: Bes
 license: MIT
+platforms: [linux, macos]
 metadata:
   hermes:
     tags: [obsidian, notes, folder-conventions]
