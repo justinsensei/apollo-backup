@@ -8,17 +8,20 @@ HERMES_HOME = os.path.expanduser("~/.hermes")
 VENV_PY = os.path.join(HERMES_HOME, "hermes-agent", "venv", "bin", "python3")
 SCRIPTS_DIR = os.path.join(HERMES_HOME, "scripts")
 
-def run_script(script_name):
+def run_script(script_name, args=None):
     script_path = os.path.join(SCRIPTS_DIR, script_name)
+    cmd = [VENV_PY, script_path]
+    if args:
+        cmd.extend(args)
     try:
         res = subprocess.run(
-            [VENV_PY, script_path],
+            cmd,
             capture_output=True,
             text=True,
             timeout=60
         )
         if res.returncode != 0:
-            sys.stderr.write(f"Error running {script_name} (rc={res.returncode}): {res.stderr}\n")
+            sys.stderr.write(f"Error running {script_name} {' '.join(args or [])} (rc={res.returncode}): {res.stderr}\n")
             return []
         
         out = res.stdout.strip()
@@ -40,14 +43,14 @@ def main():
     # Fetch Linear brains
     linear_brains = run_script("fetch_linear_brains.py")
     
-    # Fetch Telegram brains
-    telegram_brains = run_script("fetch_telegram_brains.py")
+    # Fetch Gmail/Bes Inbox forwards
+    email_brains = run_script("poll_bes_inbox.py", ["--json"])
     
     # Output unified dict
     unified = {
         "slack": slack_brains,
         "linear": linear_brains,
-        "telegram": telegram_brains
+        "emails": email_brains
     }
     print(json.dumps(unified, indent=2))
 
