@@ -10,6 +10,8 @@ Summarize today's work activity and append a structured Work Log block to **toda
 
 The block has three sections — **Highlights / Decisions / Open Questions** — synthesized across all sources. New sources do not get their own headings; they feed the synthesis. The footer enumerates which sources were actually pulled and rough counts.
 
+**Governance Rule (Human-in-the-Loop):** Work logs must **never** be written, overwritten, or updated automatically in the background (e.g., via a silent midnight cron job). They are a gray-area item requiring case-by-case review and alignment in chat before they are saved to the daily note. This review is integrated into the interactive Daily Wind-Down and Morning Briefing.
+
 **Boundary with llm-wiki:** Work logs synthesize daily activity — they do not compile Readings into Source notes. When citing readings in highlights, link to compiled `[[Sources]]` in `Notes/` when they exist; otherwise link to raw `[[Readings]]` in `Inputs/Readings/`.
 
 ## TARGET_DATE override (for cron / morning briefing)
