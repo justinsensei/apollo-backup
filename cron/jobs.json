@@ -1,47 +1,6 @@
 {
   "jobs": [
     {
-      "id": "9e1227d21111",
-      "name": "Bes email dispatch",
-      "prompt": "The poller (output above) has detected new emails Justin forwarded to goff.justin+bes@gmail.com. The script output lists one line per new message id.\n\nFor each id in the list:\n  1. Load the bes-email-dispatch skill if not already loaded.\n  2. Run scripts/load_context.py <MESSAGE_ID> via the venv python (path is in the skill).\n  3. Follow the skill: parse instruction, decide intent, write to the Obsidian vault, verify the file landed.\n  4. If is_real is false, skip and note why.\n  5. For each filed note, load llm-wiki and run integrate-light: append Utilities/log.md only (one line per ingest with daily note wikilink as last field). Do not update index.md or daily notepad. Do not modify Input bodies.\n  6. For each filed note, run `python3 ~/.hermes/scripts/integrate_entities.py <ingest_rel_path> [--gist \"...\"]`. Include hub updates in Telegram one-liner: `\u2192 updated [[Project]], [[Contact]]`.\n\nAt the end, reply with one concise line per processed message (success or skip + reason). The reply is delivered to Telegram, so keep it tight \u2014 single line per email, no preamble.\n\nIf the script output above this prompt is empty or says \"no new events,\" reply with literally nothing (empty response). Hermes cron will treat empty as silent.",
-      "skills": [
-        "bes-email-dispatch",
-        "llm-wiki"
-      ],
-      "skill": "bes-email-dispatch",
-      "model": null,
-      "provider": null,
-      "base_url": null,
-      "script": "poll_bes_inbox.py",
-      "no_agent": false,
-      "context_from": null,
-      "schedule": {
-        "kind": "interval",
-        "minutes": 10,
-        "display": "every 10m"
-      },
-      "schedule_display": "every 10m",
-      "repeat": {
-        "times": null,
-        "completed": 2539
-      },
-      "enabled": true,
-      "state": "scheduled",
-      "paused_at": null,
-      "paused_reason": null,
-      "created_at": "2026-05-20T14:56:45.812443-04:00",
-      "next_run_at": "2026-06-11T07:24:15.474986-04:00",
-      "last_run_at": "2026-06-11T07:14:15.474986-04:00",
-      "last_status": "ok",
-      "last_error": null,
-      "last_delivery_error": null,
-      "deliver": "telegram",
-      "origin": null,
-      "enabled_toolsets": null,
-      "workdir": null,
-      "profile": null
-    },
-    {
       "id": "49fb99de8688",
       "name": "Daily Work Log",
       "prompt": "Create a work log for yesterday (the day before today). Follow the work-log skill exactly. \"Today\" for the purposes of this run means yesterday's date \u2014 pre-compute it as `date -d \"yesterday\" +%F`. All source queries, date filters, and the daily note lookup should use yesterday's date. Overwrite any existing Work Log block in the note (do not prompt for confirmation \u2014 this is an automated run).",
@@ -270,5 +229,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-06-11T07:17:46.127358-04:00"
+  "updated_at": "2026-06-11T07:20:22.145412-04:00"
 }
