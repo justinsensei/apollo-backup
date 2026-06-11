@@ -4,6 +4,7 @@ description: Capture and ingest Linear comments, updates, and documents as struc
 version: 1.0.0
 author: Bes
 license: MIT
+platforms: [linux, macos]
 metadata:
   hermes:
     tags: [linear, obsidian, ingest, logs]

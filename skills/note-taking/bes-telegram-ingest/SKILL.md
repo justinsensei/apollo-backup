@@ -4,6 +4,7 @@ description: Capture and ingest flagged Telegram conversation sessions as pointe
 version: 1.0.0
 author: Bes
 license: MIT
+platforms: [linux, macos]
 metadata:
   hermes:
     tags: [telegram, obsidian, ingest, logs, state-db]
