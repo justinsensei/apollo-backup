@@ -2,7 +2,7 @@ Hermes handles infra/skills. Defer migrations/creations to Justin.
 §
 Gmail (read-only): tokens under ~/.hermes/google_tokens/. Search via gws_multi.py. Do not use himalaya.
 §
-Obsidian routes: Notes/Contacts/, Notes/Daily Notes/, Notes/, Inputs/ (Readings/Meetings/Emails/Slack), Utilities/. Layer 2 compiled Sources in Notes/. Dividers: always `---`.
+Obsidian routes: Notes/Contacts/, Notes/Daily Notes/, Notes/, Inputs/ (Readings/Meetings/Emails/Slack/Linear), Utilities/. Layer 2 compiled Sources in Notes/. Dividers: always `---`. Log appends to Utilities/log.md.
 §
 App Store Connect issue emails are not Justin's to handle — ignore them when capturing action items from email.
 §
@@ -23,7 +23,5 @@ Timelines are disabled in favor of native Backlinks. check_vault_signals.py is r
 Query syntheses → inbox/ on creation via llm-wiki, printed in channel, log.md append.
 §
 Tier-3 semantic lint (`wiki_semantic_lint.py`) runs monthly (1st, 8am cron `a3f8c2e91b04`). Report-only — orphans (inbound), stale Sources, promotion gaps, contradiction candidates. State: `~/.hermes/state/semantic_lint_last.json`. Structural lint stays in `vault_hygiene.py`.
-§
-Vault chronological logging is active; logs are appended to Utilities/log.md.
 §
 Forwarded emails processed by Bes default to the Inputs/Emails/ directory as inputs.
