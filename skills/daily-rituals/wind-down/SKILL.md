@@ -131,8 +131,7 @@ If Justin selects any:
      ```yaml
      ---
      id: <timestamp_id> # YYYYMMDDHHmmss format based on current time
-     daily_note: "[[<YYYY-MM-DD Weekday>]]" # e.g. [[2026-06-09 Tuesday]]
-     type: <person | organization>
+     category: "[[People]]" # (or [[Organizations]])
      ---
      ```
    * Markdown body:

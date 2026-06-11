@@ -526,8 +526,9 @@ for root, dirs, files in os.walk(VAULT):
         else:
             missing_ids.append(rel_path)
             
-        if not daily_note or "[[" not in daily_note:
-            missing_daily_notes.append(rel_path)
+        if category not in ["People", "Organizations"]:
+            if not daily_note or "[[" not in daily_note:
+                missing_daily_notes.append(rel_path)
             
         # Parse wikilinks
         wikilinks = re.findall(r'\[\[([^\]]+)\]\]', text)
