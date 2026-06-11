@@ -42,32 +42,20 @@ Use the normal capitalized, spaced full name as the filename:
 id: 'YYYYMMDDHHmmss'
 category: "[[People]]"
 aliases:
-  - Nickname
-  - Maiden Name
 ---
 ```
 
 ### Step 4 — Body Layout
-Use the standard personal profile layout to compile a single, scannable source of truth:
+Use the simplified personal profile layout:
 
 ```markdown
-> Executive summary: brief scannable description of who they are / role.
+Short description of who they are and their role (avoid third-person phrasing like "Justin's ___").
 
 ## State
-- **Role:** Title or relationship (e.g., Lead Developer, [[Sam]]'s teacher)
-- **Company:** [[Company Name]] (if applicable)
-- **Relationship:** Colleague/Friend/Teammate/Family
-
-## Open Threads
-- 
-
----
-
-## Timeline
-- YYYY-MM-DD | Ingest — Context of creation / updates.
+- **Role:** Role or title (e.g., Architect, Teacher)
+- **Relationship:** Connection (e.g., Professional Contractor, Friend, Family)
+- **Family:** [[Spouse]] (spouse) [[Child]] (child) (if applicable, single line, no bullets)
 ```
 
-### Step 5 — Updating Timeline
-- Read the existing file first to preserve layout.
-- Insert the new event chronologically at the top of the `## Timeline` section.
-- Keep the `Executive summary` and `State` fields up to date with any newly learned facts.
+### Step 5 — Rely on Backlinks
+Rely entirely on Obsidian's backlinks for chronological navigation. Do NOT add an "Open Threads" or "Timeline" section.
