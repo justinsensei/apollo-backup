@@ -17,8 +17,8 @@ Captures flagged Telegram conversation sessions as structured, searchable summar
 These records summarize the session's context, capture key takeaways or next steps, and store the metadata required to look up the complete, raw transcripts in the local session database (`state.db`).
 
 ## Synced Path
-- `/home/justin.guest/vault/Inputs/Telegram/YYYY-MM-DD - Session ID.md` (e.g. `2026-06-11 - 20260611_065426_f10bbd0d.md`)
-- Folder: `Inputs/Telegram/`
+- Initial Creation: `/home/justin.guest/vault/inbox/YYYY-MM-DD - Telegram - [Title].md` (e.g., `2026-06-11 - Telegram - Background Ingestion of Flagged Telegram Sessions.md`)
+- Triage Folder: `Inputs/Telegram/` (moved during wind-down or manual triage)
 - Category: `[[Telegram]]`
 
 ---
