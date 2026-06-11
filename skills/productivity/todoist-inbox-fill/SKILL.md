@@ -245,33 +245,7 @@ Sources: **Slack, Gmail, Obsidian daily notes, Calendar, Linear, Granola.**
 
 ---
 
-### Subagent E — iMessages (family)
-- **Goal:** Find open actions from family texts in the lookback window. Budget: 5 tool calls.
-- **Context:**
-  > Read recent messages across the allowlisted iMessage chats via SSH proxy:
-  > ```bash
-  > ssh mac-host bes-imsg recent-all --since <LOOKBACK_HOURS>h
-  > ```
-  >
-  > From results, extract messages where someone is:
-  > - Making an explicit request of Justin ("Can you pick up…", "Don't forget…", "Can we…")
-  > - Asking a direct question that Justin hasn't answered (you only see incoming messages, not Justin's replies — flag these as potential outstanding replies)
-  > - Communicating a time-sensitive need (appointments, pickups, deadlines)
-  >
-  > Use friendly names for senders (Nana, Sam, Jamie, Rosie, Kathy, etc.) — not phone numbers.
-  >
-  > Skip: pure reactions ("YAYYY", "I did", "Kk"), FYIs with no ask, group chatter with no clear request directed at Justin.
-  >
-  > **Command safety:** If `bes-imsg recent-all` returns JSON, parse it with `jq`, not `| python3 -c` (scanner blocks `pipe_to_interpreter`).
-  >
-  > Format each candidate task:
-  > `- [iMessage/<chat label>] <concise action> | from: <sender> | context: <brief quote or summary>`
-  >
-  > End with `Total: N candidates`.
-  >
-  > Budget: 5 tool calls. Return what you have and stop.
 
----
 
 ### Subagent D — Calendar (upcoming meetings needing prep)
 
@@ -477,7 +451,7 @@ Once Justin responds:
 ## Pitfalls
 
 - **Granola notes are in `<vault>/Granola/YYYY-MM/` month subfolders.** Filenames start with `YYYY-MM-DD`. Only lines beginning `- Justin:` (case-insensitive) under the `### Next Steps` section are action items for Justin. Everything else is noise.
-- **`delegate_task` concurrency cap is 3.** With 7 sources (Slack, Gmail, Obsidian, Calendar, Linear, iMessages, Granola), split into three batches: Batch 1 (Slack, Gmail, Obsidian), Batch 2 (Calendar, Linear, iMessages), Batch 3 (Granola). Don't try to pass more than 3 at once — it errors immediately.
+- **`delegate_task` concurrency cap is 3.** With 6 sources (Slack, Gmail, Obsidian, Calendar, Linear, Granola), split into two or three batches: Batch 1 (Slack, Gmail, Obsidian), Batch 2 (Calendar, Linear, Granola). Don't try to pass more than 3 at once — it errors immediately.
 - **Linear task naming is fixed.** Do not invent task titles for Linear items. Use exactly `Work on <ID> <name>` for assigned issues and `Triage <ID> <name>` for triage issues. Strip these from the source prefix when adding to Todoist — the content field should be the bare task name, not `[Linear/assigned] Work on…`.
 - **`find-tasks` requires at least one filter.** If you call it with no args it errors. See Step 1 for the right snapshot call.
 - **Dedup is semantic, not textual.** \"Reply to Maya about retro\" and \"Respond to Maya re: retrospective\" are the same action. Don't add both.
