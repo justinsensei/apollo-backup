@@ -4,7 +4,7 @@ Gmail (read-only): tokens under ~/.hermes/google_tokens/. Search via gws_multi.p
 §
 Obsidian routes: Notes/Contacts/, Notes/Daily Notes/, Notes/, Inputs/ (Readings/Meetings/Emails/Slack/Linear), Utilities/. Layer 2 compiled Sources in Notes/. Dividers: always `---`. Log appends to Utilities/log.md.
 §
-App Store Connect issue emails are not Justin's to handle — ignore them when capturing action items from email.
+Ignore App Store Connect emails (not Justin's).
 §
 Todoist rules: Actions only. Inbox fills exclude generic prep, iMessage, archived mail, Linear Triage/Backlog/Completed/Canceled, and items already in Todoist.
 §
@@ -12,16 +12,14 @@ Justin uses Apple Notes as a "filing cabinet" for references (previously in Obsi
 §
 Google Calendar has write access; Bes can directly schedule events on Justin's behalf (e.g., during morning briefings or from forwarded emails) using `gws_multi.py --account <name> calendar create` instead of creating 'Add to calendar' tasks in Todoist.
 §
-Scraps default under vault root (/). Inbox is for Bes-created reviews, Decisions, and Query syntheses.
-§
-New contacts created by Bes must land in vault/inbox/. Existing in Notes/Contacts/ updated in place.
+New contacts to vault/inbox/ (existing in Notes/Contacts/ updated in place). Scraps to root (/). Forwarded emails to Inputs/Emails/. Inbox holds Bes-created reviews, Decisions, and Query syntheses.
 §
 Timelines are disabled in favor of native Backlinks. check_vault_signals.py is read-only, and integrate_entities.py only updates project State on decisions.
 §
 Tier-3 semantic lint (`wiki_semantic_lint.py`) runs monthly (1st, 8am cron `a3f8c2e91b04`). Report-only — orphans (inbound), stale Sources, promotion gaps, contradiction candidates. State: `~/.hermes/state/semantic_lint_last.json`. Structural lint stays in `vault_hygiene.py`.
 §
-Forwarded emails processed by Bes default to the Inputs/Emails/ directory as inputs.
-§
 Linear capture: Poller fetch_linear_brains.py queries comments and updates with obsidian_jg or 🧠 reaction by Justin. Ingested notes save under vault/inbox/ as Inputs/Linear.
 §
-Obsidian YAML frontmatter requires category links in double brackets (e.g., [[People]]) to be wrapped in double quotes (e.g., "[[People]]") to prevent syntax validation failures.
+Obsidian frontmatter category links (e.g., [[People]]) must be double-quoted (e.g., "[[People]]").
+§
+Always query and use Telegram/cron session history (titles/summaries from state.db) as a core input when creating work logs for Justin, ensuring that all Bes/Vault development chat sessions are captured.
