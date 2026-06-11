@@ -123,4 +123,5 @@ Notes are categorized with a single `category` YAML property containing a quoted
 ---
 
 ## Linked Utility Scripts
+- **`scripts/migrate_note_names_2026.py`:** Statically re-runnable python script to scan the entire vault, detect files with old naming conventions (ID prefix or ID-carrying References), rename them safely (IDs at the end for notes, no IDs for References), check for collisions, and heal all corresponding wikilinks across the vault.
 - **`scripts/heal_wikilinks.py`:** Statically re-runnable python script to scan the entire vault, identify base-filename collisions, and automatically heal/simplify any full-path wikilinks down to clean shortest-path wikilinks. Runs completely dynamically and safely.
