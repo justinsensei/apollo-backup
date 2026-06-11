@@ -129,6 +129,18 @@ def main() -> int:
     if not new_msgs:
         return 0
 
+    if "--json" in sys.argv:
+        json_msgs = []
+        for m in new_msgs:
+            json_msgs.append({
+                "id": m.get("id"),
+                "from": m.get("from", "").replace("\n", " ").strip(),
+                "subject": m.get("subject", "").replace("\n", " ").strip(),
+                "snippet": m.get("snippet", "").replace("\n", " ").strip()
+            })
+        print(json.dumps(json_msgs, indent=2))
+        return 0
+
     # Emit summary header + one structured line per new message
     print(f"NEW_FORWARDED_EMAILS: {len(new_msgs)}")
     for m in new_msgs:
