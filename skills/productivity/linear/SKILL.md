@@ -364,6 +364,46 @@ Combine filters with `or: [...]` for OR logic (default is AND within a filter ob
 6. **Add comments** to track progress
 7. **Mark complete** by setting `stateId` to the team's "completed" type state
 
+## Custom Emoji Capture & API Quirks
+
+Linear supports reacting to Comments, ProjectUpdates, and InitiativeUpdates with custom workspace emojis.
+
+### Filtering by Custom Emoji
+To query comments or updates reacted with a custom emoji like `:obsidian_jg:`, use the `reactions` field of type `ReactionCollectionFilter` in the filter arguments:
+```graphql
+query($filter: CommentFilter) {
+  comments(filter: $filter) {
+    nodes {
+      id
+      body
+      url
+      reactions {
+        emoji
+        user { id name }
+      }
+    }
+  }
+}
+```
+With the variable filter:
+```json
+{
+  "filter": {
+    "reactions": {
+      "or": [
+        {"emoji": {"eq": "obsidian_jg"}},
+        {"customEmojiId": {"eq": "3edcb6ac-42df-4ef3-8bf4-c6a6b21c8124"}}
+      ]
+    }
+  }
+}
+```
+
+### Critical API Pitfall: Reaction Schema vs. Filter Schema
+- **The Filter (`ReactionFilter`):** Supports `customEmojiId: IDComparator` to target a specific custom emoji UUID.
+- **The Object (`Reaction`):** Does **NOT** expose a `customEmojiId` field in its GraphQL return type. Trying to query `reactions { customEmojiId }` will result in a **HTTP 400: GraphQL Validation Error**.
+- **The Workaround:** Query `reactions { emoji }` and inspect the returned string. For custom workspace emojis, Linear returns the literal text string (e.g., `"obsidian_jg"`). You can then identify the custom emoji reaction by name. Sibling-user validation must be performed client-side.
+
 ## Rate Limits
 
 - 5,000 requests/hour per API key

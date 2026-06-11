@@ -36,7 +36,7 @@ Deep reference: [architecture](references/architecture.md) | [integrate-light](r
 
 | Layer | Folder | Category | Immutable? | Bes edits body? |
 |-------|--------|----------|------------|-----------------|
-| 1 Inputs | `Inputs/Readings/` etc. | `[[Readings]]`, `[[Meetings]]`, `[[Emails]]`, `[[Slack]]` | Yes | Metadata only |
+| 1 Inputs | `Inputs/Readings/` etc. | `[[Readings]]`, `[[Meetings]]`, `[[Emails]]`, `[[Slack]]`, `[[Linear]]` | Yes | Metadata only |
 | 2 Compiled | `Notes/` | `[[Sources]]` | No | Yes (summary) |
 | 3 Maturity | `Notes/` (+ subfolders) | Notes, Thoughts, Concepts, Beliefs, References, Decisions, Memories, Projects | No | Yes |
 
@@ -64,7 +64,7 @@ See [integrate-light.md](references/integrate-light.md).
 3. Run `integrate_entities.py` on the ingest (see [integrate-entities.md](references/integrate-entities.md))
 4. Confirm hub updates from JSON report; set ingest `project:` frontmatter when script matches exactly one project
 
-**Immutability:** Do not edit bodies under `Inputs/Readings/`, `Inputs/Emails/`, `Inputs/Slack/`.
+**Immutability:** Do not edit bodies under `Inputs/Readings/`, `Inputs/Emails/`, `Inputs/Slack/`, `Inputs/Linear/`.
 
 ## integrate-full (on demand)
 
@@ -141,7 +141,7 @@ One-time `Logs/` → `Inputs/` via `scripts/migrate_logs_to_inputs.py`. See [tax
 
 - [ ] integrate-light appended log line with daily note wikilink
 - [ ] integrate-entities updated matched hub pages (or report shows unmatched only)
-- [ ] No Input body edits on Readings/Emails/Slack
+- [ ] No Input body edits on Readings/Emails/Slack/Linear
 - [ ] Compiled Sources have `## Raw inputs` with Reading links
 - [ ] Layer 3 notes untouched unless integrate-full explicitly scoped
 - [ ] obsidian-hygiene run for structural baseline before semantic lint
