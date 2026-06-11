@@ -38,14 +38,7 @@ def generate_summary(text_content):
 
     try:
         # Using the CLI to delegate is more stable than direct imports
-        process = subprocess.run(
-            [hermes_cli, "delegate-task", "--goal", goal, "--context", text_content, "--format", "json"],
-            capture_output=True,
-            text=True,
-            check=True,
-            timeout=300 
-        )
-        # The result is a JSON string on a single line, get the last non-empty line
+            [hermes_cli, "delegate-task", "--goal", goal, "--context", text_content, "--format", "json", "--model", "gemini/gemini-2.5-pro"],
         lines = process.stdout.strip().splitlines()
         if not lines:
             raise ValueError("Subagent returned no output.")
