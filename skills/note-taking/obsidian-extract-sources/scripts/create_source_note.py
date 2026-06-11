@@ -21,9 +21,9 @@ def get_hermes_cli_path():
 
 def generate_summary(text_content):
     """
-    Uses a subagent to generate a summary of the given text.
+    Uses the `hermes-agent prompt` command to generate a summary.
     """
-    goal = (
+    system_prompt = (
         "You are an expert in synthesizing complex information into concise, insightful summaries. "
         "Read the following text and extract the key points, most interesting arguments, and "
         "most useful insights. The output should be a well-structured summary formatted in Markdown, "
@@ -35,39 +35,30 @@ def generate_summary(text_content):
     hermes_cli = get_hermes_cli_path()
 
     try:
+        # Use `hermes-agent prompt` for a more direct and reliable completion
         process = subprocess.run(
-            [hermes_cli, "delegate-task", "--goal", goal, "--context", text_content, "--format", "json", "--model", "gemini/gemini-2.5-pro"],
+            [hermes_cli, "prompt", "--model", "gemini/gemini-2.5-pro", "--system", system_prompt, text_content],
             capture_output=True,
             text=True,
             check=True,
             timeout=300 
         )
-        lines = process.stdout.strip().splitlines()
-        if not lines:
-            raise ValueError("Subagent returned no output.")
-            
-        last_line = lines[-1]
-        result = json.loads(last_line)
         
-        if "result" in result and "summary" in result["result"]:
-             summary = result["result"]["summary"].strip()
-             if "No summary available" in summary:
-                 raise ValueError("Subagent failed to produce a valid summary.")
-             return summary
-        else:
-            raise KeyError("The key 'summary' was not found in the subagent's JSON response.")
+        summary = process.stdout.strip()
+        if not summary:
+            raise ValueError("LLM returned an empty summary.")
+        return summary
 
     except FileNotFoundError:
         print(f"Error: The command '{hermes_cli}' was not found.", file=sys.stderr)
         sys.exit(1)
     except subprocess.CalledProcessError as e:
-        print(f"Error: Subagent process failed with exit code {e.returncode}.", file=sys.stderr)
+        print(f"Error: LLM prompt process failed with exit code {e.returncode}.", file=sys.stderr)
         print(f"Stderr: {e.stderr}", file=sys.stderr)
         sys.exit(1)
-    except (json.JSONDecodeError, KeyError, ValueError) as e:
-        print(f"Error: Could not parse summary from subagent output. Details: {e}", file=sys.stderr)
+    except ValueError as e:
+        print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
-
 
 def create_source_note(reading_path):
     """
