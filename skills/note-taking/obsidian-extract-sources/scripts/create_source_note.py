@@ -13,12 +13,10 @@ READINGS_DIR = os.path.join(VAULT_PATH, "Inputs", "Readings")
 
 def get_hermes_cli_path():
     """Find the hermes-agent CLI executable."""
-    # This is a simple heuristic. A more robust solution might check the PATH.
     home = os.path.expanduser("~")
     local_bin = os.path.join(home, ".local", "bin", "hermes-agent")
     if os.path.exists(local_bin):
         return local_bin
-    # Fallback to assuming it's in the standard PATH
     return "hermes-agent"
 
 def generate_summary(text_content):
@@ -37,8 +35,13 @@ def generate_summary(text_content):
     hermes_cli = get_hermes_cli_path()
 
     try:
-        # Using the CLI to delegate is more stable than direct imports
+        process = subprocess.run(
             [hermes_cli, "delegate-task", "--goal", goal, "--context", text_content, "--format", "json", "--model", "gemini/gemini-2.5-pro"],
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=300 
+        )
         lines = process.stdout.strip().splitlines()
         if not lines:
             raise ValueError("Subagent returned no output.")
@@ -46,7 +49,6 @@ def generate_summary(text_content):
         last_line = lines[-1]
         result = json.loads(last_line)
         
-        # The actual output is nested
         if "result" in result and "summary" in result["result"]:
              summary = result["result"]["summary"].strip()
              if "No summary available" in summary:
@@ -88,18 +90,14 @@ def create_source_note(reading_path):
     reading_filename = os.path.basename(reading_path)
     title, _ = os.path.splitext(reading_filename)
     
-    # Sanitize title for filename
     sanitized_title = re.sub(r'[\\/*?:"<>|]', "", title)
 
     now = datetime.datetime.now()
     note_id = now.strftime('%Y%m%d%H%M%S')
     daily_note_str = now.strftime('%Y-%m-%d %A')
     
-    # Create a vault-relative path for the wikilink
     reading_relpath = os.path.relpath(reading_path, VAULT_PATH)
-    # Ensure forward slashes for wikilinks, even on Windows
     reading_wikilink = reading_relpath.replace(os.sep, '/')
-
 
     # --- Assemble the new note ---
     frontmatter = f"""---
@@ -112,7 +110,6 @@ reading: "[[{reading_wikilink}]]"
 
     new_note_content = f"{frontmatter}\n# {title}\n\n{summary}\n"
     
-    # Per convention: Title ID.md
     new_filename = f"{sanitized_title} {note_id}.md"
     new_filepath = os.path.join(SOURCES_DIR, new_filename)
 
@@ -121,7 +118,7 @@ reading: "[[{reading_wikilink}]]"
         with open(new_filepath, 'w', encoding='utf-8') as f:
             f.write(new_note_content)
         
-        print(new_filepath) # Return the path of the new file
+        print(new_filepath)
 
     except Exception as e:
         print(f"Error writing new source note: {e}", file=sys.stderr)
