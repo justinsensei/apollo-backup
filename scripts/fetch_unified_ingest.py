@@ -46,11 +46,15 @@ def main():
     # Fetch Gmail/Bes Inbox forwards
     email_brains = run_script("poll_bes_inbox.py", ["--json"])
     
+    # Fetch Telegram brains
+    telegram_brains = run_script("fetch_telegram_brains.py")
+    
     # Output unified dict
     unified = {
         "slack": slack_brains,
         "linear": linear_brains,
-        "emails": email_brains
+        "emails": email_brains,
+        "telegram": telegram_brains
     }
     print(json.dumps(unified, indent=2))
 
