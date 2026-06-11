@@ -396,6 +396,198 @@ def reconcile_granola_meetings(vault_path):
                     except Exception as e:
                         print(f"  Error deleting original raw file {filename}: {e}")
 
+# ==========================================
+# Filename Capitalization & Link Healing
+# ==========================================
+
+ACRONYMS = {
+    "ai": "AI",
+    "adhd": "ADHD",
+    "b2c": "B2C",
+    "b2b": "B2B",
+    "ab": "AB",
+    "pm": "PM",
+    "qa": "QA",
+    "ci": "CI",
+    "cd": "CD",
+    "gtm": "GTM",
+    "asl": "ASL",
+    "dau": "DAU",
+    "wsp": "WSP",
+    "sp": "SP",
+    "pr": "PR",
+    "okr": "OKR",
+    "okrs": "OKRs",
+    "k12": "K12",
+    "edtech": "EdTech",
+    "sped": "SPED",
+}
+
+PROPER_NOUNS = {
+    "amazon": "Amazon",
+    "costco": "Costco",
+    "novak": "Novak",
+    "posthog": "PostHog",
+    "signlab": "SignLab",
+    "smartpass": "SmartPass",
+    "duolingo": "Duolingo",
+    "powerschool": "PowerSchool",
+    "lingvano": "Lingvano",
+    "raptor": "Raptor",
+    "breezeway": "Breezeway",
+    "granola": "Granola",
+    "readwise": "Readwise",
+    "slack": "Slack",
+    "telegram": "Telegram",
+    "gmail": "Gmail",
+    "google": "Google",
+    "linear": "Linear",
+    "github": "GitHub",
+    "git": "Git",
+    "typescript": "TypeScript",
+    "python": "Python",
+    "javascript": "JavaScript",
+    "postgres": "Postgres",
+    "postgresql": "PostgreSQL",
+    "asl": "ASL",
+    "da": "da",
+    "van": "van",
+}
+
+BLACKLIST_WORDS = {
+    "learning", "school", "pittsburgh", "partner", "technologies", "smartpass", 
+    "design", "development", "tech", "software", "engineering", "product", 
+    "management", "doctors", "game", "mobile", "group", "health", "insurance", 
+    "academy", "training", "solutions", "classroom", "production", "video",
+    "as", "a", "an", "the", "on", "and", "or", "but", "with", "from", "for", 
+    "in", "at", "by", "of", "to", "up", "down", "out", "over", "under", "about",
+    "increases", "agility", "games", "language", "zero", "marginal", "cost",
+    "breaks", "coding", "key", "learnings", "website", "test", "testing",
+    "thoughts", "so", "far", "why", "hallucinates", "new", "kind", "interface",
+    "alternatives", "special", "ed", "strategy", "notifications", "fit", "doesn"
+}
+
+def heal_vault_filename_capitalizations(vault_path):
+    vault = Path(vault_path)
+    contacts_dir = vault / "Notes" / "Contacts"
+    
+    contact_words = set()
+    if contacts_dir.exists():
+        for f in os.listdir(contacts_dir):
+            if f.endswith(".md"):
+                name = f[:-3]
+                for w in re.split(r"[-_\s]+", name):
+                    if w:
+                        contact_words.add(w.lower())
+                        
+    contact_words = contact_words - BLACKLIST_WORDS
+    
+    def clean_filename(filename: str) -> str:
+        base, ext = os.path.splitext(filename)
+        if ext != ".md":
+            return filename
+            
+        words = base.split(" ")
+        new_words = []
+        for w in words:
+            w_clean = re.sub(r"[^\w/]", "", w)
+            w_lower = w_clean.lower()
+            
+            if w_lower in ACRONYMS:
+                val = ACRONYMS[w_lower]
+                w_new = w.replace(w_clean, val)
+            elif w_lower in PROPER_NOUNS:
+                val = PROPER_NOUNS[w_lower]
+                w_new = w.replace(w_clean, val)
+            elif w_lower in contact_words:
+                val = w_clean.capitalize()
+                w_new = w.replace(w_clean, val)
+            else:
+                w_new = w
+            new_words.append(w_new)
+            
+        new_base = " ".join(new_words)
+        new_base = re.sub(r"\bdoesn\s+t\b", "doesn't", new_base, flags=re.IGNORECASE)
+        return new_base + ext
+
+    renames = {}
+    title_mapping = {}
+    ignore_dirs = {"Readwise", "Templates", "Daily Notes", "Categories", ".git", ".trash", ".cursor", ".claude", "Copilot"}
+    
+    for root, dirs, files in os.walk(vault):
+        dirs[:] = [d for d in dirs if not d.startswith(".") and d not in ignore_dirs]
+        for f in files:
+            if f.endswith(".md"):
+                old_path = Path(root) / f
+                new_f = clean_filename(f)
+                if new_f != f:
+                    new_path = Path(root) / new_f
+                    renames[old_path] = new_path
+                    title_mapping[f[:-3].lower()] = new_f[:-3]
+                    
+    if renames:
+        print(f"Auto-fixing {len(renames)} incorrectly capitalized file names on disk...")
+        for old_path, new_path in renames.items():
+            try:
+                old_path.rename(new_path)
+                print(f"  Renamed: {old_path.name} -> {new_path.name}")
+            except Exception as e:
+                print(f"  Error renaming {old_path.name}: {e}")
+                
+        # Heal Wikilinks inside all markdown files
+        link_pattern = re.compile(r"\[\[([^\]]+)\]\]")
+        
+        def heal_links_in_text(content):
+            def replace_link(match):
+                inner = match.group(1)
+                if "|" in inner:
+                    target_part, display = inner.split("|", 1)
+                else:
+                    target_part, display = inner, None
+                    
+                if "#" in target_part:
+                    base_target, section = target_part.split("#", 1)
+                    section = "#" + section
+                else:
+                    base_target, section = target_part, ""
+                    
+                base_target_clean = base_target.strip()
+                base_target_lower = base_target_clean.lower()
+                target_filename_lower = os.path.basename(base_target_lower)
+                
+                if target_filename_lower in title_mapping:
+                    new_target_title = title_mapping[target_filename_lower]
+                    dir_part = os.path.dirname(base_target_clean)
+                    new_base_target = os.path.join(dir_part, new_target_title) if dir_part else new_target_title
+                    
+                    if display:
+                        return f"[[{new_base_target}{section}|{display}]]"
+                    else:
+                        return f"[[{new_base_target}{section}]]"
+                return match.group(0)
+                
+            return link_pattern.sub(replace_link, content)
+            
+        modified_files = 0
+        for root, dirs, files in os.walk(vault):
+            dirs[:] = [d for d in dirs if not d.startswith(".") and d not in ignore_dirs]
+            for f in files:
+                if f.endswith(".md"):
+                    path = Path(root) / f
+                    try:
+                        content = path.read_text(encoding="utf-8", errors="replace")
+                        new_content = heal_links_in_text(content)
+                        if new_content != content:
+                            path.write_text(new_content, encoding="utf-8")
+                            modified_files += 1
+                    except Exception as e:
+                        print(f"  Error healing links in {f}: {e}")
+        if modified_files:
+            print(f"Auto-healed wikilinks in {modified_files} files to match new capitalization.")
+
+# Run filename capitalization healer first
+heal_vault_filename_capitalizations(VAULT)
+
 # 1. Reconcile raw Granola meetings from external syncing
 reconcile_granola_meetings(VAULT)
 
