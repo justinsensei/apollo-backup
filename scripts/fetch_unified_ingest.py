@@ -22,7 +22,7 @@ def run_script(script_name, args=None):
         )
         if res.returncode != 0:
             sys.stderr.write(f"Error running {script_name} {' '.join(args or [])} (rc={res.returncode}): {res.stderr}\n")
-            return []
+            return None
         
         out = res.stdout.strip()
         if not out:
@@ -31,23 +31,37 @@ def run_script(script_name, args=None):
             return json.loads(out)
         except json.JSONDecodeError as e:
             sys.stderr.write(f"Error decoding JSON from {script_name}: {e}\nRaw output: {out}\n")
-            return []
+            return None
     except Exception as e:
         sys.stderr.write(f"Exception running {script_name}: {e}\n")
-        return []
+        return None
 
 def main():
+    failed = []
+    
     # Fetch Slack brains
     slack_brains = run_script("fetch_slack_brains.py")
+    if slack_brains is None:
+        failed.append("Slack (fetch_slack_brains.py)")
+        slack_brains = []
     
     # Fetch Linear brains
     linear_brains = run_script("fetch_linear_brains.py")
+    if linear_brains is None:
+        failed.append("Linear (fetch_linear_brains.py)")
+        linear_brains = []
     
     # Fetch Gmail/Bes Inbox forwards
     email_brains = run_script("poll_bes_inbox.py", ["--json"])
+    if email_brains is None:
+        failed.append("Email/Bes Inbox (poll_bes_inbox.py)")
+        email_brains = []
     
     # Fetch Telegram brains
     telegram_brains = run_script("fetch_telegram_brains.py")
+    if telegram_brains is None:
+        failed.append("Telegram (fetch_telegram_brains.py)")
+        telegram_brains = []
     
     # Output unified dict
     unified = {
@@ -57,6 +71,10 @@ def main():
         "telegram": telegram_brains
     }
     print(json.dumps(unified, indent=2))
+    
+    if failed:
+        sys.stderr.write(f"CRITICAL: Failed to ingest from: {', '.join(failed)}\n")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
