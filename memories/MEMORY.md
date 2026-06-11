@@ -6,7 +6,7 @@ Obsidian routes: Notes/Contacts/, Notes/Daily Notes/, Notes/, Inputs/ (Readings/
 §
 App Store Connect issue emails are not Justin's to handle — ignore them when capturing action items from email.
 §
-Todoist is for actions only — no informational notes or FYIs. If something isn't actionable, don't capture it.
+Todoist rules: Actions only. Inbox fills exclude generic prep, iMessage, archived mail, Linear Triage/Backlog/Completed/Canceled, and items already in Todoist.
 §
 Inbox fills: exclude generic meeting prep/internal syncs, and do not suggest tasks for Linear issues already linked/referenced in Todoist.
 §
@@ -25,5 +25,3 @@ Tier-3 semantic lint (`wiki_semantic_lint.py`) runs monthly (1st, 8am cron `a3f8
 Forwarded emails processed by Bes default to the Inputs/Emails/ directory as inputs.
 §
 Linear capture: Poller fetch_linear_brains.py queries comments and updates with obsidian_jg or 🧠 reaction by Justin. Ingested notes save under vault/inbox/ as Inputs/Linear.
-§
-Inbox fills: exclude iMessage, archived mail, and Linear Triage/Backlog/Completed/Canceled.
