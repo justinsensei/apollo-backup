@@ -101,18 +101,7 @@ reading: "[[{reading_wikilink}]]"
 
     new_note_content = f"{frontmatter}\n# {title}\n\n{summary}\n"
     
-    new_filename = f"{sanitized_title} {note_id}.md"
-    new_filepath = os.path.join(SOURCES_DIR, new_filename)
-
-    try:
-        os.makedirs(SOURCES_DIR, exist_ok=True)
-        with open(new_filepath, 'w', encoding='utf-8') as f:
-            f.write(new_note_content)
-        
-        print(new_filepath)
-
-    except Exception as e:
-        print(f"Error writing new source note: {e}", file=sys.stderr)
+    print(new_note_content)
 
 
 if __name__ == "__main__":
