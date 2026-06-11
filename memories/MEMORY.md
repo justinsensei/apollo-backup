@@ -25,3 +25,5 @@ Tier-3 semantic lint (`wiki_semantic_lint.py`) runs monthly (1st, 8am cron `a3f8
 Forwarded emails processed by Bes default to the Inputs/Emails/ directory as inputs.
 §
 Linear capture: Poller fetch_linear_brains.py queries comments and updates with obsidian_jg or 🧠 reaction by Justin. Ingested notes save under vault/inbox/ as Inputs/Linear.
+§
+Inbox fills: exclude iMessage, archived mail, and Linear Triage/Backlog/Completed/Canceled.
