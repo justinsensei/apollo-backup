@@ -214,6 +214,61 @@ def fetch_vault_git(target_date):
     except Exception as e:
         return {"error": str(e)}
 
+def fetch_sessions(target_date):
+    db_path = os.path.expanduser('~/.hermes/state.db')
+    if not os.path.exists(db_path):
+        return {"error": f"Session DB at {db_path} does not exist."}
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        
+        t_dt = datetime.strptime(target_date + " 00:00:00", "%Y-%m-%d %H:%M:%S").astimezone()
+        start_ts = t_dt.timestamp()
+        end_ts = (t_dt + timedelta(days=1)).timestamp()
+        
+        cursor.execute("""
+            SELECT id, title, source, started_at, message_count 
+            FROM sessions 
+            WHERE started_at >= ? AND started_at < ? AND message_count > 0
+            ORDER BY started_at
+        """, (start_ts, end_ts))
+        
+        sessions = cursor.fetchall()
+        results = []
+        for s in sessions:
+            sid, title, source, started_at, msgs_count = s
+            # Get first user message as goal/context
+            cursor.execute("""
+                SELECT content FROM messages 
+                WHERE session_id = ? AND role = 'user' AND content IS NOT NULL AND content != ''
+                ORDER BY id LIMIT 1
+            """, (sid,))
+            first_msg = cursor.fetchone()
+            first_msg_text = first_msg[0][:200] if first_msg else ""
+            
+            # Get last assistant message as outcome
+            cursor.execute("""
+                SELECT content FROM messages 
+                WHERE session_id = ? AND role = 'assistant' AND content IS NOT NULL AND content != ''
+                ORDER BY id DESC LIMIT 1
+            """, (sid,))
+            last_msg = cursor.fetchone()
+            last_msg_text = last_msg[0][:200] if last_msg else ""
+            
+            results.append({
+                "session_id": sid,
+                "title": title,
+                "source": source,
+                "started_at": datetime.fromtimestamp(started_at).strftime('%Y-%m-%d %H:%M:%S'),
+                "message_count": msgs_count,
+                "first_user_msg": first_msg_text,
+                "last_assistant_msg": last_msg_text
+            })
+        conn.close()
+        return results
+    except Exception as e:
+        return {"error": str(e)}
+
 def main():
     env = load_env()
     # Inject variables to environment for child processes
@@ -227,13 +282,15 @@ def main():
     linear_data = fetch_linear(target_date, env.get('LINEAR_API_KEY'), env.get('LINEAR_USER_ID', '211987db-f790-4bfa-8c8e-518e1f704901'))
     gws_data = fetch_gws(target_date)
     vault_git_data = fetch_vault_git(target_date)
+    session_data = fetch_sessions(target_date)
     
     out = {
         "target_date": target_date,
         "slack": slack_data,
         "linear": linear_data,
         "gws": gws_data,
-        "vault_git": vault_git_data
+        "vault_git": vault_git_data,
+        "sessions": session_data
     }
     
     print(json.dumps(out, indent=2))
