@@ -57,15 +57,19 @@ def find_unprocessed_readings():
                             # Ignore files that can't be read
                             continue
 
+    print(f"DEBUG: Processed Basenames Set: {processed_reading_basenames}", file=sys.stderr)
+
     all_readings = []
     unprocessed_readings = []
     if os.path.exists(READINGS_DIR):
         for root, _, files in os.walk(READINGS_DIR):
             for file in files:
                 if file.endswith(".md"):
+                    print(f"DEBUG: Checking file '{file}'", file=sys.stderr)
                     if file not in processed_reading_basenames:
                         unprocessed_readings.append(os.path.join(root, file))
     
+    print(f"DEBUG: Found {len(unprocessed_readings)} unprocessed readings.", file=sys.stderr)
     return unprocessed_readings
 
 
