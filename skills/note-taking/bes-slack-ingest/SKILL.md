@@ -43,7 +43,7 @@ Below the frontmatter, the body is kept super short:
 ```markdown
 # 💬 Slack Thread: [Cleaned Title]
 
-- **Channel:** #channel-name
+- **Channel:** `#channel-name`
 - **Date:** YYYY-MM-DD
 - **Original Thread:** [Slack Link](https://slack.com/...)
 
