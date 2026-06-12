@@ -121,7 +121,18 @@ This utility verifies:
 10. **Inappropriate Capitalization Overruns**: In filename capitalization auto-healing, harvesting words from contacts dynamically (e.g. `Haiku Learning` -> `learning`) can cause common English words (like `learning`, `design`, `pittsburgh`) to become inappropriately capitalized in filenames. Always maintain a robust `BLACKLIST_WORDS` set inside `vault_hygiene.py` to prevent standard words from being mis-identified as proper nouns.
 11. **Cron/Scheduler Timeout and Subprocess Mismatch**: Background cron wrappers (such as `vault_hygiene_cron.py`) running in `no_agent: true` mode are subject to a strict 120s script execution limit enforced by the scheduler. If the script triggers long-running tasks like `semantic_pointer.py index` as a subprocess (which has a 500s timeout to generate embeddings via external APIs), the scheduler will forcefully kill the parent process mid-execution. Always decouple intensive operations like semantic indexing from daily sync/hygiene runs (e.g., schedule them as separate low-priority crons), and ensure all subprocesses run with explicit timeouts (`timeout=100`) to fail-fast. Additionally, be aware that `approvals.cron_mode: deny` automatically blocks arbitrary local code execution (`execute_code`) and shell commands with execution flags (`-e` or `-c`) from running unattended in background tasks.
 
+12. **Commented-out Wikilinks**: The script now ignores wikilinks inside HTML comments (`<!-- [[link]] -->`). This is useful for temporarily disabling a link without deleting it. The regex `re.findall(r'<!--.*?-->|\[\[([^\]]+)\]\]', text)` is used to find all wikilinks, and then the commented-out ones are skipped.
+
+## How to Resolve Ghost Links
+
+When the hygiene script reports "Ghost Links", it means there are wikilinks pointing to notes that don't exist. Here's the process to fix them:
+
+1.  **Identify Daily Notes**: If the ghost link is a daily note (e.g., `[[2026-03-01 Sunday]]`), create the missing note using the daily note template.
+2.  **Comment Out Other Links**: For all other ghost links, comment them out so they are ignored by the linter but can be restored later if needed. The format is `<!-- [[link]] -->`.
+    - Be aware that links may have aliases (e.g., `[[link|alias]]`). The script's output will show the base link, but you may need to adjust the `old_string` in your patch to match the exact format in the file.
+
 ## Verification Checklist
+
 
 - [ ] Script completes without traceback
 - [ ] Granola meetings land in `Inputs/Meetings/` with `[[Meetings]]`
