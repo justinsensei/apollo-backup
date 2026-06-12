@@ -68,7 +68,22 @@ Once the plan is approved, the skill executes it in a granular, one-by-one inter
 3.  **Create New Concepts (One by One):**
     *   For the first new concept, generate and display the full draft of the note content.
     *   The user can approve the draft or request modifications.
-    *   Upon approval, the `write_file` tool creates the new note directly in `~/vault/inbox/`.
+    *   Upon approval, the `write_file` tool creates the new note directly in `~/vault/inbox/` using the following template:
+
+        ```markdown
+        ---
+        id: 'YYYYMMDDHHmmss'
+        daily_note: "[[YYYY-MM-DD Weekday]]"
+        category: "[[Concepts]]"
+        ---
+
+        > A brief, one-sentence summary of the core concept.
+
+        A more detailed explanation of the concept, including its key principles and implications.
+
+        Sources: [[Source Note 1]], [[Source Note 2]]
+        ```
+
     *   This process repeats for each concept on the creation list until the workflow is complete.
 
 
