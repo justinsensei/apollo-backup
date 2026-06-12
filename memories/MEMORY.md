@@ -2,7 +2,7 @@ Hermes handles infra/skills. Defer migrations/creations to Justin.
 §
 Gmail (read-only): tokens under ~/.hermes/google_tokens/. Search via gws_multi.py. Do not use himalaya.
 §
-Obsidian routes: Notes/Contacts/, Notes/Daily Notes/, Notes/, Inputs/ (Readings/Meetings/Emails/Slack/Linear), Utilities/. Layer 2 compiled Sources in Notes/. Dividers: always `---`. Log appends to Utilities/log.md.
+Obsidian vault is at `~/vault`. Routes: `~/vault/Notes/Contacts/`, `~/vault/Notes/Daily Notes/`, `~/vault/Notes/`, `~/vault/Inputs/` (Readings/Meetings/Emails/Slack/Linear), `~/vault/Utilities/`. Layer 2 compiled Sources in `~/vault/Notes/`. Dividers: always `---`. Log appends to `~/vault/Utilities/log.md`.
 §
 Ignore App Store Connect emails (not Justin's).
 §
