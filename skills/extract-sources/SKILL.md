@@ -49,7 +49,14 @@ This is the core knowledge-creation step.
 
 ### Phase 3: Assembly and Confirmation
 
-1.  **Assemble Note:** Assemble the final `Source` note, combining the verbatim content from Phase 1 with the new synthesis sections from Phase 2, all under the standard frontmatter (`id`, `daily_note`, `category`, `reading`).
+- **Assemble Note:** Assemble the final `Source` note.
+  - **Frontmatter:** Include standard frontmatter (`id`, `daily_note`, `category`, `reading`) and all bibliographic information from the `Reading` file's `At a Glance` section (Author, Title, URL, etc.).
+  - **Body:**
+    1. Copy the `Document Note` block from the `Reading` file, if present.
+    2. Copy the `Summary` block from the `Reading` file, if present.
+    3. Insert a `---` divider.
+    4. Add the `## Agreement`, `## Tension/Challenge`, and `## Application & Insights` sections generated during synthesis.
+  Do NOT include the raw `Highlights` or `At a Glance` sections from the reading file in the body of the new `Source` note; bibliographic data belongs in the frontmatter.
 2.  **Add Quick Thoughts:** If the user provides additional "quick thoughts" during the interactive session, append them under a `### Quick Thoughts` heading.
 3.  **Preview:** Present the complete, final Markdown content of the proposed note for user review.
 4.  **Create Note and Rename Reading:** Upon user confirmation, write the `Source` note to the `inbox/` directory with the filename `{Original Reading Title}.md`. Then, rename the original `Reading` file to `{Original Reading Title} {YYYY-MM-DD}.md` to mark it as processed.
