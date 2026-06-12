@@ -166,6 +166,8 @@ Because both the local VM and remote edits modify metadata and files concurrentl
 
 7. **Merge conflict loops during rebase.** Running `git rebase --continue` without resolving conflict markers can result in corrupted files containing diff markup, or skipping remote additions entirely. Always use `git reset --hard origin/main` followed by manual patching to resolve conflicts cleanly.
 
+8. **Importing MCP submodules in Python scripts or `execute_code`.** The `hermes_tools` library does NOT expose MCP-specific submodules (like `hermes_tools.mcp_todoist`). When writing Python scripts that need to communicate with external APIs (Todoist, Linear, Slack), always make direct HTTP requests using `urllib.request` and the corresponding key from `.env` (such as `TODOIST_API_KEY`, `LINEAR_API_KEY`).
+
 ## Verification Checklist
 
 - [ ] File created successfully via `skill_manage` (lives in `~/.hermes/skills/`)
