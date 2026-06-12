@@ -43,33 +43,34 @@ Once the target `Source` notes are identified, the skill gathers the necessary c
 3.  **Discover Related Concepts:** Use the `obsidian-semantic-pointer` tool again, this time searching the `~/vault/Notes/Concepts/` directory with the `Source` corpus as the query.
 4.  **Read Concepts:** Read the full content of the top 3-5 related `Concept` notes found.
 
-### 3. Synthesis and Proposal Generation
+### 3. Planning and Iteration
 
-This is the core reasoning step, typically delegated to a sub-agent.
+This phase focuses on creating a high-level plan for knowledge integration, which is then refined with the user.
 
--   **Input:** The `Source` corpus and the content of related `Concept`s.
--   **Task:** Analyze the inputs and generate a structured set of proposals.
+1.  **Propose Plan:** After analyzing the source(s) and related concepts, propose a plan with three sections:
+    *   **Link to Existing Concepts:** List existing `Concept` notes that should be linked from the source(s). Provide a brief rationale for each link.
+    *   **Revise Existing Concepts:** List existing `Concept` notes that should be updated. Provide a brief rationale explaining what new information the source(s) contribute.
+    *   **Create New Concepts:** List new `Concept` notes that should be created. Provide a brief rationale and a suggested title for each.
+2.  **Iterate with User:** The user reviews the plan and provides feedback. The plan is updated based on this feedback until the user gives explicit approval to proceed with execution.
 
-The proposals should be categorized into three types:
+### 4. Step-by-Step Execution
 
-1.  **New Links:** Identify cases where a `Source` strongly relates to an existing `Concept` without necessitating a change to the `Concept` itself. Propose adding a wikilink (e.g., `[[Concept Title]]`) to the `Source` note.
-2.  **Revisions to Existing Concepts:** Identify cases where a `Source` adds significant new information, nuance, or counter-arguments to an existing `Concept`. Propose specific edits to the `Concept` note, ideally in a diff-like format.
-3.  **New Concepts:** Identify distinct, valuable ideas within the `Source` corpus that are not adequately covered by any existing `Concept`. Propose the creation of a new `Concept` note, including a suggested title and body content.
+Once the plan is approved, the skill executes it in a granular, one-by-one interactive process.
 
-### 4. Interactive Review & Execution
+1.  **Add Links:**
+    *   All approved links are added to the relevant `Source` notes using the `patch` tool. This step is done in a single batch and does not require further approval.
+2.  **Revise Concepts (One by One):**
+    *   For the first concept marked for revision, generate and display a diff of the proposed changes.
+    *   The user can approve the changes or request modifications.
+    *   Upon approval, the `patch` tool applies the changes to the original note.
+    *   The updated note is then moved to `~/vault/inbox/` using `mv`.
+    *   This process repeats for each concept on the revision list.
+3.  **Create New Concepts (One by One):**
+    *   For the first new concept, generate and display the full draft of the note content.
+    *   The user can approve the draft or request modifications.
+    *   Upon approval, the `write_file` tool creates the new note directly in `~/vault/inbox/`.
+    *   This process repeats for each concept on the creation list until the workflow is complete.
 
-The final phase involves user collaboration.
-
-1.  **Present Proposals:** Display the generated proposals to the user, clearly grouped by type (Links, Revisions, New).
-2.  **Await Approval:** Ask the user to approve or reject each proposal individually or in groups.
-3.  **Execute Approved Actions:**
-    *   **Links:** Use the `patch` tool to add the approved wikilinks directly into the `Source` notes.
-    *   **Revisions:** Use the `patch` tool to apply the approved edits to the existing `Concept` note. **Then, move the modified note to `~/vault/inbox/` for final user review.**
-        ```bash
-        # Example move command
-        mv "~/vault/Notes/Concepts/Updated Concept.md" "~/vault/inbox/"
-        ```
-    *   **New Concepts:** Use the `write_file` tool to create the new `Concept` note directly within `~/vault/inbox/`.
 
 ## Pitfalls
 
