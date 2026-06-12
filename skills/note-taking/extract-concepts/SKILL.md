@@ -27,7 +27,7 @@ The skill begins by interpreting the user-provided seed.
 1.  **Receive Seed:** The user provides either a path to a specific `Source` note or a general topic/query.
 2.  **Identify Target Sources:**
     *   If the seed is a path, that file is the single target `Source`.
-    *   If the seed is a query, use the `obsidian-semantic-pointer` tool to search for relevant notes within the `~/vault/Notes/Sources/` directory. The top 3-5 results become the target `Source` notes.
+    *   If the seed is a query, use the `obsidian-semantic-pointer` tool to search for relevant notes within the `~/vault/Notes/Sources/` and `~/vault/inbox/` directory. The top 3-5 results become the target `Source` notes.
 
     ```bash
     # Example for a query seed
