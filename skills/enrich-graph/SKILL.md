@@ -1,5 +1,5 @@
 ---
-name: obsidian-graph-enrichment
+name: enrich-graph
 description: Principles and link hierarchy conventions for maintaining a clean note graph, tracking chronological thinking evolution, and using semantic AI memory integration in Obsidian.
 version: 1.1.0
 author: Bes
@@ -143,5 +143,3 @@ Run vector similarity queries across either full documents (`--type doc`) or ind
 ```bash
 python3 ~/.hermes/scripts/semantic_pointer.py search "search query" --type doc --limit 5
 ```
-
-
