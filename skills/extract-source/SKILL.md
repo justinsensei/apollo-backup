@@ -54,7 +54,7 @@ This is the core knowledge-creation step.
     -   **Body:** Copy the `Document Note` (if present) and `Summary` from the `Reading` file.
     -   **Synthesis:** Place the generated `Agreement`, `Tension/Challenge`, and `Application & Insights` sections under a `## My Synthesis` heading.
 2.  **Add Quick Thoughts:** If the user provides additional "quick thoughts" during the interactive session, append them under a `### Quick Thoughts` heading.
-3.  **Preview:** Present the complete, final Markdown content of the proposed note for user review.
+3.  **Preview (Telegram-Safe):** If running over Telegram, do NOT print the entire markdown note in chat, as it will exceed Telegram's 4,096-character limit and trigger fragmented message splitting. Instead, print a summary (e.g., just the Synthesis and frontmatter) and write the full note to a temporary file, then deliver it to the user as a native file attachment using the  directive.
 4.  **Create Note and Rename Reading:** Upon user confirmation, write the `Source` note to the `inbox/` directory with the filename `{Original Reading Title}.md`. Then, rename the original `Reading` file to `{Original Reading Title} {YYYY-MM-DD}.md` to mark it as processed.
 5.  **Loop:** Offer to process another reading, get a new batch, or exit the workflow.
 
