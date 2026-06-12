@@ -332,7 +332,37 @@ Draft today's work log, align with Justin, and write it to today's daily note. T
 
 ---
 
-### Phase 5 — Tomorrow's Calendar Preview & Close-out
+### Phase 5 — Open Loops
+
+This phase is designed to identify and capture unresolved tasks, unanswered questions, and lingering commitments to ensure nothing falls through the cracks.
+
+1.  **Gather Potential Open Loops:**
+    - Run the dedicated script to find potential open loops from a wide range of sources:
+      ```bash
+      python3 ~/.hermes/scripts/fetch_open_loops.py
+      ```
+    - The script will query:
+        - **Todoist:** Incomplete tasks due today or overdue.
+        - **Linear:** Assigned issues that are not in a 'done' state.
+        - **Vault:** Explicit `TODO` markers and content in `## Open Loops` sections of recently modified notes.
+        - **Communications:** Recent emails and Slack messages for unanswered questions and phrases suggesting future action (e.g., "I'll follow up on...").
+        - **Calendar:** Upcoming events in the next 2-3 days that imply preparation.
+
+2.  **Present and Review:**
+    - Present the list of suggested open loops found by the script.
+    - Ask for review and a brain dump:
+      *"Here are some potential open loops I found. Which of these should we add to the list? Please also share any other open loops on your mind."*
+    - **Wait for Justin's response.**
+
+3.  **Write to Daily Note:**
+    - Combine the approved suggestions with the items from Justin's brain dump.
+    - Format them as a clean bulleted list.
+    - Append this list under the `## Open Loops` section in today's daily note.
+    - Report success.
+
+---
+
+### Phase 6 — Tomorrow's Calendar Preview & Close-out
 
 Preview tomorrow's schedule to establish mental readiness, coordinate upcoming tasks, and close out the day.
 
