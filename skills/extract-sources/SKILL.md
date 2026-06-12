@@ -50,9 +50,10 @@ This is the core knowledge-creation step.
 ### Phase 3: Assembly and Confirmation
 
 1.  **Assemble Note:** Assemble the final `Source` note, combining the verbatim content from Phase 1 with the new synthesis sections from Phase 2, all under the standard frontmatter (`id`, `daily_note`, `category`, `reading`).
-2.  **Preview:** Present the complete, final Markdown content of the proposed note for user review.
-3.  **Create:** Upon user confirmation, write the file to the `inbox/` directory for final triage.
-4.  **Loop:** Offer to process another reading, get a new batch, or exit the workflow.
+2.  **Add Quick Thoughts:** If the user provides additional "quick thoughts" during the interactive session, append them under a `### Quick Thoughts` heading.
+3.  **Preview:** Present the complete, final Markdown content of the proposed note for user review.
+4.  **Create:** Upon user confirmation, write the file to the `inbox/` directory with the filename `Source - {Original Title} {YYYYMMDDHHMMSS}.md`.
+5.  **Loop:** Offer to process another reading, get a new batch, or exit the workflow.
 
 ## Implementation Pitfalls & Lessons Learned
 
