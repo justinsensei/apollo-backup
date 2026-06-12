@@ -1,6 +1,6 @@
 ---
 name: wind-down
-description: "Interactive daily wrap-up: 1. Input candidates; 2. Discovered contacts; 2b. Discovered projects; 3. Source review; 4. Everything In Its Right Place (EIIRP) Vault Hygiene & Triage; 5. Work log draft/write; 6. Next day's calendar preview."
+description: "Interactive daily wrap-up: 1. Input candidates; 2. Discovered contacts; 2b. Discovered projects; 3. Everything In Its Right Place (EIIRP) Vault Hygiene & Triage; 4. Work log draft/write; 5. Next day's calendar preview."
 version: 1.3.0
 author: Bes
 license: MIT
