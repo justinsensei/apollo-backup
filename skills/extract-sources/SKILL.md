@@ -54,13 +54,16 @@ This is the core knowledge-creation step.
   - **Body:**
     1. Copy the `Document Note` block from the `Reading` file, if present.
     2. Copy the `Summary` block from the `Reading` file, if present.
-    3. Insert a `---` divider.
-    4. Add the `## Agreement`, `## Tension/Challenge`, and `## Application & Insights` sections generated during synthesis.
-  Do NOT include the raw `Highlights` or `At a Glance` sections from the reading file in the body of the new `Source` note; bibliographic data belongs in the frontmatter.
-2.  **Add Quick Thoughts:** If the user provides additional "quick thoughts" during the interactive session, append them under a `### Quick Thoughts` heading.
-3.  **Preview:** Present the complete, final Markdown content of the proposed note for user review.
-4.  **Create Note and Rename Reading:** Upon user confirmation, write the `Source` note to the `inbox/` directory with the filename `{Original Reading Title}.md`. Then, rename the original `Reading` file to `{Original Reading Title} {YYYY-MM-DD}.md` to mark it as processed.
-5.  **Loop:** Offer to process another reading, get a new batch, or exit the workflow.
+    ### Phase 3: Assembly and Confirmation
+
+    1.  **Assemble Note:** Assemble the final `Source` note using the `Utilities/Templates/New Source.md` template.
+        -   **Frontmatter:** Populate `id`, `daily_note`, `category`, `reading`, and bibliographic data (`author`, `full_title`, `url`).
+        -   **Body:** Copy the `Document Note` (if present) and `Summary` from the `Reading` file.
+        -   **Synthesis:** Place the generated `Agreement`, `Tension/Challenge`, and `Application & Insights` sections under a `## My Synthesis` heading.
+    2.  **Add Quick Thoughts:** If the user provides additional "quick thoughts" during the interactive session, append them under a `### Quick Thoughts` heading.
+    3.  **Preview:** Present the complete, final Markdown content of the proposed note for user review.
+    4.  **Create Note and Rename Reading:** Upon user confirmation, write the `Source` note to the `inbox/` directory with the filename `{Original Reading Title}.md`. Then, rename the original `Reading` file to `{Original Reading Title} {YYYY-MM-DD}.md` to mark it as processed.
+    5.  **Loop:** Offer to process another reading, get a new batch, or exit the workflow.
 
 ## Implementation Pitfalls & Lessons Learned
 
