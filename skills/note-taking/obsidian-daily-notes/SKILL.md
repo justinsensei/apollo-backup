@@ -18,7 +18,7 @@ This skill governs the filename format, structure, templates, and standard secti
 ---
 
 ## Folder & Category
-- **Directory:** `/home/justin.guest/vault/Notes/Daily Notes/`
+- **Directory:** `/home/justin.guest/vault/Daily Notes/`
 - **Category link:** `category: "[[Daily Notes]]"`
 
 ---

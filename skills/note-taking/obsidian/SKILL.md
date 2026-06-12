@@ -125,7 +125,7 @@ Notes are categorized with a single `category` YAML property containing a quoted
 | `Notes/` | `category: "[[Decisions]]"` | Team or individual decisions and reasoning logs | `obsidian-decisions` |
 | `Notes/` | `category: "[[Memories]]"` | Journal-like personal notes of things I want to remember | |
 | `Notes/Projects/` | `category: "[[Projects]]"` | Hubs for notes about ongoing work, milestones, travel | `obsidian-projects` |
-| `Notes/Daily Notes/` | `category: "[[Daily Notes]]"` | Daily notes containing schedules and work logs | `obsidian-daily-notes` |
+| `Daily Notes/` | `category: "[[Daily Notes]]"` | Daily notes containing schedules and work logs | `obsidian-daily-notes` |
 | `Inputs/Meetings/` | `category: "[[Meetings]]"` | Meeting agendas, summaries, outcomes (Granola reconcile) | `obsidian-meetings` |
 | `Inputs/Readings/` | `category: "[[Readings]]"` | Raw reading imports — Readwise, clippings (immutable) | `llm-wiki` |
 | `Inputs/Emails/` | `category: "[[Emails]]"` | Email thread summaries | `bes-email-dispatch` |
