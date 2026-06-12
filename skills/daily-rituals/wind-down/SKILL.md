@@ -417,6 +417,7 @@ Preview tomorrow's schedule to establish mental readiness, coordinate upcoming t
 - **Dangling Closing Dividers:** Ensure any automated or manual procedure that adds or updates properties writes back the closing divider (`---`) on a *fresh line*. Writing it without an intervening newline will append it directly to the end of the last property string (e.g., `daily_note: '...'---`), which corrupts properties.
 - **Non-Unique Aliases Guard:** Always skip auto-linking any alias that is non-unique (shared by more than one distinct contact path) to avoid incorrect connections in the vault.
 - **Timelines Deactivation (manual wind-down):** Do not manually append `## Timeline` bullets to contact cards during wind-down; rely on Obsidian's native Backlinks panel instead. **`integrate-entities`** is the sanctioned automated append path for both contacts and projects at ingest time — cron and meeting reconcile use it.
+- **Open Loops File:** Do not modify the `/home/justin.guest/vault/Open Loops.md` file directly. All changes must be presented to and approved by Justin during the interactive review.
 
 ## Verification Checklist
 
