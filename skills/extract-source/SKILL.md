@@ -34,7 +34,7 @@ The process is designed to be interactive. It finds unprocessed readings, allows
     -   Bibliographic data (Author, Title, URL).
     -   The `Document Note` block.
     -   The `Summary` block from Readwise.
-4.  **Fetch Full Text:** If a URL is present in the bibliographic data, use the `web_extract` tool to fetch the full, clean text from the source. Hold this, along with any user highlights from the `Reading` file, for the synthesis phase. If the fetch fails, fall back to using only the content present in the `Reading` file.
+4.  **Fetch Full Text:** If a URL is present in the bibliographic data, use the browser tools (`browser_navigate`, then `browser_console` with `document.body.innerText`) to fetch the full, clean text from the source. This is more reliable than older tools like `web_extract`. Hold this, along with any user highlights from the `Reading` file, for the synthesis phase. If the fetch fails, fall back to using only the content present in the `Reading` file.
 
 ### Phase 2: Synthesis and Vault Reconnaissance
 
@@ -61,6 +61,7 @@ This is the core knowledge-creation step.
 ## Implementation Pitfalls & Lessons Learned
 
 -   **State Management:** The workflow should be stateless. Rely on direct filesystem checks (`rg`, `find`) to identify unprocessed readings rather than maintaining a separate state or database.
--   **Web Scraping Fragility:** Fetching full text from URLs can fail. The workflow must gracefully fall back to using the text available in the local `Reading` file when `web_extract` fails or returns poor quality content.
+Web Scraping Fragility: Fetching full text from URLs can fail. The workflow must gracefully fall back to using the text available in the local `Reading` file when browser tools fail or return poor quality content.
+-   **`web_extract` Deprecation:** The `web_extract` tool may not be available. Prefer using the `browser` toolset for fetching web content.
 -   **Subprocess Inception (CRITICAL):** Do **NOT** write a script that calls a subprocess invoking the `hermes-agent` CLI (e.g., `hermes prompt ...`). This anti-pattern pollutes `stdout` and causes catastrophic failures. Handle all reasoning and generation natively in the main conversation context.
 -   **Response Truncation:** The final presentation of the synthesized note can be prone to truncation or corruption. Ensure the entire note is delivered in a single, clean markdown block and that no other context (like the raw highlights) leaks into the user-facing message. Double-check the final output before sending.
