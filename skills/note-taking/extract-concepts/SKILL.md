@@ -31,7 +31,7 @@ The skill begins by interpreting the user-provided seed.
 
     ```bash
     # Example for a query seed
-    ~/.hermes/bin/obsidian-semantic-pointer search "your query here" --vault-path ~/vault --filter-path "Notes/Sources/"
+    python3 ~/bes/vault_indexer/query_vault.py "your query here"
     ```
 
 ### 2. Content Aggregation & Discovery
