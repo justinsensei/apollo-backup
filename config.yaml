@@ -280,6 +280,8 @@ display:
     telegram:
       streaming: true
       show_reasoning: false
+      tool_progress: false
+      cleanup_progress: true
     discord:
       streaming: false
     slack:
