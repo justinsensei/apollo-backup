@@ -41,7 +41,7 @@ The process is designed to be interactive. It finds unprocessed readings, allows
 This is the core knowledge-creation step.
 
 1.  **Identify Core Concepts:** Analyze the full text from the URL and any user highlights to identify the central arguments, claims, and concepts.
-2.  **Search the Vault:** Perform a targeted search of the vault (`~/vault/Notes/`, particularly `Thoughts/`, `Beliefs/`, and `Projects/`) for notes that relate to these core concepts.
+2.  **Search the Vault:** Use the semantic search tool (`~/bes/vault_indexer/query_vault.py`) to find the top 3-5 most relevant notes in the vault related to these core concepts.
 3.  **Generate Synthesis Sections:** Based on the `Reading`'s concepts and the related notes found in the vault, generate three new sections for the `Source` note:
     -   `## Agreement`: Points from the `Reading` that reinforce or support existing `Thoughts` or `Beliefs`.
     -   `## Tension/Challenge`: Points that contradict, challenge, or offer a different perspective on existing notes.
