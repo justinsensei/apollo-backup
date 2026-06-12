@@ -47,15 +47,24 @@ This is the core knowledge-creation step.
     -   `## Tension/Challenge`: Points that contradict, challenge, or offer a different perspective on existing notes.
     -   `## Application & Insights`: Actionable ideas or mental models from the `Reading` that could be applied to active `Projects` or general thinking.
 
-### Phase 3: Assembly and Confirmation
+### Phase 3: Assembly, Preview, and Confirmation
 
-1.  **Assemble Note:** Assemble the final `Source` note using the `Utilities/Templates/New Source.md` template.
+This phase is a strict, interactive sequence. Do not proceed to the next step until the user has explicitly approved the current one.
+
+1.  **Assemble Note:** Assemble the final `Source` note content using the `Utilities/Templates/New Source.md` template.
     -   **Frontmatter:** Populate `id`, `daily_note`, `category`, `reading`, and bibliographic data (`author`, `full_title`, `url`).
     -   **Body:** Copy the `Document Note` (if present) and `Summary` from the `Reading` file.
     -   **Synthesis:** Place the generated `Agreement`, `Tension/Challenge`, and `Application & Insights` sections under a `## My Synthesis` heading.
-2.  **Add Quick Thoughts:** If the user provides additional "quick thoughts" during the interactive session, append them under a `### Quick Thoughts` heading.
-3.  **Preview (Telegram-Safe):** If running over Telegram, do NOT print the entire markdown note in chat, as it will exceed Telegram's 4,096-character limit and trigger fragmented message splitting. Instead, print a summary (e.g., just the Synthesis and frontmatter) and write the full note to a temporary file, then deliver it to the user as a native file attachment using the  directive.
-4.  **Create Note and Rename Reading:** Upon user confirmation, write the `Source` note to the `inbox/` directory with the filename `{Original Reading Title}.md`. Then, rename the original `Reading` file to `{Original Reading Title} {YYYY-MM-DD}.md` to mark it as processed.
+2.  **Write to Temporary File & Preview:** Write the fully assembled note to a temporary file (e.g., `/tmp/{Original Reading Title}.md`).
+3.  **Deliver for Review:** Send a message to the user containing:
+    -   A brief summary of the synthesis.
+    -   The `MEDIA:` tag pointing to the absolute path of the temporary file.
+    -   A direct question asking for approval to proceed (e.g., "Shall I create this note in your `inbox/`?").
+    -   **CRITICAL:** Stop and wait for the user's response. Do not perform any file operations on the vault until confirmation is received.
+4.  **Finalize on Confirmation:** Once the user explicitly approves:
+    -   Write the content from the temporary file to its final destination in the `inbox/` directory with the filename `{Original Reading Title}.md`.
+    -   Rename the original `Reading` file to `{Original Reading Title} {YYYY-MM-DD}.md` to mark it as processed.
+    -   Clean up the temporary file.
 5.  **Loop:** Offer to process another reading, get a new batch, or exit the workflow.
 
 ## Implementation Pitfalls & Lessons Learned
