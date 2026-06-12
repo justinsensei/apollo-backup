@@ -261,7 +261,7 @@ Wait for Justin's confirmation or feedback at the end of the EIIRP report (Step 
 
 
 6. **Step 6: Verification (Link & Orphan Audit)**
-   - Verify that all internal and external wikilinks inside the newly created or modified notes are valid and not broken.
+   - Verify that all internal and external wikilinks inside the newly created or modified notes are valid and not broken. **Important:** Ignore any broken link errors originating from files within the `/Inputs/` directory or any of its sub-folders.
    - Scan for orphaned files created today (i.e. notes with zero incoming or outgoing links) and propose relevant connections to existing daily notes or project hubs.
 
 7. **Step 7: Report (Unified Status Summary)**
@@ -401,6 +401,7 @@ Preview tomorrow's schedule to establish mental readiness, coordinate upcoming t
 
 ## Pitfalls & Defensive Rules
 
+- **Noisy Project Suggestions:** The project discovery phase can be noisy and suggest non-project entities. Use judgment and confirm with Justin before creating new project notes.
 - **Preserve the Notepad:** Always load today's daily note first, find the `## 🗒 Notepad` section, and keep its contents completely intact.
 - **Inputs Terminology:** Always refer to Slack threads, emails, and other primary-category sources as "inputs" rather than "logs" in both conversations and note frontmatter, as per the updated vault schema.
 - **Accurate Attribution:** When drafting highlights and decisions from emails or meeting notes, ensure decisions are attributed to the correct person (e.g., Anya, Nana, teachers, etc.) rather than assuming Justin made them.
