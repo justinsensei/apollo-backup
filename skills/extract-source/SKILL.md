@@ -41,7 +41,7 @@ The process is designed to be interactive. It finds unprocessed readings, allows
 This is the core knowledge-creation step.
 
 1.  **Identify Core Concepts:** Analyze the full text from the URL and any user highlights to identify the central arguments, claims, and concepts.
-2.  **Search the Vault:** Use the semantic search tool (`~/bes/vault_indexer/query_vault.py`) to find the top 3-5 most relevant notes in the vault related to these core concepts.
+2.  **Search the Vault:** Use the semantic search tool (`~/bes/vault_indexer/query_vault.py`) to find the top 3-5 most relevant notes in the vault related to these core concepts. The correct invocation is `python ~/bes/vault_indexer/query_vault.py "your query string"`. Do not use `--query` or other flags.
 3.  **Generate Synthesis Sections:** Based on the `Reading`'s concepts and the related notes found in the vault, generate three new sections for the `Source` note:
     -   `## Agreement`: Points from the `Reading` that reinforce or support existing `Thoughts` or `Beliefs`.
     -   `## Tension/Challenge`: Points that contradict, challenge, or offer a different perspective on existing notes.
@@ -60,6 +60,7 @@ This is the core knowledge-creation step.
 
 ## Implementation Pitfalls & Lessons Learned
 
+-   **File Paths with Spaces:** When using `terminal` commands like `mv` or `ls` on files with spaces in their names, tilde (`~`) expansion can be unreliable. Prefer using the full absolute path (e.g., `/home/justin.guest/vault/...`) to avoid "No such file or directory" errors.
 -   **State Management:** The workflow should be stateless. Rely on direct filesystem checks (`rg`, `find`) to identify unprocessed readings rather than maintaining a separate state or database.
 Web Scraping Fragility: Fetching full text from URLs can fail. The workflow must gracefully fall back to using the text available in the local `Reading` file when browser tools fail or return poor quality content.
 -   **`web_extract` Deprecation:** The `web_extract` tool may not be available. Prefer using the `browser` toolset for fetching web content.
