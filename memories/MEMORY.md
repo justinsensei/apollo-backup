@@ -29,3 +29,5 @@ Executive summaries in Obsidian notes should be formatted as a blockquote withou
 New `Source` notes created by the `extract-sources` skill should be named `{Original Reading Title} {YYYY-MM-DD}.md`.
 §
 When creating `Source` notes from `Readings`, the primary goal is synthesis, not just summarization. This involves connecting the new information to existing notes in the vault by identifying points of agreement, tension, and practical application.
+§
+When building solutions, prefer creating simple, single-purpose utility tools that return raw data. The workflow logic for how to use that data should reside in the skill that calls the tool, not in the tool itself.

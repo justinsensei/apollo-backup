@@ -9,3 +9,5 @@ Accurately attribute decisions to the actual decision-maker (e.g. colleagues or 
 Vault taxonomy: Inputs/Readings (raw immutable), Notes/Sources (compiled bibliographical), then maturity ladder — Notes (fleeting), Thoughts (opinions), Beliefs (axioms), Concepts (others' thinking), References (permanent/reusable decision patterns). Deletes stubs. Batches of 10: show remaining count, omit "Current Category" column.
 §
 Admin automation (sync/ingest/lint) must be hands-off and fail loudly. Knowledge creation and work logs must never be automated (strictly manual or interactive reviews).
+§
+User values synthesis and knowledge integration over simple summarization. When processing new information, the goal is to connect it to existing notes in the vault by identifying agreements, tensions, and potential applications.
