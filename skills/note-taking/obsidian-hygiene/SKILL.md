@@ -125,11 +125,15 @@ This utility verifies:
 
 ## How to Resolve Ghost Links
 
-When the hygiene script reports "Ghost Links", it means there are wikilinks pointing to notes that don't exist. Here's the process to fix them:
+When the hygiene script reports "Ghost Links", it means there are wikilinks pointing to notes that don't exist. Here's the process to resolve them:
 
-1.  **Identify Daily Notes**: If the ghost link is a daily note (e.g., `[[2026-03-01 Sunday]]`), create the missing note using the daily note template.
-2.  **Comment Out Other Links**: For all other ghost links, comment them out so they are ignored by the linter but can be restored later if needed. The format is `<!-- [[link]] -->`.
-    - Be aware that links may have aliases (e.g., `[[link|alias]]`). The script's output will show the base link, but you may need to adjust the `old_string` in your patch to match the exact format in the file.
+1.  **Identify Daily Notes**: If the ghost link is a daily note (e.g., `[[2026-03-01 Sunday]]` or `[[2025-06-26 Thursday]]`), create the missing placeholder daily note using the standard template in `Daily Notes/` (id should be `'YYYYMMDD000000'`).
+2.  **Fuzzy/Casing Healing**: Many ghost links are obsolete kebab-case links from previous schema eras, or have minor casing/punctuation discrepancies (e.g., Torres vs (Torres)).
+    - **Normalization Rule:** Convert both the ghost link target and all existing note basenames in the vault to a normalized, lowercase alphanumeric-only string (strip all spaces, hyphens, parentheses, etc. e.g., `continuous-interviewing-torres-20250723173842` and `Continuous interviewing (Torres) 20250723173842` both normalize to `continuousinterviewingtorres20250723173842`).
+    - If a unique normalized match exists, heal the link.
+3.  **Heal Links Safely**: Perform case-insensitive search and replace of the link targets inside the referencing files.
+    - **Safeguard Section Anchors & Display Text:** Use a regex pattern like `\[\[\s*<old_target>\s*(?P<extra>[|#][^\]]*)?\]\]` to capture any trailing section anchors or display aliases (e.g. `[[old#section|display]]`), replacing with `[[<new_target>\g<extra>]]`.
+4.  **Comment Out Remaining**: For other ghost links with no fuzzy counterpart, either comment them out (`<!-- [[link]] -->`) or verify if they represent a note that needs to be created.
 
 ## Verification Checklist
 
