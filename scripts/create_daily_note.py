@@ -4,7 +4,7 @@ from datetime import datetime
 
 def create_daily_note():
     vault_path = os.path.expanduser("~/vault")
-    template_path = os.path.join(vault_path, "Utilities/Templates/Daily Note Template.md")
+    template_path = os.path.join(vault_path, "Utilities/Templates/daily_note.md")
     notes_dir = os.path.join(vault_path, "Daily Notes")
     
     os.makedirs(notes_dir, exist_ok=True)
@@ -24,7 +24,9 @@ def create_daily_note():
             template_content = f.read()
         
         # Replace placeholders
-        note_content = template_content.replace("{{date:YYYY-MM-DD}}", date_str)
+        note_content = template_content.replace("id: '20260609055912'", f"id: '{date_str.replace('-', '')}000000'")
+        note_content = note_content.replace("<% tp.file.cursor(1) %>", "")
+        note_content = note_content.replace("{{date:YYYY-MM-DD}}", date_str)
         note_content = note_content.replace("{{title}}", f"{date_str} {weekday_str}")
 
         with open(file_path, 'w') as f:
