@@ -128,7 +128,9 @@ This utility verifies:
 When the hygiene script reports "Ghost Links", it means there are wikilinks pointing to notes that don't exist. Here's the process to resolve them:
 
 1.  **Identify Daily Notes**: If the ghost link is a daily note (e.g., `[[2026-03-01 Sunday]]` or `[[2025-06-26 Thursday]]`), create the missing placeholder daily note using the standard template in `Daily Notes/` (id should be `'YYYYMMDD000000'`).
-2.  **Fuzzy/Casing Healing**: Many ghost links are obsolete kebab-case links from previous schema eras, or have minor casing/punctuation discrepancies (e.g., Torres vs (Torres)).
+2.  **ID-Based Healing**: For obsolete kebab-case links that contain a 14-digit timestamp ID (e.g., `[[the-habit-loop-20250612134304]]` which contains `20250612134304`), map all note `id:` fields in the vault to their current, active basenames. Extract the 14-digit ID from the broken link and use it to look up the renamed note (e.g., `[[System 1 vs system 2 20250626161857]]`). 
+    - **Automated Script**: Run `python3 ~/.hermes/skills/note-taking/obsidian-hygiene/scripts/heal_kebab_links.py` to automatically heal all ID-matched ghost links in-place across the vault.
+3.  **Fuzzy/Casing Healing**: Many ghost links are obsolete kebab-case links from previous schema eras, or have minor casing/punctuation discrepancies (e.g., Torres vs (Torres)).
     - **Normalization Rule:** Convert both the ghost link target and all existing note basenames in the vault to a normalized, lowercase alphanumeric-only string (strip all spaces, hyphens, parentheses, etc. e.g., `continuous-interviewing-torres-20250723173842` and `Continuous interviewing (Torres) 20250723173842` both normalize to `continuousinterviewingtorres20250723173842`).
     - If a unique normalized match exists, heal the link.
 3.  **Heal Links Safely**: Perform case-insensitive search and replace of the link targets inside the referencing files.
