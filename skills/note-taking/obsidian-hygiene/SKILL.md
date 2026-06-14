@@ -17,6 +17,7 @@ metadata:
 Operator docs for `vault_hygiene.py` and its cron wrapper. Enforces the three-layer taxonomy (Inputs → Sources → maturity tiers) with auto-fixes for safe structural issues and reports for human triage.
 
 For the background real-time git synchronization process, see [references/vault-synchronization.md](references/vault-synchronization.md).
+For mass suffix-ID note renaming and link-repair migrations, see [references/rename-notes-id-suffix-migration.md](references/rename-notes-id-suffix-migration.md) and the utility script [scripts/rename_notes_append_id.py](scripts/rename_notes_append_id.py).
 
 ## When to Use
 
