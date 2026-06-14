@@ -22,10 +22,10 @@ This skill governs the categorization, formatting, and capture of unstructured p
 - **Categories & Naming:**
   - **Thoughts:** Thoughts are *my thinking* — raw personal reflections, emergent theories, or open questions.
     - Category link: `category: "[[Thoughts]]"`
-    - Filename format: `ID Title.md` (e.g. `20260609120000 Spaced Title.md`).
+    - Filename format: `Title ID.md` (e.g. `Spaced Title 20260609120000.md`).
   - **Beliefs:** Beliefs are *evolved* concepts / thoughts — things that are durably true and shape what Justin does and how he sees the world.
     - Category link: `category: "[[Beliefs]]"`
-    - Filename format: `Title.md` (no timestamp prefix, e.g. `Spaced Title.md`).
+    - Filename format: `Title ID.md` (retaining creation ID at the end, e.g. `Spaced Title 20260609120000.md`).
 
 ---
 
@@ -94,7 +94,7 @@ Optional secondary elaboration paragraph providing deeper conceptual context or 
 ## Reversion & Promotion Constraints (June 2026)
 - **Default to Notes:** Mass or manual promotion of existing notes to Thoughts and Beliefs has proven unsatisfactory and was completely reverted in June 2026. All conceptual and personal reflection notes must default to `category: "[[Notes]]"`.
 - **Strict Exception:** Only highly structured, long-conviction mental models (such as `Willpower is limited`) should remain or be categorized as `category: "[[Beliefs]]"`.
-- **Naming Enforcement on Reversion:** When reverting Thoughts/Beliefs back to Notes, ensure their filename includes the proper 14-digit `ID ` prefix (e.g. `20250523170601 Title.md`), utilizing the `id` field from the note's frontmatter.
+- **Naming Enforcement on Reversion:** When reverting Thoughts/Beliefs back to Notes, ensure their filename includes the proper 14-digit ID suffix (e.g. `Title 20250523170601.md`), utilizing the `id` field from the note's frontmatter.
 - **Do Not Push Promotion:** Never automatically or proactively migrate notes to `Thoughts` or `Beliefs` without explicit user request.
 
 ---
