@@ -767,7 +767,8 @@ citation_issues = defaultdict(list)
 url_cache = {}
 readings_audit_dirs = readings_dirs(VAULT)
 
-if readings_audit_dirs:
+# External URL/citation auditing is disabled per user request. Only internal wikilinks are checked.
+if False: # readings_audit_dirs:
     print("Auditing Citation & Reading URLs in Inputs/Readings/...")
     all_source_files = []
     for readings_dir in readings_audit_dirs:
