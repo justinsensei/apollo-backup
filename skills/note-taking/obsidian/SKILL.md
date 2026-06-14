@@ -93,14 +93,11 @@ category: "[[CategoryName]]"         # Single category link (quoted shortest-pat
 - **Heading & Bullet Spacing:** Ensure exactly one blank line exists between any heading (such as `## Timeline` or `## State`) and its subsequent content or bullet lists. Do not allow multiple consecutive blank lines to accumulate. Bulleted lists should be kept compact with zero blank lines between siblings.
 - **Executive Summaries**: When present, should be a blockquote at the top of the note *without* the `Executive summary:` prefix. Just the text.
   - **Daily Notes:** Must be `YYYY-MM-DD Weekday.md` (e.g. `2026-06-09 Tuesday.md`).
-  - **Notes, Decisions, Thoughts, Memories, Concepts, Scraps, Beliefs, Sources (compiled):** Must be named `Title ID.md` with the ID at the end (e.g. `Spaced Title 20260609120000.md`).
-  - **References:** Must be named `Title.md` with no ID string in the filename (e.g. `Spaced Title.md`).
+  - **Notes, Decisions, Thoughts, Memories, Concepts, Scraps, Beliefs, Sources (compiled), References, Projects, Contacts (People/Organizations):** Must be named `Title ID.md` with the ID at the end (e.g. `Spaced Title 20260609120000.md`, `Aly Lalji 20260611074153.md`).
   - **Readings (raw inputs):** `Title.md` or Readwise-exported names under `Inputs/Readings/` (no forced rename).
-  - **Projects:** Must be `Title.md` under `Notes/Projects/` (e.g. `Spaced Title.md`).
-  - **Contacts (People/Organizations):** Must be `Title.md` (e.g. `Aly Lalji.md`, `SignLab.md`).
   - **Meetings:** Must be `YYYY-MM-DD - Spaced Meeting Title.md` (e.g. `2026-06-09 - SignLab Product Alignment.md`).
   - Do not use kebab-case, lowercase hyphenated, or otherwise incorrect filenames. All names must be capitalized, spaced titles following these rules. Filenames are automatically normalized and healed for correct acronym casing (e.g., `AI`, `ADHD`, `B2C`) and proper nouns by the `vault_hygiene` pipeline.
-  - **Rationale:** As notes become less ephemeral and more authoritative (moving up the hierarchy), the date and/or ID is de-emphasized or omitted in the filename. Ephemeral, lower-tier notes are highly temporal (their place in time and sequence matters more), whereas canonical/authoritative notes (projects, people, beliefs, references) should stand out visually and contextually by title alone.
+  - **Rationale:** Note IDs are systematically appended to the end of every note in the `Notes/` directory and its subdirectories (including projects, contacts, and references). This ensures a robust, redundant, and backward-compatible way to automatically repair and resolve broken links, preventing "ghost links" even if files are renamed or shifted across categories.
 
 ### Git & Synchronization
 - Do NOT run `git` commands (add, commit, push) inside the vault. The background watcher `bes-vault-sync` handles commit and synchronization to GitHub automatically within seconds of filesystem writes.
