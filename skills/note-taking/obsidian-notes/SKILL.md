@@ -38,14 +38,11 @@ This skill governs the physical structure and coordinate mapping of the `/Notes/
 ## Folder-Level Rules
 
 ### Naming Conventions
-- All files under `/Notes/` must use Spaced, Capitalized names, adhering to category-specific prefixing rules.
-- **Notes, Decisions, Thoughts, Memories, Concepts:** Must be named `ID Title.md` (where ID is the creation timestamp, e.g. `20260609120000 Spaced Title.md`).
-- **References, Beliefs, Projects:** Must be named `Title.md` (no timestamp prefix, e.g. `Spaced Title.md`).
+- All files under `/Notes/` and its subdirectories must use Spaced, Capitalized names.
+- **All Categories (Notes, Decisions, Thoughts, Memories, Concepts, References, Beliefs, Projects, People, Organizations):** Must be named `Title ID.md` with the 14-digit ID at the end (e.g. `Spaced Title 20260609120000.md`, `Aly Lalji 20260611074153.md`).
 
 ### Rationale for Naming
-As notes become less ephemeral and more authoritative, we de-emphasize the date and/or the ID in the filename:
-1. **Temporality:** More ephemeral, lower-tier notes are more "temporal"—their sequence and place in time matter more.
-2. **At-a-Glance Context:** This distinction makes it easy to tell immediately from the note's title whether you are looking at a canonical/authoritative document (project, person, belief, reference) or an ephemeral/temporal one.
+Note IDs are systematically appended to the end of every note in the `Notes/` directory and its subdirectories (including projects, contacts, and references). This ensures a robust, redundant, and backward-compatible way to automatically repair and resolve broken links, preventing "ghost links" even if files are renamed or shifted across categories.
 
 ### Evolution Path (The Scraps-to-Beliefs Pipeline)
 Raw capture flows up the hierarchy as it is refined:
