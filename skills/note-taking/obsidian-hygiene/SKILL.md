@@ -123,7 +123,7 @@ This utility verifies:
 10. **Inappropriate Capitalization Overruns**: In filename capitalization auto-healing, harvesting words from contacts dynamically (e.g. `Haiku Learning` -> `learning`) can cause common English words (like `learning`, `design`, `pittsburgh`) to become inappropriately capitalized in filenames. Always maintain a robust `BLACKLIST_WORDS` set inside `vault_hygiene.py` to prevent standard words from being mis-identified as proper nouns.
 11. **Cron/Scheduler Timeout and Subprocess Mismatch**: Background cron wrappers (such as `vault_hygiene_cron.py`) running in `no_agent: true` mode are subject to a strict 120s script execution limit enforced by the scheduler. If the script triggers long-running tasks like `semantic_pointer.py index` as a subprocess (which has a 500s timeout to generate embeddings via external APIs), the scheduler will forcefully kill the parent process mid-execution. Always decouple intensive operations like semantic indexing from daily sync/hygiene runs (e.g., schedule them as separate low-priority crons), and ensure all subprocesses run with explicit timeouts (`timeout=100`) to fail-fast. Additionally, be aware that `approvals.cron_mode: deny` automatically blocks arbitrary local code execution (`execute_code`) and shell commands with execution flags (`-e` or `-c`) from running unattended in background tasks.
 
-12. **Commented-out Wikilinks**: The script now ignores wikilinks inside HTML comments (`<!-- [[link]] -->`). This is useful for temporarily disabling a link without deleting it. The regex `re.findall(r'<!--.*?-->|\[\[([^\]]+)\]\]', text)` is used to find all wikilinks, and then the commented-out ones are skipped.
+12. **Commented-out and Escaped Wikilinks**: The script now ignores wikilinks inside HTML comments (`<!-- [[link]] -->`) and backslash-escaped wikilinks (`\[\[link\]\]`). The regex `re.findall(r'<!--.*?-->|(?<!\\\\)\[\[([^\]]+)\]\]', text)` is used to find active wikilinks, skipping commented-out or escaped ones.
 
 13. **Nested Double-Brackets Link Corruption**: Highly nested brackets (e.g., `[[[[Contact [[Contact SuffixID...`) can occur during complex multi-pass link-wrapping operations or copy-pasting. These corruptions block standard parsed target lookup and must be manually or programmatically unnested before standard resolution can work.
 
@@ -139,7 +139,12 @@ When the hygiene script reports "Ghost Links", it means there are wikilinks poin
     - If a unique normalized match exists, heal the link.
 3.  **Heal Links Safely**: Perform case-insensitive search and replace of the link targets inside the referencing files.
     - **Safeguard Section Anchors & Display Text:** Use a regex pattern like `\[\[\s*<old_target>\s*(?P<extra>[|#][^\]]*)?\]\]` to capture any trailing section anchors or display aliases (e.g. `[[old#section|display]]`), replacing with `[[<new_target>\g<extra>]]`.
-4.  **Comment Out Remaining**: For other ghost links with no fuzzy counterpart, either comment them out (`<!-- [[link]] -->`) or verify if they represent a note that needs to be created.
+4.  **Mass-Removing or Escaping Unresolvable Ghost Links**:
+    When the remaining ghost links are confirmed safe to remove, process the files using this clean-up strategy:
+    - **Identify Line Context**: For each ghost link, check if it is on its own line or bullet point. This is determined programmatically if replacing all ghost link matches on the line with an empty string leaves zero alphanumeric characters `[a-zA-Z0-9]` behind.
+    - **On its own line/bullet**: Delete the entire line/bullet from the file.
+    - **In-line with other content**: Escape the wikilink by prefixing the opening and closing brackets with backslashes (e.g. `\[\[f2p-brazil|F2P Brazil\]\]`). This retains the plain-text reference inside Obsidian but deactivates the link and prevents it from appearing on the graph or in future ghost link reports.
+    - **Linter Ignore Pattern**: The linter uses `(?<!\\\\)\[\[([^\]]+)\]\]` to match active wikilinks, meaning any backslash-escaped wikilinks are natively ignored and will not trigger warnings.
 
 ## Verification Checklist
 
