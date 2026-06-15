@@ -1,6 +1,6 @@
 ---
 name: wind-down
-description: "Interactive daily wrap-up: 1. Input candidates; 2. Discovered contacts; 2b. Discovered projects; 3. Everything In Its Right Place (EIIRP) Vault Hygiene & Triage; 4. Work log draft/write; 5. Open loops; 6. Next day's calendar preview."
+description: "Interactive daily wrap-up: 1. Input candidates; 2. Discovered contacts; 3. Everything In Its Right Place (EIIRP) Vault Hygiene & Triage; 4. Work log draft/write; 5. Open loops; 6. Next day's calendar preview."
 version: 1.3.0
 author: Bes
 license: MIT
@@ -153,58 +153,7 @@ If Justin selects any:
      ```
 3. Report success and confirm creation in the inbox directory.
 
-If no discovered contacts are found, proceed to Phase 2b.
-
----
-
-### Phase 2b — Discovered Projects
-
-Project discovery runs at **wrap-up**, not morning briefing. Surface candidates from today's ingests that look like project names but have no matching `Notes/Projects/` hub.
-
-1. Run live at wind-down start:
-   ```bash
-   python3 ~/.hermes/scripts/check_vault_signals.py --discover-projects
-   ```
-2. Also read today's unmatched candidates from `~/.hermes/state/integrate_entities_unmatched.json` (keyed by today's date).
-3. Merge and dedupe both sources.
-
-If no discovered projects are found, skip this phase and proceed to Phase 3.
-
-Format:
-```
-📁 N discovered project candidates:
-
-1. [K12 GTM] — first mentioned in [[Inbox/2026-06-10 - Decision - K12 GTM]]
-2. [SignLab Classroom] — from integrate_entities_unmatched
-
-Would you like to create project hub notes for any of these? (e.g. "yes, 1", or "skip")
-```
-
-If Justin selects any:
-1. Create stub in `/home/justin.guest/vault/Inbox/<Title>.md` with project hub schema:
-   ```yaml
-   ---
-   id: <timestamp_id>
-   daily_note: "[[<YYYY-MM-DD Weekday>]]"
-   category: "[[Projects]]"
-   ---
-   ```
-   ```markdown
-   > Executive summary: <One-line project purpose>.
-
-   Status: Active
-
-   ## State
-   -
-
-   ## Timeline
-   - <Date> | Discovered — Mentioned in [[<context_file>]].
-
-   ## Related inputs
-   -
-   ```
-2. Clear processed entries from `integrate_entities_unmatched.json` for today's date after session.
-3. Report success.
+If no discovered contacts are found, proceed to Phase 3.
 
 ---
 
@@ -401,7 +350,6 @@ Preview tomorrow's schedule to establish mental readiness, coordinate upcoming t
 
 ## Pitfalls & Defensive Rules
 
-- **Noisy Project Suggestions:** The project discovery phase (using `check_vault_signals.py`) can be extremely noisy and return scores of non-project entities or projects from ancient historical inputs (e.g. 2025). **Do not dump the raw list.** Filter the suggestions to only those from today's or very recent ingests, group/dedupe them, and highlight only the most plausible ones (typically those from files modified in the last 24 hours). Categorize legacy or single-word parsing artifacts as noisy and omit them from the main list. Confirm with Justin before creating new project notes.
 - **Preserve the Notepad:** Always load today's daily note first, find the `## 🗒 Notepad` section, and keep its contents completely intact.
 - **Inputs Terminology:** Always refer to Slack threads, emails, and other primary-category sources as "inputs" rather than "logs" in both conversations and note frontmatter, as per the updated vault schema.
 - **Accurate Attribution:** When drafting highlights and decisions from emails or meeting notes, ensure decisions are attributed to the correct person (e.g., Anya, Nana, teachers, etc.) rather than assuming Justin made them.
