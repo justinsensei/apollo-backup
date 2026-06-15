@@ -64,6 +64,10 @@ def find_daily_note(vault_path, target_date):
     if os.path.exists(p3):
         return p3
         
+    p4 = os.path.join(vault_path, 'Daily Notes', f"{target_date} {day_name_cap}.md")
+    if os.path.exists(p4):
+        return p4
+        
     return None
 
 def parse_footer_counts(daily_note_path):
