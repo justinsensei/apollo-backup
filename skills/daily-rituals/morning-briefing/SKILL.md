@@ -144,7 +144,7 @@ After presenting, set `"surfaced": true` in that JSON file.]
 **If `is_work_day` is true and `work_log_status` is NOT `"skipped"`:**
 
 1. Load `work_log_dates` from cache (computed by cron using `work_day.py logs_to_summarize`)
-2. For each date in `work_log_dates`, read the `# 📋 Work Log` section from the daily note in vault
+2. For each date in `work_log_dates`, read the `## 🚀 Highlights & Decisions` (or `# 📋 Work Log` / `## 📋 Work Log`) section from the daily note in vault
 3. Synthesize highlights across all dates into a single brief summary
 4. Read the `vault_activity` section from the daily cache file (`~/.hermes/morning-briefing/YYYY-MM-DD.json`). If the cache file or `"vault_activity"` section is missing or has status `"error"`, run the scan script live to retrieve the summary: `python3 ~/.hermes/scripts/check_morning_changes.py`
 
@@ -358,7 +358,7 @@ US federal holidays auto-detected. Personal days off in `~/.hermes/days-off.txt`
 - **Child name or grade misattribution.** Do not guess or assume which child a school event (like a graduation, potluck, or class celebration) belongs to. Always verify school grades and ages against the user profile (e.g., Jamie is in 5th grade/G5, Sam is in 6th grade/G6) before writing descriptions or adding summaries.
 - **Decision misattribution.** When summarizing work logs or calendar updates, do not attribute decisions made by others (colleagues, family members, teachers) to Justin. Always explicitly credit the actual decision-maker.
 - **Don't re-run background jobs if the cache is fresh.** Check the cache first. Only re-run if the file is missing or >4h old.
-- **Work log section header is `# 📋 Work Log`** in the daily note. If it's absent, the note may not have been logged yet — say so, don't silently skip.
+- **Work log section header** is usually `## 🚀 Highlights & Decisions` or `# 📋 Work Log` / `## 📋 Work Log` in the daily note. If all are absent, the note may not have been logged yet — say so, don't silently skip.
 - **Multiple work-log dates:** synthesize, don't concatenate. Justin doesn't want to read Friday's full log on Monday — he wants the 3-line version.
 - **Calendar dedup is against the full 30-day snapshot** already in the cache. Don't re-fetch unless you need to.
 - **"Day off" filter applies per-phase.** Check it before each phase, not just once at the top.
