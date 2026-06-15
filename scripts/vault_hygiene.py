@@ -603,6 +603,7 @@ missing_daily_notes = []
 # Build catalogs of all existing files and directories across the entire vault (no skipping) for link resolution
 existing_rel_paths = {}      # lowercase rel_path -> original rel_path
 existing_basenames = defaultdict(list)  # lowercase basename -> list of original rel_paths
+id_to_rel_path_catalog = {}  # 14-digit ID suffix -> original rel_path
 
 for root, dirs, files in os.walk(VAULT):
     for d in dirs:
@@ -621,6 +622,10 @@ for root, dirs, files in os.walk(VAULT):
         existing_basenames[f_lower].append(rel_str)
         if f_lower.endswith(".md"):
             existing_basenames[f_lower[:-3]].append(rel_str)
+            # Catalog 14-digit ID suffix for robust resolution fallback
+            id_match = re.search(r"(\d{14})", f)
+            if id_match:
+                id_to_rel_path_catalog[id_match.group(1)] = rel_str
 
 # Ghost links detection variables
 ghost_links = defaultdict(set)
@@ -757,6 +762,14 @@ for root, dirs, files in os.walk(VAULT):
             elif (norm_target + ".md") in existing_basenames:
                 resolved = existing_basenames[norm_target + ".md"][0]
                 
+            if not resolved:
+                # Fallback: match by extracting 14-digit ID suffix from link target
+                id_suffix_match = re.search(r"(\d{14})", file_target)
+                if id_suffix_match:
+                    target_id = id_suffix_match.group(1)
+                    if target_id in id_to_rel_path_catalog:
+                        resolved = id_to_rel_path_catalog[target_id]
+                        
             if not resolved:
                 ghost_links[rel_str_f].add(file_target)
             else:
