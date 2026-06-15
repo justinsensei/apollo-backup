@@ -41,6 +41,7 @@ python3 ~/.hermes/scripts/vault_hygiene.py
 **Auto-fix tier (silent unless printed):**
 - **Filename Capitalization & Spacing Healing:** Auto-corrects lowercase initialisms/acronyms (`AI`, `ADHD`, `B2C`, `B2B`, `AB`, `GTM`, `ASL`, `DAU`, `WSP`, `SP`, `PR`, `OKR`, `OKRs`, `K12`, `EdTech`, `SPED`), proper nouns (`Amazon`, `Costco`, `PostHog`, `SignLab`, `SmartPass`, `Duolingo`, `PowerSchool`, `Lingvano`, `Raptor`, `Breezeway`), grammar spacing (like `doesn t` -> `doesn't`), and dynamically harvested contact names (filtered through common-word blacklists). Renames on disk and heals all matching wikilink targets across the vault.
 - Reconcile Granola `Meetings/` → `Inputs/Meetings/` with `category: "[[Meetings]]"`
+- **Dynamic ID-Suffix Fallback Resolution:** Automatically resolves any wikilink containing a 14-digit ID suffix to its active disk path (even if the title text was renamed or kebab-cased) to suppress false-positive Ghost Link warnings.
 - Auto-link entities in meeting bodies and recent daily notes (last 7 days)
 - Legacy `[[Sources]]` on `Inputs/Readings/` → `[[Readings]]`
 - Misplaced daily notes → `Daily Notes/`
@@ -123,6 +124,8 @@ This utility verifies:
 11. **Cron/Scheduler Timeout and Subprocess Mismatch**: Background cron wrappers (such as `vault_hygiene_cron.py`) running in `no_agent: true` mode are subject to a strict 120s script execution limit enforced by the scheduler. If the script triggers long-running tasks like `semantic_pointer.py index` as a subprocess (which has a 500s timeout to generate embeddings via external APIs), the scheduler will forcefully kill the parent process mid-execution. Always decouple intensive operations like semantic indexing from daily sync/hygiene runs (e.g., schedule them as separate low-priority crons), and ensure all subprocesses run with explicit timeouts (`timeout=100`) to fail-fast. Additionally, be aware that `approvals.cron_mode: deny` automatically blocks arbitrary local code execution (`execute_code`) and shell commands with execution flags (`-e` or `-c`) from running unattended in background tasks.
 
 12. **Commented-out Wikilinks**: The script now ignores wikilinks inside HTML comments (`<!-- [[link]] -->`). This is useful for temporarily disabling a link without deleting it. The regex `re.findall(r'<!--.*?-->|\[\[([^\]]+)\]\]', text)` is used to find all wikilinks, and then the commented-out ones are skipped.
+
+13. **Nested Double-Brackets Link Corruption**: Highly nested brackets (e.g., `[[[[Contact [[Contact SuffixID...`) can occur during complex multi-pass link-wrapping operations or copy-pasting. These corruptions block standard parsed target lookup and must be manually or programmatically unnested before standard resolution can work.
 
 ## How to Resolve Ghost Links
 
