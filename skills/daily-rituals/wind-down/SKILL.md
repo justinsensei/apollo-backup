@@ -74,7 +74,7 @@ If Justin selects any:
          - "Participant Name"
        ---
        ```
-     - Append a link and one-sentence gist to today's daily note notepad under `## 🗒 Notepad`:
+     - Append a link and one-sentence gist to today's daily note notepad under `## 🗒 Notepad` (if this section is missing from the daily note, append it to the bottom of the file first):
        `* [[Inputs/Slack/<filename>|Slack summary]]: <One-sentence-gist>.`
      - Run the command to mark it processed:
        `python3 /home/justin.guest/.hermes/scripts/fetch_slack_brains.py --mark-processed <channel_id> <ts>`
@@ -93,7 +93,7 @@ If Justin selects any:
          - "Sender Name"
        ---
        ```
-     - Append a link and one-sentence gist to today's daily note notepad under `## 🗒 Notepad`:
+     - Append a link and one-sentence gist to today's daily note notepad under `## 🗒 Notepad` (if this section is missing from the daily note, append it to the bottom of the file first):
        `* [[Inputs/Emails/<filename>|Email summary]]: <One-sentence-gist>.`
      - Run the command to mark it processed:
        `python3 /home/justin.guest/.hermes/scripts/fetch_source_candidates.py --mark-email-processed <thread_id>`
@@ -351,7 +351,7 @@ Preview tomorrow's schedule to establish mental readiness, coordinate upcoming t
 ## Pitfalls & Defensive Rules
 
 - **No Project Discovery in Wind-Down:** Never attempt to run live project discovery or suggest project note creations during the wind-down session. Project suggestions are too noisy for this workflow; instead, project entity matching and timeline appends are handled exclusively via the automated ingest pipelines (`integrate-entities`).
-- **Preserve the Notepad:** Always load today's daily note first, find the `## 🗒 Notepad` section, and keep its contents completely intact.
+- **Preserve the Notepad:** Always load today's daily note first, find the `## 🗒 Notepad` section, and keep its contents completely intact. If the section doesn't exist, create it at the bottom of the note instead of overwriting any other sections.
 - **Inputs Terminology:** Always refer to Slack threads, emails, and other primary-category sources as "inputs" rather than "logs" in both conversations and note frontmatter, as per the updated vault schema.
 - **Accurate Attribution:** When drafting highlights and decisions from emails or meeting notes, ensure decisions are attributed to the correct person (e.g., Anya, Nana, teachers, etc.) rather than assuming Justin made them.
 - **Escape Slack Channels:** Always write `#channel-name` as `\#channel-name` inside the daily note so Obsidian doesn't parse it as a tag.
