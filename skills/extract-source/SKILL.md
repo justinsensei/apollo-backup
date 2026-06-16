@@ -55,16 +55,15 @@ This phase is a strict, interactive sequence. Do not proceed to the next step un
     -   **Frontmatter:** Populate `id`, `daily_note`, `category`, `reading`, and bibliographic data (`author`, `full_title`, `url`).
     -   **Body:** Copy the `Document Note` (if present) and `Summary` from the `Reading` file.
     -   **Synthesis:** Place the generated `Agreement`, `Tension/Challenge`, and `Application & Insights` sections under a `## My Synthesis` heading.
-2.  **Write to Temporary File & Preview:** Write the fully assembled note to a temporary file (e.g., `/tmp/{Original Reading Title}.md`).
+2.  **Write Draft Directly to Obsidian Inbox:** Write the fully assembled note directly to the Obsidian `Inbox/` directory (e.g., `Inbox/{Original Reading Title} Draft.md`).
 3.  **Deliver for Review:** Send a message to the user containing:
     -   A brief summary of the synthesis.
-    -   The `MEDIA:` tag pointing to the absolute path of the temporary file.
-    -   A direct question asking for approval to proceed (e.g., "Shall I create this note in your `Inbox/`?").
-    -   **CRITICAL:** Stop and wait for the user's response. Do not perform any file operations on the vault until confirmation is received.
+    -   A notice that the draft has been placed directly in their Obsidian `Inbox/` for review.
+    -   A direct question asking for approval to finalize and lock the note.
+    -   **CRITICAL:** Stop and wait for the user's response. Do not perform any renaming or archiving of the original reading file until confirmation is received.
 4.  **Finalize on Confirmation:** Once the user explicitly approves:
-    -   Write the content from the temporary file to its final destination in the `Inbox/` directory with the filename `{Original Reading Title} {YYYY-MM-DD}.md` (aligning with the naming rule for new Source notes).
+    -   Rename the draft file in the `Inbox/` directory to its final name: `{Original Reading Title} {YYYY-MM-DD}.md` (aligning with the naming rule for new Source notes).
     -   Rename the original `Reading` file to `{Original Reading Title} {YYYY-MM-DD}.md` and move it to `Inputs/Readings/` to mark it as processed.
-    -   Clean up the temporary file.
 5.  **Loop:** Offer to process another reading, get a new batch, or exit the workflow.
 
 ## Implementation Pitfalls & Lessons Learned
