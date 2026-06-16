@@ -67,5 +67,9 @@ This phase compiles the finalized notes directly into the vault. No confirmation
 -   **`web_extract` Deprecation:** The `web_extract` tool may not be available. Prefer using the `browser` toolset for fetching web content.
 -   **Subprocess Inception (CRITICAL):** Do **NOT** write a script that calls a subprocess invoking the `hermes-agent` CLI (e.g., `hermes prompt ...`). This anti-pattern pollutes `stdout` and causes catastrophic failures. Handle all reasoning and generation natively in the main conversation context.
 -   **Response Truncation:** The final presentation of the synthesized note can be prone to truncation or corruption. Ensure the entire note is delivered in a single, clean markdown block and that no other context (like the raw highlights) leaks into the user-facing message. Double-check the final output before sending.
+-   **Processing LLM/Chatbot Logs:** When extracting sources from raw LLM outputs (e.g., Dia, Claude) dumped as Readings:
+    - Treat the chatbot model name as the Author and set the URL to empty.
+    - Format initial question/query headers as blockquotes within the `Document Note` section.
+    - Focus heavily on establishing deep conceptual linkages between these exploratory research files and existing active project notes or thoughts in the vault (especially regarding user interface paradigms, B2C expansion strategy, and user friction/barriers).
 -   **Inbox-origin Naming Conflicts:** When the raw Reading file starts in `Inbox/` (instead of `Inputs/Readings/`), rename and move the raw file to `Inputs/Readings/` *before* or *simultaneously with* writing the new Source note back to `Inbox/` to prevent overwriting or name conflicts in the same folder.
 -   **Preserving Original Metadata:** If the raw reading file contains custom frontmatter (e.g., an explicit custom `id` or `daily_note` links), preserve those original fields in the newly compiled `Source` note rather than generating fresh timestamps.
