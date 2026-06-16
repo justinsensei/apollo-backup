@@ -67,8 +67,16 @@ def expected_folder_prefix(category, vault_path):
 
 def acceptable_folder_prefixes(category, vault_path):
     vault = Path(vault_path)
-    base_inputs = str(inputs_base(vault_path)).replace("\\", "/")
-    base_logs = str(vault / "Logs").replace("\\", "/")
+    base_inputs_path = inputs_base(vault_path)
+    if base_inputs_path.is_absolute():
+        base_inputs_path = base_inputs_path.relative_to(vault_path)
+    base_inputs = str(base_inputs_path).replace("\\", "/")
+    
+    base_logs_path = vault / "Logs"
+    if base_logs_path.is_absolute():
+        base_logs_path = base_logs_path.relative_to(vault_path)
+    base_logs = str(base_logs_path).replace("\\", "/")
+    
     input_cats = {"Readings", "Meetings", "Emails", "Slack"}
     if category in input_cats:
         prefixes = [f"{base_inputs}/{category}/"]
