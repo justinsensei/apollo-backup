@@ -1,45 +1,105 @@
 ---
 name: obsidian-logs
-description: Use when managing chronological directory structures for Notes/Daily Notes/ and Inputs/ directories and coordinating their sub-skills.
-version: 1.3.0
+description: "Master conventions for chronological logs: governs Daily Notes, Meetings, and incoming Inputs (Emails, Slack, Readings)."
+version: 1.4.0
 author: Bes
+index: yes
 license: MIT
+platforms: [linux, macos]
 metadata:
   hermes:
-    tags: [obsidian, inputs, logs, folder-conventions]
-    related_skills: [obsidian, obsidian-daily-notes, obsidian-meetings]
+    tags: [obsidian, logs, daily-notes, meetings, inputs, folder-conventions]
+    related_skills: [obsidian, obsidian-notes, work-log, bes-granola-ingest]
 ---
 
 # Obsidian Type: Chronological Directory & Input Conventions
 
-## Overview
-This skill governs the structure and navigation of chronological input notes and raw incoming streams under `Inputs/`, pointing to focused sub-skills for daily journaling, meeting records, and synced readings.
+This master skill governs the structure, naming, templates, and navigation of chronological log files and incoming raw input streams under `/Notes/Daily Notes/` and `/Inputs/` directories.
 
 ---
 
-- **Linked References:**
-  - **[Readwise Highlights Sync](references/readwise-sync.md):** Rules, directory conventions, and schema standardizations for Readwise raw inputs.
+## 1. Directory Navigation & Coordinates
 
----
-
-## Directories & Sub-skills
 - **Daily Notes Directory:** `/home/justin.guest/vault/Notes/Daily Notes/`
-  - Sub-skill: **`obsidian-daily-notes`** (`category: "[[Daily Notes]]"`)
+  - *Category:* `category: "[[Daily Notes]]"`
 - **Meetings Directory:** `/home/justin.guest/vault/Inputs/Meetings/`
-  - Sub-skill: **`obsidian-meetings`** (`category: "[[Meetings]]"`)
-- **Emails Directory:** `/home/justin.guest/vault/Inputs/Emails/`
-  - Synced automatically from forwarded emails or email digests (`category: "[[Emails]]"`)
-- **Slack Directory:** `/home/justin.guest/vault/Inputs/Slack/`
-  - Synced automatically from captured Slack discussions or brain-dumps (`category: "[[Slack]]"`)
-- **Readings Directory:** `/home/justin.guest/vault/Inputs/Readings/`
-  - Synced automatically via `sync_readwise.py` (`category: "[[Readings]]"`)
+  - *Category:* `category: "[[Meetings]]"`
+- **Emails Directory:** `/home/justin.guest/vault/Inputs/Emails/` (`category: "[[Emails]]"`)
+- **Slack Directory:** `/home/justin.guest/vault/Inputs/Slack/` (`category: "[[Slack]]"`)
+- **Readings Directory:** `/home/justin.guest/vault/Inputs/Readings/` (`category: "[[Readings]]"`)
+  - *Linked Reference:* [Readwise Highlights Sync](references/readwise-sync.md) covers directory conventions for Readwise raw inputs.
 
 ---
 
-## Folder-Level Rules
+## 2. Daily Notes Management
 
-- **Strict Date Formats:** Ensure all chronological filenames strictly adhere to their respective date patterns:
-  - Daily Notes: `YYYY-MM-DD Weekday.md` (capitalized weekday name).
-  - **Meetings, Emails, and Slack Inputs:** `YYYY-MM-DD - Spaced Title.md` (e.g. `2026-06-09 - SignLab Product Alignment.md`, `2026-06-09 - Product Feedback on Free to Play.md`).
-- **Linking to Daily Notes:** Every chronological input file must link back to its creation day in its YAML `daily_note:` property.
-- **Archive Raw Inputs:** Never leave raw files in the root `/Meetings/` folder. Ensure the automated hygiene script pre-processes and moves them to `/Inputs/Meetings/`.
+Daily Notes are the central journal and timeline for Justin's day.
+
+### Naming Convention
+- **Format:** `YYYY-MM-DD Weekday.md` (e.g., `2026-06-09 Tuesday.md`, `2026-06-14 Sunday.md`). Weekdays must be fully capitalized, separated from the date by a space.
+
+### Note Layout & Structure
+A Daily Note begins with an executive summary callout block followed by chronological work and notepad sections:
+```markdown
+---
+id: "YYYYMMDDHHmmss"
+daily_note: "[[YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
+category: "[[Daily Notes]]"
+---
+
+|> [!summary] Summary Callout
+|> High-level executive bullet summary of the day.
+
+## 📅 Schedule & Events
+- List of meetings, calendar events, or appointments for the day.
+
+## 🚀 Highlights & Decisions
+- Key milestones or critical choices made during the day.
+
+## 🏆 Accomplishments
+- Bulleted list of completed work items and achievements (updated via work logs).
+
+## 🗒 Notepad
+- Freeform scratchpad, thoughts, or rapid logs captured during the day.
+```
+
+### Interaction with `work-log`
+When compiling a work log, fetch events from Google Calendar, Linear, Todoist, and Slack, compile a daily summary, and append/update the accomplishments and schedule sections directly inside today's Daily Note.
+
+---
+
+## 3. Meetings & Granola Management
+
+Governs meeting note formatting and the ingestion of raw transcripts.
+
+### Naming Convention
+- **Format:** `YYYY-MM-DD - Spaced Meeting Title.md` (e.g., `2026-06-09 - SignLab Product Alignment.md`).
+
+### Meeting Note Layout
+```markdown
+---
+id: "YYYYMMDDHHmmss"
+daily_note: "[[YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"
+category: "[[Meetings]]"
+---
+
+# Meeting Title
+
+**Date:** YYYY-MM-DD
+**Attendees:** [[Justin Goff]], [[Person Name]]
+
+---
+
+## Agenda
+- 
+
+## Notes
+- 
+
+## Action Items
+- [ ] 
+```
+
+### Ingestion & Sync Pipeline
+- **Granola Sync:** Raw transcripts and notes dropped into `/Meetings/` are automatically swept, formatted, and moved into the `/Inputs/Meetings/` directory. This is automated by the `bes-granola-ingest` skill.
+- **No Raw Logs in Root:** Raw unformatted files must never be left in `/Meetings/`. Ensure automated routines move and archive them inside `/Inputs/Meetings/`. Every meeting note must link back to its creation day in its YAML `daily_note:` property.
