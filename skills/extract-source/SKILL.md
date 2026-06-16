@@ -18,6 +18,8 @@ This skill facilitates the creation of a "reading note" (`Source` note) from a r
 
 The process is designed to be interactive. It finds unprocessed readings, allows for selection, ingests the full text from the source URL, generates a synthesis by comparing the reading's concepts against the existing vault, and upon confirmation, creates a new, properly formatted `Source` note in the `Inbox/` for final triage.
 
+See [references/adhd_design_principles.md](references/adhd_design_principles.md) for compiled domain research, ADHD UX principles, and product pitfalls used during the synthesis phase.
+
 ## When to Use
 
 - When you want to work through your backlog of readings and create synthesized notes that connect to your existing knowledge base.
