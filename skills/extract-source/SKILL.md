@@ -55,6 +55,7 @@ This phase compiles the finalized notes directly into the vault. No confirmation
     -   **Frontmatter:** Populate `id`, `daily_note`, `category`, `reading`, and bibliographic data (`author`, `full_title`, `url`).
     -   **Body:** Copy the `Document Note` (if present) and `Summary` from the `Reading` file.
     -   **Synthesis:** Place the generated `Agreement`, `Tension/Challenge`, and `Application & Insights` sections under a `## My Synthesis` heading.
+    -   **No Raw Inputs:** Do not append raw highlights, original text, or raw inputs to the end of the note. Keep the final Source note focused solely on metadata, summaries, and synthesis.
 2.  **Write Final Source Note directly to Obsidian Inbox:** Write the fully assembled note directly to the Obsidian `Inbox/` directory with the filename `{Original Reading Title} {YYYY-MM-DD}.md` (aligning with the naming rule for new Source notes).
 3.  **Mark Original Reading as Processed:** Rename the original `Reading` file to `{Original Reading Title} {YYYY-MM-DD}.md` and move it to `Inputs/Readings/` to mark it as processed.
 4.  **Notify User:** Deliver a message containing a concise summary of the synthesis and a notice that the Source note has been successfully written and the Reading file has been archived.
