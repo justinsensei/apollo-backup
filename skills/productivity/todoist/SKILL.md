@@ -383,3 +383,12 @@ If any of these stop resolving, re-fetch via `find-projects` / `find-labels` and
 - The hosted alternative is `https://ai.todoist.net/mcp` with OAuth, but we chose the local stdio + API-token path because (a) Bes runs in a VM with no browser for OAuth, (b) one token works for multiple Hermes instances, (c) Justin already manages token-in-`.env` workflows fluently.
 - Justin's quick-entry hotkey setup is out of scope for the agent. He handles client-side capture; agent-side Todoist is for tasks born in conversation with the agent.
 - Hermes has a deliberately narrower version of this skill (scope: tasks labeled `hermes` only). The two skills are intentionally divergent.
+
+## Historical Context: Deprecated Nested Projects
+
+As of May 2026, Justin has transitioned to simple status-based Projects (Now, Next, Soon, Maybe Later, Shopping). He no longer uses nested sub-projects or Work/Home/Other top-level folders in Todoist. 
+1. **No Todoist Projects are created for new GTD projects.**
+2. **Tasks are created in Inbox, Now, Next, Soon, or Maybe Later.**
+3. **To link a task to an Obsidian project note**, include the linkage in the task description: `Project: [[Project Name]]`.
+4. **Obsidian project notes** (`category: "[[Projects]]"`) are still created in the vault root, but do not contain a `Todoist: <url>` link since there is no matching Project in Todoist. Instead, they query Todoist for tasks referencing their name.
+
