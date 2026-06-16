@@ -47,23 +47,17 @@ This is the core knowledge-creation step.
     -   `## Tension/Challenge`: Points that contradict, challenge, or offer a different perspective on existing notes.
     -   `## Application & Insights`: Actionable ideas or mental models from the `Reading` that could be applied to active `Projects` or general thinking.
 
-### Phase 3: Assembly, Preview, and Confirmation
+### Phase 3: Assembly and Finalization
 
-This phase is a strict, interactive sequence. Do not proceed to the next step until the user has explicitly approved the current one.
+This phase compiles the finalized notes directly into the vault. No confirmation loop is needed; the note is created immediately, and the user can revise or edit it directly in Obsidian.
 
 1.  **Assemble Note:** Assemble the final `Source` note content using the `Utilities/Templates/New Source.md` template.
     -   **Frontmatter:** Populate `id`, `daily_note`, `category`, `reading`, and bibliographic data (`author`, `full_title`, `url`).
     -   **Body:** Copy the `Document Note` (if present) and `Summary` from the `Reading` file.
     -   **Synthesis:** Place the generated `Agreement`, `Tension/Challenge`, and `Application & Insights` sections under a `## My Synthesis` heading.
-2.  **Write Draft Directly to Obsidian Inbox:** Write the fully assembled note directly to the Obsidian `Inbox/` directory (e.g., `Inbox/{Original Reading Title} Draft.md`).
-3.  **Deliver for Review:** Send a message to the user containing:
-    -   A brief summary of the synthesis.
-    -   A notice that the draft has been placed directly in their Obsidian `Inbox/` for review.
-    -   A direct question asking for approval to finalize and lock the note.
-    -   **CRITICAL:** Stop and wait for the user's response. Do not perform any renaming or archiving of the original reading file until confirmation is received.
-4.  **Finalize on Confirmation:** Once the user explicitly approves:
-    -   Rename the draft file in the `Inbox/` directory to its final name: `{Original Reading Title} {YYYY-MM-DD}.md` (aligning with the naming rule for new Source notes).
-    -   Rename the original `Reading` file to `{Original Reading Title} {YYYY-MM-DD}.md` and move it to `Inputs/Readings/` to mark it as processed.
+2.  **Write Final Source Note directly to Obsidian Inbox:** Write the fully assembled note directly to the Obsidian `Inbox/` directory with the filename `{Original Reading Title} {YYYY-MM-DD}.md` (aligning with the naming rule for new Source notes).
+3.  **Mark Original Reading as Processed:** Rename the original `Reading` file to `{Original Reading Title} {YYYY-MM-DD}.md` and move it to `Inputs/Readings/` to mark it as processed.
+4.  **Notify User:** Deliver a message containing a concise summary of the synthesis and a notice that the Source note has been successfully written and the Reading file has been archived.
 5.  **Loop:** Offer to process another reading, get a new batch, or exit the workflow.
 
 ## Implementation Pitfalls & Lessons Learned
