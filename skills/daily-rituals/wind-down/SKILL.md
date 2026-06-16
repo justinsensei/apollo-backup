@@ -105,9 +105,9 @@ If no candidates are found, skip this phase entirely and proceed to Phase 2.
 
 ### Phase 2 — Discovered Contacts & Organizations
 
-Present any discovered contacts or organizations (unresolved wikilinks found by the `check_vault_signals.py` script) from today's cache file at `~/.hermes/morning-briefing/YYYY-MM-DD.json` (under the `discovered_contacts` field).
+Present any discovered contacts or organizations (unresolved wikilinks found by the `check_vault_signals.py` script) from the signals cache file at `~/.hermes/morning-briefing/vault_signals_last_run.json` (under the `discovered_entities.people` and `discovered_entities.organizations` fields).
 
-If no discovered contacts are found in the cache, skip this phase entirely and proceed to Phase 3.
+If no discovered contacts are found in the signals cache, skip this phase entirely and proceed to Phase 3.
 
 Format:
 ```
