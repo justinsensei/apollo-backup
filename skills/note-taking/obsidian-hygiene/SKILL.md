@@ -54,7 +54,7 @@ python3 ~/.hermes/scripts/vault_hygiene.py
 | `## 🔴 ID conflicts` | Red | Duplicate `id` values |
 | `## 🔴 Non-unique aliases` | Red | Same alias on multiple contacts |
 | `## 🔴 Missing ID` | Red | Note lacks `id` |
-| `## 🔴 Missing daily_note` | Red | Note lacks `daily_note` |
+| `## 🔴 Missing daily_note` | Red | Note lacks `daily_note` (Contacts and Inputs/ excluded) |
 | `## 🔴 Wrong folder` | Red | Category/folder mismatch |
 | `## ⚠️ Ghost Links` | Warning | Wikilink target missing |
 | `## ⚠️ Orphan Notes` | Warning | Zero in/out links |
@@ -126,6 +126,9 @@ This utility verifies:
 12. **Commented-out and Escaped Wikilinks**: The script now ignores wikilinks inside HTML comments (`<!-- [[link]] -->`) and backslash-escaped wikilinks (`\[\[link\]\]`). The regex `re.findall(r'<!--.*?-->|(?<!\\\\)\[\[([^\]]+)\]\]', text)` is used to find active wikilinks, skipping commented-out or escaped ones.
 
 13. **Nested Double-Brackets Link Corruption**: Highly nested brackets (e.g., `[[[[Contact [[Contact SuffixID...`) can occur during complex multi-pass link-wrapping operations or copy-pasting. These corruptions block standard parsed target lookup and must be manually or programmatically unnested before standard resolution can work.
+14. **Inputs Directory Exclusion**: All directories under `Inputs/` are intentionally raw and are completely excluded/ignored from all vault hygiene checks to avoid false positives on raw or external inputs.
+15. **Case-Sensitivity on `Inbox/` Paths**: Folder path comparisons for temporary state must be case-insensitive (e.g., `.lower().startswith("inbox/")`) because on disk the directory is capitalized `Inbox/`, while some scripts may check against lowercase `"inbox/"`.
+16. **Relative vs Absolute Prefix Mismatches**: When verifying folder rules, always ensure the expected category prefixes match the relative path representation of the note (`rel_str_f` relative to `VAULT`), rather than comparing a relative path against an absolute folder prefix starting with `/home/...`, which causes false-positive `Wrong folder` errors.
 
 ## How to Resolve Ghost Links
 
