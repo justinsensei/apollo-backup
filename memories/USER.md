@@ -13,3 +13,5 @@ Admin automation (sync/ingest/lint) must be hands-off and fail loudly. Knowledge
 User values synthesis and knowledge integration over simple summarization. When processing new information, the goal is to connect it to existing notes in the vault by identifying agreements, tensions, and potential applications.
 §
 Justin prefers checking only internal wikilinks during vault hygiene runs, and does not want external links/citations audited.
+§
+User only uses first-name aliases in contact frontmatter for family, friends, and close current colleagues. Do not add first-name aliases for general professional or business contacts.
