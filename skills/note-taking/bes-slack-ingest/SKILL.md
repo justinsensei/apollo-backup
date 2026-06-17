@@ -12,18 +12,18 @@ metadata:
 
 # Bes Slack Ingest
 
-Captures noteworthy Slack threads and brain-dumps as lightweight pointer records inside `Inputs/Slack/`. 
+Captures noteworthy Slack threads and brain-dumps as high-quality synthesized input notes inside `Inputs/Slack/`.
 
-These notes are intentionally **minimalist**. They must never contain point-by-point summaries, individual quotes, or try to capture decisions or thoughts. They function purely as a index/pointer back to Slack with a brief human-readable description.
+These notes capture a high-quality summary showing "who said what" clearly to retain crucial context and decisions, without storing verbatim message lists.
 
 ## Synced Path
-- `/home/justin.guest/vault/Inputs/Slack/YYYY-MM-DD-slug.md`
+- `/home/justin.guest/vault/Inputs/Slack/YYYY-MM-DD - Spaced Title.md`
 
 ---
 
-## Slack Log Note Structure
+## Slack Input Note Structure
 
-Every Slack log note must start with this frontmatter format:
+Every Slack input note must start with this frontmatter format:
 
 ```yaml
 ---
@@ -38,19 +38,18 @@ participants:
 ---
 ```
 
-Below the frontmatter, the body is kept super short:
+Below the frontmatter, the body is structured cleanly as a synthesized summary:
 
 ```markdown
-# 💬 Slack Thread: [Cleaned Title]
+# [Cleaned Title] — YYYY-MM-DD
 
-- **Channel:** `#channel-name`
-- **Date:** YYYY-MM-DD
-- **Original Thread:** [Slack Link](https://slack.com/...)
+## Summary
+[A high-quality, 2-3 sentence synthesis of the thread's core outcome, decisions, or findings.]
 
----
+## Who Said What
 
-## 🎯 Topic Description
-[A brief, 2-3 sentence human-readable description of the topic discussed. Acts as a simple pointer to the conversation without listing thoughts, decisions, or individual quotes.]
+### [Participant Name]
+- [Key point, contribution, or decision made by this participant]
 ```
 
 ---
@@ -58,14 +57,14 @@ Below the frontmatter, the body is kept super short:
 ## The Creation vs. Enrichment Lifecycle
 
 ### 1. Initial Creation (First Ingest)
-When a Slack brain reaction or capture is first triggered, create a **super short stub note** containing only the basic frontmatter (with initial participants found) and a temporary 1-sentence topic description placeholder.
+When a Slack brain reaction or capture is first triggered, create a high-quality initial draft note with the correct frontmatter and a clean summary of the initial thread.
 
 ### 2. Vault Enrichment Step
 During subsequent vault enrichment runs (e.g., during Wind-Down, Morning Briefings, or an on-demand Vault Jam):
-1. Review all Slack logs created since the previous vault enrichment run.
-2. Read the source Slack thread replies if needed to refine and write a polished **2-3 sentence Topic Description**.
-3. Verify and compile the complete list of **main participants** and ensure they are added to the frontmatter `participants` list.
-4. **Enforce the Constraints:** Actively prune and remove any point-by-point summaries, individual thoughts, quotes, or decision trees that may have leaked into the logs. Keep them strictly as simple pointers.
+1. Review all Slack inputs created since the previous vault enrichment run.
+2. If further replies occurred in the source Slack thread, refine and enrich the summary and "Who Said What" section to keep it accurate.
+3. Verify and compile the complete list of participants and ensure they are added to the frontmatter `participants` list.
+4. **Enforce the Synthesis Rule:** Ensure no raw transcripts or verbatim message lines remain in the input. All content must be synthesized into summary form.
 
 ---
 
