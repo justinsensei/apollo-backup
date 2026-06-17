@@ -33,3 +33,5 @@ When creating `Source` notes from `Readings`, the primary goal is synthesis, not
 When building solutions, prefer creating simple, single-purpose utility tools that return raw data. The workflow logic for how to use that data should reside in the skill that calls the tool, not in the tool itself.
 §
 When creating new Concept notes, the generated ID (YYYYMMDDHHmmss) must be appended to the end of the filename, and the files must be written to ~/vault/Inbox/ for review.
+§
+Daily briefing cache for 2026-06-17 showed stale candidates (MKD-1, John Kearney) which were actually completed on June 11. Live queries verified they were already done.
