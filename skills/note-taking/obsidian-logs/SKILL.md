@@ -20,13 +20,13 @@ This master skill governs the structure, naming, templates, and navigation of ch
 
 ## 1. Directory Navigation & Coordinates
 
-- **Daily Notes Directory:** `/home/justin.guest/vault/Notes/Daily Notes/`
+- **Daily Notes Directory:** `/home/justin.guest/Developer/obsidian-vault/Notes/Daily Notes/`
   - *Category:* `category: "[[Daily Notes]]"`
-- **Meetings Directory:** `/home/justin.guest/vault/Inputs/Meetings/`
+- **Meetings Directory:** `/home/justin.guest/Developer/obsidian-vault/Inputs/Meetings/`
   - *Category:* `category: "[[Meetings]]"`
-- **Emails Directory:** `/home/justin.guest/vault/Inputs/Emails/` (`category: "[[Emails]]"`)
-- **Slack Directory:** `/home/justin.guest/vault/Inputs/Slack/` (`category: "[[Slack]]"`)
-- **Readings Directory:** `/home/justin.guest/vault/Inputs/Readings/` (`category: "[[Readings]]"`)
+- **Emails Directory:** `/home/justin.guest/Developer/obsidian-vault/Inputs/Emails/` (`category: "[[Emails]]"`)
+- **Slack Directory:** `/home/justin.guest/Developer/obsidian-vault/Inputs/Slack/` (`category: "[[Slack]]"`)
+- **Readings Directory:** `/home/justin.guest/Developer/obsidian-vault/Inputs/Readings/` (`category: "[[Readings]]"`)
   - *Linked Reference:* [Readwise Highlights Sync](references/readwise-sync.md) covers directory conventions for Readwise raw inputs.
 
 ---

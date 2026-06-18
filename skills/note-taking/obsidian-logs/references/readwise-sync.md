@@ -6,7 +6,7 @@ Readwise data consists of raw highlight dumps and reading logs. These are chrono
 ---
 
 ## Directory & Category
-- **Path:** `/home/justin.guest/vault/Inputs/Readings/`
+- **Path:** `/home/justin.guest/Developer/obsidian-vault/Inputs/Readings/`
 - **Category:** `category: "[[Readings]]"`
 - **Category Metadata File:** `vault/Utilities/Categories/Readings.md` (`Type: Inputs/Readings`)
 
