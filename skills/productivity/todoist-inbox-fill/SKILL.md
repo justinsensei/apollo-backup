@@ -135,16 +135,16 @@ Sources: **Slack, Gmail, Obsidian daily notes, Calendar, Linear, Granola.**
 
 - **Toolsets:** `["terminal", "file"]`
 - **Skill:** `obsidian`
-- **Goal:** Find Next Steps assigned to Justin in recent Granola meeting notes. Budget: 8 tool calls.
+- **Goal:** Find Next Steps assigned to Justin in recent meeting notes. Budget: 8 tool calls.
 - **Context:**
-  > Vault path: resolve from env `OBSIDIAN_VAULT_PATH` (fallback: `~/Documents/Obsidian Vault`). Granola notes live under `<vault>/Granola/`, organized by month folders (`YYYY-MM/`). Each note filename starts with the meeting date (`YYYY-MM-DD`).
+  > Vault path: resolve from env `OBSIDIAN_VAULT_PATH` (fallback: `~/Documents/Obsidian Vault`). Meeting notes live under `<vault>/Inputs/Meetings/`. Each note filename starts with the meeting date (`YYYY-MM-DD`).
   >
-  > Identify which month folders to search based on the lookback window (`<LOOKBACK_START>` to `<TODAY>`). Typically just the current month, but if the lookback crosses a month boundary, include both.
+  > Scan the `<vault>/Inputs/Meetings/` directory for `.md` files whose date prefix falls within the lookback window (`<LOOKBACK_START>` to `<TODAY>`).
   >
-  > For each `.md` file in the relevant folder(s) whose date prefix falls within the lookback window:
+  > For each such meeting note:
   > 1. Read the file.
-  > 2. Find the `### Next Steps` section.
-  > 3. Extract only lines that begin with `- Justin:` (case-insensitive). These are the action items assigned to Justin.
+  > 2. Find any section with "Next Steps" or "Priorities" in its heading (e.g. `### Next Steps` or `### Priorities and Next Steps`).
+  > 3. Extract only lines that begin with `- Justin:` (case-insensitive) under that section. These are the action items assigned to Justin.
   > 4. Skip all other lines (other people's action items, bullets under other sections).
   >
   > **Command safety:** Use `search_files` and `read_file` from the file toolset — do NOT use `grep` piped to `python3 -c` or similar (scanner blocks `pipe_to_interpreter`). Use `jq` if reshaping JSON.
@@ -475,7 +475,7 @@ Once Justin responds:
 
 ## Pitfalls
 
-- **Granola notes are in `<vault>/Granola/YYYY-MM/` month subfolders.** Filenames start with `YYYY-MM-DD`. Only lines beginning `- Justin:` (case-insensitive) under the `### Next Steps` section are action items for Justin. Everything else is noise.
+- **Granola/meeting notes live in `<vault>/Inputs/Meetings/`** (no longer in `Granola/` month folders). Filenames start with `YYYY-MM-DD`. Only lines beginning `- Justin:` (case-insensitive) under a section with "Next Steps" or "Priorities" in its heading are action items for Justin. Everything else is noise.
 - **`delegate_task` concurrency cap is 3.** With 6 sources (Slack, Gmail, Obsidian, Calendar, Linear, Granola), split into two or three batches: Batch 1 (Slack, Gmail, Obsidian), Batch 2 (Calendar, Linear, Granola). Don't try to pass more than 3 at once — it errors immediately.
 - **Linear task naming is fixed.** Do not invent task titles for Linear items. Use exactly `Work on <ID> <name>` for assigned issues and `Triage <ID> <name>` for triage issues. Strip these from the source prefix when adding to Todoist — the content field should be the bare task name, not `[Linear/assigned] Work on…`.
 - **`find-tasks` requires at least one filter.** If you call it with no args it errors. See Step 1 for the right snapshot call.

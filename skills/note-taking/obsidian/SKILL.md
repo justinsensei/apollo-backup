@@ -36,6 +36,8 @@ Whenever you are asked to interact with files in the vault, you **must** obey th
    * **General Rules (Categories, Folders, Links):** Read `/home/justin.guest/vault/.cursor/rules/main.mdc`
    * **Note Formats & Frontmatter:** Read `/home/justin.guest/vault/.cursor/rules/note-creation.mdc`
    * **Contacts Layouts (People/Orgs):** Read `/home/justin.guest/vault/.cursor/rules/obsidian-contacts.mdc`
+   * **File Operations (Moves, Renames, Links):** Read `/home/justin.guest/vault/.cursor/rules/file-operations.mdc`
+   * **Markdown & Syntax (Callouts, Math, YAML):** Read `/home/justin.guest/vault/.cursor/rules/obsidian-syntax.mdc`
 2. **Apply Rules Dynamically:** Treat the retrieved markdown contents as absolute constraints. For example:
    * Verify the exact frontmatter syntax required (e.g., `id: "YYYYMMDDHHmmss"` and `daily_note: "[[YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"`).
    * Verify the correct category routing paths.
@@ -48,6 +50,6 @@ Whenever you are asked to interact with files in the vault, you **must** obey th
 3. **Failing to check for existing files:** Before creating any note or stub, search both `/Notes/` and `/Inbox/` by name to prevent duplicate stubs.
 
 ## Verification Checklist
-- [ ] Active rules retrieved from `/home/justin.guest/vault/.cursor/rules/` before executing the operation
+- [ ] Active rules (including `main.mdc`, `note-creation.mdc`, `obsidian-contacts.mdc`, `file-operations.mdc`, and `obsidian-syntax.mdc`) retrieved from `/home/justin.guest/vault/.cursor/rules/` before executing the operation
 - [ ] Note frontmatter, title, and location checked against the retrieved Cursor rules
 - [ ] Newly created notes land in `/home/justin.guest/vault/Inbox/` first (except raw feed folders bypass)
