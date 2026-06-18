@@ -2,7 +2,7 @@ Hermes handles infra/skills. Defer migrations/creations to Justin.
 §
 Gmail (read-only): tokens under ~/.hermes/google_tokens/. Search via gws_multi.py. Do not use himalaya.
 §
-Obsidian vault is at `~/vault`. Routes: `~/vault/Notes/Contacts/`, `~/vault/Daily Notes/`, `~/vault/Notes/`, `~/vault/Inputs/` (Readings/Meetings/Emails/Slack/Linear), `~/vault/Utilities/`. Layer 2 compiled Sources in `~/vault/Notes/`. Dividers: always `---`. Log appends to `~/vault/Utilities/log.md`.
+Obsidian vault is at `~/Developer/obsidian-vault`. Routes: `~/Developer/obsidian-vault/Notes/Contacts/`, `~/Developer/obsidian-vault/Daily Notes/`, `~/Developer/obsidian-vault/Notes/`, `~/Developer/obsidian-vault/Inputs/` (Readings/Meetings/Emails/Slack/Linear), `~/Developer/obsidian-vault/Utilities/`. Layer 2 compiled Sources in `~/Developer/obsidian-vault/Notes/`. Dividers: always `---`. Log appends to `~/Developer/obsidian-vault/Utilities/log.md`.
 §
 Ignore App Store Connect emails (not Justin's).
 §
@@ -32,6 +32,6 @@ When creating `Source` notes from `Readings`, the primary goal is synthesis, not
 §
 When building solutions, prefer creating simple, single-purpose utility tools that return raw data. The workflow logic for how to use that data should reside in the skill that calls the tool, not in the tool itself.
 §
-When creating new Concept notes, the generated ID (YYYYMMDDHHmmss) must be appended to the end of the filename, and the files must be written to ~/vault/Inbox/ for review.
+When creating new Concept notes, the generated ID (YYYYMMDDHHmmss) must be appended to the end of the filename, and the files must be written to ~/Developer/obsidian-vault/Inbox/ for review.
 §
 Daily briefing cache for 2026-06-17 showed stale candidates (MKD-1, John Kearney) which were actually completed on June 11. Live queries verified they were already done.
