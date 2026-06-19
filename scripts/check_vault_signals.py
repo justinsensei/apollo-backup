@@ -283,7 +283,7 @@ def run_project_discovery(vault_path, now_dt):
     entities = get_existing_entities(vault_path)
     all_vault_filenames = get_all_vault_filenames(vault_path)
     today = now_dt.strftime("%Y-%m-%d")
-    skip_dirs = {".git", ".trash", ".cursor", ".claude", "_templates", "utilities", "Utilities", "Readwise"}
+    skip_dirs = {".git", ".trash", ".cursor", ".claude", "_templates", "utilities", "Utilities", "Readwise", "Inbox", "inbox"}
     all_candidates = []
 
     for root, dirs, files in os.walk(vault_path):
@@ -400,7 +400,7 @@ def main():
     
     # Find all modified markdown files
     modified_files = []
-    skip_dirs = {".git", ".trash", ".cursor", ".claude", "_templates", "utilities", "Utilities", "Readwise"}
+    skip_dirs = {".git", ".trash", ".cursor", ".claude", "_templates", "utilities", "Utilities", "Readwise", "Inbox", "inbox"}
     
     for root, dirs, files in os.walk(vault_path):
         dirs[:] = [d for d in dirs if not d.startswith(".") and d not in skip_dirs]

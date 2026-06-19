@@ -31,6 +31,8 @@ SKIP_DIRS = {
     ".claude",
     "Templates",
     "meetings",
+    "Inbox",
+    "inbox",
 }
 
 MATURITY_CATEGORIES = {
