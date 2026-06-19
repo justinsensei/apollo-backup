@@ -25,7 +25,7 @@ This skill absorbs the `Semantic Lint` workflow from the deprecated `llm-wiki` s
 
 ## Checks Performed
 
-This skill runs the `wiki_semantic_lint.py` script, which checks for several classes of semantic problems:
+This skill runs the `wiki_semantic_lint.py` script (which completely excludes the `Inbox/` and `inbox/` folders to let Justin triage those manually), checking for several classes of semantic problems:
 
 1.  **Deterministic Orphans:** Notes with no inbound links from other conceptual notes (excluding indexes, logs, and daily notes). These are potential knowledge silos.
 2.  **Stale Summaries:** `Source` notes whose underlying `Reading` notes have been updated more recently than the `Source` summary itself.
@@ -46,3 +46,4 @@ This skill runs the `wiki_semantic_lint.py` script, which checks for several cla
 -   **Auto-Editing:** Never automatically change the content of a note based on a semantic lint report. These are candidates for review, not definitive errors.
 -   **Running Before Hygiene:** Running semantic checks on a structurally unsound vault can lead to confusing or inaccurate results. Fix the simple problems first.
 -   **Confusing with Structural Lint:** Remember the division of labor: `obsidian-hygiene` is for structure (files, links, IDs), `obsidian-semantic-lint` is for content and meaning.
+-   **Scanning the Inbox:** The semantic lint scan (as part of EEIRP/EIIRP) must always ignore the `Inbox/` and `inbox/` directories. These notes are un-triaged and temporary, and scanning them produces premature or false-positive issues.
