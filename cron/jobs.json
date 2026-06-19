@@ -111,7 +111,7 @@
       "schedule_display": "0 4 * * *",
       "repeat": {
         "times": null,
-        "completed": 27
+        "completed": 28
       },
       "enabled": true,
       "state": "scheduled",
@@ -119,9 +119,9 @@
       "paused_reason": null,
       "created_at": "2026-05-22T15:05:05.687250-04:00",
       "next_run_at": "2026-06-20T04:00:00-04:00",
-      "last_run_at": "2026-06-18T04:02:23.646140-04:00",
-      "last_status": "ok",
-      "last_error": null,
+      "last_run_at": "2026-06-19T04:04:02.016451-04:00",
+      "last_status": "error",
+      "last_error": "RuntimeError: # Morning Briefing & Vault Status Report\n**Friday, June 19, 2026**\n\n## 1. Vault Hygiene & Auto-Healing Done `[High]`\nA targeted diagnostic run of `vault_hygiene_cron.py` identified four critical ghost links. These have been patched, validated, and resolved:\n\n* **Portia Labs Resolution**:\n  * Added `Portia Labs` to the frontmatter `aliases` of `/Notes/Contacts/Portia Labs 20260618155102.md` to ensure proper alias resolution.\n  * Patched `Vincenzo Bianco 20260618155100.md` and `Sam Walker 20260618155101.md` to point to the correct aliased note: `[[Portia Labs 20260618155102|Portia Labs]]`.\n* **Sources Link Healing**:\n  * Patched `/Notes/Sources/AI Doesn't Make Your Job Easier 2026-06-18.md` frontmatter and footer to resolve cleanly to the raw reading note: `[[AI Doesn't Make Your Job Easier 2026-06-18|AI Doesn't Make Your Job Easier.]]`.\n  * Patched `/Notes/Sources/Chat GPT word problems study 2026-06-18.md` to resolve the curly apostrophe mismatch linking to `[[Justin Reich\u2019s Post 2026-06-18|Justin Reich's Post]]`.\n\n*Re-running `vault_hygiene_cron.py` now returns a completely clean exit with zero active vault errors.*\n\n---\n\n## 2. Today's Context & Scheduled Agenda `[High]`\nToday's daily note has been initialized: `/Daily Notes/2026-06-19 Friday.md`.\n\n### Calendar Events\n* **14:00 (Today)** | Kabir Jaiswal \u2014 *30 min with Justin*\n* **Upcoming Monday (June 22)**:\n  * **08:00** | Street Cleaning\n  * **08:30** | Product Meeting\n  * **09:30** | Weekly Sync-Up\n  * **12:00** | HELOC Call\n\n---\n\n## 3. Active Open Loops `[High]`\n\n### Todoist (Overdue Action)\n- [ ] USA Health Insurance Renewal & Open Enrollment 2026/2027 (active opt-in required)\n\n### Linear (Assigned Issues)\n- **In Progress**:\n  - `PROD-565` | ISL Journey: signLanguage missing on onboarding events (Segment SDK)\n  - `PROD-522` | Save onboarding \"why are you learning\" answer as a PostHog person property\n- **Backlog & Diagnostics**:\n  - `PROD-566` | Norwegian (Toleio Norsk): onboarding_start attribution gap (PostHog SDK)\n  - `PROD-510` | Set up Zendesk as a source for PostHog\n  - `CLAW-26`  | Set up automatic anomaly detection and daily reports\n  - `PROD-485` | Add `page_description` property to `page_visit` events\n  - `PROD-88`  | Login code not sent when logging in from classroom (Duplicate)\n\n### Communication Triggers\n* **Emma B**: Coordinate a slot for early next week (Mon/Tue 2:00\u20135:00 PM her time).\n* **Morning Standup**: Drop priorities in the thread.\n\n---\n\n## 4. Yesterday's Activity Summary (June 18, 2026) `[High]`\nYesterday's daily note is complete. The work log represents:\n* **Slack**: 26 messages\n* **Linear**: 1 issue updated\n* **Gmail**: 8 work threads, 32 personal-main threads\n* **Calendar**: 4 events\n* **Vault**: 25 updated markdown files (including the creation of contacts *Vincenzo Bianco*, *Sam Walker*, and *Portia Labs*).",
       "last_delivery_error": null,
       "deliver": "origin",
       "origin": {
@@ -232,5 +232,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-06-19T04:00:26.483457-04:00"
+  "updated_at": "2026-06-19T04:04:02.017813-04:00"
 }
