@@ -15,8 +15,8 @@ This skill governs the **interactive phase** of the morning briefing. The 7AM cr
 - **Days off:** `~/.hermes/days-off.txt` — personal non-holiday days off
 - **Work-day helper:** `python3.12 ~/.hermes/scripts/work_day.py <cmd> [date]`
 - **Change detector & vault activity scan:** `python3 ~/.hermes/scripts/check_morning_changes.py`
-- **Vault notes candidate scanner:** `python3 ~/.hermes/scripts/fetch_vault_notes_candidates.py` — scans non-daily, non-Granola notes created or modified in the lookback window to gather task candidates and development/follow-up suggestions for newly created notes
-- **Vault signals scan script:** `scripts/check_vault_signals.py` (copied to `~/.hermes/scripts/check_vault_signals.py`) — read-only scan that gathers unresolved contact candidates (active timeline enrichment is disabled in favor of native Obsidian Backlinks)
+- **Vault notes candidate scanner:** `python3 ~/.hermes/scripts/fetch_vault_notes_candidates.py` — scans non-daily, non-Granola notes (excluding the `Inbox/` directory completely) created or modified in the lookback window to gather task candidates and development/follow-up suggestions for newly created notes
+- **Vault signals scan script:** `scripts/check_vault_signals.py` (copied to `~/.hermes/scripts/check_vault_signals.py`) — read-only scan (excluding the `Inbox/` directory completely) that gathers unresolved contact candidates (active timeline enrichment is disabled in favor of native Obsidian Backlinks)
 - **Tier-3 semantic lint state:** `~/.hermes/state/semantic_lint_last.json` — written by monthly `wiki_semantic_lint_cron.py`; surfaced once in Phase 1
 - **Vault:** `/home/justin.guest/Developer/obsidian-vault` (or `$OBSIDIAN_VAULT_PATH`)
 
@@ -355,6 +355,7 @@ US federal holidays auto-detected. Personal days off in `~/.hermes/days-off.txt`
 
 ## Pitfalls
 
+- **Excluding the Inbox from EEIRP Scans:** Always ensure that vault scanning scripts (such as `fetch_vault_notes_candidates.py` and `check_vault_signals.py`) completely ignore the `Inbox/` and `inbox/` directories. Notes in the inbox are temporary and meant to be triaged manually by Justin, so scanning them produces premature tasks, suggestions, and signals.
 - **Child name or grade misattribution.** Do not guess or assume which child a school event (like a graduation, potluck, or class celebration) belongs to. Always verify school grades and ages against the user profile (e.g., Jamie is in 5th grade/G5, Sam is in 6th grade/G6) before writing descriptions or adding summaries.
 - **Decision misattribution.** When summarizing work logs or calendar updates, do not attribute decisions made by others (colleagues, family members, teachers) to Justin. Always explicitly credit the actual decision-maker.
 - **Don't re-run background jobs if the cache is fresh.** Check the cache first. Only re-run if the file is missing or >4h old.
