@@ -153,7 +153,7 @@ def main():
     
     candidates = []
     
-    skip_dirs = {".git", ".trash", ".cursor", ".claude", "_templates", "utilities", "Utilities", "Readwise", "archive"}
+    skip_dirs = {".git", ".trash", ".cursor", ".claude", "_templates", "utilities", "Utilities", "Readwise", "archive", "Inbox", "inbox"}
     
     if not os.path.exists(vault_path):
         if args.json:
