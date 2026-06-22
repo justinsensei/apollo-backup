@@ -161,8 +161,12 @@ Draft today's work log, align with Justin, and write it to today's daily note. T
    - Pre-compute timezone offsets dynamically to prevent UTC boundary leakage on calendar searches.
 
 2. **Gather Today's Raw Activities (Fast-track):**
-   - Run `/home/justin.guest/.hermes/skills/note-taking/work-log/references/direct_execution.py` via `terminal` (with `export TARGET_DATE=<YYYY-MM-DD>`) or `execute_code` (setting `os.environ['TARGET_DATE'] = today_date`) to pull Slack, Linear, and Google Workspace calendar/email data in seconds. Using `terminal` is the preferred bulletproof pattern since `execute_code` can be restricted by environment-level approval settings.
-   - Query Todoist live for completed tasks today (`mcp_todoist_find_completed_tasks` with `since: <TODAY>`, `until: <TODAY>`, `getBy: "completion"`) and incomplete tasks due today (`mcp_todoist_find_tasks_by_date` with `startDate: <TODAY>`).
+   - **Gather live activity from multiple direct sources:**
+     - **Calendar:** Run Google Workspace calendar search with local timezone offset (e.g., `python3 ~/.hermes/skills/productivity/google-workspace/scripts/gws_multi.py --account all calendar list --start <YYYY-MM-DD>T00:00:00<OFFSET> --end <YYYY-MM-DD>T23:59:59<OFFSET>`).
+     - **Slack:** Run two searches for messages from/to Justin (e.g., `python3 ~/.hermes/skills/social-media/slack/scripts/slack.py search 'from:@justin after:<YESTERDAY_DATE> before:<TOMORROW_DATE>' --limit 50`).
+     - **Linear:** Query the Linear GraphQL API via Python's `urllib.request` using `LINEAR_API_KEY` from `~/.hermes/.env` (no "Bearer" prefix) to retrieve issues updated today where Justin is assignee, creator, or subscriber.
+     - **Todoist:** Query completed tasks via native `mcp_todoist_find_completed_tasks` (omit `responsibleUser` to include unassigned personal tasks) and any due-today incomplete tasks via `mcp_todoist_find_tasks_by_date`.
+     - **Vault Git:** Check git history of the vault to capture manual notes Justin added, modified, or deleted today (e.g., `git -C ~/Developer/obsidian-vault log --since="<YYYY-MM-DD> 00:00:00" --until="<YYYY-MM-DD> 23:59:59" --name-status --pretty=format:"COMMIT:%h|%an|%s"`). Filter out commits from `Bes (bes-vm)` or containing `bes` to isolate Justin's manual edits.
    - Read today's existing Obsidian daily note with `read_file` to see manual notepad entries.
    - Search the vault for any meeting/Granola notes generated today (look in `vault/Meetings/` or files containing today's date in their name).
    - Read the daily briefing cache `/home/justin.guest/.hermes/morning-briefing/<YYYY-MM-DD>.json` to check the `vault_activity` field, and run a quick terminal find command over the vault to gather any high-level vault restructuring, bulk updates, or manual categorization sweeps that took place during the day.
