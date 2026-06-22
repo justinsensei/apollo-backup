@@ -143,11 +143,6 @@ If Justin selects any:
      - **Company:** 
      - **Relationship:** 
 
-     ## Open Threads
-     - 
-
-     ---
-
      ## Timeline
      - <Date> | Discovered — Mentioned in [[<context_file_relative_path_no_ext>|<context_file_title>]].
      ```
