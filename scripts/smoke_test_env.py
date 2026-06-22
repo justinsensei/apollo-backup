@@ -264,6 +264,34 @@ def main():
                 }
                 overall_pass = False
                 
+        # ----------------------------------------------------
+    # Checkpoint 3.5: Gmail API Connection
+    # ----------------------------------------------------
+    print_section("Gmail API Integration Check")
+    gmail_passed = False
+    try:
+        gapi_path = os.path.expanduser("~/.hermes/skills/productivity/google-workspace/scripts/google_api.py")
+        venv_py = os.path.expanduser("~/.hermes/hermes-agent/venv/bin/python3")
+        import subprocess
+        env = {**os.environ, "GOOGLE_ACCOUNT": "personal-main"}
+        res = subprocess.run(
+            [venv_py, gapi_path, "gmail", "search", 'label:"Bes/Inbox" in:inbox', "--max", "1"],
+            env=env, capture_output=True, text=True, timeout=15
+        )
+        if res.returncode == 0:
+            gmail_passed = True
+            print(f" {TICK} Gmail (personal-main): Connected successfully!")
+        else:
+            print(f" {CROSS} Gmail (personal-main): Failed with exit code {res.returncode}. Stderr: {res.stderr}")
+    except Exception as e:
+        print(f" {CROSS} Gmail (personal-main): Failed to run check: {e}")
+    
+    if not gmail_passed:
+        overall_pass = False
+    api_results["Gmail"] = {
+        "status": "PASS" if gmail_passed else "FAIL"
+    }
+
     report["results"]["external_apis"] = api_results
     
     # 4. Final Status and JSON write
