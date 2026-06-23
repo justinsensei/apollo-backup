@@ -174,9 +174,9 @@ Draft today's work log, align with Justin, and write it to today's daily note. T
 3. **Synthesize the Work Log Draft:**
    - Synthesize the gathered material into a set of clean, structured blocks matching the standard work log format:
      - **Preview Summary:** A highly concise, 1-2 sentence active-voice overview of the day's main focus.
-     - **📅 Schedule & Events:** Chronological bullet list of meetings and events.
-     - **🚀 Highlights & Decisions:** Synthesized highlights, bolded decisions (with accurate attribution), and open questions/blockers.
-     - **🏆 Accomplishments:** Completed Todoist tasks, closed Linear issues, git commits, or high-level vault changes (major file movements, bulk hygiene updates, or structural cleanups).
+     - **🗓 Schedule & Events:** Chronological bullet list of today's and tomorrow's meetings and events (shared with the Morning Briefing).
+     - **✅ Work Log:** Synthesized highlights, bolded decisions (with accurate attribution), open questions/blockers, and accomplishments (completed Todoist tasks, closed Linear issues, git commits, or high-level vault changes).
+
 
 4. **Present the Draft to Justin:**
    - Deliver the formatted draft in chat.
