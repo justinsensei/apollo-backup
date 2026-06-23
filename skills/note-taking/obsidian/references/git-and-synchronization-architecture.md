@@ -53,12 +53,18 @@ The Hermes configuration, custom skills, custom scripts, cron jobs, and memory s
    - Forces the addition of custom/diverged user skills (overriding standard `.gitignore` rules) by comparing local hashes with the default bundled twins.
    - Commits with the subject `auto: <filename>` or `auto: N files changed` and pushes to GitHub.
 
+### Pull Syncing & The `bes-pull` Wrapper
+Although the background daemon `bes-autocommit` only pushes, you can safely pull down remote updates (such as edited config files, new/renamed skills, or updated scripts) from GitHub using the custom `bes-pull` utility.
+* **Command Path:** `/home/justin.guest/.local/bin/bes-pull`
+* **Execution Flow:**
+  1. Stops the `bes-autocommit` daemon to prevent file-system race conditions.
+  2. Syncs any local untracked/unsynced edits from `~/.hermes/` back into `~/bes-backup/` and auto-commits them.
+  3. Pulls and rebases from the remote repository (`origin main`).
+  4. On success, reverse-syncs files from the Git repo back into the live `~/.hermes/` runtime directory.
+  5. Restarts the `bes-autocommit` daemon automatically on exit.
+
 ### Critical Pitfalls & Rules
-- **No Remote Pulling (Strictly Push-Only):** The `bes-autocommit` daemon **does NOT** pull or fetch changes from GitHub automatically. There is no git pull mechanism.
-- **Editing Configs Elsewhere:** If you edit files inside the `bes-backup` remote repository elsewhere (e.g., via the GitHub UI, another clone, or on another machine) and push them, the local VM will **not** receive those updates automatically.
-- **Handling Push Conflicts:** The next time a local modification triggers an autocommit, the `git push` on the VM will fail with a push conflict due to the remote being ahead. To recover, you must manually navigate to the backup repository on the VM and pull:
-  ```bash
-  cd ~/bes-backup
-  git pull --rebase
-  ```
+- **Use `bes-pull` for Remote Updates:** Never run raw `git pull` in `~/bes-backup/` to apply remote changes. Bypassing `bes-pull` means files will *not* be reverse-synced into the active `~/.hermes/` live environment. Always run `bes-pull` instead.
+- **Editing Configs Elsewhere:** If you edit files inside the `bes-backup` remote repository elsewhere (e.g., via the GitHub UI, another clone, or on another machine) and push them, the local VM will **not** receive those updates automatically until you execute `bes-pull`.
+- **Handling Push Conflicts:** If the remote has diverged, local modifications on the VM will trigger push failures in `bes-autocommit`. Run `bes-pull` immediately to reconcile the divergent branches and re-apply synced states.
 - **Syncing Manual VM Changes:** If you manually update or create files under the tracked `~/.hermes` directories, the daemon will automatically detect, rsync, and push them within 5 seconds.
