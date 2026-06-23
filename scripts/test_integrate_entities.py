@@ -34,11 +34,11 @@ class IntegrateEntitiesTest(unittest.TestCase):
         os.makedirs(os.path.join(self.vault, "Inputs", "Meetings"), exist_ok=True)
 
         Path(os.path.join(self.vault, "Notes", "Projects", "K12 GTM.md")).write_text(
-            "> Executive summary: K12 go-to-market.\n\nStatus: Active\n\n## State\n\n## Timeline\n\n## Related inputs\n",
+            "> K-12 go-to-market strategy initiative.\n\nStatus: Active\n\n## State\n\n## Timeline\n\n## Related inputs\n",
             encoding="utf-8",
         )
         Path(os.path.join(self.vault, "Contacts", "Endre.md")).write_text(
-            "> Executive summary: Briefing for Endre.\n\n## State\n\n## Timeline\n",
+            "> Co-founder of SignLab and primary engineering collaborator.\n\n## State\n\n## Timeline\n",
             encoding="utf-8",
         )
 

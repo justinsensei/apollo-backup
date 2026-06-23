@@ -1101,7 +1101,20 @@ if False: # readings_audit_dirs:
             if err:
                 citation_issues[rel_src_str].append((url, err))
 
-# 2.5 EIIRP: convert raw daily-note checkboxes to TaskNotes (96h window)
+# 2.5 Summary placeholder check: flag notes with stale "Executive summary:" or "Briefing for" boilerplate
+summary_placeholder_issues = []
+_placeholder_re = re.compile(r"^> (Executive summary:|Briefing for \S)", re.MULTILINE)
+for md_file in VAULT.rglob("*.md"):
+    if any(part.startswith(".") for part in md_file.parts):
+        continue
+    try:
+        text = md_file.read_text(encoding="utf-8")
+    except Exception:
+        continue
+    if _placeholder_re.search(text):
+        summary_placeholder_issues.append(str(md_file.relative_to(VAULT)))
+
+# 2.6 EIIRP: convert raw daily-note checkboxes to TaskNotes (96h window)
 print("Running EIIRP task sweep (last 96h)...")
 eiirp_summary = sweep_eiirp_tasks(VAULT, lookback_hours=96)
 if eiirp_summary:
@@ -1109,7 +1122,7 @@ if eiirp_summary:
 else:
     print("EIIRP: no unconverted checkboxes found in recent daily notes.")
 
-# 2.6 TaskNote reverse hygiene: backfill missing id and daily_note
+# 2.7 TaskNote reverse hygiene: backfill missing id and daily_note
 print("Running TaskNote reverse hygiene...")
 reverse_hygiene_summary = sweep_tasknote_reverse_hygiene(VAULT)
 if reverse_hygiene_summary:
@@ -1203,6 +1216,11 @@ if legacy_path_links:
     for p in sorted(legacy_path_links.keys()):
         for target in sorted(legacy_path_links[p]):
             lines.append(f"  - {p} links to legacy path: [[{target}]]")
+
+if summary_placeholder_issues:
+    lines.append("\n## 🔴 Summary placeholders")
+    for p in sorted(summary_placeholder_issues):
+        lines.append(f"  - {p}: contains '> Executive summary:' or '> Briefing for' — replace with a real one-sentence description")
 
 if citation_issues:
     lines.append("\n## ⚠️ Citation & Reading URL Issues")
