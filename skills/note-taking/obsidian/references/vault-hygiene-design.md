@@ -53,6 +53,14 @@ The cron wrapper imports stdout from the main script and passes through lines un
 - **Do not auto-link:** `Inputs/Readings/`, `Inputs/Emails/`, `Inputs/Slack/` (preserve raw import text)
 - **Do not append `### Related`:** Readings, Emails, Slack
 
+### Healing broken timestamp-less links
+**Detection:** A broken wikilink whose target title (e.g., `[[ADHD Product Strategy Framework]]`) matches an existing note on disk that has a 14-digit timestamp ID suffix (e.g., `ADHD Product Strategy Framework 20260616102600.md`).
+**Action:** Automatically rewrite the wikilink to target the full timestamped filename while utilizing an alias to display the short title (or preserving the existing section/custom alias):
+- `[[ADHD Product Strategy Framework]]` -> `[[ADHD Product Strategy Framework 20260616102600|ADHD Product Strategy Framework]]`
+- `[[ADHD Product Strategy Framework#Introduction]]` -> `[[ADHD Product Strategy Framework 20260616102600#Introduction|ADHD Product Strategy Framework]]`
+- `[[ADHD Product Strategy Framework|My Strategy]]` -> `[[ADHD Product Strategy Framework 20260616102600|My Strategy]]`
+If multiple timestamped versions exist for the same clean title, the script resolves to the newest lexicographical timestamp. No manual approval is required.
+
 ## Report-only decisions
 
 ### Wrong folder (`## 🔴 Wrong folder`)
