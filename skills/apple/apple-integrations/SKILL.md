@@ -43,44 +43,20 @@ SSH flattens arguments into a single string. Double-quote folder names containin
 
 ---
 
-## 2. Apple Reminders (via remindctl)
+## 2. Apple Reminders to Obsidian Daily Note (Active)
 
-Manage Reminders on the macOS host which sync automatically across Apple devices via iCloud.
+Siri voice captures and other new reminders added to your default list **`Reminders ⚠️`** are automatically synced directly to the **## 🗒 Scratchpad** section of your current Obsidian Daily Note in `bes-vm`.
 
-> ⚠️ **IMPLEMENTATION LIMITATION:**
-> As of June 2026, the `remindctl` CLI and host-side Reminders integration are **NOT YET IMPLEMENTED/ACTIVE**. 
-> The VM's outgoing SSH keys are tightly restricted on the macOS host's side:
-> - `mac-host` is locked to the `bes-imsg` script (read-only iMessage).
-> - `mac-host-notes` is locked to `/Users/justin/.local/share/bes/notes/notes-proxy.py` (which only supports Notes commands: `list-folders`, `create-folder`, `list-notes`, `create-note`, and `search-notes`).
-> 
-> Attempting to run `remindctl` on the VM or over current SSH proxies will fail (returning `command not found` or `Unknown command`).
->
-> **Future Enablement Steps:**
-> 1. Add AppleScript-based Reminders querying and deletion to a script on the macOS host.
-> 2. Expose it by configuring a new restricted SSH key/host alias (e.g., `mac-host-reminders`) on both the VM and macOS host.
+### How it works
+- **Cron-driven Polling**: A background cron job (`Reminders → Obsidian Scratchpad`) runs every 5 minutes on the macOS host.
+- **Auto Daily Note Creation**: The sync automatically triggers `create_daily_note.py` inside `bes-vm` to ensure today's note exists before appending.
+- **Append Format**: Reminders are cleanly appended to the **`## 🗒 Scratchpad`** section as `- [[Reminder Title]]`. Any additional reminder notes are appended as indented sub-bullets.
+- **Self-Cleaning Queue**: Once successfully appended, the reminders are marked as completed on the host.
 
-### Quick Reference (Proposed CLI Schema)
-
-```bash
-# View today's reminders
-remindctl today
-
-# List all reminders lists
-remindctl list
-
-# Create a new reminders list
-remindctl list Shopping --create
-
-# Add a timed reminder
-remindctl add --title "Hairdresser" --due "2026-05-15 14:00"
-
-# Add reminder with an early nudge/alarm
-remindctl add --title "Prep presentation" --due "2026-05-15 10:00" --alarm "2026-05-15 09:30"
-```
-
-### Due Date vs Alarm Trigger
-- `--due` sets the actual due date/time of the reminder.
-- `--alarm` sets the notification trigger/early nudge time. Verify with `remindctl today --json` rather than assuming the due date shifted when the UI groups items by alarm time.
+### Troubleshooting / Reference
+- **Configuration Path**: `/Users/justin/.hermes/scripts/sync_reminders_to_obsidian.py` on the host.
+- **Log Location**: `~/.hermes/cron/output/71f8a2d4e25d/` (on the host).
+- **Default List ID**: `223B68FA-6463-41AD-8B13-069CC61E821B` (named `Reminders ⚠️`).
 
 ---
 
