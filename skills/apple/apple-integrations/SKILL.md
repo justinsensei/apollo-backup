@@ -47,7 +47,19 @@ SSH flattens arguments into a single string. Double-quote folder names containin
 
 Manage Reminders on the macOS host which sync automatically across Apple devices via iCloud.
 
-### Quick Reference
+> ⚠️ **IMPLEMENTATION LIMITATION:**
+> As of June 2026, the `remindctl` CLI and host-side Reminders integration are **NOT YET IMPLEMENTED/ACTIVE**. 
+> The VM's outgoing SSH keys are tightly restricted on the macOS host's side:
+> - `mac-host` is locked to the `bes-imsg` script (read-only iMessage).
+> - `mac-host-notes` is locked to `/Users/justin/.local/share/bes/notes/notes-proxy.py` (which only supports Notes commands: `list-folders`, `create-folder`, `list-notes`, `create-note`, and `search-notes`).
+> 
+> Attempting to run `remindctl` on the VM or over current SSH proxies will fail (returning `command not found` or `Unknown command`).
+>
+> **Future Enablement Steps:**
+> 1. Add AppleScript-based Reminders querying and deletion to a script on the macOS host.
+> 2. Expose it by configuring a new restricted SSH key/host alias (e.g., `mac-host-reminders`) on both the VM and macOS host.
+
+### Quick Reference (Proposed CLI Schema)
 
 ```bash
 # View today's reminders
