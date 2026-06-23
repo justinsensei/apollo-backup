@@ -593,6 +593,67 @@ def heal_vault_filename_capitalizations(vault_path):
         if modified_files:
             print(f"Auto-healed wikilinks in {modified_files} files to match new capitalization.")
 
+def heal_timestamp_links(content, clean_title_to_rel_path, existing_rel_paths, existing_basenames, id_to_rel_path_catalog):
+    def replace_link(match):
+        full_match = match.group(0)
+        if full_match.startswith("<!--"):
+            return full_match
+            
+        inner = match.group(1)
+        if not inner:
+            return full_match
+            
+        if "|" in inner:
+            target_part, display = inner.split('|', 1)
+        else:
+            target_part, display = inner, None
+            
+        if "#" in target_part:
+            base_target, section = target_part.split('#', 1)
+            section = "#" + section
+        else:
+            base_target, section = target_part, ""
+            
+        file_target = base_target.strip()
+        if not file_target:
+            return full_match
+            
+        norm_target = file_target.replace("\\", "/").lower().strip()
+        
+        # Check if already resolved
+        resolved = None
+        if norm_target in existing_rel_paths:
+            resolved = existing_rel_paths[norm_target]
+        elif (norm_target + ".md") in existing_rel_paths:
+            resolved = existing_rel_paths[norm_target + ".md"]
+        elif norm_target in existing_basenames:
+            resolved = existing_basenames[norm_target][0]
+        elif (norm_target + ".md") in existing_basenames:
+            resolved = existing_basenames[norm_target + ".md"][0]
+            
+        if not resolved:
+            id_suffix_match = re.search(r"(\d{14})", file_target)
+            if id_suffix_match:
+                target_id = id_suffix_match.group(1)
+                if target_id in id_to_rel_path_catalog:
+                    resolved = id_to_rel_path_catalog[target_id]
+                    
+        if resolved:
+            return full_match
+            
+        # Try to heal using clean_title_to_rel_path
+        if norm_target in clean_title_to_rel_path:
+            resolved_rel_path = clean_title_to_rel_path[norm_target]
+            resolved_basename = os.path.basename(resolved_rel_path)[:-3]
+            clean_title_match = re.sub(r"\s*\d{14}$", "", resolved_basename)
+            
+            actual_display = display if display is not None else clean_title_match
+            return f"[[{resolved_basename}{section}|{actual_display}]]"
+            
+        return full_match
+
+    return re.sub(r'<!--.*?-->|(?<!\\\\)\[\[([^\]]+)\]\]', replace_link, content)
+
 def _slugify(text, max_len=60):
     """Convert task text to a URL/filename-safe slug."""
     slug = text.lower()
