@@ -806,6 +806,104 @@ def sweep_tasknote_reverse_hygiene(vault):
     return summary
 
 
+def sweep_completed_tasknotes(vault):
+    """Move completed TaskNotes (status: done) from TaskNotes/Tasks/ to TaskNotes/Archive/
+    and update all wikilinks pointing to them across the vault.
+
+    Returns a list of human-readable summary strings describing moves made.
+    """
+    tasknotes_tasks_dir = Path(vault) / "TaskNotes" / "Tasks"
+    tasknotes_archive_dir = Path(vault) / "TaskNotes" / "Archive"
+
+    if not tasknotes_tasks_dir.exists():
+        return []
+
+    tasknotes_archive_dir.mkdir(parents=True, exist_ok=True)
+
+    moved_tasks = []  # list of tuples: (old_path, new_path, old_stem, new_stem)
+
+    for task_path in sorted(tasknotes_tasks_dir.glob("*.md")):
+        try:
+            text = task_path.read_text(encoding="utf-8", errors="replace")
+        except Exception as e:
+            print(f"  Error reading task note {task_path.name}: {e}")
+            continue
+
+        fm, _ = _parse_frontmatter(text)
+
+        status = fm.get("status", "").strip().lower()
+        if status == "done":
+            filename = task_path.name
+            old_stem = task_path.stem
+
+            dest_path = tasknotes_archive_dir / filename
+            if dest_path.exists():
+                # Handle filename collision
+                stem = task_path.stem
+                counter = 1
+                while (tasknotes_archive_dir / f"{stem}_{counter}.md").exists():
+                    counter += 1
+                dest_path = tasknotes_archive_dir / f"{stem}_{counter}.md"
+
+            new_stem = dest_path.stem
+
+            try:
+                task_path.rename(dest_path)
+                moved_tasks.append((task_path, dest_path, old_stem, new_stem))
+            except Exception as e:
+                print(f"  Error moving {task_path.name} to Archive: {e}")
+
+    if not moved_tasks:
+        return []
+
+    # Update wikilinks in all markdown files in the vault
+    all_md_files = []
+    for root, dirs, files in os.walk(vault):
+        dirs[:] = [d for d in dirs if not d.startswith('.') and d not in ('.trash', '.cursor', '.claude')]
+        for f in files:
+            if f.endswith('.md'):
+                all_md_files.append(Path(root) / f)
+
+    summary = []
+
+    replacements = []
+    for _, _, old_stem, new_stem in moved_tasks:
+        escaped_old_stem = re.escape(old_stem)
+        # Match [[TaskNotes/Tasks/old_stem]] or [[TaskNotes/Tasks/old_stem|...]] or [[TaskNotes/Tasks/old_stem#...]]
+        pattern = re.compile(rf'\[\[TaskNotes/Tasks/{escaped_old_stem}(?=[\]|#])')
+        replacement_str = f"[[TaskNotes/Archive/{new_stem}"
+        replacements.append((pattern, replacement_str))
+
+    files_updated = 0
+    for file_path in all_md_files:
+        try:
+            text = file_path.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            continue
+
+        original_text = text
+        for pattern, replacement_str in replacements:
+            text = pattern.sub(replacement_str, text)
+
+        if text != original_text:
+            try:
+                file_path.write_text(text, encoding="utf-8")
+                files_updated += 1
+            except Exception as e:
+                print(f"  Error updating links in {file_path.name}: {e}")
+
+    for _, dest_path, old_stem, new_stem in moved_tasks:
+        if old_stem == new_stem:
+            summary.append(f"  - Moved [[TaskNotes/Tasks/{old_stem}]] to Archive")
+        else:
+            summary.append(f"  - Moved [[TaskNotes/Tasks/{old_stem}]] to Archive as [[TaskNotes/Archive/{new_stem}]]")
+
+    if files_updated > 0:
+        print(f"Sweep TaskNotes: Updated links in {files_updated} vault files.")
+
+    return summary
+
+
 # Run filename capitalization healer first
 heal_vault_filename_capitalizations(VAULT)
 
