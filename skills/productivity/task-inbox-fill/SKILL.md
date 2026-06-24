@@ -4,7 +4,12 @@ description: "Use when Justin asks to 'fill my inbox', 'sync my tasks', 'what am
 platforms: [linux, macos]
 ---
 
-# 📥 Todoist Inbox Fill
+# 📥 Todoist Inbox Fill — ⚠️ DEPRECATED ⚠️
+
+> [!warning] **DEPRECATION NOTICE: Transitioned to Obsidian TaskNotes (June 23, 2026)**
+> Justin has stopped using Todoist entirely and transitioned his task management to **Obsidian TaskNotes**. 
+> - This skill is legacy/deprecated and should not be run for Todoist.
+> - Any future automated task ingestion or "inbox fill" sweeps should target the Obsidian TaskNotes system (creating new task notes in `TaskNotes/Tasks` or checklists in daily notes for the EIIRP sweep), following the conventions in `/home/justin.guest/Developer/obsidian-vault/TaskNotes/Setup.md`.
 
 Scan external sources for open actions Justin owns and needs to do. Deduplicate against what already exists in Todoist. Surface candidates to Justin for confirm/edit. Batch-add confirmed tasks to Inbox.
 

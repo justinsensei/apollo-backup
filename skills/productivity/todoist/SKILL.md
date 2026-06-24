@@ -10,9 +10,16 @@ metadata:
     related_skills: [native-mcp, obsidian]
 ---
 
-# Todoist (Bes scope — full Todoist)
+# Todoist (Bes scope — full Todoist) — ⚠️ DEPRECATED ⚠️
 
-Justin's task system. Todoist Pro account (uid `49270620`), shared between Hermes and Bes via Doist's official MCP server (`@doist/todoist-mcp`, stdio, env `TODOIST_API_KEY`). **One token, one task list — both agents see the same Todoist, but they have different scopes.** Clio doesn't have it.
+> [!warning] **DEPRECATION NOTICE: Transitioned to Obsidian TaskNotes (June 23, 2026)**
+> Justin has stopped using Todoist entirely. All task management has been migrated to the **Obsidian TaskNotes** plugin.
+> - **Do NOT use Todoist tools (`mcp_todoist_*`)** to manage or capture tasks unless explicitly requested.
+> - **All active tasks** are now stored as individual Markdown files under `/home/justin.guest/Developer/obsidian-vault/TaskNotes/Tasks/`.
+> - **Completed or dropped tasks** are archived under `/home/justin.guest/Developer/obsidian-vault/TaskNotes/Archive/`.
+> - **Conventions & Schema:** Refer to `/home/justin.guest/Developer/obsidian-vault/TaskNotes/Setup.md` and the `.cursor/rules/tasknotes.mdc` rule file for all active task management schemas, statuses (`open`, `now`, `next`, `soon`, `later`, `done`, `dropped`), and workflows.
+
+Justin's legacy task system. Todoist Pro account (uid `49270620`), shared between Hermes and Bes via Doist's official MCP server (`@doist/todoist-mcp`, stdio, env `TODOIST_API_KEY`). **One token, one task list — both agents see the same Todoist, but they have different scopes.** Clio doesn't have it.
 
 Bes's scope: **everything in Todoist**. Hermes is restricted to tasks labeled `hermes`; Bes operates across the full task list.
 
