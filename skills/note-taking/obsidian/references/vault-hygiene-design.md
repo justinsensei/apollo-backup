@@ -61,6 +61,10 @@ The cron wrapper imports stdout from the main script and passes through lines un
 - `[[ADHD Product Strategy Framework|My Strategy]]` -> `[[ADHD Product Strategy Framework 20260616102600|My Strategy]]`
 If multiple timestamped versions exist for the same clean title, the script resolves to the newest lexicographical timestamp. No manual approval is required.
 
+### Completed TaskNotes Sweep
+**Detection:** TaskNote files under `TaskNotes/Tasks/` where frontmatter contains `status: done`.
+**Action:** Move the completed TaskNote to `TaskNotes/Archive/` (handling filename collisions robustly by appending incremental suffixes). To keep internal links intact, automatically scan the entire vault and rewrite any wikilinks pointing to the old task path (e.g., `[[TaskNotes/Tasks/old_stem]]` -> `[[TaskNotes/Archive/new_stem]]`).
+
 ## Report-only decisions
 
 ### Wrong folder (`## 🔴 Wrong folder`)
