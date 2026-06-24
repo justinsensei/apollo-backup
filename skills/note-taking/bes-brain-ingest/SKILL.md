@@ -65,13 +65,13 @@ Analyze the instruction line (`instruction` field from the loaded context) for k
   ```
   Write a high-quality summary of the thread discussions and decisions. Do not copy the email contents verbatim.
 
-#### Action B: Create a Todoist Task
+#### Action B: Create an Obsidian Task (Task it) — ⚠️ UPDATED FOR TASKNOTES ⚠️
 - **Trigger Keywords:** Contains `Task`, `task`, `TODO`, `todo`, `to do`, `To do`.
 - **Process:**
-  1. Call `mcp_todoist_add_tasks` to add to Justin's Inbox (`projectId: "inbox"`).
-  2. **Task Name (`content`):** Clear, actionable name derived from email subject and context.
-  3. **Due Date (`dueString`):** Extract date mentions (e.g., "due Friday", "due tomorrow") if present.
-  4. **Context Comment:** Immediately call `mcp_todoist_add_comments` to add a concise comment summarizing the email metadata and core content.
+  1. Since Todoist is disconnected, write the task as a raw `- [ ]` checkbox directly inside today's Daily Note under the notepad or capture section.
+  2. **Task Format:** `- [ ] <Task Name> #task` (e.g., `- [ ] Follow up on invoice #task`).
+  3. Include any relevant context, due dates, or link references in the daily note bullet context.
+  4. The nightly vault hygiene sweep will automatically promote this raw checkbox into a TaskNote file under `TaskNotes/Tasks/`.
 
 #### Other Intent Shapes (Legacy Support)
 - **Person/Company Notes:** "Person note for <Name>" or "New company <Name>" → Create `<Firstname> <Lastname> <ID>.md` under `Inbox/` or in `Notes/Contacts/` per standard contacts layouts.
