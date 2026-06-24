@@ -121,7 +121,7 @@ Would you like me to create contact notes for any of these? (e.g. "yes, 1 as org
 
 If Justin selects any:
 1. Check if the contact card already exists under `/home/justin.guest/Developer/obsidian-vault/Notes/Contacts/` OR in `/home/justin.guest/Developer/obsidian-vault/Inbox/` by performing a wildcard search on the name (e.g. searching for files matching `*Name*` using the `search_files` tool with `target='files'`). This is critical because contacts are saved with their unique timestamp appended (e.g., `Notes/Contacts/Tor Barstad 20260610075543.md`).
-2. If a matching file exists in either location, do NOT overwrite or truncate it (as it contains precious history/timeline entries). Instead, patch the file in its current location to insert the standard frontmatter, summary, and state sections at the very top, preserving any existing content (like `## Timeline` and its entries) underneath.
+2. If a matching file exists in either location, do NOT overwrite or truncate it (as it contains precious history/timeline entries). Instead, patch the file in its current location to insert the standard frontmatter, executive summary, and state sections at the very top, preserving any existing content (like `## Timeline` and its entries) underneath.
 3. If the file does not exist in either location, create a new file in the inbox directory `/home/justin.guest/Developer/obsidian-vault/Inbox/<Name>.md` and format the contact note following these strict standards:
    * Frontmatter:
      ```yaml
@@ -132,7 +132,7 @@ If Justin selects any:
      ```
    * Markdown body:
      ```markdown
-     > <One-sentence description of who <Name> is and their relevance, drawn from meeting context. Do NOT write "Briefing for <Name>" — write a real summary, e.g. "Senior engineer at Acme Corp, encountered as a potential hire.">
+     > Executive summary: Briefing for <Name>.
 
      ## State
      - **Role:** 
