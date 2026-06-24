@@ -143,6 +143,7 @@ Append a single line to the central log file:
 - **Verify Writes:** After writing any note, verify the file exists on disk and is non-empty before reporting success.
 - **Emails with Whitespace:** Some transactional HTML emails have empty text parts containing only whitespace (`\r\n`). When extracting bodies in custom scripts, always check `if not body.strip():` to correctly trigger fallback HTML extraction.
 - **No Infinite Loops:** Skip processing any emails or messages originating from the bot itself.
+- **No Daily Note Writing:** Do NOT append or write to the Daily Note (the Notepad section is completely retired). The pipeline runs hands-off and logs exclusively to `Utilities/log.md` and through `integrate_entities.py`.
 - **Traceability Checklist:**
   - [ ] Target note created under `Inbox/` or `Inputs/`
   - [ ] Frontmatter includes canonical `id`, `daily_note`, and `category`
