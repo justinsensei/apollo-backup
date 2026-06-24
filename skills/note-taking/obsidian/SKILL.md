@@ -38,6 +38,7 @@ Whenever you are asked to interact with files in the vault, you **must** obey th
    * **Contacts Layouts (People/Orgs):** Read `/home/justin.guest/Developer/obsidian-vault/.cursor/rules/obsidian-contacts.mdc`
    * **File Operations (Moves, Renames, Links):** Read `/home/justin.guest/Developer/obsidian-vault/.cursor/rules/file-operations.mdc`
    * **Markdown & Syntax (Callouts, Math, YAML):** Read `/home/justin.guest/Developer/obsidian-vault/.cursor/rules/obsidian-syntax.mdc`
+   * **Task Management (TaskNotes plugin & Archive):** Read `/home/justin.guest/Developer/obsidian-vault/.cursor/rules/tasknotes.mdc` and `/home/justin.guest/Developer/obsidian-vault/TaskNotes/Setup.md`
 2. **Apply Rules Dynamically:** Treat the retrieved markdown contents as absolute constraints. For example:
    * Verify the exact frontmatter syntax required (e.g., `id: "YYYYMMDDHHmmss"` and `daily_note: "[[YYYY-MM-DD Weekday|YYYY-MM-DD Weekday]]"`).
    * Verify the correct category routing paths.
