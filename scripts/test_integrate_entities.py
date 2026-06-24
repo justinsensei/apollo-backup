@@ -38,7 +38,7 @@ class IntegrateEntitiesTest(unittest.TestCase):
             encoding="utf-8",
         )
         Path(os.path.join(self.vault, "Contacts", "Endre.md")).write_text(
-            "> Executive summary: Briefing for Endre.\n\n## State\n\n## Timeline\n",
+            "> Executive summary: Briefing for Endre.\n\n## State\n",
             encoding="utf-8",
         )
 
