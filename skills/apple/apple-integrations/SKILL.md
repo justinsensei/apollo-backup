@@ -49,7 +49,7 @@ Siri voice captures and other new reminders added to your default list **`Remind
 
 ### How it works
 - **Cron-driven Polling**: A background cron job (`Reminders → Obsidian Scratchpad`) runs every 5 minutes on the macOS host.
-- **Append Format**: Reminders are cleanly appended to the **`# ✅ Tasks`** section of `/Inbox/Scratchpad.md` as `- [[Reminder Title]]`. Any additional reminder notes are appended as indented sub-bullets.
+- **Append Format**: Reminders are cleanly appended to the **`# ✅ Tasks`** section of `/Inbox/Scratchpad.md` as `- [ ] Reminder Title`. Any additional reminder notes are appended as indented sub-bullets.
 - **Self-Cleaning Queue**: Once successfully appended, the reminders are marked as completed on the host.
 
 ### Troubleshooting / Reference
