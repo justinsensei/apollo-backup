@@ -53,6 +53,7 @@ Siri voice captures and other new reminders added to your default list **`Remind
 - **Self-Cleaning Queue**: Once successfully appended, the reminders are marked as completed on the host.
 
 ### Troubleshooting / Reference
+- **Bundled Script Reference**: The canonical source code is packaged in this skill at `scripts/sync_reminders_to_obsidian.py` for easy copy-deployment.
 - **Configuration Path**: `/Users/justin/.hermes/scripts/sync_reminders_to_obsidian.py` on the host.
 - **Log Location**: `~/.hermes/cron/output/71f8a2d4e25d/` (on the host).
 - **Default List ID**: "223B68FA-6463-41AD-8B13-069CC61E821B" (named `Reminders ⚠️`).
