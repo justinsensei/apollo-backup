@@ -26,3 +26,7 @@ The canonical rules, formats, and step-by-step logic for the Morning Briefing ar
 1. **Load Canonical Skill:** Read the live, canonical skill file:
    `/home/justin.guest/Developer/obsidian-vault/.cursor/skills/morning-briefing/SKILL.md`
 2. **Execute Workflow:** Follow the exact layout formatting, data collection, and file-writing steps defined in that file.
+
+## Common Pitfalls
+1. **No Retired Reminders or Mentions:** The "Morning thought" section is fully retired and removed. Do not output any notes, notices, or disclaimers stating that it is retired (e.g. `(Note: The "Morning thought" section has been retired...)`). Simply omit any reference to it.
+
