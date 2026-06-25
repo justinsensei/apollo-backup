@@ -87,6 +87,13 @@ curl -s -X POST \
 
 ---
 
+## 2b. Claude Tag Organization Access Limitation
+For issues regarding personal repository 403 access errors inside Claude Tag (Slack), see [references/claude-tag-repo-access.md](references/claude-tag-repo-access.md).
+
+---
+
+---
+
 ## 3. GitHub Issues
 
 Create, search, triage, and manage GitHub issues.
