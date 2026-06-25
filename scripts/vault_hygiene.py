@@ -1052,7 +1052,7 @@ for root, dirs, files in os.walk(VAULT):
         
         if note_id:
             id_to_paths[note_id].append(rel_path)
-        else:
+        elif rel_str_f.startswith("Notes/"):
             missing_ids.append(rel_path)
             
         is_contact = (category in ["People", "Organizations"]) or rel_str_f.lower().startswith("notes/contacts/")
@@ -1091,7 +1091,8 @@ for root, dirs, files in os.walk(VAULT):
                         resolved = id_to_rel_path_catalog[target_id]
                         
             if not resolved:
-                ghost_links[rel_str_f].add(file_target)
+                if rel_str_f.startswith("Notes/"):
+                    ghost_links[rel_str_f].add(file_target)
             else:
                 outgoing_links[rel_str_f].add(resolved)
                 incoming_links[resolved].add(rel_str_f)
@@ -1290,8 +1291,9 @@ if ghost_links:
 # ⚠️ Orphan Notes
 orphan_notes = []
 for note in sorted(list(all_audited_notes)):
-    if len(incoming_links[note]) == 0 and len(outgoing_links[note]) == 0:
-        orphan_notes.append(note)
+    if note.startswith("Notes/"):
+        if len(incoming_links[note]) == 0 and len(outgoing_links[note]) == 0:
+            orphan_notes.append(note)
 
 if orphan_notes:
     lines.append("\n## ⚠️ Orphan Notes")
