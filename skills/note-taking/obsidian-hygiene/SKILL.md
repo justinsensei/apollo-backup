@@ -49,6 +49,15 @@ TaskNotes represent actionable work items. Completed or abandoned items are swep
 - **Scope Rule:** Folder-wide health audits (Missing ID, Ghost Links, and Orphan Notes) are strictly restricted to the `Notes/` directory and its subdirectories.
 - **Why:** This avoids false positives and warning noise from temporary or inbox files in `Inbox/` or `TaskNotes/`.
 
+### 5. Automated ID Conflict Resolution
+- **Operation:** When multiple notes in the vault share the same 14-digit `id` field in their frontmatter, the pipeline automatically resolves the conflict.
+- **Resolution:**
+  - Keeps the alphabetical/first file's ID unchanged.
+  - Increments the ID for subsequent conflicting files until a globally unique ID in the vault is found.
+  - Rewrites the frontmatter `id:` field in the resolved files.
+  - If the conflicting ID is present in the filename, renames the file to match the new ID.
+  - Heals any incoming wikilinks to the renamed files across the entire vault.
+
 ---
 
 ## Technical & Environment Architecture
