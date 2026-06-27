@@ -36,4 +36,4 @@ When creating new Concept notes, the generated ID (YYYYMMDDHHmmss) must be appen
 §
 Daily briefing cache for 2026-06-17 showed stale candidates (MKD-1, John Kearney) which were actually completed on June 11. Live queries verified they were already done.
 §
-The vault hygiene checks for Missing ID, Ghost Links, and Orphan Notes are strictly restricted to the `Notes/` folder and its subfolders to avoid false positives from temporary directories like Inbox/ and TaskNotes/.
+The vault hygiene checks for Missing ID, Missing Daily Note, Ghost Links, and Orphan Notes are strictly restricted to the Notes/ folder and its subfolders to avoid false positives from temporary directories like Inbox/ and TaskNotes/.

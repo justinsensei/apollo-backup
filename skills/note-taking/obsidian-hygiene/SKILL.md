@@ -46,7 +46,7 @@ TaskNotes represent actionable work items. Completed or abandoned items are swep
 - **Link Repair:** Updates references across all files in the vault to use the corrected, newly renamed capitalized filepath.
 
 ### 4. Folder Boundary Constraints
-- **Scope Rule:** Folder-wide health audits (Missing ID, Ghost Links, and Orphan Notes) are strictly restricted to the `Notes/` directory and its subdirectories.
+- **Scope Rule:** Folder-wide health audits (Missing ID, Missing Daily Note, Ghost Links, and Orphan Notes) are strictly restricted to the `Notes/` directory and its subdirectories.
 - **Why:** This avoids false positives and warning noise from temporary or inbox files in `Inbox/` or `TaskNotes/`.
 
 ### 5. Automated ID Conflict Resolution
