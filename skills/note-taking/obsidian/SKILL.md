@@ -1,14 +1,14 @@
 ---
 name: obsidian
-description: Use when Justin asks you to search the vault, find/read notes, or ingest raw items. This is a thin pointer skill that instructs Bes to dynamically read and apply the canonical Cursor rules and skills maintained in the vault.
-version: 2.0.0
+description: Use when Justin asks you to search, read, write, or manage notes in the vault, OR when performing structural/physical vault maintenance (hygiene, task archiving, capitalization healing, link repair, and nightly cron plumbing).
+version: 2.1.0
 author: Bes
 license: MIT
 platforms: [linux, macos]
 metadata:
   hermes:
-    tags: [obsidian, core, conventions, rules, pointers, thin-assistant]
-    related_skills: [did-i-already-do-this, bes-slack-ingest, bes-telegram-ingest, bes-email-dispatch]
+    tags: [obsidian, core, conventions, rules, pointers, thin-assistant, hygiene, maintenance, tasknotes, cron, links, automation]
+    related_skills: [did-i-already-do-this, bes-slack-ingest, bes-telegram-ingest, bes-email-dispatch, obsidian-semantic-lint, bes-brain-ingest]
 ---
 
 # Obsidian: Vault Operations & Schema Pointer
