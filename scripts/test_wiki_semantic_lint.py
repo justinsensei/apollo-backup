@@ -49,6 +49,29 @@ Standalone idea with no inbound links.
         self.assertEqual(len(orphans), 1)
         self.assertEqual(orphans[0]["path"], "Notes/Orphan Concept.md")
 
+    def test_maturity_orphan_not_detected_if_has_outgoing_links(self):
+        self._write(
+            "Notes/Target.md",
+            """---
+category: "[[Concepts]]"
+---
+# Target
+This note is linked to by another note.
+""",
+        )
+        self._write(
+            "Notes/Source With Outgoing.md",
+            """---
+category: "[[Concepts]]"
+---
+# Source With Outgoing
+Links to [[Target]].
+""",
+        )
+        result = wsl.run_lint(vault=self.vault, since_last=False)
+        orphans = result["findings"]["maturity_orphans"]
+        self.assertEqual(len(orphans), 0)
+
     def test_stale_summary_detected(self):
         reading = self._write(
             "Inputs/Readings/Example Book.md",
