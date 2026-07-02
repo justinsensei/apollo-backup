@@ -44,6 +44,14 @@ python3 ~/.hermes/skills/productivity/google-workspace/scripts/gws_multi.py --ac
 
 ---
 
+## Common Pitfalls
+
+1. **Declined Invites showing as Confirmed:** When a user declines a calendar event, the top-level `status` of the event in the API response remains `"confirmed"`. The declined status is nested inside the `attendees` list under the owner's email as `responseStatus: "declined"`. Always verify the owner's response status before compiling schedules; otherwise, declined/cancelled meetings will mistakenly be shown as active/confirmed.
+2. **Deleting Declined Events:** When the user explicitly requests to delete or clean up declined meetings from the calendar, use `calendar delete EVENT_ID` under the correct account (e.g. `work`) to completely purge the event from their calendar views.
+
+
+---
+
 ## Handling Vacation & Meeting Cancellations
 
 When Justin informs you that he is taking a day off, has cancelled work meetings, or is on vacation through a specific date, you must actively update the environment:
