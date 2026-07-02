@@ -452,7 +452,7 @@ command_allowlist:
 quick_commands: {}
 hooks:
   pre_llm_call:
-  - command: ~/.hermes/agent-hooks/bes-vault-pre-turn.sh
+  - command: ~/.hermes/agent-hooks/apollo-vault-pre-turn.sh
     timeout: 8
 hooks_auto_accept: true
 personalities: {}
