@@ -293,7 +293,7 @@ def run_lint(
             continue
         if any(rel.startswith(p) for p in ORPHAN_EXCLUDE_PREFIXES):
             continue
-        if len(incoming.get(rel, set())) == 0:
+        if len(incoming.get(rel, set())) == 0 and len(outgoing.get(rel, set())) == 0:
             findings["maturity_orphans"].append(
                 {
                     "path": rel,
