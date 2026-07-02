@@ -39,7 +39,7 @@ if _SCRIPTS_DIR not in sys.path:
 from _hermes_home import get_hermes_home
 
 HERMES_HOME = get_hermes_home()
-# ─── Multi-account support (Bes customization) ──────────────────────────────
+# ─── Multi-account support (Apollo customization) ──────────────────────────────
 def _resolve_account_paths():
     """Resolve token + client_secret paths for the requested account.
 

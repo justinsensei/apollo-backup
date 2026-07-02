@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Automated Skill Validation & Conformance Testing
-This script scans Bes's custom skills under ~/.hermes/skills/ (and nested directories)
+This script scans Apollo's custom skills under ~/.hermes/skills/ (and nested directories)
 to enforce conformance with specified standards.
 """
 
@@ -417,7 +417,7 @@ def validate_skill(skill_dir_info, vault_files, vault_basenames, known_skill_nam
     }
 
 def main():
-    parser = argparse.ArgumentParser(description="Verify skill conformance and integrity across Bes's custom skills.")
+    parser = argparse.ArgumentParser(description="Verify skill conformance and integrity across Apollo's custom skills.")
     parser.parser_name = "test_skills_conformance.py"
     parser.add_argument("--strict", action="store_true", help="Fail if there are any warnings, not just errors.")
     parser.add_argument("--skill", help="Check a specific skill directory name (e.g., 'obsidian').")

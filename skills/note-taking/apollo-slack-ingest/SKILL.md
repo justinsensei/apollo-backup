@@ -1,8 +1,8 @@
 ---
-name: bes-slack-ingest
+name: apollo-slack-ingest
 description: Capture and ingest Slack conversations as brief pointer records with a short topic description and participant list.
 version: 2.0.0
-author: Bes
+author: Apollo
 license: MIT
 metadata:
   hermes:
@@ -10,7 +10,7 @@ metadata:
     related_skills: [obsidian, obsidian-logs, obsidian-graph-enrichment, obsidian-vault-jam]
 ---
 
-# Bes Slack Ingest
+# Apollo Slack Ingest
 
 Captures noteworthy Slack threads and brain-dumps as high-quality synthesized input notes inside `Inputs/Slack/`.
 
@@ -71,5 +71,5 @@ During subsequent vault enrichment runs (e.g., during Wind-Down, Morning Briefin
 ## Unified Feeds Ingest Pattern
 
 The Slack, Linear, and Gmail (Email Dispatch) ingest pipelines are executed together by the unified cron job **"Unified Brain Feeds Ingest"** (`284c08eb12b7`) running every 120 minutes.
-- **Unified Script:** `/home/justin.guest/.hermes/scripts/fetch_unified_ingest.py` runs `fetch_slack_brains.py`, `fetch_linear_brains.py`, and `poll_bes_inbox.py --json` in parallel and consolidates candidates into a single JSON object with `slack`, `linear`, and `emails` keys.
+- **Unified Script:** `/home/justin.guest/.hermes/scripts/fetch_unified_ingest.py` runs `fetch_slack_brains.py`, `fetch_linear_brains.py`, and `poll_apollo_inbox.py --json` in parallel and consolidates candidates into a single JSON object with `slack`, `linear`, and `emails` keys.
 - **Workflow:** The agent processes incoming candidates, saves files to `/Inbox/` (or `Inputs/Emails/` for emails), runs the marking-processed commands (`--mark-processed`), appends to `Utilities/log.md`, and runs `integrate_entities.py` to keep project hub states aligned. No daily note appending is performed (as the Notepad section is retired).

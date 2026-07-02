@@ -1,8 +1,8 @@
 ---
-name: bes-telegram-ingest
+name: apollo-telegram-ingest
 description: Capture and ingest flagged Telegram conversation sessions as pointer and summary records in Obsidian.
 version: 1.0.0
-author: Bes
+author: Apollo
 license: MIT
 platforms: [linux, macos]
 metadata:
@@ -11,7 +11,7 @@ metadata:
     related_skills: [obsidian, obsidian-logs, llm-wiki, work-log]
 ---
 
-# Bes Telegram Ingest
+# Apollo Telegram Ingest
 
 Captures flagged Telegram conversation sessions as structured, searchable summary inputs inside `Inputs/Telegram/`. 
 

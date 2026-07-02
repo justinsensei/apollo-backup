@@ -207,7 +207,7 @@ backend.auth.token-url = "https://provider.com/oauth/token"
 
 ```toml
 [accounts.default]
-signature = "Best regards,\nYour Name"
+signature = "Apollot regards,\nYour Name"
 signature-delim = "-- \n"
 ```
 

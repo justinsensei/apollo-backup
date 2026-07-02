@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
-"""Poll Bes/Inbox in Justin's personal-main Gmail account for newly forwarded emails.
+"""Poll Apollo/Inbox in Justin's personal-main Gmail account for newly forwarded emails.
 
 Layer B of the polling-cron-agent pattern. Queries unread messages with the
-`Bes/Inbox` label on the personal-main account, filters against a watermark
+`Apollo/Inbox` label on the personal-main account, filters against a watermark
 of recently-seen message IDs, and emits one machine-parseable line per new
 message. Silent (empty stdout) when nothing new — Hermes cron treats empty
 stdout as a no-op.
 
-State: ~/.hermes/state/bes-inbox-watermark.json
+State: ~/.hermes/state/apollo-inbox-watermark.json
 Account: personal-main (goff.justin@gmail.com)
-Label: Bes/Inbox (Gmail-side filter on To: goff.justin+bes@gmail.com)
+Label: Apollo/Inbox (Gmail-side filter on To: goff.justin+apollo@gmail.com)
 
 Read-only on Gmail. Never marks read, never modifies labels — the watermark
-is the source of truth for "has Bes seen this?".
+is the source of truth for "has Apollo seen this?".
 """
 from __future__ import annotations
 
@@ -27,10 +27,10 @@ from pathlib import Path
 HERMES_HOME = Path(os.environ.get("HERMES_HOME") or (Path.home() / ".hermes"))
 VENV_PY = HERMES_HOME / "hermes-agent" / "venv" / "bin" / "python3"
 GAPI = HERMES_HOME / "skills" / "productivity" / "google-workspace" / "scripts" / "google_api.py"
-WATERMARK_PATH = HERMES_HOME / "state" / "bes-inbox-watermark.json"
+WATERMARK_PATH = HERMES_HOME / "state" / "apollo-inbox-watermark.json"
 
 ACCOUNT = "personal-main"
-GMAIL_QUERY = 'label:"Bes/Inbox" in:inbox newer_than:7d'  # Only search for emails in the inbox (excludes archived)
+GMAIL_QUERY = 'label:"Apollo/Inbox" in:inbox newer_than:7d'  # Only search for emails in the inbox (excludes archived)
 MAX_RESULTS = 25
 SCHEMA_VERSION = 1
 
@@ -95,7 +95,7 @@ def main() -> int:
         msgs = query_gmail()
     except Exception as e:
         # Surface to stderr — cron LLM gets the message but no false-positive lines.
-        print(f"ERROR: poll_bes_inbox: {e}", file=sys.stderr)
+        print(f"ERROR: poll_apollo_inbox: {e}", file=sys.stderr)
         return 1
 
     seen_ids = set(wm.get("seen_ids") or [])
@@ -144,7 +144,7 @@ def main() -> int:
     # Emit summary header + one structured line per new message
     print(f"NEW_FORWARDED_EMAILS: {len(new_msgs)}")
     for m in new_msgs:
-        # Best-effort one-line summary; the handler does the real fetch.
+        # Apollot-effort one-line summary; the handler does the real fetch.
         subj = (m.get("subject") or "").replace("\n", " ").strip()[:120]
         frm = (m.get("from") or "").replace("\n", " ").strip()[:80]
         snip = (m.get("snippet") or "").replace("\n", " ").strip()[:140]

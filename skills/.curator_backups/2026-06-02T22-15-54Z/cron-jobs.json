@@ -2,16 +2,16 @@
   "jobs": [
     {
       "id": "9e1227d21111",
-      "name": "Bes email dispatch",
-      "prompt": "The poller (output above) has detected new emails Justin forwarded to goff.justin+bes@gmail.com. The script output lists one line per new message id.\n\nFor each id in the list:\n  1. Load the bes-email-dispatch skill if not already loaded.\n  2. Run scripts/load_context.py <MESSAGE_ID> via the venv python (path is in the skill).\n  3. Follow the skill: parse instruction, decide intent, write to the Obsidian vault, verify the file landed.\n  4. If is_real is false, skip and note why.\n\nAt the end, reply with one concise line per processed message (success or skip + reason). The reply is delivered to Telegram, so keep it tight \u2014 single line per email, no preamble.\n\nIf the script output above this prompt is empty or says \"no new events,\" reply with literally nothing (empty response). Hermes cron will treat empty as silent.",
+      "name": "Apollo email dispatch",
+      "prompt": "The poller (output above) has detected new emails Justin forwarded to goff.justin+apollo@gmail.com. The script output lists one line per new message id.\n\nFor each id in the list:\n  1. Load the apollo-email-dispatch skill if not already loaded.\n  2. Run scripts/load_context.py <MESSAGE_ID> via the venv python (path is in the skill).\n  3. Follow the skill: parse instruction, decide intent, write to the Obsidian vault, verify the file landed.\n  4. If is_real is false, skip and note why.\n\nAt the end, reply with one concise line per processed message (success or skip + reason). The reply is delivered to Telegram, so keep it tight \u2014 single line per email, no preamble.\n\nIf the script output above this prompt is empty or says \"no new events,\" reply with literally nothing (empty response). Hermes cron will treat empty as silent.",
       "skills": [
-        "bes-email-dispatch"
+        "apollo-email-dispatch"
       ],
-      "skill": "bes-email-dispatch",
+      "skill": "apollo-email-dispatch",
       "model": null,
       "provider": null,
       "base_url": null,
-      "script": "poll_bes_inbox.py",
+      "script": "poll_apollo_inbox.py",
       "no_agent": false,
       "context_from": null,
       "schedule": {

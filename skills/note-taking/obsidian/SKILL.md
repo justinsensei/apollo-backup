@@ -2,25 +2,25 @@
 name: obsidian
 description: Use when Justin asks you to search, read, write, or manage notes in the vault, OR when performing structural/physical vault maintenance (hygiene, task archiving, capitalization healing, link repair, and nightly cron plumbing).
 version: 2.1.0
-author: Bes
+author: Apollo
 license: MIT
 platforms: [linux, macos]
 metadata:
   hermes:
     tags: [obsidian, core, conventions, rules, pointers, thin-assistant, hygiene, maintenance, tasknotes, cron, links, automation]
-    related_skills: [did-i-already-do-this, bes-slack-ingest, bes-telegram-ingest, bes-email-dispatch, obsidian-semantic-lint, bes-brain-ingest]
+    related_skills: [did-i-already-do-this, apollo-slack-ingest, apollo-telegram-ingest, apollo-email-dispatch, obsidian-semantic-lint, apollo-brain-ingest]
 ---
 
 # Obsidian: Vault Operations & Schema Pointer
 
 ## Overview
-Bes is a **thin assistant** designed for lightweight mobile query, search, and automated background plumbing (ingestion and daily note/hygiene runs).
+Apollo is a **thin assistant** designed for lightweight mobile query, search, and automated background plumbing (ingestion and daily note/hygiene runs).
 
 To prevent drift and eliminate duplication of maintenance overhead, **the Obsidian vault itself is the sole canonical source of truth for all schemas, formats, layout structures, and workflows.** These conventions are actively maintained under:
 1. **Cursor Rules:** `/home/justin.guest/Developer/obsidian-vault/.cursor/rules/`
 2. **Cursor Skills:** `/home/justin.guest/Developer/obsidian-vault/.cursor/skills/`
 
-Bes does not store hard-coded copies of note formats, category tables, or sorting rules. Instead, this skill acts as a dynamic runtime instruction directing Bes to read the live rules directly from the filesystem prior to performing any note operations.
+Apollo does not store hard-coded copies of note formats, category tables, or sorting rules. Instead, this skill acts as a dynamic runtime instruction directing Apollo to read the live rules directly from the filesystem prior to performing any note operations.
 
 ## When to Use
 * **Use when** creating, editing, renaming, moving, searching, or reading any note in the vault.
@@ -95,9 +95,9 @@ TaskNotes represent actionable work items. Completed or abandoned items are swep
 
 ### Technical & Environment Architecture: The Bidirectional Sync Gotcha
 On the VM environment, changes to tracked scripts (like `vault_hygiene.py`) and configurations have a strict directory mapping.
-- **The Pitfall:** The VM's active runtime directory is **`~/.hermes/`**, but there is also a backup repository at **`~/bes-backup/`**.
-- **The Mirror Mechanism:** The system runs a background daemon `bes-autocommit.service` which watches `~/.hermes/` and mirrors its contents into `~/bes-backup/` (using `rsync --delete`).
-- **How to Avoid Reversion:** You must **never** edit python scripts directly in `~/bes-backup/scripts/` or files under `~/bes-backup/`. If you do, your changes will be silently deleted and overwritten on the next sync event!
+- **The Pitfall:** The VM's active runtime directory is **`~/.hermes/`**, but there is also a backup repository at **`~/apollo-backup/`**.
+- **The Mirror Mechanism:** The system runs a background daemon `apollo-autocommit.service` which watches `~/.hermes/` and mirrors its contents into `~/apollo-backup/` (using `rsync --delete`).
+- **How to Avoid Reversion:** You must **never** edit python scripts directly in `~/apollo-backup/scripts/` or files under `~/apollo-backup/`. If you do, your changes will be silently deleted and overwritten on the next sync event!
 - **Rule:** Always apply patches and write files to the active runtime paths under **`~/.hermes/`** (e.g., `~/.hermes/scripts/vault_hygiene.py`). The background daemon will safely mirror and commit those changes to git.
 
 ---
@@ -110,4 +110,4 @@ On the VM environment, changes to tracked scripts (like `vault_hygiene.py`) and 
 - [ ] Run the hygiene script manually when auditing: `python3 ~/.hermes/scripts/vault_hygiene_cron.py`
 - [ ] Verify stdout of hygiene script only contains legitimate unresolved errors or is empty for a clean state
 - [ ] Confirm moved tasks exist in `TaskNotes/Archive/` and are deleted from their source paths
-- [ ] Check `git -C ~/bes-backup status` and ensure the autocommit service safely mirrored and pushed updates
+- [ ] Check `git -C ~/apollo-backup status` and ensure the autocommit service safely mirrored and pushed updates

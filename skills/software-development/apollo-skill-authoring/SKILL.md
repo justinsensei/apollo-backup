@@ -1,33 +1,33 @@
 ---
-name: bes-skill-authoring
-description: "Author Bes-specific skills under ~/.hermes/skills/: frontmatter, validator, structure."
+name: apollo-skill-authoring
+description: "Author Apollo-specific skills under ~/.hermes/skills/: frontmatter, validator, structure."
 version: 1.0.0
-author: Bes
+author: Apollo
 license: MIT
 metadata:
   hermes:
-    tags: [skills, authoring, bes, conventions, skill-md]
+    tags: [skills, authoring, apollo, conventions, skill-md]
     related_skills: [writing-plans, requesting-code-review]
 ---
 
-# Authoring Bes Skills
+# Authoring Apollo Skills
 
 ## Overview
 
-Bes skills are durable, procedural knowledge for specific kinds of work (vault conventions, work logs, narrower tools, daily rituals).
+Apollo skills are durable, procedural knowledge for specific kinds of work (vault conventions, work logs, narrower tools, daily rituals).
 
 There are two places a SKILL.md can live:
 
-1. **User-local (primary for Bes):** `~/.hermes/skills/<category>/<name>/SKILL.md` — personal, not shared. Created via `skill_manage(action='create')`.
+1. **User-local (primary for Apollo):** `~/.hermes/skills/<category>/<name>/SKILL.md` — personal, not shared. Created via `skill_manage(action='create')`.
 2. **In-repo (for development of Hermes core):** `/home/bb/hermes-agent/skills/<category>/<name>/SKILL.md`.
 
-Since Bes is a customized personal assistant for Justin, we focus almost exclusively on **User-local** skills under `~/.hermes/skills/` to codify personal rituals and Obsidian integration.
+Since Apollo is a customized personal assistant for Justin, we focus almost exclusively on **User-local** skills under `~/.hermes/skills/` to codify personal rituals and Obsidian integration.
 
 ## When to Use
 
 - Justin asks you to save an approach as a skill, or remember a procedure.
 - You identify a stable, reusable workflow (e.g., custom data parsing, syncing scripts, platform integrations).
-- You need to update or maintain an existing Bes-specific skill.
+- You need to update or maintain an existing Apollo-specific skill.
 
 ## Required Frontmatter
 
@@ -47,7 +47,7 @@ Peer-matched shape used by every skill under `~/.hermes/skills/`:
 name: my-skill-name               # lowercase, hyphens, ≤64 chars (MAX_NAME_LENGTH)
 description: Use when <trigger>. <one-line behavior>.
 version: 1.0.0
-author: Bes
+author: Apollo
 license: MIT
 metadata:
   hermes:
@@ -79,7 +79,7 @@ One or two paragraphs: what and why.
 ## <Topic sections specific to the skill>
 - Quick-reference tables are common
 - Code blocks with exact commands
-- Bes-specific recipes and variables
+- Apollo-specific recipes and variables
 
 ## Common Pitfalls
 Numbered list of mistakes and their fixes.
@@ -102,7 +102,7 @@ User-local skills live under:
 
 Categories currently in use (confirm with `skills_list`): `apple`, `autonomous-ai-agents`, `creative`, `daily-rituals`, `data-science`, `devops`, `email`, `gaming`, `github`, `mcp`, `media`, `mlops`, `note-taking`, `productivity`, `red-teaming`, `research`, `smart-home`, `social-media`, `software-development`.
 
-Pick the closest existing category. For Bes notes and workflows, `note-taking` or `daily-rituals` is usually best. For technical scripts, `software-development` is best.
+Pick the closest existing category. For Apollo notes and workflows, `note-taking` or `daily-rituals` is usually apollot. For technical scripts, `software-development` is apollot.
 
 ## Workflow
 
@@ -124,31 +124,31 @@ Pick the closest existing category. For Bes notes and workflows, `note-taking` o
 
 ## Bidirectional Sync & Merge Conflict Resolution
 
-The personality repository (`~/bes-backup/`) is connected to remote GitHub (`origin/main`). In the background, the `bes-autocommit` systemd service watches `~/.hermes/` and automatically commits and pushes local updates (e.g. memories, cron job statuses, local skill updates) to `origin/main`.
+The personality repository (`~/apollo-backup/`) is connected to remote GitHub (`origin/main`). In the background, the `apollo-autocommit` systemd service watches `~/.hermes/` and automatically commits and pushes local updates (e.g. memories, cron job statuses, local skill updates) to `origin/main`.
 
-### Pulling Remote Updates (`bes-pull`)
-If you or Justin edit skills/config on another machine and push them to GitHub, run the custom `/home/justin.guest/.local/bin/bes-pull` script to fetch them.
+### Pulling Remote Updates (`apollo-pull`)
+If you or Justin edit skills/config on another machine and push them to GitHub, run the custom `/home/justin.guest/.local/bin/apollo-pull` script to fetch them.
 
 The script:
-1. Stops the background `bes-autocommit` service.
-2. Syncs any unsynced local changes from `~/.hermes/` to `~/bes-backup/` and commits them to prevent uncommitted conflict errors.
+1. Stops the background `apollo-autocommit` service.
+2. Syncs any unsynced local changes from `~/.hermes/` to `~/apollo-backup/` and commits them to prevent uncommitted conflict errors.
 3. Pulls and rebases from `origin/main`.
-4. Reverse-syncs the pulled updates from `~/bes-backup/` into `~/.hermes/`.
-5. Restarts the `bes-autocommit` service.
+4. Reverse-syncs the pulled updates from `~/apollo-backup/` into `~/.hermes/`.
+5. Restarts the `apollo-autocommit` service.
 
-### Resolving Merge Conflicts during `bes-pull`
-Because both the local VM and remote edits modify metadata and files concurrently, `bes-pull` might abort with a merge conflict. If this happens, follow this workflow to resolve it cleanly:
+### Resolving Merge Conflicts during `apollo-pull`
+Because both the local VM and remote edits modify metadata and files concurrently, `apollo-pull` might abort with a merge conflict. If this happens, follow this workflow to resolve it cleanly:
 
 1. **Reset to Clean Remote Baseline:** Reset your local branch to the remote state to clear any broken rebase state:
    ```bash
    git reset --hard origin/main
    ```
-2. **Re-apply Local Changes Manually:** Inspect your local revisions against the remote version of the files, and use the `patch` tool to re-apply your custom local changes onto the clean remote baseline in `~/bes-backup/`.
+2. **Re-apply Local Changes Manually:** Inspect your local revisions against the remote version of the files, and use the `patch` tool to re-apply your custom local changes onto the clean remote baseline in `~/apollo-backup/`.
 3. **Reverse Sync back to Live Environment:** Manually copy/rsync the updated files from the backup repo back to the live runtime environment under `~/.hermes/`:
    ```bash
-   rsync -a --delete ~/bes-backup/skills/ ~/.hermes/skills/
+   rsync -a --delete ~/apollo-backup/skills/ ~/.hermes/skills/
    ```
-4. **Auto-commit and Push:** Once the files are updated in `~/.hermes/`, the running background `bes-autocommit` service will automatically detect the changes, mirror them to `~/bes-backup/`, commit them, and push them to `origin/main` without conflicts.
+4. **Auto-commit and Push:** Once the files are updated in `~/.hermes/`, the running background `apollo-autocommit` service will automatically detect the changes, mirror them to `~/apollo-backup/`, commit them, and push them to `origin/main` without conflicts.
 
 ## Common Pitfalls
 
@@ -162,7 +162,7 @@ Because both the local VM and remote edits modify metadata and files concurrentl
 
 5. **Embedding scanner-tripping command shapes in skill content.** Inside each subagent context block, tell the agent which JSON parser to use (`jq` is installed everywhere) and forbid unsafe shapes explicitly (e.g. `cmd | python3 -c`, `cmd | bash`, `cmd | node -e`, or `curl | sh`).
 
-6. **Directly editing `~/bes-backup/` files without reverse-syncing.** If you edit files in `~/bes-backup/` directly and don't sync them back to `~/.hermes/`, the live environment won't see them, and any subsequent change in `~/.hermes/` will trigger `bes-autocommit` to overwrite your backup edits. Always reverse-sync to `~/.hermes/` after patching backup files.
+6. **Directly editing `~/apollo-backup/` files without reverse-syncing.** If you edit files in `~/apollo-backup/` directly and don't sync them back to `~/.hermes/`, the live environment won't see them, and any subsequent change in `~/.hermes/` will trigger `apollo-autocommit` to overwrite your backup edits. Always reverse-sync to `~/.hermes/` after patching backup files.
 
 7. **Merge conflict loops during rebase.** Running `git rebase --continue` without resolving conflict markers can result in corrupted files containing diff markup, or skipping remote additions entirely. Always use `git reset --hard origin/main` followed by manual patching to resolve conflicts cleanly.
 

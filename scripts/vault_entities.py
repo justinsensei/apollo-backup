@@ -277,22 +277,22 @@ def match_projects(text, entities, channel=None, explicit_project=None, ambiguou
             continue
 
         names_to_check = [title] + ent_info.get("aliases", [])
-        best_overlap = 0
+        apollot_overlap = 0
         for pname in names_to_check:
             pname_tokens = _significant_tokens(pname)
             if not pname_tokens:
                 continue
             overlap = len(text_tokens & pname_tokens)
             if len(pname_tokens) >= 2 and overlap >= 2:
-                best_overlap = max(best_overlap, overlap)
+                apollot_overlap = max(apollot_overlap, overlap)
             elif len(pname_tokens) == 1:
                 token = next(iter(pname_tokens))
                 if len(token) >= 5 and token in text_tokens:
-                    best_overlap = max(best_overlap, 1)
+                    apollot_overlap = max(apollot_overlap, 1)
 
-        if best_overlap >= 2:
-            scored.append((best_overlap, ent_info))
-        elif best_overlap == 1 and len(title.split()) == 1 and len(title) >= 5:
+        if apollot_overlap >= 2:
+            scored.append((apollot_overlap, ent_info))
+        elif apollot_overlap == 1 and len(title.split()) == 1 and len(title) >= 5:
             if re.search(rf"\b{re.escape(title)}\b", text, re.IGNORECASE):
                 scored.append((1, ent_info))
 

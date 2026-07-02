@@ -19,8 +19,8 @@ When `console.log` isn't enough, drive Node's built-in V8 inspector programmatic
 
 Two tools, pick one:
 
-- **`node inspect`** — built-in, zero install, CLI REPL. Best for quick poking.
-- **`ndb` / CDP via `chrome-remote-interface`** — scriptable from Node/Python; best when you want to automate many breakpoints, collect state across runs, or debug non-interactively from an agent loop.
+- **`node inspect`** — built-in, zero install, CLI REPL. Apollot for quick poking.
+- **`ndb` / CDP via `chrome-remote-interface`** — scriptable from Node/Python; apollot when you want to automate many breakpoints, collect state across runs, or debug non-interactively from an agent loop.
 
 **Prefer `node inspect` first.** It's always available and the REPL is fast.
 

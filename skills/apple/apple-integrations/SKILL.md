@@ -61,22 +61,22 @@ Siri voice captures and other new reminders added to your default list **`Remind
 
 ## 3. iMessage (Read-Only SSH Proxy)
 
-Read recent iMessages from allowlisted chats on the macOS host via `mac-host` wrapper `bes-imsg`. Note: Access is read-only; sending replies is not supported.
+Read recent iMessages from allowlisted chats on the macOS host via `mac-host` wrapper `apollo-imsg`. Note: Access is read-only; sending replies is not supported.
 
 ### Accessible Chats
-Bes can query 13 allowlisted chats (including Nana, Kathy, CVS, family groups, etc.).
+Apollo can query 13 allowlisted chats (including Nana, Kathy, CVS, family groups, etc.).
 
 ### Quick Reference
 
 ```bash
 # List available chats and their IDs
-ssh mac-host bes-imsg chats
+ssh mac-host apollo-imsg chats
 
 # Read recent messages from a specific chat ID (e.g. chat-id 1, limit 10)
-ssh mac-host bes-imsg recent --chat-id 1 --limit 10
+ssh mac-host apollo-imsg recent --chat-id 1 --limit 10
 
 # Sweep recent messages across all allowlisted chats (e.g. past 24 hours)
-ssh mac-host bes-imsg recent-all --since 24h
+ssh mac-host apollo-imsg recent-all --since 24h
 ```
 
 ---

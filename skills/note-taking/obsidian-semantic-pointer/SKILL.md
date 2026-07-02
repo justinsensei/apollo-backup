@@ -2,7 +2,7 @@
 name: obsidian-semantic-pointer
 description: Manage and operate the Obsidian Semantic Pointer CLI for on-demand historical bridging, semantic search, and context pruning.
 version: 1.0.0
-author: Bes
+author: Apollo
 license: MIT
 metadata:
   hermes:

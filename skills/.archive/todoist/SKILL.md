@@ -10,7 +10,7 @@ metadata:
     related_skills: [native-mcp, obsidian]
 ---
 
-# Todoist (Bes scope — full Todoist) — ⚠️ DEPRECATED ⚠️
+# Todoist (Apollo scope — full Todoist) — ⚠️ DEPRECATED ⚠️
 
 > [!warning] **DEPRECATION NOTICE: Transitioned to Obsidian TaskNotes (June 23, 2026)**
 > Justin has stopped using Todoist entirely. All task management has been migrated to the **Obsidian TaskNotes** plugin.
@@ -19,9 +19,9 @@ metadata:
 > - **Completed or dropped tasks** are archived under `/home/justin.guest/Developer/obsidian-vault/TaskNotes/Archive/`.
 > - **Conventions & Schema:** Refer to `/home/justin.guest/Developer/obsidian-vault/TaskNotes/Setup.md` and the `.cursor/rules/tasknotes.mdc` rule file for all active task management schemas, statuses (`open`, `now`, `next`, `soon`, `later`, `done`, `dropped`), and workflows.
 
-Justin's legacy task system. Todoist Pro account (uid `49270620`), shared between Hermes and Bes via Doist's official MCP server (`@doist/todoist-mcp`, stdio, env `TODOIST_API_KEY`). **One token, one task list — both agents see the same Todoist, but they have different scopes.** Clio doesn't have it.
+Justin's legacy task system. Todoist Pro account (uid `49270620`), shared between Hermes and Apollo via Doist's official MCP server (`@doist/todoist-mcp`, stdio, env `TODOIST_API_KEY`). **One token, one task list — both agents see the same Todoist, but they have different scopes.** Clio doesn't have it.
 
-Bes's scope: **everything in Todoist**. Hermes is restricted to tasks labeled `hermes`; Bes operates across the full task list.
+Apollo's scope: **everything in Todoist**. Hermes is restricted to tasks labeled `hermes`; Apollo operates across the full task list.
 
 ## Justin's Todoist model (the new shape — read this twice)
 
@@ -46,9 +46,9 @@ As of May 2026, Justin uses **simple Projects to represent statuses**. The struc
 | `waiting` | Special | Delegated or blocked — waiting on someone/something |
 | `hermes` | Special | Hermes-originated tasks — **do not touch** |
 
-**Label deduction:** When Justin asks Bes to add a task, infer labels from context even if not explicitly stated. A task clearly about work gets `work`; one about picking something up at a specific store gets `@store-name`; one involving a specific person gets `+person`. If ambiguous, leave unlabeled — don't guess. Never infer `hermes` or add it to any task.
+**Label deduction:** When Justin asks Apollo to add a task, infer labels from context even if not explicitly stated. A task clearly about work gets `work`; one about picking something up at a specific store gets `@store-name`; one involving a specific person gets `+person`. If ambiguous, leave unlabeled — don't guess. Never infer `hermes` or add it to any task.
 
-- **The `hermes` label** (id `2183843700`, teal) is reserved for Hermes-originated tasks. Bes should not apply, remove, or modify it. If you see it on a task, that means Hermes created it; treat it as a read signal, not something to manage.
+- **The `hermes` label** (id `2183843700`, teal) is reserved for Hermes-originated tasks. Apollo should not apply, remove, or modify it. If you see it on a task, that means Hermes created it; treat it as a read signal, not something to manage.
 
 ## When to use
 
@@ -87,7 +87,7 @@ As of May 2026, Justin uses **simple Projects to represent statuses**. The struc
 
 ## Obsidian linkage convention
 
-Bes is the agent that bridges Todoist and Obsidian. When linking the two:
+Apollo is the agent that bridges Todoist and Obsidian. When linking the two:
 
 - **Todoist task → Obsidian:** include the linkage in the task `description`. Use one of:
   - `Project: [[Project-Note-Name]]` — for tasks tied to a multi-step Obsidian project
@@ -120,7 +120,7 @@ When scanning Obsidian daily notes or email for action items:
 4. **Create tasks when asked, no friction.** If Justin says "add X to my list", "create a task for Y", "remind me to Z" — just do it. Default destination is Inbox unless he specifies a status project. Infer labels from context (area, location, people) even if not mentioned explicitly. Don't ask for confirmation on straightforward captures — act, then confirm with one line.
 5. **Be conservative with deletes.** Use `complete-tasks` to finish a task, NOT `delete-object`. The completed-task history is useful for retrospectives.
 6. **Use natural-language dates.** `dueString: "tomorrow at 3pm"`, `"every monday"`, `"in 2 weeks"` — Todoist parses these correctly and preserves Justin's timezone (America/New_York). Don't construct ISO timestamps unless you have a specific reason.
-7. **Don't touch the `hermes` label.** It's Hermes's identity marker. If a task is labeled `hermes`, that means the other agent created it. Leave the label alone; otherwise the task is fully in Bes's scope.
+7. **Don't touch the `hermes` label.** It's Hermes's identity marker. If a task is labeled `hermes`, that means the other agent created it. Leave the label alone; otherwise the task is fully in Apollo's scope.
 
 ## The tool surface (54 tools, organized)
 
@@ -339,7 +339,7 @@ Justin has four saved filters for temporal visibility:
 
 9. **The MCP server runs as a subprocess of the Hermes gateway** (`npm exec @doist/todoist-mcp`). If tools start returning errors, check that the subprocess didn't die: `ps -ef | grep todoist-mcp`. A gateway restart respawns it. If tool registration is showing 0 tools in the agent log, the `TODOIST_API_KEY` env var didn't load — verify with `grep -c '^TODOIST_API_KEY=' ~/.hermes/.env`.
 
-10. **One token, two clients (Hermes + Bes).** Both agents see the same task list. If Hermes adds a task (labeled `hermes`), Bes can find it and vice versa. Treat the task list as shared state. **Never apply, remove, or modify the `hermes` label** — that's Hermes's identity marker, not a shared signal.
+10. **One token, two clients (Hermes + Apollo).** Both agents see the same task list. If Hermes adds a task (labeled `hermes`), Apollo can find it and vice versa. Treat the task list as shared state. **Never apply, remove, or modify the `hermes` label** — that's Hermes's identity marker, not a shared signal.
 
 11. **Don't reorganize the status-project structure.** Now/Next/Soon/Maybe Later is Justin's framework. Adding a fifth top-level project, archiving one of the four, or renaming them needs explicit direction. The same goes for sections: Justin doesn't use them under this model; don't add them.
 
@@ -387,7 +387,7 @@ If any of these stop resolving, re-fetch via `find-projects` / `find-labels` and
 ## Notes
 
 - The MCP server is npm-distributed (`@doist/todoist-mcp`), maintained by Doist directly. It's the same tool surface that powers their Claude Desktop / Cursor / Claude Code integrations.
-- The hosted alternative is `https://ai.todoist.net/mcp` with OAuth, but we chose the local stdio + API-token path because (a) Bes runs in a VM with no browser for OAuth, (b) one token works for multiple Hermes instances, (c) Justin already manages token-in-`.env` workflows fluently.
+- The hosted alternative is `https://ai.todoist.net/mcp` with OAuth, but we chose the local stdio + API-token path because (a) Apollo runs in a VM with no browser for OAuth, (b) one token works for multiple Hermes instances, (c) Justin already manages token-in-`.env` workflows fluently.
 - Justin's quick-entry hotkey setup is out of scope for the agent. He handles client-side capture; agent-side Todoist is for tasks born in conversation with the agent.
 - Hermes has a deliberately narrower version of this skill (scope: tasks labeled `hermes` only). The two skills are intentionally divergent.
 

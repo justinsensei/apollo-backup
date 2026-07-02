@@ -2,7 +2,7 @@
 name: obsidian-semantic-lint
 description: Performs high-level semantic health checks on the vault, identifying potential contradictions, stale summaries, and structural anomalies in the knowledge graph.
 version: 1.0.0
-author: Bes
+author: Apollo
 license: MIT
 metadata:
   hermes:

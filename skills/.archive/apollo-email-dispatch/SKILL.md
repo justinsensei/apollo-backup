@@ -1,6 +1,6 @@
 ---
-name: bes-email-dispatch
-description: Process an email that Justin forwarded to goff.justin+bes@gmail.com — parse the inline instruction (first line of body or subject prefix), turn the email into the right kind of Obsidian artifact (note, Person note update, append to existing note, ad-hoc judgment), and report back to Telegram. Read-only on Gmail.
+name: apollo-email-dispatch
+description: Process an email that Justin forwarded to goff.justin+apollo@gmail.com — parse the inline instruction (first line of body or subject prefix), turn the email into the right kind of Obsidian artifact (note, Person note update, append to existing note, ad-hoc judgment), and report back to Telegram. Read-only on Gmail.
 version: 1.2.0
 platforms: [linux, macos]
 metadata:
@@ -9,11 +9,11 @@ metadata:
     related_skills: [google-workspace, obsidian, llm-wiki, polling-cron-agent]
 ---
 
-# Bes Email Dispatch
+# Apollo Email Dispatch
 
-Handler skill for the email-forwarding workflow. Justin forwards an email to `goff.justin+bes@gmail.com` with a one-line instruction at the top of the body (or just a subject prefix); a Gmail filter labels it `Bes/Inbox`; a poller (`poll_bes_inbox.py`) detects it and invokes this skill once per new message ID.
+Handler skill for the email-forwarding workflow. Justin forwards an email to `goff.justin+apollo@gmail.com` with a one-line instruction at the top of the body (or just a subject prefix); a Gmail filter labels it `Apollo/Inbox`; a poller (`poll_apollo_inbox.py`) detects it and invokes this skill once per new message ID.
 
-This skill is **read-only on Gmail**. It never archives, marks read, or replies. The source of truth for "has Bes seen this?" is the watermark file (`~/.hermes/state/bes-inbox-watermark.json`), not Gmail label state.
+This skill is **read-only on Gmail**. It never archives, marks read, or replies. The source of truth for "has Apollo seen this?" is the watermark file (`~/.hermes/state/apollo-inbox-watermark.json`), not Gmail label state.
 
 ## Inputs
 
@@ -159,7 +159,7 @@ For each message ID detected by the poller:
 ## Guidelines & Rules
 
 - **Verify Writes:** After writing any note to the vault, verify the file exists and is non-empty before reporting success.
-- **Avoid Loop Guards:** Skip any emails sent by Bes himself to prevent infinite loops.
+- **Avoid Loop Guards:** Skip any emails sent by Apollo himself to prevent infinite loops.
 - **Rate Limit:** Limit processing to at most 5 emails per cron tick. If there are more, report that the rest will be picked up next tick.
 
 ## Troubleshooting & Pitfalls

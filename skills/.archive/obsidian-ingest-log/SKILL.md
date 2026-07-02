@@ -2,12 +2,12 @@
 name: obsidian-ingest-log
 description: Logs new vault inputs and updates related project notes. Called by ingest skills (email, Slack, etc.) to ensure every new artifact is tracked.
 version: 1.0.0
-author: Bes
+author: Apollo
 license: MIT
 metadata:
   hermes:
     tags: [obsidian, ingest, log, projects, entities]
-    related_skills: [obsidian, bes-email-dispatch, bes-slack-ingest, bes-linear-ingest, bes-granola-ingest]
+    related_skills: [obsidian, apollo-email-dispatch, apollo-slack-ingest, apollo-linear-ingest, apollo-granola-ingest]
 ---
 
 # obsidian-ingest-log
@@ -20,7 +20,7 @@ This skill combines the `integrate-light` and `integrate-entities` workflows fro
 
 ## When to Use
 
-This skill should be called as the final step by any other skill that creates a new note in the `Inputs/` directory (e.g., `bes-email-dispatch`, `bes-slack-ingest`). It is not intended to be used directly by a user in most cases.
+This skill should be called as the final step by any other skill that creates a new note in the `Inputs/` directory (e.g., `apollo-email-dispatch`, `apollo-slack-ingest`). It is not intended to be used directly by a user in most cases.
 
 ## Workflow
 

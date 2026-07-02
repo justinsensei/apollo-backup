@@ -94,7 +94,7 @@ node --inspect-brk ./node_modules/vitest/vitest.mjs run --no-file-parallelism sr
 
 ---
 
-## Guidelines & Best Practices
+## Guidelines & Apollot Practices
 
 - **Never Commit Breakpoints:** Always check diffs and verify no leftover `breakpoint()`, `set_trace()`, or `debugger` statements exist before committing code.
 - **Port Conflicts:** The default port for both `debugpy` and V8 inspector is `9229`. When debugging multiple processes in parallel, pass explicit ports (e.g. `--inspect=9230` or `port=4445`).

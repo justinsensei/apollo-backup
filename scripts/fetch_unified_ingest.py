@@ -51,10 +51,10 @@ def main():
         failed.append("Linear (fetch_linear_brains.py)")
         linear_brains = []
     
-    # Fetch Gmail/Bes Inbox forwards
-    email_brains = run_script("poll_bes_inbox.py", ["--json"])
+    # Fetch Gmail/Apollo Inbox forwards
+    email_brains = run_script("poll_apollo_inbox.py", ["--json"])
     if email_brains is None:
-        failed.append("Email/Bes Inbox (poll_bes_inbox.py)")
+        failed.append("Email/Apollo Inbox (poll_apollo_inbox.py)")
         email_brains = []
     
     # Fetch Telegram brains

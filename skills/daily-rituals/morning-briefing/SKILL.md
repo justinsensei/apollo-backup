@@ -1,8 +1,8 @@
 ---
 name: morning-briefing
-description: Use when generating or managing Justin's daily morning briefing report. This is a thin pointer skill that directs Bes to load and apply the canonical morning briefing conventions and formatting rules maintained in the vault.
+description: Use when generating or managing Justin's daily morning briefing report. This is a thin pointer skill that directs Apollo to load and apply the canonical morning briefing conventions and formatting rules maintained in the vault.
 version: 3.0.0
-author: Bes
+author: Apollo
 license: MIT
 metadata:
   hermes:
@@ -13,7 +13,7 @@ metadata:
 # 🌅 Morning Briefing Pointer
 
 ## Overview
-Bes is a **thin assistant** whose Obsidian-specific conventions are stored and maintained directly inside the Obsidian vault.
+Apollo is a **thin assistant** whose Obsidian-specific conventions are stored and maintained directly inside the Obsidian vault.
 
 The canonical rules, formats, and step-by-step logic for the Morning Briefing are located in:
 `/home/justin.guest/Developer/obsidian-vault/.cursor/skills/morning-briefing/SKILL.md`

@@ -2,14 +2,14 @@
 name: obsidian-logs
 description: "Master conventions for chronological logs: governs Daily Notes, Meetings, and incoming Inputs (Emails, Slack, Readings)."
 version: 1.4.0
-author: Bes
+author: Apollo
 index: yes
 license: MIT
 platforms: [linux, macos]
 metadata:
   hermes:
     tags: [obsidian, logs, daily-notes, meetings, inputs, folder-conventions]
-    related_skills: [obsidian, obsidian-notes, work-log, bes-granola-ingest]
+    related_skills: [obsidian, obsidian-notes, work-log, apollo-granola-ingest]
 ---
 
 # Obsidian Type: Chronological Directory & Input Conventions
@@ -106,5 +106,5 @@ category: "[[Meetings]]"
 ```
 
 ### Ingestion & Sync Pipeline
-- **Granola Sync:** Raw transcripts and notes dropped into `/Meetings/` are automatically swept, formatted, and moved into the `/Inputs/Meetings/` directory. This is automated by the `bes-granola-ingest` skill.
+- **Granola Sync:** Raw transcripts and notes dropped into `/Meetings/` are automatically swept, formatted, and moved into the `/Inputs/Meetings/` directory. This is automated by the `apollo-granola-ingest` skill.
 - **No Raw Logs in Root:** Raw unformatted files must never be left in `/Meetings/`. Ensure automated routines move and archive them inside `/Inputs/Meetings/`. Every meeting note must link back to its creation day in its YAML `daily_note:` property.

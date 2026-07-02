@@ -267,7 +267,7 @@ def main():
         import subprocess
         env = {**os.environ, "GOOGLE_ACCOUNT": "personal-main"}
         res = subprocess.run(
-            [venv_py, gapi_path, "gmail", "search", 'label:"Bes/Inbox" in:inbox', "--max", "1"],
+            [venv_py, gapi_path, "gmail", "search", 'label:"Apollo/Inbox" in:inbox', "--max", "1"],
             env=env, capture_output=True, text=True, timeout=15
         )
         if res.returncode == 0:

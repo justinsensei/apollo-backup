@@ -1,8 +1,8 @@
 ---
-name: bes-granola-ingest
+name: apollo-granola-ingest
 description: Sweep, sanitize, and ingest machine-generated meeting transcripts and notes from Granola into vault/Logs/Meetings/.
 version: 1.0.0
-author: Bes
+author: Apollo
 license: MIT
 metadata:
   hermes:
@@ -10,7 +10,7 @@ metadata:
     related_skills: [obsidian, obsidian-logs, obsidian-meetings]
 ---
 
-# Bes Granola Ingest
+# Apollo Granola Ingest
 
 Manages the ingestion pipeline for machine-generated meeting logs and transcripts synced from your Granola app. The sync directory acts as a landing zone, while this skill sweeps, formats, and files them.
 

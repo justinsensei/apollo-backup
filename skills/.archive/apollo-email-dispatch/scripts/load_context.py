@@ -62,7 +62,7 @@ def run_gmail_get(message_id: str) -> dict:
 
 
 def html_to_text(s: str) -> str:
-    """Best-effort HTML → plaintext. Stdlib-only; for high-quality conversion the
+    """Apollot-effort HTML → plaintext. Stdlib-only; for high-quality conversion the
     handler can re-fetch and run a richer converter. For instruction-parsing we
     just need readable plaintext at the top of the body.
     """

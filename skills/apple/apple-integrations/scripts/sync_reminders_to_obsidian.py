@@ -2,7 +2,7 @@
 """
 Sync Apple Reminders to Obsidian Daily Note Scratchpad.
 Runs on the host (where remindctl and interactive TCC permissions work perfectly),
-and writes directly into the Obsidian Daily Note inside bes-vm via SSH.
+and writes directly into the Obsidian Daily Note inside apollo-vm via SSH.
 
 Designed to be run as a cron job on the host.
 """
@@ -54,10 +54,10 @@ def fetch_active_reminders() -> list[dict]:
 
 
 def ensure_daily_note_exists() -> None:
-    """Trigger create_daily_note.py inside bes-vm via SSH."""
+    """Trigger create_daily_note.py inside apollo-vm via SSH."""
     try:
         subprocess.run(
-            ["ssh", "bes-vm", "python3 ~/.hermes/scripts/create_daily_note.py"],
+            ["ssh", "apollo-vm", "python3 ~/.hermes/scripts/create_daily_note.py"],
             capture_output=True,
             text=True,
             timeout=30,
@@ -69,10 +69,10 @@ def ensure_daily_note_exists() -> None:
 
 
 def read_remote_note(remote_path: str) -> str:
-    """Read the content of today's Daily Note from bes-vm."""
+    """Read the content of today's Daily Note from apollo-vm."""
     try:
         res = subprocess.run(
-            ["ssh", "bes-vm", f"cat {shlex.quote(remote_path)}"],
+            ["ssh", "apollo-vm", f"cat {shlex.quote(remote_path)}"],
             capture_output=True,
             text=True,
             timeout=30,
@@ -85,11 +85,11 @@ def read_remote_note(remote_path: str) -> str:
 
 
 def write_remote_note(remote_path: str, content: str) -> None:
-    """Write updated content back to the Daily Note on bes-vm using stdin."""
+    """Write updated content back to the Daily Note on apollo-vm using stdin."""
     try:
         cmd = [
             "ssh",
-            "bes-vm",
+            "apollo-vm",
             f"python3 -c \"import sys; open({repr(remote_path)}, 'w').write(sys.stdin.read())\"",
         ]
         res = subprocess.run(cmd, input=content, capture_output=True, text=True, timeout=30)

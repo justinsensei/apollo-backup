@@ -47,7 +47,7 @@ Subject: Plain Text Example
 Hello, this is a plain text email.
 No special formatting needed.
 
-Best,
+Apollot,
 Alice
 ```
 
@@ -126,7 +126,7 @@ Subject: Mixed Content
 <#part type=text/plain>
 Please find the attached files.
 
-Best,
+Apollot,
 Alice
 <#part filename=/path/to/file1.pdf><#/part>
 <#part filename=/path/to/file2.zip><#/part>

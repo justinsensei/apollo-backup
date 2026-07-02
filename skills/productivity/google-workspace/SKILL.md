@@ -22,7 +22,7 @@ metadata:
 Gmail, Calendar, Drive, Contacts, Sheets, and Docs — through Hermes-managed OAuth and a thin CLI wrapper. When `gws` is installed, the skill uses it as the execution backend for broader Google Workspace coverage; otherwise it falls back to the bundled Python client implementation.
 
 
-> ⚠️ **GMAIL-READ-ONLY MODE (Bes-specific customization)**
+> ⚠️ **GMAIL-READ-ONLY MODE (Apollo-specific customization)**
 >
 > This installation of the google-workspace skill has **full write access** for
 > **Google Calendar, Google Drive, Google Sheets, and Google Docs**, so you can
@@ -355,8 +355,8 @@ service.events().patch(
 ```
 
 
-## Multi-Account Usage (Bes customization)
-## Multi-Account Usage (Bes customization)
+## Multi-Account Usage (Apollo customization)
+## Multi-Account Usage (Apollo customization)
 
 Justin has multiple Google accounts. This installation supports per-account tokens
 and cross-account read queries. Tokens are stored as

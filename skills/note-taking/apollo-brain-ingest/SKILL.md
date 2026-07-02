@@ -1,5 +1,5 @@
 ---
-name: bes-brain-ingest
+name: apollo-brain-ingest
 description: Master Justin's automated note-taking, ingestion, and logging pipeline (Brain Feeds Ingest). Coordinates email forwarding, Linear reactions, Telegram bookmarks, and central vault logging/entity integration.
 version: 1.0.0
 platforms: [linux, macos]
@@ -9,7 +9,7 @@ metadata:
     related_skills: [obsidian, todoist, google-workspace]
 ---
 
-# Bes Brain Ingestion & Logging Pipeline
+# Apollo Brain Ingestion & Logging Pipeline
 
 Automated collection pipeline for incoming personal knowledge artifacts. This skill governs the extraction, transformation, target formatting, vault routing, central audit logging, and project-entity linking for Justin's diverse incoming feeds.
 
@@ -18,7 +18,7 @@ Automated collection pipeline for incoming personal knowledge artifacts. This sk
 The ingestion feeds are executed in parallel by a unified cron job **"Unified Brain Feeds Ingest"** (`284c08eb12b7`) running every 30 minutes in the background.
 
 - **Unified Orchestrator:** `/home/justin.guest/.hermes/scripts/fetch_unified_ingest.py` runs three distinct pollers in parallel:
-  - `poll_bes_inbox.py --json` (Gmail / Email Dispatch)
+  - `poll_apollo_inbox.py --json` (Gmail / Email Dispatch)
   - `fetch_linear_brains.py` (Linear bookmarks)
   - `fetch_telegram_brains.py` (Flagged Telegram sessions)
 - **Workflow Phase:**
@@ -29,9 +29,9 @@ The ingestion feeds are executed in parallel by a unified cron job **"Unified Br
 
 ---
 
-## 1. Email Forwarding & Dispatch (formerly `bes-email-dispatch`)
+## 1. Email Forwarding & Dispatch (formerly `apollo-email-dispatch`)
 
-Justin forwards emails to `goff.justin+bes@gmail.com` with a one-line instruction at the top of the body. A Gmail filter labels it `Bes/Inbox`, and `poll_bes_inbox.py` detects it.
+Justin forwards emails to `goff.justin+apollo@gmail.com` with a one-line instruction at the top of the body. A Gmail filter labels it `Apollo/Inbox`, and `poll_apollo_inbox.py` detects it.
 
 ### Core Principle: Dual-Action Dispatch
 Analyze the instruction line (`instruction` field from the loaded context) for keywords to trigger one or both of the following:
@@ -80,7 +80,7 @@ Analyze the instruction line (`instruction` field from the loaded context) for k
 
 ---
 
-## 2. Linear Comment & Update Ingestion (formerly `bes-linear-ingest`)
+## 2. Linear Comment & Update Ingestion (formerly `apollo-linear-ingest`)
 
 Captures Linear comments, project updates, and initiative updates carrying the `:obsidian_jg:` reaction or `🧠`/`brain` reaction added by Justin.
 
@@ -100,7 +100,7 @@ Captures Linear comments, project updates, and initiative updates carrying the `
 
 ---
 
-## 3. Telegram Conversation Ingestion (formerly `bes-telegram-ingest`)
+## 3. Telegram Conversation Ingestion (formerly `apollo-telegram-ingest`)
 
 Captures flagged Telegram conversation sessions as structured, searchable summary records.
 
@@ -138,7 +138,7 @@ Append a single line to the central log file:
 
 ---
 
-## Guidelines & Best Practices
+## Guidelines & Apollot Practices
 
 - **Verify Writes:** After writing any note, verify the file exists on disk and is non-empty before reporting success.
 - **Emails with Whitespace:** Some transactional HTML emails have empty text parts containing only whitespace (`\r\n`). When extracting bodies in custom scripts, always check `if not body.strip():` to correctly trigger fallback HTML extraction.

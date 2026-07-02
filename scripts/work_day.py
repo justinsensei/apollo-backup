@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.12
 """
-work_day.py — work-day helper for Bes morning briefing.
+work_day.py — work-day helper for Apollo morning briefing.
 
 Usage:
   python3.12 work_day.py is_work_day [YYYY-MM-DD]

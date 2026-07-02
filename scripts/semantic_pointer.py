@@ -576,7 +576,7 @@ def run_context_pruning(query, limit=10):
         print("-"*80 + "\n")
 
 def main():
-    parser = argparse.ArgumentParser(description="Bes Semantic Pointer & Historical Bridging Utility")
+    parser = argparse.ArgumentParser(description="Apollo Semantic Pointer & Historical Bridging Utility")
     subparsers = parser.add_subparsers(dest="command", help="Commands")
     
     # 1. Index command

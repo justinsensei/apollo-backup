@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Thin Slack user-token wrapper for Bes.
+"""Thin Slack user-token wrapper for Apollo.
 
 Operates as Justin via xoxp- token. All subcommands print JSON unless --text
 is passed (only meaningful for message-list outputs).
@@ -86,7 +86,7 @@ def render_message_line(msg: dict, user_lookup: dict[str, str]) -> str:
 
 
 def pick_user_display(profile: dict, fallback: str = "") -> str:
-    """Best-name choice for a Slack user."""
+    """Apollot-name choice for a Slack user."""
     p = profile or {}
     return (
         p.get("display_name_normalized")

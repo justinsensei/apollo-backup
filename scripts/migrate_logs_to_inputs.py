@@ -4,7 +4,7 @@ migrate_logs_to_inputs.py — One-time vault taxonomy migration: Logs/ → Input
 
 Dry-run by default. Pass --apply to execute moves and category fixes.
 
-Pause bes-vault-sync during bulk rename; restart after.
+Pause apollo-vault-sync during bulk rename; restart after.
 """
 
 import argparse
@@ -236,7 +236,7 @@ def main():
     print("\nPost-migration VM steps:")
     print("  1. Update ~/sync_readwise.py export path → vault/Inputs/Readings/")
     print("  2. python3 ~/.hermes/scripts/semantic_pointer.py index")
-    print("  3. Restart bes-vault-sync")
+    print("  3. Restart apollo-vault-sync")
     print("  4. python3 ~/.hermes/scripts/vault_hygiene.py")
 
     return 0

@@ -1,17 +1,17 @@
 ---
-name: bes-linear-ingest
+name: apollo-linear-ingest
 description: Capture and ingest Linear comments, updates, and documents as structured inbox files.
 version: 1.0.0
-author: Bes
+author: Apollo
 license: MIT
 platforms: [linux, macos]
 metadata:
   hermes:
     tags: [linear, obsidian, ingest, logs]
-    related_skills: [obsidian, obsidian-logs, obsidian-graph-enrichment, obsidian-vault-jam, llm-wiki, bes-slack-ingest]
+    related_skills: [obsidian, obsidian-logs, obsidian-graph-enrichment, obsidian-vault-jam, llm-wiki, apollo-slack-ingest]
 ---
 
-# Bes Linear Ingest
+# Apollo Linear Ingest
 
 Captures noteworthy Linear comments, project updates, and initiative updates carrying the `:obsidian_jg:` (or `🧠`/`brain`) reaction added by Justin.
 
@@ -56,5 +56,5 @@ Below the frontmatter, the body has a clear synthesis of the discussion:
 ## Unified Feeds Ingest Pattern
 
 The Linear, Slack, Telegram, and Gmail (Email Dispatch) ingest pipelines are executed together by the unified cron job **"Unified Brain Feeds Ingest"** (`284c08eb12b7`) running every 30 minutes.
-- **Unified Script:** `/home/justin.guest/.hermes/scripts/fetch_unified_ingest.py` runs `fetch_linear_brains.py`, `fetch_slack_brains.py`, `poll_bes_inbox.py --json`, and `fetch_telegram_brains.py` in parallel and consolidates candidates into a single JSON object with `linear`, `slack`, `emails`, and `telegram` keys.
+- **Unified Script:** `/home/justin.guest/.hermes/scripts/fetch_unified_ingest.py` runs `fetch_linear_brains.py`, `fetch_slack_brains.py`, `poll_apollo_inbox.py --json`, and `fetch_telegram_brains.py` in parallel and consolidates candidates into a single JSON object with `linear`, `slack`, `emails`, and `telegram` keys.
 - **Workflow:** The agent processes incoming candidates, saves files directly to their respective `Inputs/` folder (such as `Inputs/Linear/`, `Inputs/Slack/`, `Inputs/Telegram/`, `Inputs/Emails/`), runs the marking-processed commands (`--mark-processed`), appends to `Utilities/log.md`, and runs `integrate_entities.py` to keep project hub states aligned. No daily note appending is performed (as the Notepad section is retired).

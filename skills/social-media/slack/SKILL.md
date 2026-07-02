@@ -2,7 +2,7 @@
 name: slack
 description: "Operate Justin's Slack on his behalf via user-token (xoxp-) API — read channels/DMs/threads, search messages, post as Justin, react. Workspace: SignLab. Single-workspace today; designed to multi-tenant later."
 version: 1.0.0
-author: Bes
+author: Apollo
 license: MIT
 metadata:
   hermes:
@@ -16,9 +16,9 @@ metadata:
 
 This Slack access is **user-token** (`xoxp-`), not a bot. That means:
 
-- **Anything you post appears as Justin himself**, not as "Bes". There is no
+- **Anything you post appears as Justin himself**, not as "Apollo". There is no
   visible distinction in Slack between "Justin typed this on his phone" and
-  "Bes posted this via the API on Justin's behalf." Co-workers will react
+  "Apollo posted this via the API on Justin's behalf." Co-workers will react
   to your posts as if Justin wrote them.
 - You can read every channel, DM, and group DM Justin can read. That
   includes potentially sensitive conversations. Treat what you see as you
@@ -35,7 +35,7 @@ This Slack access is **user-token** (`xoxp-`), not a bot. That means:
 
 - **SignLab** (only workspace today)
 - Auth: env var `SLACK_USER_TOKEN` (starts with `xoxp-`)
-- App name in Slack: "Bes" (or similar) — Justin owns it
+- App name in Slack: "Apollo" (or similar) — Justin owns it
 - Scopes installed: channels/groups/im/mpim history+read, users:read,
   search:read, files:read, reactions:read, chat:write, reactions:write
 

@@ -1,8 +1,8 @@
 ---
-name: bes-calendar-ingest
+name: apollo-calendar-ingest
 description: Sync, query, and ingest calendar events from Google Calendar (work and personal) to drive daily schedule planning and automated work logs.
 version: 1.0.0
-author: Bes
+author: Apollo
 license: MIT
 metadata:
   hermes:
@@ -10,7 +10,7 @@ metadata:
     related_skills: [google-workspace, work-log, morning-briefing, wind-down]
 ---
 
-# Bes Calendar Ingest
+# Apollo Calendar Ingest
 
 Handles Google Calendar syncs across all of your accounts (work, personal-main, personal-junk) to drive schedule-planning, morning briefings, and automated work log accomplishments.
 
@@ -36,7 +36,7 @@ This schedule feeds directly into:
 
 ## Scheduling Events (Write Access)
 
-Bes has write access to Google Calendar. You can directly schedule events on Justin's behalf (e.g., during briefings or from forwarded email instructions) rather than creating tasks in Todoist:
+Apollo has write access to Google Calendar. You can directly schedule events on Justin's behalf (e.g., during briefings or from forwarded email instructions) rather than creating tasks in Todoist:
 ```bash
 python3 ~/.hermes/skills/productivity/google-workspace/scripts/gws_multi.py --account work|personal-main calendar create --summary "Event Title" --start "2026-06-09T14:00:00" --end "2026-06-09T15:00:00" --description "Context..."
 ```

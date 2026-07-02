@@ -12,7 +12,7 @@ Full structural and frontmatter audit of `/home/justin.guest/Developer/obsidian-
 | Readwise/ | 112 |
 | References/ | 38 |
 | Templates/ | 7 |
-| Root | 2 (today's daily note + Bes Setup.md) |
+| Root | 2 (today's daily note + Apollo Setup.md) |
 | **Total** | **~796** |
 
 ## Notebook breakdown
@@ -68,10 +68,10 @@ Benchmarks - Subscription page CTR.md
 Madeira 2026.md
 Belize 2026.md
 Benchmarks - user retention.md
-Brain dump on Bes 20260519162610.md
+Brain dump on Apollo 20260519162610.md
 ```
 
-### ⚠️ OPEN — Bes Setup.md in vault root
+### ⚠️ OPEN — Apollo Setup.md in vault root
 Sole project note with `category: "[[Projects]]"`. Lives in vault root by manage-projects convention — INTENTIONAL. Project notes go in root, not Notebook.
 
 ### ⚠️ OPEN — Readwise bulk import bug (112 files)
