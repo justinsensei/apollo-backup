@@ -50,6 +50,7 @@ Whenever you are asked to interact with files in the vault, you **must** obey th
 2. **Hard-coding YAML properties in scripts:** If a Cursor rule shifts (e.g., taxonomy change), scripts should be reviewed for alignment to prevent automated pipeline drift.
 3. **Failing to check for existing files:** Before creating any note or stub, search both `/Notes/` and `/Inbox/` by name to prevent duplicate stubs.
 4. **Failing to update the central wiki log:** Any newly created note (including manual quick-captures or scraps in `Inbox/`) must be logged in `Utilities/log.md` under the correct daily header (creating the header in `## YYYY-MM-DD Weekday` format if it doesn't already exist for the current date).
+   - **Wiki Log Line Format:** `- HH:MM | <type> | [[Note Title]] | <vault/relative/path.md> | [[YYYY-MM-DD Weekday]]` (where `<type>` is one of `reading`, `meeting`, `email`, `slack`, `telegram`, `query`, `source-compile`, `lint`).
 5. **Over-strict Filename Normalization:** While `.cursor/rules/note-creation.mdc` specifies that projects should be named `Title.md (no ID)`, in practice many active project files in `Notes/Projects/` retain their 14-digit creation timestamp ID (e.g., `Animate Correct Answers 2026 20260612145350.md`). Check the actual folder contents to match existing naming conventions before stripping IDs during file moves or renames.
 
 ## Vault Hygiene & Structural Plumbing
