@@ -9,10 +9,28 @@ This reference document outlines the exact architecture, scripts, and behaviors 
 The Obsidian vault is configured as a fully bidirectional, real-time synced git repository.
 
 - **Local Path:** `/home/justin.guest/Developer/obsidian-vault`
-- **Remote Repo:** `obsidian-vault` on GitHub
+- **Remote Repo:** `obsidian-vault` on GitHub (Use SSH remote: `git@github.com:justinsensei/obsidian-vault.git`)
 - **Watcher Script:** `/home/justin.guest/.local/bin/apollo-vault-sync`
 - **Daemon Service:** `apollo-vault-sync.service` (systemd-user service)
 - **Log Source:** `journalctl --user -u apollo-vault-sync`
+
+### Git Authentication & SSH Remote Configuration
+- **SSH Preference:** Always configure local repositories on the VM with SSH remotes (`git@github.com:...`) rather than HTTPS. The VM is authenticated to GitHub using a stable SSH key (`ssh -T git@github.com`).
+- **Avoid HTTPS Credentials Pitfalls:** GitHub has deprecated password authentication for HTTPS Git operations. Using HTTPS remotes with a personal access token (PAT) stored in plain-text helpers is highly prone to expiration or mismatch failures (e.g., when local `.git-credentials-vault` files are empty or corrupt).
+- **Repairing Authentication Failures:**
+  If the `fs-event` synchronization or pull alerts with "Invalid username or token" or "Authentication failed":
+  1. Set the remote URL to SSH:
+     ```bash
+     git -C ~/Developer/obsidian-vault remote set-url origin git@github.com:justinsensei/obsidian-vault.git
+     ```
+  2. Clean up any local or conflicting credential helpers:
+     ```bash
+     git -C ~/Developer/obsidian-vault config --local --unset-all credential.helper
+     ```
+  3. Verify with a dry-run fetch:
+     ```bash
+     git -C ~/Developer/obsidian-vault fetch --dry-run
+     ```
 
 ### Sync Mechanism
 1. **Trigger:** `inotifywait` monitors the vault directory recursively (ignoring `.git/`, `.obsidian/workspace`, and temporary/trash directories).
@@ -40,7 +58,7 @@ The Hermes configuration, custom skills, custom scripts, cron jobs, and memory s
   - *Tracked Files:* `SOUL.md`, `config.yaml`
   - *Tracked Folders:* `skills/`, `hooks/`, `cron/`, `memories/`, `scripts/`
 - **Local Git Repository:** `/home/justin.guest/apollo-backup`
-- **Remote Repo:** `https://github.com/justinsensei/apollo-backup.git`
+- **Remote Repo:** `apollo-backup` on GitHub (Use SSH remote: `git@github.com:justinsensei/apollo-backup.git`)
 - **Watcher Script:** `/home/justin.guest/.local/bin/apollo-autocommit`
 - **Daemon Service:** `apollo-autocommit.service` (systemd-user service)
 - **Log Source:** `journalctl --user -u apollo-autocommit`
