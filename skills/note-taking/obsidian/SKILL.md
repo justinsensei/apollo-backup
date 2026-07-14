@@ -53,7 +53,18 @@ Whenever you are asked to interact with files in the vault, you **must** obey th
    - **Wiki Log Line Format:** `- HH:MM | <type> | [[Note Title]] | <vault/relative/path.md> | [[YYYY-MM-DD Weekday]]` (where `<type>` is one of `reading`, `meeting`, `email`, `slack`, `telegram`, `query`, `source-compile`, `lint`).
 5. **Over-strict Filename Normalization:** While `.cursor/rules/note-creation.mdc` specifies that projects should be named `Title.md (no ID)`, in practice many active project files in `Notes/Projects/` retain their 14-digit creation timestamp ID (e.g., `Animate Correct Answers 2026 20260612145350.md`). Check the actual folder contents to match existing naming conventions before stripping IDs during file moves or renames.
 6. **Stale References to Renamed/Refactored Notes:** When renaming compiled sources or other knowledge notes (particularly replacing old `{Title} {YYYY-MM-DD}.md` style names with unique 14-digit ID names `{Title} {YYYYMMDDHHmmss}.md`), always scan the entire vault for incoming references to the old filename. Standard path-healing scripts like `heal_wikilinks.py` only simplify paths; they do not map changed filenames, leaving stale references as ghost links. Write and execute a targeted python script to perform find-and-replace for these changed targets.
-6. **Self-Referential & Dated Ghost Links:** When compiled sources are created from raw readings, template scripts or manual actions can accidentally insert self-referential or cross-referential links using old dates and folder paths (e.g., `[[Notes/Sources/You, Me, or Adult ADHD 2026-06-15]]`) instead of referencing the actual filename which contains a 14-digit timestamp ID (e.g., `[[You, Me, or Adult ADHD 20260615153637]]`). Always heal these to use shortest-path, ID-matched wikilinks to avoid generating persistent structural ghost links.
+7. **Self-Referential & Dated Ghost Links:** When compiled sources are created from raw readings, template scripts or manual actions can accidentally insert self-referential or cross-referential links using old dates and folder paths (e.g., `[[Notes/Sources/You, Me, or Adult ADHD 2026-06-15]]`) instead of referencing the actual filename which contains a 14-digit timestamp ID (e.g., `[[You, Me, or Adult ADHD 20260615153637]]`). Always heal these to use shortest-path, ID-matched wikilinks to avoid generating persistent structural ghost links.
+
+## Triage & Relocation Workflow (Moving from Inbox to Notes)
+
+When the user asks to move/triage a scrap, concept, or decision note from `Inbox/` to its permanent home under `Notes/`:
+
+1. **Update Frontmatter Category:** Patch the note's frontmatter to change its category from its temporary staging category (e.g., `category: "[[Scraps]]"`) to its permanent target category (e.g., `category: "[[Decisions]]"` or `category: "[[Concepts]]"`).
+2. **Move the File:** Relocate the file using the Shell tool `mv` to the target directory matching the category routing table in `main.mdc` (e.g., `Notes/` for `"[[Decisions]]"` or `"[[Concepts]]"`). Maintain the unique `Title ID.md` filename structure.
+3. **Log the Note Chronologically:** Check if the note is already logged in the central wiki log (`Utilities/log.md`). If it is not, insert a new entry chronologically under its original creation date header based on its 14-digit ID timestamp.
+   - **Line Format:** `- HH:MM | query | [[Note Title ID]] | Notes/Note Title ID.md | [[YYYY-MM-DD Weekday]]`
+4. **Run Hygiene Validation:** Manually run the structural hygiene validation script to verify that no ghost links or folder boundary violations are introduced:
+   `python3 ~/.hermes/scripts/vault_hygiene_cron.py`
 
 ## Vault Hygiene & Structural Plumbing
 
