@@ -57,6 +57,7 @@ Whenever you are asked to interact with files in the vault, you **must** obey th
 8. **Misattributed Links in Immutable Ingested Content:** Transcript parsers (e.g. Granola) often automatically generate wikilinks for generic names (e.g. linking "Sam Ferris" to an existing son's note `[[Sam Goff 20260610120301|Sam]] Ferris`). Even if this creates semantically incorrect or broken links, remember that files under `Inputs/` (e.g. `Inputs/Meetings/`) are strictly **immutable**. Do **not** modify them during link-healing or triage runs. Instead, report the misattributed link to the user so they can manually fix it or approve a manual override, and link the new contact correctly in other editable areas (such as the updated Organization note).
 9. **Cron Timeout during Bulk Migrations / Large Indexing Backlogs:** The `vault-hygiene` daily cron job has a strict 120-second execution timeout. If a bulk metadata migration or a massive import of new notes occurs (e.g., modifying or adding 100+ files), the subsequent daily hygiene run will trigger semantic pointer indexing (`semantic_pointer.py index`) for all of those files and their individual paragraphs. Querying Gemini embeddings for hundreds of chunks in sequence can easily exceed the 120-second threshold, causing the cron job to fail loudly with a timeout error.
    - **Workaround:** Whenever performing large-scale note migrations, bulk refactorings, or importing numerous transcripts, immediately clear the indexing queue manually by running the indexer in a foreground session: `python3 ~/.hermes/scripts/semantic_pointer.py index`. This ensures the nightly hygiene cron has zero backlog and runs well within its 120-second limit.
+10. **Linter Side-effects after Relocations:** Moving notes from folders like `TaskNotes/` (which are ignored by folder-wide health audits) into the audited `Notes/` directory exposes them to structural checks like `Missing daily_note` or `Missing id`. Relocating files without validating these properties can cause clean hygiene states to break. Always verify and patch frontmatter properties at the same time you relocate files.
 
 ## Triage & Relocation Workflow (Moving from Inbox to Notes)
 
@@ -68,6 +69,7 @@ When the user asks to move/triage a scrap, concept, or decision note from `Inbox
    - **Line Format:** `- HH:MM | query | [[Note Title ID]] | Notes/Note Title ID.md | [[YYYY-MM-DD Weekday]]`
 4. **Run Hygiene Validation:** Manually run the structural hygiene validation script to verify that no ghost links or folder boundary violations are introduced:
    `python3 ~/.hermes/scripts/vault_hygiene_cron.py`
+5. **Ensure Frontmatter Compliance:** Moving notes from non-audited directories (like `TaskNotes/`) to the audited `Notes/` or `Notes/Projects/` folder makes them subject to strict linter checks (e.g., Missing Daily Note, Missing ID). Always ensure that `daily_note: "[[YYYY-MM-DD Weekday]]"` and `id: "YYYYMMDDHHmmss"` are present in the frontmatter during relocation (derived from the file's creation/modified dates or ID timestamp).
 
 ## Vault Hygiene & Structural Plumbing
 
