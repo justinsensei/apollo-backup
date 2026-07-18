@@ -38,6 +38,7 @@ Source of truth: `tools/skill_manager_tool.py::_validate_frontmatter`. Hard requ
 - Parses as a YAML mapping.
 - `name` field present.
 - `description` field present, ≤ **1024 chars** (`MAX_DESCRIPTION_LENGTH`).
+- `platforms` field present and is a list (e.g., `[linux, macos]`).
 - Non-empty body after the closing `---`.
 
 Peer-matched shape used by every skill under `~/.hermes/skills/`:
@@ -47,6 +48,7 @@ Peer-matched shape used by every skill under `~/.hermes/skills/`:
 name: my-skill-name               # lowercase, hyphens, ≤64 chars (MAX_NAME_LENGTH)
 description: Use when <trigger>. <one-line behavior>.
 version: 1.0.0
+platforms: [linux, macos]
 author: Apollo
 license: MIT
 metadata:
@@ -183,7 +185,7 @@ The trigger to refactor a piece of logic out of a monolith into its own skill is
 - [ ] Run the automated validator `test_skills_conformance.py` on the skill and verify a PASS status (no errors or strict warnings)
 - [ ] Frontmatter starts at byte 0 with `---`, closes with `\n---\n`
 - [ ] No embedded `| python3 -c`, `| bash`, `| node -e`, or `curl ... | sh` patterns in example commands or subagent context blocks
-- [ ] `name`, `description`, `version`, `author`, `license`, `metadata.hermes.{tags, related_skills}` all present
+- [ ] `name`, `description`, `version`, `platforms`, `author`, `license`, `metadata.hermes.{tags, related_skills}` all present
 - [ ] Name ≤ 64 chars, lowercase + hyphens
 - [ ] Description ≤ 1024 chars and starts with "Use when ..."
 - [ ] Total file ≤ 100,000 chars (aim for 8-15k)
