@@ -274,7 +274,57 @@
       ],
       "workdir": null,
       "profile": null
+    },
+    {
+      "id": "675ae49929a5",
+      "name": "Compile Inputs",
+      "prompt": "Run the 'apollo-compile-inputs' skill. Run exactly one action (Flow A or Flow B) based on the scanned candidates. If there are no candidate files to compile, do nothing and respond with '[SILENT]' so that no notification is sent to Justin. Do not commit anything to Git.",
+      "skills": [
+        "apollo-compile-inputs"
+      ],
+      "skill": "apollo-compile-inputs",
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": "precheck_compile_inputs.py",
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "interval",
+        "minutes": 30,
+        "display": "every 30m"
+      },
+      "schedule_display": "every 30m",
+      "repeat": {
+        "times": null,
+        "completed": 0
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-07-18T13:00:19.890700-04:00",
+      "next_run_at": "2026-07-18T13:30:19.890808-04:00",
+      "last_run_at": null,
+      "last_status": null,
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "origin",
+      "origin": {
+        "platform": "telegram",
+        "chat_id": "8612970484",
+        "chat_name": "Justin Goff",
+        "thread_id": null
+      },
+      "enabled_toolsets": [
+        "terminal",
+        "file",
+        "web",
+        "browser"
+      ],
+      "workdir": null,
+      "profile": null
     }
   ],
-  "updated_at": "2026-07-18T12:47:46.629239-04:00"
+  "updated_at": "2026-07-18T13:00:19.891959-04:00"
 }
