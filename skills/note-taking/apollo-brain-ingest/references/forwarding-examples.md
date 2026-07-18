@@ -29,13 +29,9 @@ Task due Friday. Gotta finish the book before the weekend.
 
 ### Expected Behavior:
 - **Intents:** Task only.
-- **Todoist Task Creation:**
-  - `content`: "Read/Finish book" (actionable name derived from email/context)
-  - `dueString`: "Friday"
-  - `description`: "Gotta finish the book before the weekend."
-  - `projectId`: "6VGcQ7r6HW5r87j9" (Inbox)
-- **Todoist Task Comment:**
-  - Add a comment containing a summary of the email (sender, recipient, date, core content).
+- **Vault Note Update:**
+  - Append a task checkbox directly to today's Daily Note:
+    `- [ ] Finish the book before the weekend #task [due:: 2026-06-12]` (assuming Friday's date)
 
 ---
 
@@ -52,8 +48,6 @@ Task due Friday. Gotta finish the book before the weekend.
 - **Step 1: File Email to Vault:**
   - Save to `/home/justin.guest/Developer/obsidian-vault/Inbox/...`
   - Put "I like the idea about the flux capacitor..." under `## Context`.
-- **Step 2: Create Todoist Task:**
-  - Create the task in Inbox with `content`: "Finish reading about the improbability engine" (or "Finish the book")
-  - Set `dueString`: "Friday"
-  - Set `description`: "Gotta finish the book before the weekend."
-  - Immediately comment on the task with the email's sender/recipient metadata and a concise summary.
+- **Step 2: Create TaskNote/Daily Note Task:**
+  - Append a task checkbox directly to today's Daily Note:
+    `- [ ] Finish the book before the weekend #task [due:: 2026-06-12]`
