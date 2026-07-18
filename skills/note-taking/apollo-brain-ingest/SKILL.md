@@ -6,7 +6,7 @@ platforms: [linux, macos]
 metadata:
   hermes:
     tags: [obsidian, ingest, brain, feeds, email, linear, telegram, logging, cron]
-    related_skills: [obsidian, todoist, google-workspace]
+    related_skills: [obsidian, google-workspace]
 ---
 
 # Apollo Brain Ingestion & Logging Pipeline
@@ -68,7 +68,7 @@ Analyze the instruction line (`instruction` field from the loaded context) for k
 #### Action B: Create an Obsidian Task (Task it) — ⚠️ UPDATED FOR TASKNOTES ⚠️
 - **Trigger Keywords:** Contains `Task`, `task`, `TODO`, `todo`, `to do`, `To do`.
 - **Process:**
-  1. Since Todoist is disconnected, write the task as a raw `- [ ]` checkbox directly inside today's Daily Note under the notepad or capture section.
+  1. Since Todoist has been retired, write the task as a raw `- [ ]` checkbox directly inside today's Daily Note under the notepad or capture section.
   2. **Task Format:** `- [ ] <Task Name> #task` (e.g., `- [ ] Follow up on invoice #task`).
   3. Include any relevant context, due dates, or link references in the daily note bullet context.
   4. The nightly vault hygiene sweep will automatically promote this raw checkbox into a TaskNote file under `TaskNotes/Tasks/`.

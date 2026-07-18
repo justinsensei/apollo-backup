@@ -7,7 +7,7 @@ license: MIT
 metadata:
   hermes:
     tags: [briefing, morning, report, thin-pointer]
-    related_skills: [obsidian, work-log, todoist]
+    related_skills: [obsidian, work-log]
 ---
 
 # 🌅 Morning Briefing Pointer

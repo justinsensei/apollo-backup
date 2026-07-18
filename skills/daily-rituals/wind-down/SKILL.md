@@ -10,7 +10,7 @@ platforms:
 metadata:
   hermes:
     tags: [productivity, wind-down, daily-routine, work-log, inbox-triage, sources, calendar]
-    related_skills: [work-log, morning-briefing, obsidian, todoist]
+    related_skills: [work-log, morning-briefing, obsidian]
 ---
 
 # 🌅 Daily Wind-Down & Wrap-Up
@@ -163,7 +163,7 @@ Draft today's work log, align with Justin, and write it to today's daily note. T
      - **Calendar:** Run Google Workspace calendar search with local timezone offset (e.g., `python3 ~/.hermes/skills/productivity/google-workspace/scripts/gws_multi.py --account all calendar list --start <YYYY-MM-DD>T00:00:00<OFFSET> --end <YYYY-MM-DD>T23:59:59<OFFSET>`).
      - **Slack:** Run two searches for messages from/to Justin (e.g., `python3 ~/.hermes/skills/social-media/slack/scripts/slack.py search 'from:@justin after:<YESTERDAY_DATE> before:<TOMORROW_DATE>' --limit 50`).
      - **Linear:** Query the Linear GraphQL API via Python's `urllib.request` using `LINEAR_API_KEY` from `~/.hermes/.env` (no "Bearer" prefix) to retrieve issues updated today where Justin is assignee, creator, or subscriber.
-     - **TaskNotes & Task Management:** Justin is disconnecting Todoist in favor of the **TaskNotes** Obsidian plugin. Scan the Vault Git history for file additions/deletions/renames under `TaskNotes/Tasks/` and `TaskNotes/Archive/` to identify newly added, completed, or archived tasks.
+     - **TaskNotes & Task Management:** Task management is fully handled via the **TaskNotes** Obsidian plugin. Scan the Vault Git history for file additions/deletions/renames under `TaskNotes/Tasks/` and `TaskNotes/Archive/` to identify newly added, completed, or archived tasks.
      - **Vault Git:** Check git history of the vault to capture manual notes, budget checks, and task status edits Justin made today (e.g., `git -C ~/Developer/obsidian-vault log --since="<YYYY-MM-DD> 00:00:00" --until="<YYYY-MM-DD> 23:59:59" --name-status --pretty=format:"COMMIT:%h|%an|%s"`). Filter out commits from `Apollo (apollo-vm)` or containing `apollo` to isolate Justin's manual edits, paying close attention to modified tasks or newly created budget check files.
    - Read today's existing Obsidian daily note with `read_file` to see manual scratchpad entries.
    - Search the vault for any meeting/Granola notes generated today (look in `vault/Meetings/` or files containing today's date in their name).
@@ -232,9 +232,7 @@ Preview tomorrow's schedule to establish mental readiness, coordinate upcoming t
 - **Escape Slack Channels:** Always write `#channel-name` as `\#channel-name` inside the daily note so Obsidian doesn't parse it as a tag.
 - **Dynamic Timezone Offset:** When fetching calendar events, always calculate and append the local timezone offset (e.g. `-04:00` or `-05:00`) to `--start` and `--end` to prevent boundary events from leaking from yesterday or tomorrow.
 - **Git Commit Warning:** Do not manually `git add` or `git commit` any vault edits. The `apollo-vault-sync` watcher will handle it immediately.
-- **Todoist Task Creation Rule:** When creating any Todoist task, always add a one-sentence comment immediately after — source + why it became a task.
-- **Todoist Filter Preference:** Do not present tasks using native Todoist sidebar views (Today, Inbox, etc.), as Justin finds them cluttered. Emphasize saved filter views.
-- **TaskNotes Migration Guard:** Since Justin is transitioning task management to the **TaskNotes** Obsidian plugin (`TaskNotes/Tasks/` and `TaskNotes/Archive/`), prioritize capturing task status changes (completed, archived, or added) directly from vault git history of the `TaskNotes/` directory rather than relying on Todoist.
+- **TaskNotes Rule:** Since task management is fully handled via the **TaskNotes** Obsidian plugin (`TaskNotes/Tasks/` and `TaskNotes/Archive/`), prioritize capturing task status changes (completed, archived, or added) directly from vault git history of the `TaskNotes/` directory.
 - **Frontmatter Safety & Infinite Loops:** Avoid extracting body content in a way that includes leading newlines, preventing infinite overwrite loops during hygiene tasks. Always `.lstrip()` body content immediately upon extraction.
 - **Dangling Closing Dividers:** Ensure any automated or manual procedure that adds or updates properties writes back the closing divider (`---`) on a *fresh line*. Writing it without an intervening newline will append it directly to the end of the last property string (e.g., `daily_note: '...'---`), which corrupts properties.
 - **Non-Unique Aliases Guard:** Always skip auto-linking any alias that is non-unique (shared by more than one distinct contact path) to avoid incorrect connections in the vault.

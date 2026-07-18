@@ -1,7 +1,5 @@
 Head of Product at SignLab (B2C sign language edtech). Alumnus of Duolingo/PowerSchool. Playbook: premium apps funding future free-to-play pivot.
 §
-Todoist: Now/Next/Soon/Maybe Later, Shopping, Inbox. No other top-level/GTD subprojects. Prefer filter views. Add 1-sentence source comment on create. Week ends Sun. No auto-vault additions from raw feeds.
-§
 Pittsburgh, PA. Family: Nana (wife); Sam (G7, 11/22/13), Jamie (they, G6, 05/08/15), Rosie (she, G4, 05/16/17). Wikilinks: [[Nana]], [[Sam]], [[Jamie]], [[Rosie]] (manually linked by Justin only).
 §
 Accurately attribute decisions to the actual decision-maker (e.g. colleagues or family members) in work logs/summaries, rather than assuming Justin made them.

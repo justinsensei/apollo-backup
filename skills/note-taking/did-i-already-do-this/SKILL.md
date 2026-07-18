@@ -10,15 +10,12 @@ triggers:
 
 # Did I Already Do This? Or Where / When Is My Appointment?
 
-Justin captures completed work, appointment details, and correspondence in **Todoist**, **Obsidian**, **Gmail**, or **Google Calendar**. Check in this order:
+Justin captures completed work, appointment details, and correspondence in **Obsidian**, **Gmail**, or **Google Calendar**. Check in this order:
 
-## 1. Todoist completed tasks
-Use `mcp_todoist_find_completed_tasks` or `mcp_todoist_search` with a relevant keyword search. Cast a wide date range if unsure when it might have happened.
-
-## 2. Obsidian notes / work logs
+## 1. Obsidian notes / work logs
 Use the `obsidian` skill to search notes. Work logs, meeting notes, and project notes are the most likely places. Search by keyword; also check dated work log entries if a rough timeframe is known. Include filed query syntheses (`category: [[Thoughts]]` notes with `## Question` sections) as search targets.
 
-## 3. Google Calendar & Gmail (via gws_multi.py)
+## 2. Google Calendar & Gmail (via gws_multi.py)
 When searching for bookings, appointments, confirmations, or correspondence, query the Google Workspace API:
 - **Calendar Lookup:** Search for upcoming or past events across all accounts over a broad date range:
   ```bash
@@ -33,7 +30,7 @@ When searching for bookings, appointments, confirmations, or correspondence, que
   python3 ~/.hermes/skills/productivity/google-workspace/scripts/gws_multi.py --account <account> gmail get <id>
   ```
 
-## 4. Session search (last resort)
+## 3. Session search (last resort)
 Use `session_search` to scan past conversation transcripts. Useful if the thing was discussed or decided here but may not have been formally captured anywhere.
 
 ## Notes

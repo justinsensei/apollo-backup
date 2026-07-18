@@ -63,7 +63,7 @@ category: "[[Daily Notes]]"
 ```
 
 ### Interaction with `work-log`
-When compiling a work log, fetch events from Google Calendar, Linear, Todoist, and Slack, compile today's summary, and append/update the schedule and Highlights & Decisions sections directly inside today's Daily Note (omitting accomplishments/completed task lists entirely).
+When compiling a work log, fetch events from Google Calendar, Linear, and Slack, compile today's summary, and append/update the schedule and Highlights & Decisions sections directly inside today's Daily Note (omitting accomplishments/completed task lists entirely).
 
 ### Updating Past Events & Cancellations
 When updating past daily notes or reviews to reflect that a planned calendar event was not attended or was cancelled:
