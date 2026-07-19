@@ -1,24 +1,16 @@
 ---
 name: apollo-compile-inputs
-description: Run vault compile-inputs — one Inputs→Inbox action per tick (Reading→Source or Input→Proposal).
-version: 1.0.0
-platforms: [linux, macos]
-metadata:
-  hermes:
-    tags: [note-taking, obsidian, compile, inputs]
-    related_skills: [obsidian, apollo-brain-ingest]
+description: Run vault compile-inputs — phased tick (all Readings→Sources, Source/Meetings/Others Proposals).
 ---
 
 # Apollo Compile Inputs
 
-## Overview
-Automated compilation of raw inputs into structured vault drafts (Sources and Proposals) in the Inbox.
+## When
 
-## When to Use
-- Run during Cron ticks.
-- Run when Justin asks to compile or drain the input queues.
+Cron tick or Justin asks to drain the compile queue.
 
 ## Steps
+
 1. Ensure vault is current (pre-turn pull / apollo-vault-sync).
 2. Read and follow exactly:
    `/home/justin.guest/Developer/obsidian-vault/.cursor/skills/compile-inputs/SKILL.md`
@@ -26,22 +18,17 @@ Automated compilation of raw inputs into structured vault drafts (Sources and Pr
    - `.cursor/skills/extract-source/SKILL.md`
    - `.cursor/skills/draft-notebook-proposal/SKILL.md`
    - `.cursor/rules/agent-routing.mdc`
-4. Execute **one** action, then stop.
+4. Run the **full phased tick** (not “one action then stop”):
+   - Phase 1: extract **all** unprocessed Readings (newest first) → Sources in `Inputs/Sources/` with `status: "final"` (never Inbox)
+   - Phase 2: ≤1 Source → Proposal (newest) if any
+   - Phase 3: **all** pending Meetings → one Proposal each
+   - Phase 4: if any pending Others → **one** theme-clustered digest Proposal covering all of them
 5. Do **not** `git commit` — `apollo-vault-sync` owns commits.
 6. Do **not** edit `Notebook/` or apply Proposals.
-7. Delivery: Telegram summary only when a file was written; use `[SILENT]` on no-op.
+7. Delivery: Telegram summary when any file was written (include counts: Sources extracted, Reading Proposals, Meeting Proposals, digest Inputs); use `[SILENT]` on no-op.
 
-## Flows Reminder
-- Flow A: Reading → Source → Proposal (never Reading → Proposal)
-- Flow B: Non-Reading Input → Proposal
+## Flows reminder
 
-## Common Pitfalls
-- **Accidentally running multiple steps:** Always process exactly one action (one Reading to Source, or one Source to Proposal, or one non-Reading Input to Proposal) per tick.
-- **Git Commits:** Do not run `git commit`. The `apollo-vault-sync` process manages the git tracking.
-
-## Verification Checklist
-- [ ] Vault has been updated prior to execution.
-- [ ] Correct flow (A1, A2, or B) has been identified and executed.
-- [ ] Exactly one action has been performed.
-- [ ] No changes have been committed to git by this tool.
-- [ ] Telegram notification is only sent if a file was written; otherwise silent.
+- Flow A: Reading → Source (`Inputs/Sources/`) → Proposal (never Reading → Proposal; ≤1 Proposal per tick; extract all Readings)
+- Flow B1: Meeting → Proposal (1:1; all pending in one tick)
+- Flow B2: Others → one Inputs digest Proposal (theme-clustered)
