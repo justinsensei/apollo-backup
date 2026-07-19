@@ -304,7 +304,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-07-18T13:00:19.890700-04:00",
-      "next_run_at": "2026-07-19T13:30:00-04:00",
+      "next_run_at": "2026-07-19T14:00:00-04:00",
       "last_run_at": "2026-07-19T13:03:44.161322-04:00",
       "last_status": "error",
       "last_error": "RuntimeError: ### Apollo Compile Inputs\n\nA phased compilation tick has been executed on the compile queues. \n\n`[High]` **Confidence Level**\n\n---\n\n### Phase Summary\n\n*   **Phase 0 (Apply Ready):** `No-op`. `Inbox/Ready to Apply/` was empty.\n*   **Phase 1 (Extract Readings):** `No-op`. All readings in `Inputs/Readings/` have already been extracted.\n*   **Phase 2 (Source Proposal):** **1 Proposal compiled** from the newest eligible Source note (`Asimov How Do People Get New Ideas Jun 2026`). The proposal consolidates three closely related duplicate/companion Source notes concerning Isaac Asimov's 1959 essay on idea generation.\n*   **Phase 3 (Meetings):** `No-op`. 0 meetings within the last 7 days required processing; **667 older meetings were age-skipped** to protect the queue from massive backlog flooding.\n*   **Phase 4 (Others Digest):** `No-op`. All 114 scraps, emails, slack, and telegram notes have already been processed into historical digests.\n\n---\n\n### Written & Updated Paths\n\n#### **Draft Proposal Created**\n*   `Inbox/Proposals/Proposal - Asimov How Do People Get New Ideas Jun 2026 20260719083301.md`\n    *   *Theme:* Combines Asimov's combinatorial model of creativity with the operational design principles of structured group \"cerebration.\"\n    *   *Changes Proposed:*\n        1.  **Create Concept:** `[[Cerebration Sessions 20260719083301]]` (proposes \u22645 participant caps, radical informality, and PM-as-psychoanalyst facilitation).\n        2.  **Enrich Belief:** `[[Zettelkasten improves innovation skills 20250624153048]]` (integrates Asimov's insight that \"creation is embarrassing,\" establishing the private Zettelkasten as an ideal, non-judgmental cerebration partner).\n\n#### **Source Notes Linked (Frontmatter updated with proposal link)**\n*   `Inputs/Sources/Asimov How Do People Get New Ideas Jun 2026 20260719083300.md`\n*   `Inputs/Sources/Asimov How Do People Get New Ideas 20260719082408.md`\n*   `Inputs/Sources/Asimov Hidden Guide to Generating Ideas 20260719082407.md`\n\n---\n\n### Knowledge Log Entry Appended\n```markdown\n## [2026-07-19T12:45:00-04:00] compile | Proposal - Asimov How Do People Get New Ideas Jun 2026 20260719083301\n- from: [[Asimov How Do People Get New Ideas Jun 2026 20260719083300]]\n- to: [[Proposal - Asimov How Do People Get New Ideas Jun 2026 20260719083301]]\n- flow: A2 draft-notebook-proposal (mode: source)\n```",
@@ -326,5 +326,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-07-19T13:04:29.804492-04:00"
+  "updated_at": "2026-07-19T13:30:24.061433-04:00"
 }
