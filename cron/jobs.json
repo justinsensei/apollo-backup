@@ -215,7 +215,7 @@
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
-      "deliver": "origin",
+      "deliver": "telegram:-5174229110",
       "origin": {
         "platform": "telegram",
         "chat_id": "-5174229110",
@@ -309,7 +309,7 @@
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
-      "deliver": "origin",
+      "deliver": "telegram:-5174229110",
       "origin": {
         "platform": "telegram",
         "chat_id": "8612970484",
@@ -326,5 +326,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-07-19T08:23:28.819249-04:00"
+  "updated_at": "2026-07-19T08:24:48.247571-04:00"
 }
