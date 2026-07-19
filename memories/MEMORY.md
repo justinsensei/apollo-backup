@@ -35,3 +35,5 @@ When creating new Concept notes, the generated ID (YYYYMMDDHHmmss) must be appen
 Daily briefing cache for 2026-06-17 showed stale candidates (MKD-1, John Kearney) which were actually completed on June 11. Live queries verified they were already done.
 §
 The vault hygiene checks for Missing ID, Missing Daily Note, Ghost Links, and Orphan Notes are strictly restricted to the Notes/ folder and its subfolders to avoid false positives from temporary directories like Inbox/ and TaskNotes/.
+§
+Apollo may compile Inputs -> Sources + Inbox Proposals, and may batch-apply Proposals Justin has moved into Inbox/Ready to Apply/. Apollo must not promote Thoughts/Beliefs/Decisions into Notebook, must not edit trusted Notebook outside apply's Inbox-draft rules, and must never write or move files into Ready to Apply.
