@@ -277,8 +277,8 @@
     },
     {
       "id": "675ae49929a5",
-      "name": "Compile Inputs",
-      "prompt": "Run the 'apollo-compile-inputs' skill. Full phased tick including Phase 0 apply Ready to Apply. Silent if nothing to do.",
+      "name": "compile-inputs",
+      "prompt": "Run the apollo-compile-inputs skill. Full phased tick including Phase 0 apply Ready to Apply. Silent if nothing to do.",
       "skills": [
         "apollo-compile-inputs"
       ],
@@ -326,5 +326,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-07-19T09:27:29.702285-04:00"
+  "updated_at": "2026-07-19T09:28:37.303397-04:00"
 }
