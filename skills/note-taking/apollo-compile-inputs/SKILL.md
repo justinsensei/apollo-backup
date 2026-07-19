@@ -35,3 +35,9 @@ Cron tick or Justin asks to drain the compile queue.
 - Flow A: Reading → Source (`Inputs/Sources/`) → Proposal (never Reading → Proposal; ≤1 Proposal per tick; extract all Readings)
 - Flow B1: Meeting → Proposal (1:1; all pending in one tick)
 - Flow B2: Others → one Inputs digest Proposal (theme-clustered)
+
+## Pitfalls & Backlog Safety
+
+- **Transcript Chunk Flooding**: `Inputs/Meetings/` can contain dozens of fragmented transcript chunks (e.g., files ending with `-1.md`, `-2.md`, etc.). Always ignore/skip these chunk files; only compile proposals from the primary/full non-chunk meeting files.
+- **Massive Meeting Backlog**: If there is a large historical backlog of pending meetings (e.g., hundreds of unprocessed files), attempting to process "all pending" in a single tick will exceed token limits or timeout. In such cases, process only the most recent **2-3 full meetings** per tick, and work with the user to archive or batch-mark the old files with a `notebook_proposal:` marker to safely clear the backlog.
+
