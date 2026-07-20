@@ -304,7 +304,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-07-18T13:00:19.890700-04:00",
-      "next_run_at": "2026-07-20T01:00:00-04:00",
+      "next_run_at": "2026-07-20T01:30:00-04:00",
       "last_run_at": "2026-07-20T00:33:05.193277-04:00",
       "last_status": "error",
       "last_error": "RuntimeError: ### Compile-Inputs Phased Tick Complete `[High]`\n\nThe compile-inputs tick has completed. One new Proposal note has been generated, and all other phases were evaluated as no-ops due to an empty backlog.\n\n#### Execution Summary\n- **Phase 0 (Batch-apply Ready):** No-op (no files in `Inbox/Ready to Apply/`).\n- **Phase 1 (Reading Extraction):** No-op (0 unprocessed Readings found).\n- **Phase 2 (Source Proposal):** Created **1** Proposal from the newest eligible Source (`A Post-AI Learning Taxonomy 20260719083103.md`).\n- **Phase 3 (Meeting Proposals):** No-op (0 non-chunk meetings \u22647d old lacking proposals; **393** older meetings age-skipped).\n- **Phase 4 (Others Digest):** No-op (0 pending scraps, emails, slack messages, or telegram captures).\n\n---\n\n#### Paths Written\n- `Inbox/Proposals/Proposal - A Post-AI Learning Taxonomy 20260720003200.md`\n\n#### Modified Files\n- `Inputs/Sources/A Post-AI Learning Taxonomy 20260719083103.md` (added `notebook_proposal` frontmatter)\n- `Utilities/ops/knowledge-log.md` (appended audit trail entry)\n\n---\n\n#### Appended Knowledge-Log Entry\n```markdown\n## [2026-07-20T00:32:00-04:00] compile | Proposal - A Post-AI Learning Taxonomy 20260720003200\n- from: [[A Post-AI Learning Taxonomy 20260719083103]]\n- to: [[Proposal - A Post-AI Learning Taxonomy 20260720003200]]\n- flow: A2 draft-notebook-proposal (mode: source)\n```",
@@ -326,5 +326,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-07-20T00:57:10.004591-04:00"
+  "updated_at": "2026-07-20T01:00:02.604709-04:00"
 }
