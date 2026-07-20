@@ -511,7 +511,7 @@ gateway:
   trust_recent_files: true
   trust_recent_files_seconds: 600
 streaming:
-  enabled: false
+  enabled: true
   transport: auto
   edit_interval: 0.8
   buffer_threshold: 24
