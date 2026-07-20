@@ -118,7 +118,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-22T15:05:05.687250-04:00",
-      "next_run_at": "2026-07-20T05:00:00-04:00",
+      "next_run_at": "2026-07-21T05:00:00-04:00",
       "last_run_at": "2026-07-19T05:03:31.157927-04:00",
       "last_status": "ok",
       "last_error": null,
@@ -304,7 +304,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-07-18T13:00:19.890700-04:00",
-      "next_run_at": "2026-07-20T05:00:00-04:00",
+      "next_run_at": "2026-07-20T05:30:00-04:00",
       "last_run_at": "2026-07-20T04:33:50.481539-04:00",
       "last_status": "error",
       "last_error": "RuntimeError: **Compile-Inputs Phase Tick Report**\n\nI have completed the full phased tick of the compile-inputs queue. Below is the summary of operations, written paths, and details for each phase.\n\n**Confidence Level:** `[High]`\n\n---\n\n### Phase Run Summary\n\n1. **Phase 0 (Ready to Apply \u2192 Triage Drafts):** No-op. The `Inbox/Ready to Apply/` directory contains no pending Proposals.\n2. **Phase 1 (Readings \u2192 Sources):** No-op. There are currently zero unprocessed Readings in `Inputs/Readings/`.\n3. **Phase 2 (Source \u2192 Proposal):** Completed. Successfully drafted a rich Proposal note from the newest eligible unproposed Source: `Acceleration Flow 20260719083010.md`.\n4. **Phase 3 (Meetings \u2192 Proposals):** No-op. All non-chunk meetings within the $\\le 7$ days age gate have already been compiled into Proposals. The remaining non-proposed files within this date range are fragmented transcript chunks, which were safely ignored.\n5. **Phase 4 (Others \u2192 Digest Proposal):** No-op. There are currently zero eligible unproposed non-meeting inputs (`Scraps`, `Emails`, `Slack`, `Telegram`).\n\n---\n\n### Counts & Metrics\n\n- **Proposals Applied:** 0\n- **Sources Extracted:** 0\n- **Reading Proposals Drafted:** 1\n- **Meeting Proposals Drafted:** 0\n- **Meetings Age-Skipped (>7d):** 0 (No eligible new meetings found)\n- **Digest Inputs Covered:** 0\n\n---\n\n### Written Paths\n\n- **Drafted Proposal File:**\n  `Inbox/Proposals/Proposal - Acceleration Flow 20260720160000.md`\n- **Updated Source Frontmatter:**\n  `Inputs/Sources/Acceleration Flow 20260719083010.md` (Added `notebook_proposal: \"[[Proposal - Acceleration Flow 20260720160000]]\"`)\n- **Updated Knowledge Log:**\n  `Utilities/ops/knowledge-log.md`\n\n---\n\n### Drafted Proposal Summary\n\n#### **Proposal - Acceleration Flow**\nBased on Ramon Marc's analysis of the dopamine loops triggered by rapid AI-assisted execution, this proposal frames the psychological state of **\"Acceleration Flow\"** (the AI Machine Zone) and integrates it across several existing vault notes:\n1. **Create Concept: Acceleration Flow `[[Acceleration Flow 20260720160000]]`** \u2014 Establishes the core concept of building velocity acting as a gambler's \"machine zone\", masking a lack of underlying product discovery.\n2. **Create Contact Card: Ramon Marc `[[Ramon Marc 20260720160000]]`** \u2014 Profiles the author of the piece.\n3. **Enrich Concept: Learning vs knowledge addiction `[[Learning vs knowledge addiction 20260128142342]]`** \u2014 Connects Keiffenheim's intake-layer \"knowledge addiction\" (dopamine from collecting info) to Marc's action-layer \"acceleration flow\" (dopamine from rapid generation).\n4. **Enrich Thought: Vibe coding output and outcomes `[[Vibe coding output and outcomes 20260211160110]]`** \u2014 Connects the tendency of vibe coding to increase outputs over outcomes directly to the psychological pull of the AI machine zone.\n5. **Enrich Note: ADHD Product Strategy Framework `[[ADHD Product Strategy Framework 20260616102600]]`** \u2014 Integrates the \"machine zone\" concept as a failure mode in ADHD product design, outlining how rapid AI feedback loops can capture ADHD hyperfocus in escapist ways.\n\n---\n\n### Knowledge-Log Update\n\n```markdown\n## [2026-07-20T16:00:00-04:00] compile | Proposal - Acceleration Flow 20260720160000\n- from: [[Acceleration Flow 20260719083010]]\n- to: [[Proposal - Acceleration Flow 20260720160000]]\n- flow: A2 draft-notebook-proposal (mode: source)\n```\n\nThe underlying file changes have been detected and committed by the background sync system (`apollo-vault-sync`). The drafted proposal is now waiting in `Inbox/Proposals/` for your revision.",
@@ -326,5 +326,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-07-20T04:33:50.482987-04:00"
+  "updated_at": "2026-07-20T05:00:13.164486-04:00"
 }
