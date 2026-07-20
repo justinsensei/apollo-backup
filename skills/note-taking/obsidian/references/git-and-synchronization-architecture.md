@@ -86,3 +86,36 @@ Although the background daemon `apollo-autocommit` only pushes, you can safely p
 - **Editing Configs Elsewhere:** If you edit files inside the `apollo-backup` remote repository elsewhere (e.g., via the GitHub UI, another clone, or on another machine) and push them, the local VM will **not** receive those updates automatically until you execute `apollo-pull`.
 - **Handling Push Conflicts:** If the remote has diverged, local modifications on the VM will trigger push failures in `apollo-autocommit`. Run `apollo-pull` immediately to reconcile the divergent branches and re-apply synced states.
 - **Syncing Manual VM Changes:** If you manually update or create files under the tracked `~/.hermes` directories, the daemon will automatically detect, rsync, and push them within 5 seconds.
+
+---
+
+## 3. Syncthing Peer-to-Peer Synchronization & Network Troubleshooting
+
+Syncthing is utilized for real-time peer-to-peer file synchronization between the VM (`lima-apollo-vm`) and Justin's Mac Mini (`Justins-Mac-mini`), specifically synchronizing the `obsidian-vault` folder.
+
+### The Emoji Conversion Quirk (😎)
+In messaging clients (such as Telegram), the character combination of `B` and `)` (capital B and a closing parenthesis) automatically converts to the cool-guy emoji: 😎.
+Because Syncthing outputs transferred data volumes in parentheses (e.g., `(273 B)` and `(214 B)`), these metrics will frequently arrive in chat screens as `(273 😎` and `(214 😎`. This is normal and represents small metadata keepalive packets, not file transfer speeds.
+
+### Diagnostic Queries via REST API
+Syncthing runs an HTTP API on the local interface (port `8384`). The active API key can be found in `~/.local/state/syncthing/config.xml` under `<gui><apikey>`.
+You can query the Syncthing state programmatically from terminal:
+```bash
+# Check active connections and connection types (relay vs direct TCP)
+curl -s -H "X-API-Key: <API_KEY>" http://localhost:8384/rest/system/connections
+
+# Check synchronization status of the vault folder
+curl -s -H "X-API-Key: <API_KEY>" "http://localhost:8384/rest/db/status?folder=obsidian-vault"
+```
+
+### Direct LAN Connections vs. Relay Fallbacks
+* **Relay Fallback Issue:** Direct TCP LAN connections (`tcp://192.168.5.2:22000`) can occasionally drop with `reading length: EOF` due to hypervisor network timeouts, sleeping hosts, or firewall resets. When direct connections fail, Syncthing silently falls back to public WAN relays (`type: relay-server`). Public relays are heavily throttled (a few KB/s) and slow down syncing to a crawl.
+* **Forcing Direct Connections:** To force Syncthing to bypass slow public WAN relays and maintain high-speed direct peer connections on the private network:
+  1. Open the local config file: `/home/justin.guest/.local/state/syncthing/config.xml`
+  2. Set `<relaysEnabled>false</relaysEnabled>` under the `<options>` tag.
+  3. Set `<address>tcp://192.168.5.2:22000</address>` (explicit target IP rather than `dynamic`) for the remote device configuration.
+  4. Restart the user service:
+     ```bash
+     systemctl --user restart syncthing
+     ```
+  5. Verify that `connections` reports `type: "tcp-client"` and `isLocal: true` rather than `"relay-server"`.
