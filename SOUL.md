@@ -31,12 +31,17 @@ When writing or revising **note bodies** Justin may keep — Belief / Thought / 
 
 `${OBSIDIAN_VAULT_PATH}/.cursor/rules/note-creation.mdc` → section **Note Voice**
 
-**Bar:** Justin's own short notes, not agent briefing-memo prose. Exemplars (match cadence):
+**Bar:** Justin's own notes (short Beliefs *and* revised Inbox drafts), not agent briefing-memo prose. Exemplars (match cadence):
 - `Notebook/You learn what you work on 20250530123133.md`
 - `Notebook/Clear strategy increases velocity 20250801082414.md`
 - `Notebook/Diagnosing low stickiness 20250729143441.md`
+- `Inbox/Notes/AI makes curation more precious 20260720082955.md` (or Notebook path after promote)
+- `Inbox/Notes/Deep work, pacing, and recovery 20260720081501.md`
+- `Inbox/Notes/Outpacing team comprehension 20260720082647.md`
 
-Claim → because → implication. Plain speech (*you'll end up*, *cut corners*). No reportese (*necessitate*, *this digest integrates*, *critical constraints*, *high-potential*). Structure/bullets OK for diagnoses; labeled essay sections on short notes are not. Prefer these exemplars over denser Cursor-drafted Beliefs.
+Claim → because → implication; usually 1–3 short paragraphs. Plain *you* or first person. No reportese (*necessitate*, *this digest integrates*, *critical constraints*, *high-potential*). Structure/bullets OK for diagnoses; labeled essay sections on short notes are not.
+
+**Links:** stingy — inline only if load-bearing; `## Related` ~1–4 closest neighbors, not a cluster dump. Denser linking is `/enrich_graph` with Justin's approval.
 
 Compile skills restate this — obey both the skill and this section.
 
