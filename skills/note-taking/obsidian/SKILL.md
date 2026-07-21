@@ -60,17 +60,17 @@ Whenever you are asked to interact with files in the vault, you **must** obey th
 10. **Linter Side-effects after Relocations:** Moving notes from folders like `TaskNotes/` (which are ignored by folder-wide health audits) into the audited `Notebook/` directory exposes them to structural checks like `Missing daily_note` or `Missing id`. Relocating files without validating these properties can cause clean hygiene states to break. Always verify and patch frontmatter properties at the same time you relocate files.
 11. **Handling Missing Reference Notes / Install Briefs:** When instructed to implement changes or compile items described in a specific note link (e.g., `[[Apollo install brief proposal cadences 20260719080600]]`), do not assume the note is already synced. Always run an explicit `git fetch --all --prune` followed by `git pull` on the vault first to ensure remote-tracking branches and local branches are fully synchronized with the actual GitHub origin. If the note is still missing, do not get stuck in a recursive search loop or try to invent the brief. Fail gracefully, explain that the file is missing on the VM, and ask the user to commit/push the note or paste its contents.
 
-## Triage & Relocation Workflow (Moving from Inbox to Notes)
+## Triage & Relocation Workflow (Moving from Inbox to Notebook)
 
-When the user asks to move/triage a scrap, concept, or decision note from `Inbox/` to its permanent home under `Notes/`:
+When the user asks to move/triage a scrap, concept, or decision note from `Inbox/` to its permanent home under `Notebook/`:
 
 1. **Update Frontmatter Category:** Patch the note's frontmatter to change its category from its temporary staging category (e.g., `category: "[[Scraps]]"`) to its permanent target category (e.g., `category: "[[Decisions]]"` or `category: "[[Concepts]]"`).
-2. **Move the File:** Relocate the file using the Shell tool `mv` to the target directory matching the category routing table in `main.mdc` (e.g., `Notes/` for `"[[Decisions]]"` or `"[[Concepts]]"`). Maintain the unique `Title ID.md` filename structure.
+2. **Move the File:** Relocate the file using the Shell tool `mv` to the target directory matching the category routing table in `main.mdc` (e.g., `Notebook/` for `"[[Decisions]]"` or `"[[Concepts]]"`). Maintain the unique `Title ID.md` filename structure.
 3. **Log the Note Chronologically:** Check if the note is already logged in the central wiki log (`Utilities/log.md`). If it is not, insert a new entry chronologically under its original creation date header based on its 14-digit ID timestamp.
-   - **Line Format:** `- HH:MM | query | [[Note Title ID]] | Notes/Note Title ID.md | [[YYYY-MM-DD Weekday]]`
+   - **Line Format:** `- HH:MM | query | [[Note Title ID]] | Notebook/Note Title ID.md | [[YYYY-MM-DD Weekday]]`
 4. **Run Hygiene Validation:** Manually run the structural hygiene validation script to verify that no ghost links or folder boundary violations are introduced:
    `python3 ~/.hermes/scripts/vault_hygiene_cron.py`
-5. **Ensure Frontmatter Compliance:** Moving notes from non-audited directories (like `TaskNotes/`) to the audited `Notes/` or `Notes/Projects/` folder makes them subject to strict linter checks (e.g., Missing Daily Note, Missing ID). Always ensure that `daily_note: "[[YYYY-MM-DD Weekday]]"` and `id: "YYYYMMDDHHmmss"` are present in the frontmatter during relocation (derived from the file's creation/modified dates or ID timestamp).
+5. **Ensure Frontmatter Compliance:** Moving notes from non-audited directories (like `TaskNotes/`) to the audited `Notebook/` or `Notebook/Projects/` folder makes them subject to strict linter checks (e.g., Missing Daily Note, Missing ID). Always ensure that `daily_note: "[[YYYY-MM-DD Weekday]]"` and `id: "YYYYMMDDHHmmss"` are present in the frontmatter during relocation (derived from the file's creation/modified dates or ID timestamp).
 
 ## Vault Hygiene & Structural Plumbing
 
@@ -100,7 +100,7 @@ TaskNotes represent actionable work items. Completed or abandoned items are swep
 - **Link Repair:** Updates references across all files in the vault to use the corrected, newly renamed capitalized filepath.
 
 #### 4. Folder Boundary Constraints
-- **Scope Rule:** Folder-wide health audits (Missing ID, Missing Daily Note, Ghost Links, and Orphan Notes) are strictly restricted to the `Notes/` directory and its subdirectories.
+- **Scope Rule:** Folder-wide health audits (Missing ID, Missing Daily Note, Ghost Links, and Orphan Notes) are strictly restricted to the `Notebook/` directory and its subdirectories.
 - **Why:** This avoids false positives and warning noise from temporary or inbox files in `Inbox/` or `TaskNotes/`.
 
 #### 5. Automated ID Conflict Resolution
