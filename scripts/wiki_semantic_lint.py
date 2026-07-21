@@ -53,8 +53,8 @@ ORPHAN_EXCLUDE_PREFIXES = (
     "Logs/",
     "Daily Notes/",
     "Contacts/",
-    "Notes/Daily Notes/",
-    "Notes/Contacts/",
+    "Notebook/Daily Notes/",
+    "Notebook/Contacts/",
     "Readwise/",
     "meetings/",
     "Utilities/",
@@ -289,7 +289,7 @@ def run_lint(
     for rel, meta in notes.items():
         if meta["category"] not in MATURITY_CATEGORIES:
             continue
-        if not rel.startswith("Notes/"):
+        if not rel.startswith("Notebook/"):
             continue
         if any(rel.startswith(p) for p in ORPHAN_EXCLUDE_PREFIXES):
             continue
@@ -358,7 +358,7 @@ def run_lint(
     for rel, meta in notes.items():
         links = {normalize_link_target(x).lower() for x in re.findall(r"\[\[([^\]]+)\]\]", meta["text"])}
         links = {x for x in links if x}
-        if meta["category"] in BELIEF_THOUGHT_CATEGORIES and rel.startswith("Notes/"):
+        if meta["category"] in BELIEF_THOUGHT_CATEGORIES and rel.startswith("Notebook/"):
             belief_thought.append((rel, links))
         if meta["category"] in RECENT_DECISION_CATEGORIES and meta["mtime"] >= cutoff:
             recent_items.append((rel, links, meta["category"]))

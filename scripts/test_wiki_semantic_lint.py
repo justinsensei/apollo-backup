@@ -16,7 +16,7 @@ class WikiSemanticLintTest(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.vault = Path(self.tmp.name)
-        os.makedirs(self.vault / "Notes", exist_ok=True)
+        os.makedirs(self.vault / "Notebook", exist_ok=True)
         os.makedirs(self.vault / "Inputs" / "Readings", exist_ok=True)
         os.makedirs(self.vault / "Utilities", exist_ok=True)
 
@@ -36,7 +36,7 @@ class WikiSemanticLintTest(unittest.TestCase):
 
     def test_maturity_orphan_detected(self):
         self._write(
-            "Notes/Orphan Concept.md",
+            "Notebook/Orphan Concept.md",
             """---
 category: "[[Concepts]]"
 ---
@@ -47,11 +47,11 @@ Standalone idea with no inbound links.
         result = wsl.run_lint(vault=self.vault, since_last=False)
         orphans = result["findings"]["maturity_orphans"]
         self.assertEqual(len(orphans), 1)
-        self.assertEqual(orphans[0]["path"], "Notes/Orphan Concept.md")
+        self.assertEqual(orphans[0]["path"], "Notebook/Orphan Concept.md")
 
     def test_maturity_orphan_not_detected_if_has_outgoing_links(self):
         self._write(
-            "Notes/Target.md",
+            "Notebook/Target.md",
             """---
 category: "[[Concepts]]"
 ---
@@ -60,7 +60,7 @@ This note is linked to by another note.
 """,
         )
         self._write(
-            "Notes/Source With Outgoing.md",
+            "Notebook/Source With Outgoing.md",
             """---
 category: "[[Concepts]]"
 ---
@@ -82,7 +82,7 @@ category: "[[Readings]]"
 """ + ("x" * 500),
         )
         source = self._write(
-            "Notes/Example Book.md",
+            "Notebook/Example Book.md",
             """---
 category: "[[Sources]]"
 ---
@@ -96,14 +96,14 @@ Old summary.
 """,
         )
         reading_path = self.vault / "Inputs/Readings/Example Book.md"
-        source_path = self.vault / "Notes/Example Book.md"
+        source_path = self.vault / "Notebook/Example Book.md"
         old = source_path.stat().st_mtime
         os.utime(reading_path, (old + 100, old + 100))
 
         result = wsl.run_lint(vault=self.vault, since_last=False)
         stale = result["findings"]["stale_summaries"]
         self.assertEqual(len(stale), 1)
-        self.assertEqual(stale[0]["source"], "Notes/Example Book.md")
+        self.assertEqual(stale[0]["source"], "Notebook/Example Book.md")
 
     def test_promotion_opportunity_detected(self):
         self._write(
@@ -125,7 +125,7 @@ category: "[[Readings]]"
 
     def test_clean_vault_reports_zero_issues(self):
         self._write(
-            "Notes/Hub.md",
+            "Notebook/Hub.md",
             """---
 category: "[[Projects]]"
 ---
@@ -134,7 +134,7 @@ See [[Linked Child]].
 """,
         )
         self._write(
-            "Notes/Linked Child.md",
+            "Notebook/Linked Child.md",
             """---
 category: "[[Concepts]]"
 ---
