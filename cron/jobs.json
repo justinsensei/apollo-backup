@@ -297,7 +297,7 @@
       "schedule_display": "0,30 * * * *",
       "repeat": {
         "times": null,
-        "completed": 123
+        "completed": 124
       },
       "enabled": true,
       "state": "scheduled",
@@ -305,9 +305,9 @@
       "paused_reason": null,
       "created_at": "2026-07-18T13:00:19.890700-04:00",
       "next_run_at": "2026-07-21T05:00:00-04:00",
-      "last_run_at": "2026-07-21T04:04:20.910815-04:00",
-      "last_status": "error",
-      "last_error": "RuntimeError: ### Apollo Vault Compile Report\n\n**Mode:** `since-last-run`  \n**State Cutoff:** `2026-07-21T03:31:16-04:00`\n\n---\n\n### Phase Summary\n\n* **Phase 0 (Apply Ready):** `[No-op]` \u2014 `Inbox/Ready to Apply/` was empty.\n* **Phase 1 (Reading Extraction):** `[No-op]` \u2014 No new Readings found after the state cutoff.\n* **Phase 2 (Source Proposals):** `[No-op]` \u2014 No new Sources found after the state cutoff.\n* **Phase 3 (Meeting Proposals):** `[1 Compiled]` \u2014 `Inputs/Meetings/2026-07-20 Product meeting.md` was processed.\n* **Phase 4 (Others Digest):** `[No-op]` \u2014 No new Emails, Slack, Telegram, or Scraps after the state cutoff.\n\n---\n\n### Core Accomplishments & Findings\n\n#### 1. Identity Resolution & Reconnaissance `[High]`\nA search of the vault history reveals that \"Andre\" mentioned in the raw meeting transcripts (e.g. *\"Andre's concern about the brand being perceived as AI-generated\"*) is a transcription error for **Endre Elvestad** (co-founder and CEO of SignLab, who has dyslexia). \n* **Outcome:** No duplicate Contact note was created for \"Andre.\" All references and updates have been mapped directly to `[[Endre Elvestad 20260610075536]]`.\n\n#### 2. Meeting Proposal Compiled\nA highly surgical 1:1 Proposal was successfully generated at:  \n`Inbox/Proposals/Proposal - 2026-07-20 Product meeting 20260721040242.md`\n\nFollowing the principle of **enrichment over creation**, the draft targets specific existing durable context rather than generating clean-slate stub duplicates:\n* **[[SignLab character design and art style insights 20251019135401]] (Enrich):** Adds the design commit details to proceed with Bloom's updated 3D character design (softer eyes, naturalistic hair) under a disagree-and-commit decision pending user testing.\n* **[[Ask for permissions after a moment of value 20250731161501]] (Enrich):** Documents the tiered permission strategy for sign recognition\u2014deferring camera prompts to Lesson 2 (minimizing Day Zero friction) and presenting data-consent slide-up drawers on Day 1 returning tasks (higher user intent yields cleaner model data).\n* **[[Flashcards in the study app 20260714091306]] (Enrich):** Integrates the product analysis of gamifying retrieval practice, specifically framing how mechanical action physics (e.g., jump game) introduces noise (Type 1/2 errors) into spaced repetition memory metrics, and recommending simplified physics to preserve assessment integrity.\n* **Collaborator Contact Profiles (Enrich):** Pre-drafted timeline updates adding meeting roles, concerns, and action items for:\n  * `[[Tor Barstad 20260610075543]]` (assessment noise)\n  * `[[Anya Volosskaya 20260610075531]]` (teacher scripts, academic assessment researcher connection)\n  * `[[Bruna Enne 20260610075532]]` (JSON task scaling, live session specs, consent drawers)\n  * `[[Endre Elvestad 20260610075536]]` (AI brand perception risks)\n\n#### 3. Vault Hygiene & Deduplication `[High]`\n* **Marking Input:** Set `notebook_proposal: \"[[Proposal - 2026-07-20 Product meeting 20260721040242]]\"` directly inside the frontmatter of `Inputs/Meetings/2026-07-20 Product meeting.md`.\n* **Conflict Cleanup:** Identified that a prior partial run had generated a sparse duplicate proposal `Proposal - 2026-07-20 Product meeting 20260720213101.md` without setting the corresponding metadata (likely orphaned during a Syncthing sync-conflict cycle). Deleted the old duplicate to prevent folder clutter and ensure Justin has exactly one clean, comprehensive proposal to review.",
+      "last_run_at": "2026-07-21T04:31:35.100358-04:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "telegram:-5174229110",
       "origin": {
@@ -326,5 +326,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-07-21T04:30:10.561661-04:00"
+  "updated_at": "2026-07-21T04:31:35.100591-04:00"
 }
