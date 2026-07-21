@@ -74,8 +74,8 @@ Analyze the instruction line (`instruction` field from the loaded context) for k
   4. The nightly vault hygiene sweep will automatically promote this raw checkbox into a TaskNote file under `TaskNotes/Tasks/`.
 
 #### Other Intent Shapes (Legacy Support)
-- **Person/Company Notes:** "Person note for <Name>" or "New company <Name>" → Create `<Firstname> <Lastname> <ID>.md` under `Inbox/` or in `Notes/Contacts/` per standard contacts layouts.
-- **Project Notes:** "New project <Name>" → Create `<Project Name>.md` (no ID) under `Inbox/` or `Notes/Projects/`.
+- **Person/Company Notes:** "Person note for <Name>" or "New company <Name>" → Create `<Firstname> <Lastname> <ID>.md` under `Inbox/` or in `Notebook/Contacts/` per standard contacts layouts.
+- **Project Notes:** "New project <Name>" → Create `<Project Name>.md` (no ID) under `Inbox/` or `Notebook/Projects/`.
 - **Append to existing note:** "Add to <note title>" → Find closest match vault-wide and append a dated bullet: `- YYYY-MM-DD | Ingest — <context/details>`.
 
 ---
@@ -133,7 +133,7 @@ Append a single line to the central log file:
 
 ### Phase B: Entity Integration (`integrate-entities`)
 - **Script:** Runs `integrate_entities.py <input_note_path>`.
-- **Action:** Scans the input note for project identifiers. If a clear link is resolved, it updates the `## State` section of the corresponding project note under `Notes/Projects/<Project Name>.md` with a concise summary.
+- **Action:** Scans the input note for project identifiers. If a clear link is resolved, it updates the `## State` section of the corresponding project note under `Notebook/Projects/<Project Name>.md` with a concise summary.
 - **Rules:** Update-only operation. Never create new project notes or stubs automatically here.
 
 ---

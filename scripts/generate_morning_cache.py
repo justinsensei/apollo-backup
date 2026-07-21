@@ -149,7 +149,7 @@ def main():
     daily_thought = select_morning_thought(vault_path)
     if not daily_thought:
         daily_thought = {
-            "path": "Notes/Avoid mathy prioritization 20250603163001.md",
+            "path": "Notebook/Avoid mathy prioritization 20250603163001.md",
             "title": "Avoid mathy prioritization",
             "category": "Concepts"
         }

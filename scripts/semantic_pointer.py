@@ -231,7 +231,7 @@ def index_vault(verbose=False, batch_size=30):
     
     # Sort to prioritize Inputs/ (or legacy Logs/) first, then Daily Notes/
     pending_files.sort(key=lambda x: (
-        0 if ("Inputs/" in x[0] or "Logs/" in x[0]) else (1 if "Daily Notes/" in x[0] or "Notes/Daily Notes/" in x[0] else 2),
+        0 if ("Inputs/" in x[0] or "Logs/" in x[0]) else (1 if "Daily Notes/" in x[0] or "Notebook/Daily Notes/" in x[0] else 2),
         x[0]
     ))
     
