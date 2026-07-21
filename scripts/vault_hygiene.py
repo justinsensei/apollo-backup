@@ -52,15 +52,15 @@ def expected_folder_prefix(category, vault_path):
         "Emails": f"{base}/Emails/",
         "Slack": f"{base}/Slack/",
         "Scraps": "inbox/",
-        "Sources": "Notes/",
-        "Notes": "Notes/",
-        "Thoughts": "Notes/",
-        "Concepts": "Notes/",
-        "Beliefs": "Notes/",
-        "References": "Notes/",
-        "Decisions": "Notes/",
-        "Memories": "Notes/",
-        "Projects": "Notes/Projects/",
+        "Sources": "Notebook/",
+        "Notes": "Notebook/",
+        "Thoughts": "Notebook/",
+        "Concepts": "Notebook/",
+        "Beliefs": "Notebook/",
+        "References": "Notebook/",
+        "Decisions": "Notebook/",
+        "Memories": "Notebook/",
+        "Projects": "Notebook/Projects/",
     }
     return rules.get(category)
 
@@ -1233,12 +1233,12 @@ for root, dirs, files in os.walk(VAULT):
                 expected = expected_folder_prefix(category, VAULT)
                 prefixes = acceptable_folder_prefixes(category, VAULT)
                 if category == "Sources":
-                    if not rel_str_f.startswith("Notes/") or rel_str_f.startswith("Notes/Projects/"):
-                        wrong_folder.append((rel_str_f, category, "Notes/"))
+                    if not rel_str_f.startswith("Notebook/") or rel_str_f.startswith("Notebook/Projects/"):
+                        wrong_folder.append((rel_str_f, category, "Notebook/"))
                 elif category == "Projects":
-                    if not rel_str_f.startswith("Notes/Projects/"):
-                        wrong_folder.append((rel_str_f, category, "Notes/Projects/"))
-                elif category == "Readings" and rel_str_f.startswith("Notes/"):
+                    if not rel_str_f.startswith("Notebook/Projects/"):
+                        wrong_folder.append((rel_str_f, category, "Notebook/Projects/"))
+                elif category == "Readings" and rel_str_f.startswith("Notebook/"):
                     wrong_folder.append((rel_str_f, category, expected or prefixes[0]))
                 elif category == "Scraps":
                     if not rel_str_f.lower().startswith("inbox/"):
@@ -1246,7 +1246,7 @@ for root, dirs, files in os.walk(VAULT):
                 elif prefixes and not any(rel_str_f.startswith(p.rstrip("/")) for p in prefixes):
                     wrong_folder.append((rel_str_f, category, expected or prefixes[0]))
 
-        if category == "Sources" and rel_str_f.startswith("Notes/") and not rel_str_f.startswith("Notes/Projects/"):
+        if category == "Sources" and rel_str_f.startswith("Notebook/") and not rel_str_f.startswith("Notebook/Projects/"):
             raw_section = re.search(r"^## Raw inputs\s*$", text, re.MULTILINE | re.IGNORECASE)
             if not raw_section:
                 source_linkage_issues.append((rel_str_f, "missing ## Raw inputs section"))
