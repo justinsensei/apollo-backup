@@ -27,7 +27,7 @@ This skill absorbs the `Semantic Lint` workflow from the deprecated `llm-wiki` s
 
 This skill runs the `wiki_semantic_lint.py` script (which completely excludes the `Inbox/` and `inbox/` folders to let Justin triage those manually), checking for several classes of semantic problems:
 
-1.  **Deterministic Orphans:** Maturity orphans (notes under `Notes/` in mature categories) are only flagged if they have **neither inbound nor outbound links** (completely isolated). Notes that have outbound links but no inbound links are NOT counted as orphans.
+1.  **Deterministic Orphans:** Maturity orphans (notes under `Notebook/` in mature categories) are only flagged if they have **neither inbound nor outbound links** (completely isolated). Notes that have outbound links but no inbound links are NOT counted as orphans.
 2.  **Stale Summaries:** `Source` notes whose underlying `Reading` notes have been updated more recently than the `Source` summary itself.
 3.  **Promotion Gaps:** High-level `Beliefs` that are not supported by a chain of `Thoughts` or `Concepts`, indicating a potential leap in logic.
 4.  **Circular Reasoning:** Identifies link chains that form a closed loop (e.g., A → B → C → A), which can be a sign of a tautological argument.

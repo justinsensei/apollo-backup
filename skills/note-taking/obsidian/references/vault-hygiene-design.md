@@ -17,8 +17,8 @@ The cron wrapper imports stdout from the main script and passes through lines un
 | Layer | Folder | Category | Hygiene may edit body? |
 |-------|--------|----------|------------------------|
 | 1 — Inputs | `Inputs/Readings/`, `Meetings/`, `Emails/`, `Slack/` | `[[Readings]]`, `[[Meetings]]`, etc. | Metadata only on Readings/Emails/Slack; Meetings get entity auto-link |
-| 2 — Compiled biblio | `Notes/` | `[[Sources]]` | Yes (summary kept current by llm-wiki integrate-full) |
-| 3 — Maturity | `Notes/` (+ subfolders) | Notes, Thoughts, Concepts, Beliefs, References, Decisions, Memories, Projects | Yes |
+| 2 — Compiled biblio | `Notebook/` | `[[Sources]]` | Yes (summary kept current by llm-wiki integrate-full) |
+| 3 — Maturity | `Notebook/` (+ subfolders) | Notes, Thoughts, Concepts, Beliefs, References, Decisions, Memories, Projects | Yes |
 
 **Transition:** Script feature-detects `Inputs/` vs legacy `Logs/` paths until migration completes.
 
@@ -32,7 +32,7 @@ The cron wrapper imports stdout from the main script and passes through lines un
 **Always convert:** `#people`, `#person`, `#organizations`, `#organization`.
 **Date-prefix only:** `#meetings`/`#meeting`, `#projects`/`#project` — only if filename starts `YYYY-MM-DD`.
 **Readings:** `#readings` / `#reading` → `category: "[[Readings]]"` (no date prefix required).
-**Sources (context-aware):** `#sources` under `Inputs/` paths → `[[Readings]]`; under `Notes/` → `[[Sources]]`.
+**Sources (context-aware):** `#sources` under `Inputs/` paths → `[[Readings]]`; under `Notebook/` → `[[Sources]]`.
 **Action:** write `category: "[[Wikilink]]"` to frontmatter, remove tag from body.
 
 ### Legacy category on input paths
@@ -74,12 +74,12 @@ If multiple timestamped versions exist for the same clean title, the script reso
 | `[[Meetings]]` | `Inputs/Meetings/` |
 | `[[Emails]]` | `Inputs/Emails/` |
 | `[[Slack]]` | `Inputs/Slack/` |
-| `[[Sources]]` (compiled) | `Notes/` (not `Notes/Projects/`) |
-| `[[Readings]]` on `Notes/` | Report — never auto-move |
-| Maturity tiers | `Notes/` per triage table |
+| `[[Sources]]` (compiled) | `Notebook/` (not `Notebook/Projects/`) |
+| `[[Readings]]` on `Notebook/` | Report — never auto-move |
+| Maturity tiers | `Notebook/` per triage table |
 
 ### Source linkage (`## ⚠️ Source linkage`)
-Compiled `[[Sources]]` notes under `Notes/` must have `## Raw inputs` with at least one Reading wikilink.
+Compiled `[[Sources]]` notes under `Notebook/` must have `## Raw inputs` with at least one Reading wikilink.
 
 ### Legacy path links (`## ⚠️ Legacy path links`)
 Wikilinks still containing `Logs/` after migration — feeds gap detection for `migrate_logs_to_inputs.py`.
@@ -90,7 +90,7 @@ URL validation on markdown links in `Inputs/Readings/` (legacy: `Logs/Sources/`,
 ### ID conflicts / Missing ID / Missing daily_note
 Report but never auto-fix.
 
-*Note: The **Missing ID**, **Ghost Links**, and **Orphan Notes** checks are strictly restricted to the `Notes/` folder and its subfolders to prevent false-positive reports on temporary files (`Inbox/`, `TaskNotes/`, etc.).*
+*Note: The **Missing ID**, **Ghost Links**, and **Orphan Notes** checks are strictly restricted to the `Notebook/` folder and its subfolders to prevent false-positive reports on temporary files (`Inbox/`, `TaskNotes/`, etc.).*
 
 ## Hygiene tiers
 
