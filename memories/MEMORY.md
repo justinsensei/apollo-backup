@@ -2,7 +2,7 @@ Hermes handles infra/skills. Defer migrations/creations to Justin.
 §
 Gmail (read-only): tokens under ~/.hermes/google_tokens/. Search via gws_multi.py. Do not use himalaya.
 §
-Obsidian vault is at `~/Developer/obsidian-vault`. Routes: `~/Developer/obsidian-vault/Notes/Contacts/`, `~/Developer/obsidian-vault/Daily Notes/`, `~/Developer/obsidian-vault/Notes/`, `~/Developer/obsidian-vault/Inputs/` (Readings/Meetings/Emails/Slack/Linear), `~/Developer/obsidian-vault/Utilities/`. Layer 2 compiled Sources in `~/Developer/obsidian-vault/Notes/`. Dividers: always `---`. Log appends to `~/Developer/obsidian-vault/Utilities/log.md`.
+Obsidian vault is at `~/Developer/obsidian-vault`. Routes: `~/Developer/obsidian-vault/Notebook/Contacts/`, `~/Developer/obsidian-vault/Inputs/Daily Notes/`, `~/Developer/obsidian-vault/Notebook/`, `~/Developer/obsidian-vault/Inputs/` (Readings/Meetings/Emails/Slack/Linear), `~/Developer/obsidian-vault/Utilities/`. Layer 2 compiled Sources in `~/Developer/obsidian-vault/Notebook/`. Dividers: always `---`. Log appends to `~/Developer/obsidian-vault/Utilities/log.md`.
 §
 Ignore App Store Connect emails (not Justin's).
 §
@@ -10,7 +10,7 @@ Justin uses Apple Notes as a "filing cabinet" for references (previously in Obsi
 §
 Google Calendar has write access; Bes can directly schedule events on Justin's behalf (e.g., during morning briefings or from forwarded emails) using gws_multi.py --account <name> calendar create.
 §
-New contacts to vault/Inbox/ (existing in Notes/Contacts/ updated in place). Scraps to Inbox/. Forwarded emails to Inputs/Emails/. Inbox holds Bes-created reviews, Decisions, and Query syntheses.
+New contacts to vault/Inbox/ (existing in Notebook/Contacts/ updated in place). Scraps to Inbox/. Forwarded emails to Inputs/Emails/. Inbox holds Bes-created reviews, Decisions, and Query syntheses.
 §
 Always query and use Telegram/cron session history (titles/summaries from state.db) as a core input when creating work logs for Justin, ensuring that all Bes/Vault development chat sessions are captured.
 §
@@ -34,6 +34,6 @@ When creating new Concept notes, the generated ID (YYYYMMDDHHmmss) must be appen
 §
 Daily briefing cache for 2026-06-17 showed stale candidates (MKD-1, John Kearney) which were actually completed on June 11. Live queries verified they were already done.
 §
-The vault hygiene checks for Missing ID, Missing Daily Note, Ghost Links, and Orphan Notes are strictly restricted to the Notes/ folder and its subfolders to avoid false positives from temporary directories like Inbox/ and TaskNotes/.
+The vault hygiene checks for Missing ID, Missing Daily Note, Ghost Links, and Orphan Notes are strictly restricted to the Notebook/ folder and its subfolders to avoid false positives from temporary directories like Inbox/ and TaskNotes/.
 §
 Apollo may compile Inputs -> Sources + Inbox Proposals, and may batch-apply Proposals Justin has moved into Inbox/Ready to Apply/. Apollo must not promote Thoughts/Beliefs/Decisions into Notebook, must not edit trusted Notebook outside apply's Inbox-draft rules, and must never write or move files into Ready to Apply.
