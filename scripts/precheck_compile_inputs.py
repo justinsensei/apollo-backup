@@ -15,13 +15,8 @@ def run_cmd(cmd):
     return res.stdout
 
 def main():
-    print("--- Obsidian Vault Remote Sync ---")
-    # Pull from remote
-    git_pull_out = run_cmd(["git", "-C", VAULT_DIR, "pull"])
-    print(git_pull_out.strip())
-    
     # Scan for candidate files for compile-inputs
-    print("\n--- Scanning for Compile-Inputs Candidates ---")
+    print("--- Scanning for Compile-Inputs Candidates ---")
     
     # 1. Unprocessed Readings in Inputs/Readings/
     # (files not named "Title YYYY-MM-DD.md" or lacking a Source note in Inputs/Sources/ or Inbox)

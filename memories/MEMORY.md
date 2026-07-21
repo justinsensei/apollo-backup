@@ -37,3 +37,5 @@ Daily briefing cache for 2026-06-17 showed stale candidates (MKD-1, John Kearney
 The vault hygiene checks for Missing ID, Missing Daily Note, Ghost Links, and Orphan Notes are strictly restricted to the Notebook/ folder and its subfolders to avoid false positives from temporary directories like Inbox/ and TaskNotes/.
 §
 Apollo may compile Inputs -> Sources + Inbox Proposals, and may batch-apply Proposals Justin has moved into Inbox/Ready to Apply/. Apollo must not promote Thoughts/Beliefs/Decisions into Notebook, must not edit trusted Notebook outside apply's Inbox-draft rules, and must never write or move files into Ready to Apply.
+§
+Vault sync is handled solely by Obsidian Sync. No automatic git push/pull/commit daemon runs on ~/Developer/obsidian-vault. Git is reserved strictly for manual safety commits before major structural changes or bulk operations.

@@ -4,49 +4,14 @@ This reference document outlines the exact architecture, scripts, and behaviors 
 
 ---
 
-## 1. Obsidian Vault Synchronization (`apollo-vault-sync`)
+## 1. Obsidian Vault Synchronization (Obsidian Sync)
 
-The Obsidian vault is configured as a fully bidirectional, real-time synced git repository.
+**STATUS: RETIRED / DISABLED (`apollo-vault-sync.service` is stopped/disabled)**
 
+The Obsidian vault is synchronized exclusively via **Obsidian Sync**.
 - **Local Path:** `/home/justin.guest/Developer/obsidian-vault`
-- **Remote Repo:** `obsidian-vault` on GitHub (Use SSH remote: `git@github.com:justinsensei/obsidian-vault.git`)
-- **Watcher Script:** `/home/justin.guest/.local/bin/apollo-vault-sync`
-- **Daemon Service:** `apollo-vault-sync.service` (systemd-user service)
-- **Log Source:** `journalctl --user -u apollo-vault-sync`
-
-### Git Authentication & SSH Remote Configuration
-- **SSH Preference:** Always configure local repositories on the VM with SSH remotes (`git@github.com:...`) rather than HTTPS. The VM is authenticated to GitHub using a stable SSH key (`ssh -T git@github.com`).
-- **Avoid HTTPS Credentials Pitfalls:** GitHub has deprecated password authentication for HTTPS Git operations. Using HTTPS remotes with a personal access token (PAT) stored in plain-text helpers is highly prone to expiration or mismatch failures (e.g., when local `.git-credentials-vault` files are empty or corrupt).
-- **Repairing Authentication Failures:**
-  If the `fs-event` synchronization or pull alerts with "Invalid username or token" or "Authentication failed":
-  1. Set the remote URL to SSH:
-     ```bash
-     git -C ~/Developer/obsidian-vault remote set-url origin git@github.com:justinsensei/obsidian-vault.git
-     ```
-  2. Clean up any local or conflicting credential helpers:
-     ```bash
-     git -C ~/Developer/obsidian-vault config --local --unset-all credential.helper
-     ```
-  3. Verify with a dry-run fetch:
-     ```bash
-     git -C ~/Developer/obsidian-vault fetch --dry-run
-     ```
-
-### Sync Mechanism
-1. **Trigger:** `inotifywait` monitors the vault directory recursively (ignoring `.git/`, `.obsidian/workspace`, and temporary/trash directories).
-2. **Debounce:** Accumulates filesystem events for **5 seconds** before initiating a sync loop to avoid commit storms.
-3. **Rebase-first Sync:**
-   - Runs `git pull --rebase --autostash` first to fetch changes pushed from Justin's Mac/devices, rebasing local changes on top.
-   - If a merge conflict or network failure occurs during the pull phase, it aborts the rebase and sends a Telegram alarm to Justin.
-4. **Auto-commit & Push:**
-   - If files are modified locally, it auto-commits with the subject format `apollo: <filename>` or `apollo: N files changed` and pushes them to GitHub.
-
-### Critical Pitfalls & Rules
-- **Do NOT manually run git commands inside `/home/justin.guest/Developer/obsidian-vault`:** The background daemon races with manual git operations and will cause spurious commits, locked trees, or rebase loops.
-- **Merge Conflicts:** If the daemon alerts about a merge conflict, it pauses until resolved. Resolve it by SSHing into the VM, executing manual rebase fixes in `~/Developer/obsidian-vault`, committing, and restarting the service:
-  ```bash
-  systemctl --user restart apollo-vault-sync
-  ```
+- **Git Policy:** Git is no longer used for automated sync or real-time remote pushing. Git is reserved solely for manual safety commits prior to major structural changes or bulk operations (e.g. `git commit -m "safety: before bulk migration"`).
+- **Background Watcher (`apollo-vault-sync.service`):** Disabled (`systemctl --user stop apollo-vault-sync && systemctl --user disable apollo-vault-sync`). Do not restart or re-enable.
 
 ---
 
