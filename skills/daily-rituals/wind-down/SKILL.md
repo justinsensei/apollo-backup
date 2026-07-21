@@ -106,7 +106,7 @@ Present any discovered contacts or organizations (unresolved wikilinks found by 
 
 *Crucial Filtering & Duplication Check:* The raw cache contains many false-positive people/organization names (such as "Use Anya Volosskaya", "ASL Bloom", "Daily Wind", "Scraps", or action item phrases). 
 1. **Filter Candidates:** Filter out non-entity phrases, daily note headers, action items, or generic software tools before presenting the list. Only present genuine, unresolved human and organizational entities.
-2. **Duplicate Check:** Always perform a wildcard search (e.g., `*Name*`) using `search_files` under `/home/justin.guest/Developer/obsidian-vault/` to check if a contact note already exists in `Notes/Contacts/` or `Inbox/`. Omit any entities that already have an existing contact card from the candidate list entirely.
+2. **Duplicate Check:** Always perform a wildcard search (e.g., `*Name*`) using `search_files` under `/home/justin.guest/Developer/obsidian-vault/` to check if a contact note already exists in `Notebook/Contacts/` or `Inbox/`. Omit any entities that already have an existing contact card from the candidate list entirely.
 
 If no new, unresolved, and verified human or organization candidates are found in the signals cache after filtering, skip this phase entirely and proceed to Phase 3.
 
@@ -125,7 +125,7 @@ Would you like me to create contact notes for any of these? (e.g. "yes, 1 as org
 ```
 
 If Justin selects any:
-1. Check if the contact card already exists under `/home/justin.guest/Developer/obsidian-vault/Notes/Contacts/` OR in `/home/justin.guest/Developer/obsidian-vault/Inbox/` by performing a wildcard search on the name (e.g. searching for files matching `*Name*` using the `search_files` tool with `target='files'`). This is critical because contacts are saved with their unique timestamp appended (e.g., `Notes/Contacts/Tor Barstad 20260610075543.md`).
+1. Check if the contact card already exists under `/home/justin.guest/Developer/obsidian-vault/Notebook/Contacts/` OR in `/home/justin.guest/Developer/obsidian-vault/Inbox/` by performing a wildcard search on the name (e.g. searching for files matching `*Name*` using the `search_files` tool with `target='files'`). This is critical because contacts are saved with their unique timestamp appended (e.g., `Notebook/Contacts/Tor Barstad 20260610075543.md`).
 2. If a matching file exists in either location, do NOT overwrite or truncate it (as it contains precious history). Instead, patch the file in its current location to insert the standard frontmatter, executive summary, and state sections at the very top, preserving any existing content underneath.
 3. If the file does not exist in either location, create a new file in the inbox directory `/home/justin.guest/Developer/obsidian-vault/Inbox/<Name>.md` and format the contact note following these strict standards:
    * Frontmatter:

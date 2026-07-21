@@ -14,13 +14,13 @@ metadata:
 
 # Obsidian Type: Chronological Directory & Input Conventions
 
-This master skill governs the structure, naming, templates, and navigation of chronological log files and incoming raw input streams under `/Notes/Daily Notes/` and `/Inputs/` directories.
+This master skill governs the structure, naming, templates, and navigation of chronological log files and incoming raw input streams under `/Notebook/Daily Notes/` (or `/Inputs/Daily Notes/`) and `/Inputs/` directories.
 
 ---
 
 ## 1. Directory Navigation & Coordinates
 
-- **Daily Notes Directory:** `/home/justin.guest/Developer/obsidian-vault/Notes/Daily Notes/`
+- **Daily Notes Directory:** `/home/justin.guest/Developer/obsidian-vault/Inputs/Daily Notes/` (or `/home/justin.guest/Developer/obsidian-vault/Notebook/Daily Notes/` depending on sync setup)
   - *Category:* `category: "[[Daily Notes]]"`
 - **Meetings Directory:** `/home/justin.guest/Developer/obsidian-vault/Inputs/Meetings/`
   - *Category:* `category: "[[Meetings]]"`
