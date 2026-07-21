@@ -1264,11 +1264,11 @@ for root, dirs, files in os.walk(VAULT):
         
         if note_id:
             id_to_paths[note_id].append(rel_path)
-        elif rel_str_f.startswith("Notes/"):
+        elif rel_str_f.startswith("Notebook/"):
             missing_ids.append(rel_path)
             
-        is_contact = (category in ["People", "Organizations"]) or rel_str_f.lower().startswith("notes/contacts/")
-        if rel_str_f.startswith("Notes/") and not is_contact:
+        is_contact = (category in ["People", "Organizations"]) or rel_str_f.lower().startswith("notebook/contacts/")
+        if rel_str_f.startswith("Notebook/") and not is_contact:
             if not daily_note or "[[" not in daily_note:
                 missing_daily_notes.append(rel_path)
             
@@ -1303,7 +1303,7 @@ for root, dirs, files in os.walk(VAULT):
                         resolved = id_to_rel_path_catalog[target_id]
                         
             if not resolved:
-                if rel_str_f.startswith("Notes/"):
+                if rel_str_f.startswith("Notebook/"):
                     ghost_links[rel_str_f].add(file_target)
             else:
                 outgoing_links[rel_str_f].add(resolved)
@@ -1515,7 +1515,7 @@ if ghost_links:
 # ⚠️ Orphan Notes
 orphan_notes = []
 for note in sorted(list(all_audited_notes)):
-    if note.startswith("Notes/"):
+    if note.startswith("Notebook/"):
         if len(incoming_links[note]) == 0 and len(outgoing_links[note]) == 0:
             orphan_notes.append(note)
 
