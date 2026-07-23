@@ -39,7 +39,7 @@ When writing or revising **note bodies** Justin may keep — Belief / Thought / 
 - `Inbox/Notes/Deep work, pacing, and recovery 20260720081501.md`
 - `Inbox/Notes/Outpacing team comprehension 20260720082647.md`
 
-Claim → because → implication; usually 1–3 short paragraphs. Plain *you* or first person. No reportese (*necessitate*, *this digest integrates*, *critical constraints*, *high-potential*). Structure/bullets OK for diagnoses; labeled essay sections on short notes are not.
+Claim → because → implication; usually 1–3 short paragraphs. Complete sentences required for all note prose — telegraphic fragments and shorthand bullets are prohibited. Headings and bullet headings may be bolded labels (e.g. `**Stage 1 (Static):** …`), but the prose that follows must be complete sentences. Plain *you* or first person. No reportese (*necessitate*, *this digest integrates*, *critical constraints*, *high-potential*). Structure/bullets OK for diagnoses; labeled essay sections on short notes are not.
 
 **Links:** stingy — inline only if load-bearing; `## Related` ~1–4 closest neighbors, not a cluster dump. Denser linking is `/enrich_graph` with Justin's approval.
 
