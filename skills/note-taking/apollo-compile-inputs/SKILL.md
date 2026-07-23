@@ -19,7 +19,9 @@ Cron tick or Justin asks to drain the compile queue.
    - `.cursor/skills/extract-source/SKILL.md`
    - `.cursor/skills/draft-notebook-proposal/SKILL.md`
    - `.cursor/rules/agent-routing.mdc`
-4. Run the **full phased tick** (not “one action then stop”):
+   - `.cursor/rules/note-creation.mdc`
+4. **Note Voice & Prose Standards:** All keepable note bodies, draft proposals, document notes, and work logs MUST use complete sentences. Telegraphic fragments and shorthand bullets are prohibited. Headings and bullet headings may be bolded labels (`**Stage 1 (Static):** …`), but full sentences must follow.
+5. Run the **full phased tick** (not “one action then stop”):
    - Phase 0: batch-apply **all** `Proposal - *.md` in `Inbox/Ready to Apply/` (one at a time; empty folder = no-op, continue)
    - Phase 1: extract **all** unprocessed Readings (newest first) → Sources in `Inputs/Sources/` (never Inbox)
    - Phase 2: ≤1 Source → Proposal (newest) if any
