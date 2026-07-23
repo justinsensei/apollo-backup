@@ -45,22 +45,36 @@ def readings_dirs(vault_path):
 
 
 def expected_folder_prefix(category, vault_path):
+    """Final (post-triage) folder for a category.
+
+    Inbox/ is intentionally absent: drafts under Inbox/Notes/ keep durable
+    categories (Concepts, People, …) while awaiting Justin's triage. Never
+    treat Inbox paths as wrong-folder or auto-move them into Notebook/.
+    """
     base = str(inputs_base(vault_path)).replace("\\", "/")
+    # Notebook is flat — no category subfolders (Projects included).
+    notebook = "Notebook/"
     rules = {
         "Readings": f"{base}/Readings/",
         "Meetings": f"{base}/Meetings/",
         "Emails": f"{base}/Emails/",
         "Slack": f"{base}/Slack/",
-        "Scraps": "inbox/",
-        "Sources": "Notebook/",
-        "Notes": "Notebook/",
-        "Thoughts": "Notebook/",
-        "Concepts": "Notebook/",
-        "Beliefs": "Notebook/",
-        "References": "Notebook/",
-        "Decisions": "Notebook/",
-        "Memories": "Notebook/",
-        "Projects": "Notebook/Projects/",
+        "Telegram": f"{base}/Telegram/",
+        "Daily Notes": f"{base}/Daily Notes/",
+        "Scraps": f"{base}/Scraps/",
+        "Sources": f"{base}/Sources/",
+        "Proposals": "Inbox/Proposals/",
+        "Notes": notebook,
+        "Thoughts": notebook,
+        "Concepts": notebook,
+        "Beliefs": notebook,
+        "References": notebook,
+        "Decisions": notebook,
+        "Memories": notebook,
+        "Projects": notebook,
+        "Domains": notebook,
+        "People": notebook,
+        "Organizations": notebook,
     }
     return rules.get(category)
 
@@ -1226,27 +1240,43 @@ for root, dirs, files in os.walk(VAULT):
                     text = new_text
 
         if category:
+            # Inbox is the review gate. Creates from apply_proposal keep durable
+            # categories while living in Inbox/Notes/ — NEVER flag or move them.
             if rel_str_f.lower().startswith("inbox/"):
-                # Any note in the inbox is in a valid temporary landing/review state
                 pass
             else:
                 expected = expected_folder_prefix(category, VAULT)
                 prefixes = acceptable_folder_prefixes(category, VAULT)
                 if category == "Sources":
-                    if not rel_str_f.startswith("Notebook/") or rel_str_f.startswith("Notebook/Projects/"):
-                        wrong_folder.append((rel_str_f, category, "Notebook/"))
+                    if not rel_str_f.startswith(("Inputs/Sources/", "Notebook/", "Notes/")) or rel_str_f.startswith(
+                        ("Notebook/Projects/", "Notes/Projects/")
+                    ):
+                        wrong_folder.append((rel_str_f, category, expected or "Inputs/Sources/"))
                 elif category == "Projects":
-                    if not rel_str_f.startswith("Notebook/Projects/"):
-                        wrong_folder.append((rel_str_f, category, "Notebook/Projects/"))
-                elif category == "Readings" and rel_str_f.startswith("Notebook/"):
+                    # Flat Notebook/ (legacy Notes/Projects/ still acceptable)
+                    if not (
+                        rel_str_f.startswith("Notebook/")
+                        or rel_str_f.startswith("Notes/Projects/")
+                        or rel_str_f.startswith("Notes/")
+                    ):
+                        wrong_folder.append((rel_str_f, category, expected or "Notebook/"))
+                elif category == "Readings" and (
+                    rel_str_f.startswith("Notebook/") or rel_str_f.startswith("Notes/")
+                ):
                     wrong_folder.append((rel_str_f, category, expected or prefixes[0]))
                 elif category == "Scraps":
-                    if not rel_str_f.lower().startswith("inbox/"):
-                        wrong_folder.append((rel_str_f, category, "Inbox/"))
-                elif prefixes and not any(rel_str_f.startswith(p.rstrip("/")) for p in prefixes):
+                    if not rel_str_f.startswith("Inputs/Scraps/") and not rel_str_f.lower().startswith("inbox/"):
+                        wrong_folder.append((rel_str_f, category, "Inputs/Scraps/"))
+                elif prefixes and not any(
+                    rel_str_f.startswith(p.rstrip("/"))
+                    or (p.startswith("Notebook/") and rel_str_f.startswith("Notes/"))
+                    for p in prefixes
+                ):
                     wrong_folder.append((rel_str_f, category, expected or prefixes[0]))
 
-        if category == "Sources" and rel_str_f.startswith("Notebook/") and not rel_str_f.startswith("Notebook/Projects/"):
+        if category == "Sources" and rel_str_f.startswith(
+            ("Inputs/Sources/", "Notebook/", "Notes/")
+        ) and not rel_str_f.startswith(("Notebook/Projects/", "Notes/Projects/")):
             raw_section = re.search(r"^## Raw inputs\s*$", text, re.MULTILINE | re.IGNORECASE)
             if not raw_section:
                 source_linkage_issues.append((rel_str_f, "missing ## Raw inputs section"))

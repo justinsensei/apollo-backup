@@ -74,9 +74,11 @@ If multiple timestamped versions exist for the same clean title, the script reso
 | `[[Meetings]]` | `Inputs/Meetings/` |
 | `[[Emails]]` | `Inputs/Emails/` |
 | `[[Slack]]` | `Inputs/Slack/` |
-| `[[Sources]]` (compiled) | `Notebook/` (not `Notebook/Projects/`) |
-| `[[Readings]]` on `Notebook/` | Report — never auto-move |
-| Maturity tiers | `Notebook/` per triage table |
+| `[[Sources]]` (compiled) | `Inputs/Sources/` |
+| `[[Readings]]` on `Notebook/` / `Notes/` | Report — never auto-move |
+| Maturity tiers (Concepts, Thoughts, …) | `Notebook/` after triage |
+
+**Inbox exemption (hard rule):** Anything under `Inbox/` (`Notes/`, `Proposals/`, `Observations/`, `Ready to Apply/`) is **never** wrong-folder. Apply creates keep durable categories while in `Inbox/Notes/` until Justin files them. Do **not** auto-move Inbox → Notebook. (Jul 2026 regression: agents treated durable-category drafts in Inbox as misplaced and bypassed triage.)
 
 ### Source linkage (`## ⚠️ Source linkage`)
 Compiled `[[Sources]]` notes under `Notebook/` must have `## Raw inputs` with at least one Reading wikilink.
