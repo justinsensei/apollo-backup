@@ -22,7 +22,7 @@ The Hermes configuration, custom skills, custom scripts, cron jobs, and memory s
 - **Local Source Paths:** Subset of `/home/justin.guest/.hermes/`
   - *Tracked Files:* `SOUL.md`, `config.yaml`
   - *Tracked Folders:* `skills/`, `hooks/`, `cron/`, `memories/`, `scripts/`
-- **Local Git Repository:** `/home/justin.guest/apollo-backup`
+- **Local Git Repository:** `/home/justin.guest/apollo-backup` (also known as `bes-backup`)
 - **Remote Repo:** `apollo-backup` on GitHub (Use SSH remote: `git@github.com:justinsensei/apollo-backup.git`)
 - **Watcher Script:** `/home/justin.guest/.local/bin/apollo-autocommit`
 - **Daemon Service:** `apollo-autocommit.service` (systemd-user service)

@@ -14,7 +14,7 @@ New contacts to vault/Inbox/ (existing in Notebook/Contacts/ updated in place). 
 §
 Always query and use Telegram/cron session history (titles/summaries from state.db) as a core input when creating work logs for Justin, ensuring that all Bes/Vault development chat sessions are captured.
 §
-The ~/.hermes/ directory on the VM is a live runtime directory, NOT a Git repository. Never run git init or git commands inside ~/.hermes/ or its subfolders (such as ~/.hermes/skills/). The actual Git repository for system-state backups is ~/bes-backup/. Always perform git commits, pushes, and status checks inside ~/bes-backup/ instead.
+The ~/.hermes/ directory on the VM is a live runtime directory, NOT a Git repository. Never run git commands inside ~/.hermes/ or its subfolders. System-state backups live in ~/apollo-backup/ (aka bes-backup). For remote updates, always run apollo-pull (/home/justin.guest/.local/bin/apollo-pull) to pull, rebase, and reverse-sync into ~/.hermes/ safely.
 §
 When writing Python scripts or calling execute_code, do not attempt to import from hermes_tools mcp-specific submodules. The hermes_tools library only exposes read_file, write_file, search_files, patch, and terminal. Standard MCP tools are not importable in Python. To call external APIs (Linear, Slack, etc.) from Python scripts, make direct HTTP requests using urllib.request and the corresponding token from .env (e.g. LINEAR_API_KEY).
 §

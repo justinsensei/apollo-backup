@@ -115,10 +115,11 @@ TaskNotes represent actionable work items. Completed or abandoned items are swep
 
 ### Technical & Environment Architecture: The Bidirectional Sync Gotcha
 On the VM environment, changes to tracked scripts (like `vault_hygiene.py`) and configurations have a strict directory mapping.
-- **The Pitfall:** The VM's active runtime directory is **`~/.hermes/`**, but there is also a backup repository at **`~/apollo-backup/`**.
+- **The Pitfall:** The VM's active runtime directory is **`~/.hermes/`**, but there is also a backup repository at **`~/apollo-backup/`** (also known as `bes-backup`).
 - **The Mirror Mechanism:** The system runs a background daemon `apollo-autocommit.service` which watches `~/.hermes/` and mirrors its contents into `~/apollo-backup/` (using `rsync --delete`).
 - **How to Avoid Reversion:** You must **never** edit python scripts directly in `~/apollo-backup/scripts/` or files under `~/apollo-backup/`. If you do, your changes will be silently deleted and overwritten on the next sync event!
 - **Rule:** Always apply patches and write files to the active runtime paths under **`~/.hermes/`** (e.g., `~/.hermes/scripts/vault_hygiene.py`). The background daemon will safely mirror and commit those changes to git.
+- **Pulling Remote Updates:** When syncing changes from remote (GitHub), run `/home/justin.guest/.local/bin/apollo-pull` (or `apollo-pull`). It stops the autocommit daemon, pulls/rebases changes safely in `~/apollo-backup`, reverse-syncs them into the live `~/.hermes/` environment, and restarts the daemon. Do not run raw `git pull` directly in `~/apollo-backup/`.
 
 ---
 
