@@ -204,7 +204,7 @@ def scan_file_for_unresolved_links(file_path, content, entities, vault_path, all
     # Excluded folders / system categories
     excluded_names = {
         'notes', 'memory', 'projects', 'thoughts', 'references', 'readings', 
-        'meetings', 'people', 'organizations', 'products', 'daily notes', 'utilities', 
+        'meetings', 'people', 'organizations', 'daily notes', 'utilities', 
         'contacts', 'sources', 'notepad', 'state'
     }
     
