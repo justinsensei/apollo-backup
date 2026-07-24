@@ -45,36 +45,22 @@ def readings_dirs(vault_path):
 
 
 def expected_folder_prefix(category, vault_path):
-    """Final (post-triage) folder for a category.
-
-    Inbox/ is intentionally absent: drafts under Inbox/Notes/ keep durable
-    categories (Concepts, People, …) while awaiting Justin's triage. Never
-    treat Inbox paths as wrong-folder or auto-move them into Notebook/.
-    """
     base = str(inputs_base(vault_path)).replace("\\", "/")
-    # Notebook is flat — no category subfolders (Projects included).
-    notebook = "Notebook/"
     rules = {
         "Readings": f"{base}/Readings/",
         "Meetings": f"{base}/Meetings/",
         "Emails": f"{base}/Emails/",
         "Slack": f"{base}/Slack/",
-        "Telegram": f"{base}/Telegram/",
-        "Daily Notes": f"{base}/Daily Notes/",
-        "Scraps": f"{base}/Scraps/",
-        "Sources": f"{base}/Sources/",
-        "Proposals": "Inbox/Proposals/",
-        "Notes": notebook,
-        "Thoughts": notebook,
-        "Concepts": notebook,
-        "Beliefs": notebook,
-        "References": notebook,
-        "Decisions": notebook,
-        "Memories": notebook,
-        "Projects": notebook,
-        "Domains": notebook,
-        "People": notebook,
-        "Organizations": notebook,
+        "Scraps": "inbox/",
+        "Sources": "Notebook/",
+        "Notes": "Notebook/",
+        "Thoughts": "Notebook/",
+        "Concepts": "Notebook/",
+        "Beliefs": "Notebook/",
+        "References": "Notebook/",
+        "Decisions": "Notebook/",
+        "Memories": "Notebook/",
+        "Projects": "Notebook/Projects/",
     }
     return rules.get(category)
 
@@ -252,31 +238,6 @@ def auto_link_recent_daily_notes(vault_path, entities):
         except Exception as e:
             print(f"  Error auto-linking daily note {path.name}: {e}")
 
-def _upsert_frontmatter_fields(fm_content, fields):
-    """Upsert scalar YAML keys in a frontmatter block without dropping other keys.
-
-    Critical for Granola meetings: must preserve granola_id / updated / transcript /
-    attendees / notebook_proposal. Replacing the whole block caused Granola sync to
-    lose its id lookup and create timestamped collision copies (-YYYY-MM-DD_HH-MM-SS, -N).
-    Multiline values (e.g. attendees lists) are left untouched.
-    """
-    lines = fm_content.splitlines()
-    seen = set()
-    out = []
-    for line in lines:
-        m = re.match(r"^(\w[\w_]*)\s*:", line)
-        if m and m.group(1) in fields:
-            key = m.group(1)
-            out.append(f"{key}: {fields[key]}")
-            seen.add(key)
-        else:
-            out.append(line)
-    for key, value in fields.items():
-        if key not in seen:
-            out.append(f"{key}: {value}")
-    return "\n".join(out).rstrip() + "\n"
-
-
 def reconcile_granola_meetings(vault_path):
     entities = get_existing_entities(vault_path)
     meetings_dir = Path(vault_path) / "meetings"
@@ -324,6 +285,7 @@ def reconcile_granola_meetings(vault_path):
             date_str = date_match.group(1)
             try:
                 dt = datetime.date.fromisoformat(date_str)
+                weekday_lower = dt.strftime("%A").lower()
                 weekday_cap = dt.strftime("%A")
             except ValueError:
                 continue
@@ -376,10 +338,6 @@ def reconcile_granola_meetings(vault_path):
             if not daily_note or "[[" not in daily_note:
                 daily_note = f"[[{date_str} {weekday_cap}]]"
                 needs_update = True
-
-            cat_match = re.search(r'^category:\s*[\"\']?(.+?)[\"\']?\s*$', fm_content, re.MULTILINE) if has_frontmatter else None
-            if not cat_match or "[[Meetings]]" not in cat_match.group(1):
-                needs_update = True
                 
             # Clean body: strip leading whitespace and redundant separators
             original_body = body_content
@@ -414,22 +372,13 @@ def reconcile_granola_meetings(vault_path):
                     needs_update = True
                 
             if is_raw or needs_update:
-                # MERGE vault fields into existing frontmatter — never replace the block.
-                # Replacing wiped granola_id and caused Granola collision copies.
-                vault_fields = {
-                    "id": f'"{note_id}"',
-                    "daily_note": f'"{daily_note}"',
-                    "category": '"[[Meetings]]"',
-                }
-                if has_frontmatter:
-                    new_fm_inner = _upsert_frontmatter_fields(fm_content, vault_fields)
-                else:
-                    new_fm_inner = (
-                        f'id: "{note_id}"\n'
-                        f'daily_note: "{daily_note}"\n'
-                        f'category: "[[Meetings]]"\n'
-                    )
-                new_text = f"---\n{new_fm_inner.rstrip()}\n---\n{body_content}"
+                new_fm = (
+                    f"---\nid: {note_id}\n"
+                    f"daily_note: '{daily_note}'\n"
+                    f"category: \"[[Meetings]]\"\n"
+                    f"---\n"
+                )
+                new_text = new_fm + body_content
                 dest_path = dest_dir / filename
                 dest_path.write_text(new_text, encoding="utf-8")
                 rel_dest = str(dest_path.relative_to(vault_path)).replace("\\", "/")
@@ -1277,43 +1226,27 @@ for root, dirs, files in os.walk(VAULT):
                     text = new_text
 
         if category:
-            # Inbox is the review gate. Creates from apply_proposal keep durable
-            # categories while living in Inbox/Notes/ — NEVER flag or move them.
             if rel_str_f.lower().startswith("inbox/"):
+                # Any note in the inbox is in a valid temporary landing/review state
                 pass
             else:
                 expected = expected_folder_prefix(category, VAULT)
                 prefixes = acceptable_folder_prefixes(category, VAULT)
                 if category == "Sources":
-                    if not rel_str_f.startswith(("Inputs/Sources/", "Notebook/", "Notes/")) or rel_str_f.startswith(
-                        ("Notebook/Projects/", "Notes/Projects/")
-                    ):
-                        wrong_folder.append((rel_str_f, category, expected or "Inputs/Sources/"))
+                    if not rel_str_f.startswith("Notebook/") or rel_str_f.startswith("Notebook/Projects/"):
+                        wrong_folder.append((rel_str_f, category, "Notebook/"))
                 elif category == "Projects":
-                    # Flat Notebook/ (legacy Notes/Projects/ still acceptable)
-                    if not (
-                        rel_str_f.startswith("Notebook/")
-                        or rel_str_f.startswith("Notes/Projects/")
-                        or rel_str_f.startswith("Notes/")
-                    ):
-                        wrong_folder.append((rel_str_f, category, expected or "Notebook/"))
-                elif category == "Readings" and (
-                    rel_str_f.startswith("Notebook/") or rel_str_f.startswith("Notes/")
-                ):
+                    if not rel_str_f.startswith("Notebook/Projects/"):
+                        wrong_folder.append((rel_str_f, category, "Notebook/Projects/"))
+                elif category == "Readings" and rel_str_f.startswith("Notebook/"):
                     wrong_folder.append((rel_str_f, category, expected or prefixes[0]))
                 elif category == "Scraps":
-                    if not rel_str_f.startswith("Inputs/Scraps/") and not rel_str_f.lower().startswith("inbox/"):
-                        wrong_folder.append((rel_str_f, category, "Inputs/Scraps/"))
-                elif prefixes and not any(
-                    rel_str_f.startswith(p.rstrip("/"))
-                    or (p.startswith("Notebook/") and rel_str_f.startswith("Notes/"))
-                    for p in prefixes
-                ):
+                    if not rel_str_f.lower().startswith("inbox/"):
+                        wrong_folder.append((rel_str_f, category, "Inbox/"))
+                elif prefixes and not any(rel_str_f.startswith(p.rstrip("/")) for p in prefixes):
                     wrong_folder.append((rel_str_f, category, expected or prefixes[0]))
 
-        if category == "Sources" and rel_str_f.startswith(
-            ("Inputs/Sources/", "Notebook/", "Notes/")
-        ) and not rel_str_f.startswith(("Notebook/Projects/", "Notes/Projects/")):
+        if category == "Sources" and rel_str_f.startswith("Notebook/") and not rel_str_f.startswith("Notebook/Projects/"):
             raw_section = re.search(r"^## Raw inputs\s*$", text, re.MULTILINE | re.IGNORECASE)
             if not raw_section:
                 source_linkage_issues.append((rel_str_f, "missing ## Raw inputs section"))
