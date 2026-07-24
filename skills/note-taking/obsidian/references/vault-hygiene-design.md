@@ -18,7 +18,7 @@ The cron wrapper imports stdout from the main script and passes through lines un
 |-------|--------|----------|------------------------|
 | 1 — Inputs | `Inputs/Readings/`, `Meetings/`, `Emails/`, `Slack/` | `[[Readings]]`, `[[Meetings]]`, etc. | Metadata only on Readings/Emails/Slack; Meetings get entity auto-link |
 | 2 — Compiled biblio | `Notebook/` | `[[Sources]]` | Yes (summary kept current by llm-wiki integrate-full) |
-| 3 — Maturity | `Notebook/` (flat — category via frontmatter) | Notes, Thoughts, Concepts, Beliefs, References, Decisions, Memories, Projects, Domains, People, Organizations | Yes |
+| 3 — Maturity | `Notebook/` (flat — category via frontmatter) | Notes, Thoughts, Concepts, Beliefs, References, Decisions, Memories, Projects, Domains, People, Organizations, Products | Yes |
 
 **Transition:** Script feature-detects `Inputs/` vs legacy `Logs/` paths until migration completes.
 
