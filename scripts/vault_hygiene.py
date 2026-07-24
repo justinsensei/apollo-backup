@@ -252,6 +252,31 @@ def auto_link_recent_daily_notes(vault_path, entities):
         except Exception as e:
             print(f"  Error auto-linking daily note {path.name}: {e}")
 
+def _upsert_frontmatter_fields(fm_content, fields):
+    """Upsert scalar YAML keys in a frontmatter block without dropping other keys.
+
+    Critical for Granola meetings: must preserve granola_id / updated / transcript /
+    attendees / notebook_proposal. Replacing the whole block caused Granola sync to
+    lose its id lookup and create timestamped collision copies (-YYYY-MM-DD_HH-MM-SS, -N).
+    Multiline values (e.g. attendees lists) are left untouched.
+    """
+    lines = fm_content.splitlines()
+    seen = set()
+    out = []
+    for line in lines:
+        m = re.match(r"^(\w[\w_]*)\s*:", line)
+        if m and m.group(1) in fields:
+            key = m.group(1)
+            out.append(f"{key}: {fields[key]}")
+            seen.add(key)
+        else:
+            out.append(line)
+    for key, value in fields.items():
+        if key not in seen:
+            out.append(f"{key}: {value}")
+    return "\n".join(out).rstrip() + "\n"
+
+
 def reconcile_granola_meetings(vault_path):
     entities = get_existing_entities(vault_path)
     meetings_dir = Path(vault_path) / "meetings"
@@ -299,7 +324,6 @@ def reconcile_granola_meetings(vault_path):
             date_str = date_match.group(1)
             try:
                 dt = datetime.date.fromisoformat(date_str)
-                weekday_lower = dt.strftime("%A").lower()
                 weekday_cap = dt.strftime("%A")
             except ValueError:
                 continue
@@ -352,6 +376,10 @@ def reconcile_granola_meetings(vault_path):
             if not daily_note or "[[" not in daily_note:
                 daily_note = f"[[{date_str} {weekday_cap}]]"
                 needs_update = True
+
+            cat_match = re.search(r'^category:\s*[\"\']?(.+?)[\"\']?\s*$', fm_content, re.MULTILINE) if has_frontmatter else None
+            if not cat_match or "[[Meetings]]" not in cat_match.group(1):
+                needs_update = True
                 
             # Clean body: strip leading whitespace and redundant separators
             original_body = body_content
@@ -386,13 +414,22 @@ def reconcile_granola_meetings(vault_path):
                     needs_update = True
                 
             if is_raw or needs_update:
-                new_fm = (
-                    f"---\nid: {note_id}\n"
-                    f"daily_note: '{daily_note}'\n"
-                    f"category: \"[[Meetings]]\"\n"
-                    f"---\n"
-                )
-                new_text = new_fm + body_content
+                # MERGE vault fields into existing frontmatter — never replace the block.
+                # Replacing wiped granola_id and caused Granola collision copies.
+                vault_fields = {
+                    "id": f'"{note_id}"',
+                    "daily_note": f'"{daily_note}"',
+                    "category": '"[[Meetings]]"',
+                }
+                if has_frontmatter:
+                    new_fm_inner = _upsert_frontmatter_fields(fm_content, vault_fields)
+                else:
+                    new_fm_inner = (
+                        f'id: "{note_id}"\n'
+                        f'daily_note: "{daily_note}"\n'
+                        f'category: "[[Meetings]]"\n'
+                    )
+                new_text = f"---\n{new_fm_inner.rstrip()}\n---\n{body_content}"
                 dest_path = dest_dir / filename
                 dest_path.write_text(new_text, encoding="utf-8")
                 rel_dest = str(dest_path.relative_to(vault_path)).replace("\\", "/")

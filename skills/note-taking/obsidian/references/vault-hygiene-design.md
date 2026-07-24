@@ -40,9 +40,11 @@ The cron wrapper imports stdout from the main script and passes through lines un
 **Action:** auto-rewrite to `category: "[[Readings]]"`.
 
 ### Granola meeting reconcile
-**Source:** `Meetings/` (raw Granola sync).
+**Source:** `meetings/` (legacy raw) and `Inputs/Meetings/` (canonical).
 **Destination:** `Inputs/Meetings/` (fallback `Logs/Meetings/` during transition).
-**Action:** write `id`, `daily_note`, `category: "[[Meetings]]"`; auto-link entities in meeting body; delete raw file after reconcile.
+**Action:** **Merge** vault fields (`id`, `daily_note`, `category: "[[Meetings]]"`) into existing frontmatter; auto-link entities in meeting body; delete raw `meetings/` file after move.
+
+**Critical — preserve Granola keys:** Never replace the whole YAML block. Always keep `granola_id`, `updated`, `created`, `title`, `type`, `attendees`, `folders`, `transcript`, `notebook_proposal`, and any other non-vault keys. Wiping `granola_id` makes the Granola Obsidian plugin fail its id lookup, hit a filename collision on `YYYY-MM-DD Title.md`, and create timestamped siblings (`…-YYYY-MM-DD_HH-MM-SS.md`, then `-2`, `-3`, …).
 
 ### Granola-to-Project linking
 **Detection:** matches key terms of active project notes in meeting body.
