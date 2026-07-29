@@ -1,19 +1,28 @@
 ---
 name: software-development
-description: "Core Software Engineering Workflows: Plan Mode, TDD, Systematic Debugging, and Pre-Commit Reviews."
-version: 1.0.0
+description: "Core Software Engineering Workflows: Plan Mode, TDD, Systematic Debugging, Runtime Debugging, Subagent Execution, Pre-Commit Reviews, and Skill Authoring."
+version: 2.0.0
 author: Hermes Agent Curator
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [software-development, engineering, planning, tdd, debugging, code-review, verification, workflow]
-    related_skills: [subagent-driven-development, apollo-skill-authoring, runtime-debugging]
+    tags: [software-development, engineering, planning, tdd, debugging, code-review, verification, workflow, subagents, skill-authoring]
+    related_skills: [github, workspace-integrations]
 ---
 
 # Software Engineering Workflows
 
-This umbrella skill captures the core development cycle and engineering practices required for high-quality code. It synthesizes planning, testing, debugging, and verification into a cohesive workflow.
+This umbrella skill captures the core development cycle and engineering practices required for high-quality code. It synthesizes planning, testing, debugging, execution, and verification into a cohesive workflow.
+
+---
+
+## Specialized Engineering References & Submodules
+
+- **Subagent-Driven Development:** See `references/subagent-driven-development.md` for executing plans via subagents with two-stage reviews.
+- **Interactive Runtime Debugging:** See `references/runtime-debugging.md` for terminal-based breakpoint stepping in Python (pdb/debugpy) and Node.js (node inspect/CDP).
+- **Hermes TUI Slash Command Debugging:** See `references/debugging-hermes-tui-commands.md` for debugging Python, gateway JSON-RPC, and Ink UI layers.
+- **Skill Authoring & Validation:** See `references/skill-authoring.md` for creating and conforming SKILL.md packages.
 
 ---
 

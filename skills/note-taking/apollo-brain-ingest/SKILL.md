@@ -1,17 +1,23 @@
 ---
 name: apollo-brain-ingest
-description: Master Justin's automated note-taking, ingestion, and logging pipeline (Brain Feeds Ingest). Coordinates email forwarding, Linear reactions, Telegram bookmarks, and central vault logging/entity integration.
-version: 1.0.0
+description: Master Justin's automated note-taking, ingestion, and logging pipeline (Brain Feeds Ingest). Coordinates email forwarding, Linear reactions, Telegram bookmarks, Slack captures, Granola transcripts, Calendar sync, and input compilation.
+version: 2.0.0
 platforms: [linux, macos]
 metadata:
   hermes:
-    tags: [obsidian, ingest, brain, feeds, email, linear, telegram, logging, cron]
-    related_skills: [obsidian, google-workspace]
+    tags: [obsidian, ingest, brain, feeds, email, linear, telegram, slack, granola, calendar, logging, cron]
+    related_skills: [obsidian, workspace-integrations]
 ---
 
 # Apollo Brain Ingestion & Logging Pipeline
 
 Automated collection pipeline for incoming personal knowledge artifacts. This skill governs the extraction, transformation, target formatting, vault routing, central audit logging, and project-entity linking for Justin's diverse incoming feeds.
+
+## Feed Submodules & Canonical References
+- **Slack Conversation Ingest:** See `references/slack-ingest.md` for Slack thread capture and `Inputs/Slack/` synthesis.
+- **Granola Meeting Ingest:** See `references/granola-ingest.md` for Granola transcript sweeping and `Inputs/Meetings/` formatting.
+- **Calendar Event Ingest:** See `references/calendar-ingest.md` for multi-account Google Calendar sync and schedule querying.
+- **Input Compilation Pipeline (`compile-inputs`):** See `references/compile-inputs.md` for phased proposal batching and vault input compilation.
 
 ## Overview & Unified Cron Job
 

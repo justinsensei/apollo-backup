@@ -1,14 +1,14 @@
 ---
 name: obsidian
 description: Use when Justin asks you to search, read, write, or manage notes in the vault, OR when performing structural/physical vault maintenance (hygiene, task archiving, capitalization healing, link repair, and nightly cron plumbing).
-version: 2.1.0
+version: 2.2.0
 author: Apollo
 license: MIT
 platforms: [linux, macos]
 metadata:
   hermes:
     tags: [obsidian, core, conventions, rules, pointers, thin-assistant, hygiene, maintenance, tasknotes, cron, links, automation]
-    related_skills: [did-i-already-do-this, apollo-slack-ingest, apollo-telegram-ingest, apollo-email-dispatch, obsidian-semantic-lint, apollo-brain-ingest]
+    related_skills: [apollo-brain-ingest, workspace-integrations]
 ---
 
 # Obsidian: Vault Operations & Schema Pointer
@@ -25,8 +25,16 @@ Apollo does not store hard-coded copies of note formats, category tables, or sor
 ## When to Use
 * **Use when** creating, editing, renaming, moving, searching, or reading any note in the vault.
 * **Use when** running or reviewing automated ingestion pipelines (Slack, Telegram, Emails, Linear).
-* **Use when** running daily scheduled hygiene checks.
+* **Use when** running daily scheduled hygiene checks or semantic health audits.
+* **Use when** looking up whether Justin completed or filed past items ("Did I already do X?").
 * **Do not use for** modifying the underlying vault structures or schemas yourself (which is owned by Cursor).
+
+## Core Vault Submodules & Reference Guides
+
+- **Chronological Logs & Inputs:** See `references/obsidian-logs.md` for conventions governing Daily Notes, Meetings, and raw inputs (`/Inputs/`).
+- **Semantic Health Checks (Linting):** See `references/semantic-linting.md` for running content-level health audits (orphans, stale summaries, promotion gaps, contradictions).
+- **Semantic Pointer & Vector Search:** See `references/semantic-pointer.md` for operating the embedding CLI (`semantic_pointer.py`), indexing, and vector similarity search.
+- **Historical Lookups & Memory Checks:** See `references/historical-lookups.md` for step-by-step procedures to verify completed tasks or appointments ("Did I already do X?").
 
 ## Rules of Engagement: Dynamic Rule Reading
 
