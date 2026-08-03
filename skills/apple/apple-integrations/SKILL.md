@@ -43,21 +43,9 @@ SSH flattens arguments into a single string. Double-quote folder names containin
 
 ---
 
-## 2. Apple Reminders to Obsidian Scratchpad (Active)
+## 2. Apple Reminders Sync (Disabled)
 
-Siri voice captures and other new reminders added to your default list **`Reminders ⚠️`** are automatically synced directly to the **# ✅ Tasks** section of the global `/Inbox/Scratchpad.md` note in your Obsidian vault.
-
-### How it works
-- **Cron-driven Polling**: A background cron job (`Reminders → Obsidian Scratchpad`) runs every 5 minutes on the macOS host.
-- **Append Format**: Reminders are cleanly appended to the **`# ✅ Tasks`** section of `/Inbox/Scratchpad.md` as `- [ ] Reminder Title`. Any additional reminder notes are appended as indented sub-bullets.
-- **Self-Cleaning Queue**: Once successfully appended, the reminders are marked as completed on the host.
-
-### Troubleshooting / Reference
-### Troubleshooting / Reference
-- **Configuration Path**: `/Users/justin/.hermes/scripts/sync_reminders_to_obsidian.py` on the host.
-- **Reference Template**: `templates/sync_reminders_to_obsidian.py` (a copy of this template is stored directly within this skill for replication or backup updates).
-- **Log Location**: `~/.hermes/cron/output/71f8a2d4e25d/` (on the host).
-- **Default List ID**: "223B68FA-6463-41AD-8B13-069CC61E821B" (named `Reminders ⚠️`).
+*Disabled per user request.* Apple Reminders scraping/syncing is permanently turned off. No Reminders are ingested into Obsidian or tracked.
 
 ## 3. iMessage (Read-Only SSH Proxy)
 
