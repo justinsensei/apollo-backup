@@ -519,6 +519,10 @@ When scanning Gmail to extract action items for Todoist or similar:
 
 2. **Use `--field body --max-len N` for targeted email reads.** Avoids piping through `python3 -c` (trips the security scanner) and keeps output manageable. Fall back to `jq` (not `python3 -c`) when you need multiple fields or transformations.
 
+3. **`gmail get` accepts a single `message_id`.** Calling `gmail get ID1 ID2` fails with `unrecognized arguments: ID2`. Loop through IDs in shell or Python when fetching multiple messages.
+
+4. **Subcommand name is `gmail get`, not `gmail read`.** `gmail read` throws `invalid choice: 'read'`. Use `gmail get <message_id>`.
+
 ## Troubleshooting
 
 | Problem | Fix |
