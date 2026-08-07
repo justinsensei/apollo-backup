@@ -297,7 +297,7 @@
       "schedule_display": "0,30 * * * *",
       "repeat": {
         "times": null,
-        "completed": 892
+        "completed": 893
       },
       "enabled": true,
       "state": "scheduled",
@@ -305,9 +305,9 @@
       "paused_reason": null,
       "created_at": "2026-07-18T13:00:19.890700-04:00",
       "next_run_at": "2026-08-07T11:30:00-04:00",
-      "last_run_at": "2026-08-07T10:33:38.153793-04:00",
-      "last_status": "error",
-      "last_error": "RuntimeError: \u26a0\ufe0f Skill(s) not found and skipped: apollo-compile-inputs\n\n## Compile Inputs Report (`since-last-run`)\n\n- **Mode:** `since-last-run` [High]\n- **State File:** `Utilities/ops/compile-inputs-state.json`\n  - Previous `last_run_at`: `2026-08-07T10:00:28-04:00`\n  - Updated `last_run_at`: `2026-08-07T10:28:00-04:00`\n\n---\n\n### Phase Summary\n\n1. **Phase 0 (Apply Ready Proposals):** 0 applied (queue empty) [High]\n2. **Phase 1 (Reading \u2192 Thin Source Extraction):** 2 Readings compiled [High]\n   - `Inputs/Readings/When Hard Work Becomes Abuse 2026-08-06.md` \u2192 `Inputs/Sources/When Hard Work Becomes Abuse 20260807102801.md`\n   - `Inputs/Readings/Stop Trying to Build a Unicorn. Start Cockroachmaxxing. 2026-08-03.md` \u2192 `Inputs/Sources/Stop Trying to Build a Unicorn. Start Cockroachmaxxing. 20260807102802.md`\n3. **Phase 2 (Source Proposals):** 2 Proposals drafted [High]\n   - `Inbox/Proposals/Proposal - When Hard Work Becomes Abuse 20260807102801.md`\n   - `Inbox/Proposals/Proposal - Stop Trying to Build a Unicorn. Start Cockroachmaxxing. 20260807102802.md`\n4. **Phase 3 (Meeting Proposals):** 1 Meeting Proposal drafted; 1 skipped due to existing review proposal [High]\n   - Drafted: `Inbox/Proposals/Proposal - 2026-04-15 Justin Goff and Istv\u00e1n M\u00e9sz\u00e1ros 20260807102803.md` (marked canonical and sibling files)\n   - Skipped: `Inputs/Meetings/2026-08-06 Tadhg __ SignLab.md` (Proposal exists in `Utilities/Review/`)\n5. **Phase 4 (Others Digest):** 1 Digest Proposal drafted covering 2 Scraps [High]\n   - `Inbox/Proposals/Proposal - Inputs digest 2026-08-07 20260807102804.md`\n   - Inputs covered: `Granola Sync collision cleanup 20260807100620` and `Post-summary continue and Exam date passed 20260805151733`\n\n---\n\n### Provenance Log\nAppended 6 operations to `Utilities/ops/knowledge-log.md`. All newly covered Inputs updated with `notebook_proposal` frontmatter references. [High]",
+      "last_run_at": "2026-08-07T11:01:04.942034-04:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "telegram:-5174229110",
       "origin": {
@@ -326,5 +326,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-08-07T11:00:20.686487-04:00"
+  "updated_at": "2026-08-07T11:01:04.942862-04:00"
 }
