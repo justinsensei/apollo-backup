@@ -1,14 +1,14 @@
 ---
 name: workspace-integrations
-description: "Unified productivity and collaboration integrations: Google Workspace, Notion, Airtable, Microsoft Teams, Himalaya Email, Maps, and Yuanbao messaging."
-version: 1.0.0
+description: "Unified productivity and collaboration integrations: Google Workspace, Notion, Airtable, Microsoft Teams, Linear, Slack, Himalaya Email, Maps, and Yuanbao messaging."
+version: 1.1.0
 author: Hermes Agent Curator
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [productivity, integrations, google, notion, airtable, teams, mail, maps, yuanbao, apis, cli]
-    related_skills: [obsidian, slack, linear, github]
+    tags: [productivity, integrations, google, notion, airtable, linear, slack, teams, mail, maps, yuanbao, apis, cli]
+    related_skills: [obsidian, github]
 ---
 
 # Workspace & Productivity Integrations
@@ -75,6 +75,19 @@ Specific platforms, credentials, and execution commands are demoted to supportin
 - **Support Files:**
   - `references/yuanbao-group.md` (Yuanbao API & @mention workflow)
 - **Key Capability:** Group and private messaging in "Pai" groups with automated @mention formatting.
+
+### 8. Linear (Project & Issue Management)
+- **Support Files:**
+  - `references/linear-api.md` (GraphQL queries, mutations, docs syntax)
+  - `scripts/linear_api.py` (Zero-dependency CLI helper for Linear)
+- **Key Capability:** Full issue tracking, project updates, document retrieval, and team management via GraphQL API.
+
+### 9. Slack (Workspace Messaging)
+- **Support Files:**
+  - `references/slack-api.md` (User-token Slack API reference)
+  - `scripts/slack.py` (Slack CLI wrapper for reading, posting, searching)
+  - `scripts/fetch_slack_brains.py` (Automated 🧠 reaction note capture)
+- **Key Capability:** Reading channels/threads, searching messages, posting as authed user, and capturing conversation logs into vault.
 
 ---
 
