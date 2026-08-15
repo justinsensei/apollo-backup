@@ -210,7 +210,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-11T07:13:41.706316-04:00",
-      "next_run_at": "2026-08-15T19:50:08.673083-04:00",
+      "next_run_at": "2026-08-15T20:21:00.267568-04:00",
       "last_run_at": "2026-08-15T19:20:08.673083-04:00",
       "last_status": "error",
       "last_error": "RuntimeError: Gemini streaming request failed: [Errno -2] Name or service not known",
@@ -326,5 +326,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-08-15T19:30:08.831081-04:00"
+  "updated_at": "2026-08-15T19:51:00.268036-04:00"
 }
