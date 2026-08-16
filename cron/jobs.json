@@ -203,15 +203,15 @@
       "schedule_display": "every 30m",
       "repeat": {
         "times": null,
-        "completed": 2827
+        "completed": 2828
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-11T07:13:41.706316-04:00",
-      "next_run_at": "2026-08-16T15:59:23.528993-04:00",
-      "last_run_at": "2026-08-16T15:29:23.528993-04:00",
+      "next_run_at": "2026-08-16T16:30:24.264354-04:00",
+      "last_run_at": "2026-08-16T16:00:24.264354-04:00",
       "last_status": "error",
       "last_error": "RuntimeError: Gemini streaming request failed: [Errno -2] Name or service not known",
       "last_delivery_error": "delivery error: Telegram send failed: httpx.ConnectError: [Errno -2] Name or service not known",
@@ -297,15 +297,15 @@
       "schedule_display": "0,30 * * * *",
       "repeat": {
         "times": null,
-        "completed": 1334
+        "completed": 1335
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-07-18T13:00:19.890700-04:00",
-      "next_run_at": "2026-08-16T16:00:00-04:00",
-      "last_run_at": "2026-08-16T15:30:23.696307-04:00",
+      "next_run_at": "2026-08-16T16:30:00-04:00",
+      "last_run_at": "2026-08-16T16:00:23.629719-04:00",
       "last_status": "error",
       "last_error": "RuntimeError: Gemini streaming request failed: [Errno -2] Name or service not known",
       "last_delivery_error": "delivery error: Telegram send failed: httpx.ConnectError: [Errno -2] Name or service not known",
@@ -326,5 +326,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-08-16T15:30:23.696476-04:00"
+  "updated_at": "2026-08-16T16:00:24.264436-04:00"
 }
