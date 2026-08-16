@@ -297,15 +297,15 @@
       "schedule_display": "0,30 * * * *",
       "repeat": {
         "times": null,
-        "completed": 1315
+        "completed": 1316
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-07-18T13:00:19.890700-04:00",
-      "next_run_at": "2026-08-16T06:30:00-04:00",
-      "last_run_at": "2026-08-16T06:00:15.192609-04:00",
+      "next_run_at": "2026-08-16T07:00:00-04:00",
+      "last_run_at": "2026-08-16T06:30:15.190928-04:00",
       "last_status": "error",
       "last_error": "RuntimeError: Gemini streaming request failed: [Errno -2] Name or service not known",
       "last_delivery_error": "delivery error: Telegram send failed: httpx.ConnectError: [Errno -2] Name or service not known",
@@ -326,5 +326,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-08-16T06:11:17.943140-04:00"
+  "updated_at": "2026-08-16T06:30:15.191126-04:00"
 }
