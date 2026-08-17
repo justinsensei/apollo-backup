@@ -5,31 +5,50 @@ import sys
 
 VAULT_DIR = "/home/justin.guest/Developer/obsidian-vault"
 
-def run_cmd(cmd):
-    res = subprocess.run(cmd, capture_output=True, text=True)
-    if res.returncode != 0:
-        sys.stderr.write(f"Command {' '.join(cmd)} failed with return code {res.returncode}\n")
-        sys.stderr.write(f"stdout:\n{res.stdout}\n")
-        sys.stderr.write(f"stderr:\n{res.stderr}\n")
-        sys.exit(1)
-    return res.stdout
+def sync_semantic_index():
+    print("--- Running Incremental Semantic Indexing ---")
+    script_path = os.path.expanduser("~/.hermes/scripts/semantic_pointer.py")
+    if not os.path.exists(script_path):
+        print("⚠️ Semantic pointer script not found.")
+        return
+    try:
+        env = os.environ.copy()
+        env_file = os.path.expanduser("~/.hermes/.env")
+        if os.path.exists(env_file):
+            with open(env_file) as ef:
+                for line in ef:
+                    line = line.strip()
+                    if line and not line.startswith("#") and "=" in line:
+                        k, v = line.split("=", 1)
+                        env[k.strip()] = v.strip().strip('"\'')
+        res = subprocess.run([sys.executable, script_path, "index"], env=env, capture_output=True, text=True, timeout=120)
+        if res.returncode == 0:
+            output = res.stdout.strip()
+            if output:
+                print(output)
+            else:
+                print("Index up to date.")
+        else:
+            print(f"⚠️ Indexing returned code {res.returncode}: {res.stderr.strip()[:200]}")
+    except Exception as e:
+        print(f"⚠️ Semantic indexing check skipped: {e}")
 
 def main():
+    # 0. Sync semantic vector embeddings incrementally first
+    sync_semantic_index()
+
     # Scan for candidate files for compile-inputs
-    print("--- Scanning for Compile-Inputs Candidates ---")
+    print("\n--- Scanning for Compile-Inputs Candidates ---")
     
     # 1. Unprocessed Readings in Inputs/Readings/
-    # (files not named "Title YYYY-MM-DD.md" or lacking a Source note in Inputs/Sources/ or Inbox)
     readings_dir = os.path.join(VAULT_DIR, "Inputs", "Readings")
     readings = []
     if os.path.isdir(readings_dir):
         for f in os.listdir(readings_dir):
             if f.endswith(".md"):
-                # Check if it has a processed marker (e.g. ending in YYYY-MM-DD.md)
                 if not f[:-3].endswith("-") and len(f) > 13:
                     date_part = f[-13:-3]
                     if len(date_part) == 10 and date_part[4] == '-' and date_part[7] == '-':
-                        # Already processed
                         continue
                 readings.append(os.path.join("Inputs", "Readings", f))
                 
