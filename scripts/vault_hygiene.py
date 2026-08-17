@@ -1559,7 +1559,16 @@ print("\nTriggering semantic indexing for new/modified files...")
 try:
     script_path = os.path.expanduser("~/.hermes/scripts/semantic_pointer.py")
     if os.path.exists(script_path):
-        result = subprocess.run(["python3", script_path, "index"], capture_output=True, text=True, timeout=500, check=True)
+        env = os.environ.copy()
+        env_file = os.path.expanduser("~/.hermes/.env")
+        if os.path.exists(env_file):
+            with open(env_file) as ef:
+                for line in ef:
+                    line = line.strip()
+                    if line and not line.startswith("#") and "=" in line:
+                        k, v = line.split("=", 1)
+                        env[k.strip()] = v.strip().strip('"'')
+        result = subprocess.run([sys.executable, script_path, "index"], env=env, capture_output=True, text=True, timeout=500, check=True)
         print("✅ Semantic indexing completed.")
         if result.stdout:
             print(result.stdout.strip())
