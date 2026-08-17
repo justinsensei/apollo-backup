@@ -278,11 +278,9 @@
     {
       "id": "675ae49929a5",
       "name": "compile-inputs",
-      "prompt": "/apollo-compile-inputs",
-      "skills": [
-        "apollo-compile-inputs"
-      ],
-      "skill": "apollo-compile-inputs",
+      "prompt": "Execute the compile-inputs pipeline in mode 'since-last-run'. Read and strictly follow the canonical instructions in /home/justin.guest/Developer/obsidian-vault/.cursor/skills/compile-inputs/SKILL.md.",
+      "skills": [],
+      "skill": null,
       "model": null,
       "provider": null,
       "base_url": null,
