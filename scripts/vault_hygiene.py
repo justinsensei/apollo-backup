@@ -1,3 +1,4 @@
+import sys
 #!/usr/bin/env python3
 """
 vault_hygiene.py — Obsidian vault hygiene check + auto-fix.
@@ -1567,7 +1568,7 @@ try:
                     line = line.strip()
                     if line and not line.startswith("#") and "=" in line:
                         k, v = line.split("=", 1)
-                        env[k.strip()] = v.strip().strip('"'')
+                        env[k.strip()] = v.strip().strip('"\'')
         result = subprocess.run([sys.executable, script_path, "index"], env=env, capture_output=True, text=True, timeout=500, check=True)
         print("✅ Semantic indexing completed.")
         if result.stdout:
