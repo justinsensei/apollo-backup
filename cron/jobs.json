@@ -302,7 +302,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-07-18T13:00:19.890700-04:00",
-      "next_run_at": "2026-08-18T01:30:00-04:00",
+      "next_run_at": "2026-08-18T02:00:00-04:00",
       "last_run_at": "2026-08-18T01:00:35.482729-04:00",
       "last_status": "ok",
       "last_error": null,
@@ -324,5 +324,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-08-18T01:14:25.812584-04:00"
+  "updated_at": "2026-08-18T01:30:21.698990-04:00"
 }
