@@ -295,17 +295,17 @@
       "schedule_display": "0,30 * * * *",
       "repeat": {
         "times": null,
-        "completed": 1475
+        "completed": 1476
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-07-18T13:00:19.890700-04:00",
-      "next_run_at": "2026-08-19T17:00:00-04:00",
-      "last_run_at": "2026-08-19T16:30:33.694773-04:00",
-      "last_status": "error",
-      "last_error": "RuntimeError: Gemini HTTP 403 (PERMISSION_DENIED): The caller does not have permission",
+      "next_run_at": "2026-08-19T17:30:00-04:00",
+      "last_run_at": "2026-08-19T17:00:46.907727-04:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "telegram:-5174229110",
       "origin": {
@@ -324,5 +324,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-08-19T16:30:35.480712-04:00"
+  "updated_at": "2026-08-19T17:00:46.908155-04:00"
 }
