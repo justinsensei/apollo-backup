@@ -295,7 +295,7 @@
       "schedule_display": "0,30 * * * *",
       "repeat": {
         "times": null,
-        "completed": 1565
+        "completed": 1566
       },
       "enabled": true,
       "state": "scheduled",
@@ -303,9 +303,9 @@
       "paused_reason": null,
       "created_at": "2026-07-18T13:00:19.890700-04:00",
       "next_run_at": "2026-08-21T14:30:00-04:00",
-      "last_run_at": "2026-08-21T13:35:05.550459-04:00",
-      "last_status": "error",
-      "last_error": "RuntimeError: ### Compile Inputs: `since-last-run` Execution Summary `[High]`\n\n**Mode:** `since-last-run`  \n**State Window:** Inputs created after `2026-08-21T13:01:00-04:00`  \n**Tick Start:** `2026-08-21T13:32:01-04:00`\n\n---\n\n### Pipeline Phases & Results\n\n1. **Phase 0 \u2014 Apply Ready Proposals:**\n   - Evaluated `Inbox/Ready to Apply/`.\n   - **Applied:** `0` (folder empty except `.gitkeep`).\n\n2. **Phase 1 \u2014 Extract Readings (`extract-source`):**\n   - Scanned `Inputs/Readings/` for files created in window.\n   - **Sources extracted:** `0` (no new readings in window).\n\n3. **Phase 2 \u2014 Source Proposals (`mode: source`):**\n   - Scanned `Inputs/Sources/` for eligible sources created in window.\n   - **Proposals drafted:** `0`.\n\n4. **Phase 3 \u2014 Meeting Proposals (`mode: meeting`):**\n   - Processed `Inputs/Meetings/2026-08-21 SignLab x BCG _ Check-in.md` and transcript (deduped older Granola snapshot rewrites).\n   - **Drafted Proposal:** `Inbox/Proposals/Proposal - 2026-08-21 SignLab x BCG _ Check-in 20260821133201.md`\n   - **Proposed Changes:**\n     - Create `[[Research preview framing over beta testing 20260821133202]]` (`[[Concepts]]`)\n     - Create `[[Separating demand validation from product architecture 20260821133203]]` (`[[Thoughts]]`)\n     - Enrich `[[Flashcard app 2026]]` (sprint timeline: waitlist landing pages, research preview target week of Sept 7, MVP release, paid acquisition baselines via Rend)\n     - Enrich `[[Anya Volosskaya 20260610075531]]` (transition to operations after delivering agentic design system)\n     - Enrich `[[Bruna Enne 20260610075532]]` (full ownership of SignLab sign language domain)\n     - Enrich `[[SignLab 20260610075135]]` (late October Investinor 49% match funding timeline and Buzz migration)\n   - **Backlinked Inputs:** `notebook_proposal:` set on meeting note and transcript.\n\n5. **Phase 4 \u2014 Others Digest (`mode: digest`):**\n   - Identified newly created scrap `Inputs/Scraps/JoyDeck 20260821130706.md`.\n   - Target destination: open same-day digest `Inbox/Proposals/Proposal - Inputs digest 2026-08-21 20260821100101.md`.\n\n---\n\n### Artifacts Written\n- `Inbox/Proposals/Proposal - 2026-08-21 SignLab x BCG _ Check-in 20260821133201.md`\n- Updated frontmatter on `Inputs/Meetings/2026-08-21 SignLab x BCG _ Check-in.md`\n- Updated frontmatter on `Inputs/Transcripts/2026-08-21 SignLab x BCG _ Check-in transcript.md`",
+      "last_run_at": "2026-08-21T14:04:16.522699-04:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "telegram:-5174229110",
       "origin": {
@@ -324,5 +324,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-08-21T14:00:57.023833-04:00"
+  "updated_at": "2026-08-21T14:04:16.523931-04:00"
 }
