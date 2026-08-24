@@ -1,21 +1,66 @@
 # Git and Synchronization Architecture
 
-This reference document outlines the exact architecture, scripts, and behaviors of the file synchronization and backup daemons running on Justin's Hermes VM.
+This reference document outlines the exact architecture, scripts, and behaviors for Justin's Hermes / Apollo VM and the Obsidian vault.
 
 ---
 
-## 1. Obsidian Vault Synchronization (Obsidian Sync)
+## 1. Obsidian Vault — Sync Contract (LOCKED 2026-08-24)
 
-**STATUS: RETIRED / DISABLED (`apollo-vault-sync.service` is stopped/disabled)**
+**Live sync plane: Obsidian Sync only.**
+**GitHub: cold history / intentional rollbacks only — never a second sync plane.**
 
-The Obsidian vault is synchronized exclusively via **Obsidian Sync**.
-- **Local Path:** `/home/justin.guest/Developer/obsidian-vault`
-- **Git Policy:** Git is no longer used for automated sync or real-time remote pushing. Git is reserved solely for manual safety commits prior to major structural changes or bulk operations (e.g. `git commit -m "safety: before bulk migration"`).
-- **Background Watcher (`apollo-vault-sync.service`):** Disabled (`systemctl --user stop apollo-vault-sync && systemctl --user disable apollo-vault-sync`). Do not restart or re-enable.
+| Layer | Job | Who writes |
+|---|---|---|
+| **Obsidian Sync** | Live truth across Mac + Apollo (+ phone) | Continuous file sync |
+| **GitHub (`obsidian-vault`)** | Large-grain restore points | Justin on Mac only, intentional commits |
+
+### Hard rules (Apollo / Hermes must obey)
+
+1. **Do not** `git add`, `git commit`, `git push`, `git pull`, or `git fetch` in `/home/justin.guest/Developer/obsidian-vault`.
+2. **Do not** start, enable, or reinstall `apollo-vault-sync`, `apollo-vault-backup`, or any other vault auto-git / nightly checkpoint service.
+3. Wait for **Obsidian Sync** when a referenced note is missing on disk. If still missing, report that — do not invent a git sync workaround.
+4. At most **one** writer to `origin/main` for the vault: Justin's Mac. Apollo is never that writer.
+5. Syncthing is **not** part of the vault sync story (retired). Do not reintroduce it for `obsidian-vault`.
+
+### Disabled services (must stay off)
+
+```bash
+systemctl --user stop apollo-vault-sync apollo-vault-backup
+systemctl --user disable apollo-vault-sync apollo-vault-backup
+# Confirm:
+systemctl --user is-enabled apollo-vault-sync apollo-vault-backup
+systemctl --user is-active apollo-vault-sync apollo-vault-backup
+```
+
+Expected: `disabled` / `inactive` (or `not-found`). If either is active, stop/disable immediately and alert Justin.
+
+### Git on the Mac (Justin only)
+
+- Manual safety commits before bulk/risky work, e.g. `safety: before meeting sibling cleanup`.
+- Optional sparse checkpoints (weekly) from **one** machine — never from Apollo.
+- Obsidian Git plugin: installed but **disabled**; auto-backup / auto-pull / auto-push off (`autoSaveInterval: 0`, `autoBackupAfterFileChange: false`, `autoPullOnBoot: false`, `disablePush: true`).
+
+### Why this exists (do not regress)
+
+Auto-git on the vault fights apply/archive and Sync:
+
+- **2026-08-13:** `apollo-vault-sync` commit `fa51031a5` renamed applied Proposals `Utilities/Review/` → `Inbox/Proposals/` and dropped apply creates from HEAD (sync ghosts).
+- **2026-08-15+:** `apollo-vault-backup` nightly checkpoints re-added Inbox Proposal/Notes ghosts and Granola meeting siblings from a divergent VM tree.
+
+Any commit with subject `apollo: …` / `backup: daily vault checkpoint` / message `Auto-committed by apollo-vault-*` is a **regression**. Stop the service; do not treat those commits as valid sync.
+
+Vault pointer: [[Vault sync contract Obsidian Sync primary 20260824164801]]
+
+### Paths
+
+- **Vault on Apollo:** `/home/justin.guest/Developer/obsidian-vault`
+- **Vault on Mac:** `/Users/justin/Developer/obsidian-vault`
 
 ---
 
 ## 2. Hermes Configuration Backup (`apollo-autocommit` / `apollo-backup`)
+
+This section is **Hermes config only** (`~/.hermes/` → `apollo-backup` repo). It does **not** apply to the Obsidian vault.
 
 The Hermes configuration, custom skills, custom scripts, cron jobs, and memory stores are backed up into a dedicated Git repository.
 
@@ -51,36 +96,26 @@ Although the background daemon `apollo-autocommit` only pushes, you can safely p
 - **Editing Configs Elsewhere:** If you edit files inside the `apollo-backup` remote repository elsewhere (e.g., via the GitHub UI, another clone, or on another machine) and push them, the local VM will **not** receive those updates automatically until you execute `apollo-pull`.
 - **Handling Push Conflicts:** If the remote has diverged, local modifications on the VM will trigger push failures in `apollo-autocommit`. Run `apollo-pull` immediately to reconcile the divergent branches and re-apply synced states.
 - **Syncing Manual VM Changes:** If you manually update or create files under the tracked `~/.hermes` directories, the daemon will automatically detect, rsync, and push them within 5 seconds.
+- **Never confuse repos:** `apollo-pull` / `apollo-autocommit` touch Hermes backup only — never the Obsidian vault.
 
 ---
 
-## 3. Syncthing Peer-to-Peer Synchronization & Network Troubleshooting
+## 3. Syncthing — RETIRED for the vault
 
-Syncthing is utilized for real-time peer-to-peer file synchronization between the VM (`lima-apollo-vm`) and Justin's Mac Mini (`Justins-Mac-mini`), specifically synchronizing the `obsidian-vault` folder.
+**STATUS: RETIRED.** Syncthing is not used for `obsidian-vault`. Live sync is Obsidian Sync (Section 1). Do not re-enable Syncthing for the vault folder; dual sync + auto-git caused Inbox Proposal ghosts and meeting-sibling piles.
+
+Historical notes (diagnostics only, if a leftover Syncthing install is found):
 
 ### The Emoji Conversion Quirk (😎)
 In messaging clients (such as Telegram), the character combination of `B` and `)` (capital B and a closing parenthesis) automatically converts to the cool-guy emoji: 😎.
 Because Syncthing outputs transferred data volumes in parentheses (e.g., `(273 B)` and `(214 B)`), these metrics will frequently arrive in chat screens as `(273 😎` and `(214 😎`. This is normal and represents small metadata keepalive packets, not file transfer speeds.
 
-### Diagnostic Queries via REST API
-Syncthing runs an HTTP API on the local interface (port `8384`). The active API key can be found in `~/.local/state/syncthing/config.xml` under `<gui><apikey>`.
-You can query the Syncthing state programmatically from terminal:
-```bash
-# Check active connections and connection types (relay vs direct TCP)
-curl -s -H "X-API-Key: <API_KEY>" http://localhost:8384/rest/system/connections
+### Diagnostic Queries via REST API (legacy)
+Syncthing ran an HTTP API on port `8384`. If still installed:
 
-# Check synchronization status of the vault folder
+```bash
+curl -s -H "X-API-Key: <API_KEY>" http://localhost:8384/rest/system/connections
 curl -s -H "X-API-Key: <API_KEY>" "http://localhost:8384/rest/db/status?folder=obsidian-vault"
 ```
 
-### Direct LAN Connections vs. Relay Fallbacks
-* **Relay Fallback Issue:** Direct TCP LAN connections (`tcp://192.168.5.2:22000`) can occasionally drop with `reading length: EOF` due to hypervisor network timeouts, sleeping hosts, or firewall resets. When direct connections fail, Syncthing silently falls back to public WAN relays (`type: relay-server`). Public relays are heavily throttled (a few KB/s) and slow down syncing to a crawl.
-* **Forcing Direct Connections:** To force Syncthing to bypass slow public WAN relays and maintain high-speed direct peer connections on the private network:
-  1. Open the local config file: `/home/justin.guest/.local/state/syncthing/config.xml`
-  2. Set `<relaysEnabled>false</relaysEnabled>` under the `<options>` tag.
-  3. Set `<address>tcp://192.168.5.2:22000</address>` (explicit target IP rather than `dynamic`) for the remote device configuration.
-  4. Restart the user service:
-     ```bash
-     systemctl --user restart syncthing
-     ```
-  5. Verify that `connections` reports `type: "tcp-client"` and `isLocal: true` rather than `"relay-server"`.
+If a vault folder is still configured in Syncthing, remove it and rely on Obsidian Sync.
