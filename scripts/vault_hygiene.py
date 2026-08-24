@@ -242,11 +242,10 @@ def auto_link_recent_daily_notes(vault_path, entities):
 def reconcile_granola_meetings(vault_path):
     entities = get_existing_entities(vault_path)
     meetings_dir = Path(vault_path) / "meetings"
-    meetings_dir.mkdir(parents=True, exist_ok=True)
-    
+
     dest_dir = inputs_base(vault_path) / "Meetings"
     dest_dir.mkdir(parents=True, exist_ok=True)
-        
+
     print("Reconciling meetings from Granola...")
     
     # Pre-scan vault for existing IDs to avoid collisions
@@ -270,7 +269,9 @@ def reconcile_granola_meetings(vault_path):
             except Exception:
                 pass
 
-    src_dirs = [(meetings_dir, True), (dest_dir, False)]
+    src_dirs = [(dest_dir, False)]
+    if meetings_dir.is_dir():
+        src_dirs.insert(0, (meetings_dir, True))
     legacy_dest = Path(vault_path) / "Logs" / "Meetings"
     if legacy_dest.exists() and legacy_dest.resolve() != dest_dir.resolve():
         src_dirs.append((legacy_dest, False))
@@ -404,6 +405,13 @@ def reconcile_granola_meetings(vault_path):
                         path.unlink()
                     except Exception as e:
                         print(f"  Error deleting original raw file {filename}: {e}")
+
+    try:
+        if meetings_dir.is_dir() and not any(meetings_dir.iterdir()):
+            meetings_dir.rmdir()
+            print("Removed empty legacy meetings/ folder")
+    except OSError:
+        pass
 
 # ==========================================
 # Filename Capitalization & Link Healing
